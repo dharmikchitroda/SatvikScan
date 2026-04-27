@@ -59,4 +59,10 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     //for navigation
     implementation("androidx.navigation:navigation-compose:2.8.0")
+
+    //camerax
+    val camerax_version = "1.7.0-alpha01"
+    implementation("androidx.camera:camera-camera2:${camerax_version}") // camera logic actual
+    implementation("androidx.camera:camera-lifecycle:${camerax_version}") // start or stop
+    implementation("androidx.camera:camera-view:${camerax_version}") // PreviewView
 }
