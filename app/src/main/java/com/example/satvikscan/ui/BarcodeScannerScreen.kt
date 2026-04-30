@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.camera.view.PreviewView
 
 @Composable
 fun BarcodeScannerScreen() {
@@ -29,8 +30,11 @@ fun BarcodeScannerScreen() {
 
     Box(Modifier.fillMaxSize()) {
         AndroidView(
-            factory = { context ->
-                val previewView = androidx.camera.view.PreviewView(context)
+            factory = { context -> // this context would use many time below code
+                // context will provided by system
+
+                val previewView = PreviewView(context)
+
                 val cameraProviderFuture = androidx.camera.lifecycle.ProcessCameraProvider.getInstance(context)
 
                 cameraProviderFuture.addListener({
