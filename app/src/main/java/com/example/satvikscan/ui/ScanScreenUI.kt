@@ -58,7 +58,9 @@ fun ScanScreenUI(paddingValues: PaddingValues) {
         //Scan Photo Button
 
         Button(
-            onClick = {},
+            onClick = {
+                BarcodeScannerScreen()
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(52.dp),

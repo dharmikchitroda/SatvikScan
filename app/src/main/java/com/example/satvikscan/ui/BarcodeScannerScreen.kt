@@ -3,15 +3,16 @@ package com.example.satvikscan.ui
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.camera.view.PreviewView
-import  androidx.camera.lifecycle.ProcessCameraProvider
-
+import androidx.core.content.ContextCompat
+import androidx.camera.core.Preview
 
 @Composable
 fun BarcodeScannerScreen() {
@@ -41,12 +42,14 @@ fun BarcodeScannerScreen() {
 
                 cameraProviderFuture.addListener({
 
+                    // dont use listener ke BAHAR beciuse sometime camera not be ready and i give a object so app happen to the crash
                     val cameraProvider = cameraProviderFuture.get()
 
-                    val preview = androidx.camera.core.Preview.Builder().build()
+                    // get every frame froma the camera
+                    val preview = Preview.Builder().build()
 
+                    // provide a surface to the preview
                     preview.setSurfaceProvider(previewView.surfaceProvider)
-
 
                     cameraProvider.unbindAll()
 
@@ -56,7 +59,7 @@ fun BarcodeScannerScreen() {
                         preview
                     )
 
-                },androidx.core.content.ContextCompat.getMainExecutor(context))
+                }, ContextCompat.getMainExecutor(context))
 
                 previewView
             }
