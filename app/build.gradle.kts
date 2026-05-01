@@ -65,4 +65,9 @@ dependencies {
     implementation("androidx.camera:camera-camera2:${camerax_version}") // camera logic actual
     implementation("androidx.camera:camera-lifecycle:${camerax_version}") // start or stop
     implementation("androidx.camera:camera-view:${camerax_version}") // PreviewView
+
+    // viewmodel library
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0") // ViewModel
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")  // Lifecycles only (without ViewModel or LiveData)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0") // use compose
 }

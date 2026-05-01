@@ -59,7 +59,7 @@ fun ScanScreenUI(paddingValues: PaddingValues) {
 
         Button(
             onClick = {
-                BarcodeScannerScreen()
+
             },
             modifier = Modifier
                 .fillMaxWidth()
