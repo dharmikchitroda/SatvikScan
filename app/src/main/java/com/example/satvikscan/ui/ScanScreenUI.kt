@@ -1,6 +1,7 @@
 package com.example.satvikscan.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,94 +35,98 @@ import com.example.satvikscan.R
 
 val SatvikGreen = Color(0xFF1B3A2D)
 val SatvikMint = Color(0xFF6FCF97)
+
 @Composable
-fun ScanScreenUI(paddingValues: PaddingValues) {
+fun ScanScreenUI(paddingValues: PaddingValues, nav_fun: () -> Unit) {
     //use for this page
+    Box(modifier = Modifier.fillMaxSize()) {
 
+        Image(
+            painter = painterResource(R.drawable.backgroud_photo),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop,
 
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(Color.White)
-            .padding(paddingValues)
-            .padding(horizontal = 20.dp)
-
-        ,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.height(24.dp))
-
-        //scanboxfill
-        ScanBox()
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        //Scan Photo Button
-
-        Button(
-            onClick = {
-
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(52.dp),
-            shape = RoundedCornerShape(14.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = SatvikGreen
-            )
+        )
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(
-                painter = painterResource(R.drawable.baseline_camera_alt_24),
-                contentDescription = null,
-                modifier = Modifier.size(20.dp),
-                tint = Color.White
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Scan Photo", fontSize = 16.sp , color = Color.White)
-        }
+            Spacer(modifier = Modifier.height(24.dp))
 
-        Spacer(modifier = Modifier.height(12.dp))
+            //scanboxfill
+            ScanBox()
 
-        //Scan Barcode Button
-        OutlinedButton(
-            onClick = { },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(52.dp),
-            shape = RoundedCornerShape(14.dp),
-            border = BorderStroke(1.5.dp, SatvikGreen)
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.barcode_scan),
-                contentDescription = null,
-                tint = SatvikGreen,
-                modifier = Modifier.size(20.dp)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+
+            //Scan Photo Button
+
+            Button(
+                onClick = {
+                    nav_fun()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = SatvikGreen
+                )
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.baseline_camera_alt_24),
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp),
+                    tint = Color.White
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = "Scan Photo", fontSize = 16.sp, color = Color.White)
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            //Scan Barcode Button
+            OutlinedButton(
+                onClick = {
+                    nav_fun()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(14.dp),
+                border = BorderStroke(1.5.dp, SatvikGreen)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.barcode_scan),
+                    contentDescription = null,
+                    tint = SatvikGreen,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Scan Barcode",
+                    fontSize = 16.sp,
+                    color = SatvikGreen
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            //  Manual Entry
             Text(
-                text = "Scan Barcode",
-                fontSize = 16.sp,
-                color = SatvikGreen
+                text = "✏️  Enter Ingredients Manually",
+                fontSize = 14.sp,
+                color = SatvikGreen,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.clickable { }
             )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Bottom text
+            FooterText()
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        //  Manual Entry
-        Text(
-            text = "✏️  Enter Ingredients Manually",
-            fontSize = 14.sp,
-            color = SatvikGreen,
-            fontWeight = FontWeight.Medium,
-            modifier = Modifier.clickable { }
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Bottom text
-        Text(
-            text = "Eat with awareness 🙏",
-            fontSize = 13.sp,
-            color = Color.Gray
-        )
     }
 }
 
@@ -160,5 +166,25 @@ fun ScanBox() {
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
+    }
+}
+
+@Composable
+fun FooterText() {
+    // Bottom Tagline Section
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 24.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "Purity in Every Bite\nThat's SatvikScan! 🍃",
+            fontSize = 28.sp,
+            fontWeight = FontWeight.ExtraBold,
+            color = Color(0xFFB0B0B0),
+            textAlign = TextAlign.Center,
+            lineHeight = 36.sp
+        )
     }
 }

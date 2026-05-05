@@ -1,5 +1,6 @@
 package com.example.satvikscan.ui
 
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,15 +28,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.satvikscan.R
 import com.example.satvikscan.routname
+import com.example.satvikscan.ui.theme.Satvik_ViewModel
+import kotlin.getValue
 
 @Composable
 fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
+
     val navconroller = rememberNavController()
+    val viewModel: Satvik_ViewModel = viewModel() // made object by android
 
     Scaffold(
         topBar = { Topbar() },
@@ -66,13 +72,18 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
 
         NavHost(navconroller, startDestination = routname().ScanScreen) {
             composable(routname().ScanScreen) {
-                ScanScreenUI(paddingValues)
+                ScanScreenUI(paddingValues,{
+                    navconroller.navigate(routname().CameraScreen)
+                })
             }
             composable(routname().HisScreen) {
                 HistoryScreen(paddingValues)
             }
             composable(routname().ProfileScreen) {
                 UserProfileScreen(paddingValues)
+            }
+            composable(routname().CameraScreen) {
+                BarcodeScannercameraScreen(viewModel)
             }
 
         }
@@ -86,14 +97,14 @@ fun Topbar() {
         title = {
             Text(
                 "SatvikScan", fontWeight = FontWeight.Bold,
-                color = Color(0xFF2ECC71)
+                    color = Color.White
             )
         },
         actions = {
             Box(
                 modifier = Modifier
                     .background(
-                        color = Color(0xFF2ECC71),
+                        color = Color.White,
                         shape = RoundedCornerShape(20.dp)
                     )
                     .padding(horizontal = 10.dp, vertical = 4.dp)
@@ -101,12 +112,14 @@ fun Topbar() {
                 Text(
                     text = "Swaminarayan", // baad mein DataStore se aayega
                     fontSize = 11.sp,
-                    color = Color.White,
+                    color = Color.Black,
                     fontWeight = FontWeight.Medium
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(Color.White)
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF4CAF50)
+        )
 
     )
 }
@@ -154,7 +167,7 @@ fun BottomBar(
                     modifier = Modifier
                         .size(54.dp)
                         .background(
-                            color = Color(0xFF2ECC71),
+                            color = Color(0xFF4CAF50),
                             shape = CircleShape
                         ),
                     contentAlignment = Alignment.Center

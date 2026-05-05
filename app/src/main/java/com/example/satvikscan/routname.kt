@@ -5,4 +5,6 @@ package com.example.satvikscan;
     var HisScreen = "HistoryScreen"
     var ProfileScreen = "ProfileScreen"
 
+    var CameraScreen = "CameraProfileScreen"
+
 }

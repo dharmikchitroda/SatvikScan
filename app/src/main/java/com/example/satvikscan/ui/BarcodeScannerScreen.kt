@@ -17,12 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.satvikscan.ui.theme.Satvik_ViewModel
 
 @Composable
-fun BarcodeScannerScreen(viewModel: Satvik_ViewModel) {
+fun BarcodeScannercameraScreen(viewModel: Satvik_ViewModel ) {
 
     val CheckPermisson by viewModel.CameraPermission.collectAsState()
+
 
     val cameraluncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
@@ -41,7 +43,7 @@ fun BarcodeScannerScreen(viewModel: Satvik_ViewModel) {
     Box(Modifier.fillMaxSize()) {
       if(CheckPermisson)  {
             AndroidView(
-                factory = { context -> // this context would use many time below code
+                factory = { context -> // this context would use manytime below code
                     // context will provided by system
 
                     val previewView = PreviewView(context)
@@ -50,7 +52,7 @@ fun BarcodeScannerScreen(viewModel: Satvik_ViewModel) {
 
                     cameraProviderFuture.addListener({
 
-                        // dont use listener ke BAHAR beciuse sometime camera not be ready and i give a object so app happen to the crash
+                        // don't use listener ke BAHAR beciuse sometime camera not be ready and i give a object so app happen to the crash
                         val cameraProvider = cameraProviderFuture.get()
 
                         // get every frame froma the camera
