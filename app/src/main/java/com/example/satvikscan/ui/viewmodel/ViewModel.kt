@@ -1,5 +1,4 @@
-package com.example.satvikscan.ui.theme
-
+package com.example.satvikscan.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

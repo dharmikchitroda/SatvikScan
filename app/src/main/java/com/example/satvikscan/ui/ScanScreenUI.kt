@@ -182,7 +182,8 @@ fun FooterText() {
             text = "Purity in Every Bite\nThat's SatvikScan! 🍃",
             fontSize = 28.sp,
             fontWeight = FontWeight.ExtraBold,
-            color = Color(0xFFB0B0B0),
+//            color = Color(0xFFB0B0B0),
+            color = Color.Black,
             textAlign = TextAlign.Center,
             lineHeight = 36.sp
         )

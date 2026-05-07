@@ -34,7 +34,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.satvikscan.R
 import com.example.satvikscan.routname
-import com.example.satvikscan.ui.theme.Satvik_ViewModel
+import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 import kotlin.getValue
 
 @Composable
