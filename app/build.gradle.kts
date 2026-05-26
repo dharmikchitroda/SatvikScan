@@ -66,11 +66,11 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:${camerax_version}") // start or stop
     implementation("androidx.camera:camera-view:${camerax_version}") // PreviewView
 
-    // viewmodel library
+    // viewmodel library1
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0") // ViewModel
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")  // Lifecycles only (without ViewModel or LiveData)
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0") // use compose
 
     // ML kit library
-    implementation("com.google.mlkit:barcode-scanning:17.3.0") // this dependency to bundle the model with your app not a palystore
+    implementation("com.google.mlkit:barcode-scanning:17.3.0") // this dependency to bundle the model with your app not a playstore
 }
