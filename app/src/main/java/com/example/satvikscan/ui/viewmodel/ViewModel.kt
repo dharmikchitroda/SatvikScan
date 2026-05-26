@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class Satvik_ViewModel : ViewModel() {
+    // for this portion permission get or not
     private val _CameraPermission = MutableStateFlow(false)
     val CameraPermission: StateFlow<Boolean> = _CameraPermission
 

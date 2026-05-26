@@ -49,7 +49,7 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
         topBar = { Topbar() },
         bottomBar = {
             BottomBar(
-                movescanscreen = {
+                moveScanscreen = {
                     navconroller.navigate(routname().ScanScreen){
                         popUpTo(navconroller.graph.startDestinationId)
                         launchSingleTop = true
@@ -129,7 +129,7 @@ fun Topbar() {
 
 @Composable
 fun BottomBar(
-    movescanscreen: () -> Unit,
+    moveScanscreen: () -> Unit,
     moveHisscreen: () -> Unit,
     moveProfilescreen: () -> Unit
 ) {
@@ -163,7 +163,7 @@ fun BottomBar(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .clickable {
-                        movescanscreen()
+                        moveScanscreen()
                     }
             ) {
                 Box(

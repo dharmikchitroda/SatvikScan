@@ -37,16 +37,21 @@ private val LightColorScheme = lightColorScheme(
 fun SatvikScanTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = false,
+    dynamicColor: Boolean = false, // set color according to the wallpaper this not for suitable this type app beacuse i want to fix my color primary app 
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
+       /*1 condition -> */
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            if (darkTheme) dynamicDarkColorScheme(context)
+            else dynamicLightColorScheme(context)
         }
 
+        /* 2 condition -> */
         darkTheme -> DarkColorScheme
+
+        /* 3 condition -> */
         else -> LightColorScheme
     }
 

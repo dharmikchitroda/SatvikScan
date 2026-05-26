@@ -12,7 +12,7 @@ import com.google.mlkit.vision.common.InputImage
 class BarcodeAnalyzer : ImageAnalysis.Analyzer {
 
 
-    private val option = BarcodeScannerOptions.Builder().build()
+    private val option = BarcodeScannerOptions.Builder().build() // configuration/settings of barcode scanner used for only custumize aur add somthing advance
     private var scanner = BarcodeScanning.getClient(option)
 
 
@@ -31,9 +31,16 @@ class BarcodeAnalyzer : ImageAnalysis.Analyzer {
             scanner.process(inputImage)
                 .addOnSuccessListener { barcodes ->
                     for (barcode in barcodes) {
-                        val value = barcode.rawValue ?: continue
+                        val value = barcode.rawValue ?: continue // if value does not exist so move next(continue)
                         Log.d("BARCODE", value)
                     }
+                }
+                .addOnFailureListener {
+                    //scan fail
+                }
+                .addOnCompleteListener {
+                    //kaam khatam
+                    image.close()
                 }
         }
     }
