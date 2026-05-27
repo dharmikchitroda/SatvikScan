@@ -5,19 +5,26 @@ import androidx.annotation.OptIn
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
+import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
-class BarcodeAnalyzer : ImageAnalysis.Analyzer {
+class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel) : ImageAnalysis.Analyzer {
 
 
-    private val option = BarcodeScannerOptions.Builder().build() // configuration/settings of barcode scanner used for only custumize aur add somthing advance
-
+    private val option = BarcodeScannerOptions.Builder()
+        .build() // configuration/settings of barcode scanner used for only custumize aur add somthing advance
 
 
     @OptIn(ExperimentalGetImage::class)
-    override fun analyze(image : ImageProxy) {
+    override fun analyze(image: ImageProxy) {
+
+        // check resut and close the camera till user not open rescan
+        if (!viewModel.isScanning.value) {
+            image.close()
+            return
+        }
 
         val mediaImage = image.image
 
@@ -35,16 +42,18 @@ class BarcodeAnalyzer : ImageAnalysis.Analyzer {
                     for (barcode in barcodes) {
                         val value = barcode.rawValue ?: continue // if value does not exist so move next(continue)
                         Log.d("BARCODE", value)
+
+                        // stop scaning when result number
+                        viewModel.stopscanning()
+
                     }
                 }
                 .addOnFailureListener {
                     //scan fail
                 }
                 .addOnCompleteListener {
-                    //kaam khatam
                     image.close()
                 }
         }
     }
-
 }

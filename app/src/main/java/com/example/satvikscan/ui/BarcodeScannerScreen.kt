@@ -66,7 +66,7 @@ fun BarcodeScannercameraScreen(viewModel: Satvik_ViewModel) {
 
                             imageAnalysis.setAnalyzer(
                                 ContextCompat.getMainExecutor(context), // main thread
-                                BarcodeAnalyzer()
+                                BarcodeAnalyzer(viewModel)
                             )
 
                             cameraProvider.unbindAll()

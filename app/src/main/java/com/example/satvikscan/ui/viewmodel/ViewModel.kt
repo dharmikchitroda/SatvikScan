@@ -12,4 +12,16 @@ class Satvik_ViewModel : ViewModel() {
     fun PermissionResult(isGranted: Boolean) {
         _CameraPermission.value = isGranted
     }
+
+    // stop / start scanner
+    private var _isScanning = MutableStateFlow(true)
+    val isScanning : StateFlow<Boolean> = _isScanning
+
+    fun stopscanning(){
+        _isScanning.value = false
+    }
+
+    fun startScanning() {
+        _isScanning.value = true
+    }
 }
