@@ -1,5 +1,9 @@
 package com.example.satvikscan.analyzer
 
+import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import androidx.annotation.OptIn
 import androidx.camera.core.ExperimentalGetImage
@@ -10,7 +14,8 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
-class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel) : ImageAnalysis.Analyzer {
+class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val context: Context) :
+    ImageAnalysis.Analyzer {
 
 
     private val option = BarcodeScannerOptions.Builder()
@@ -43,8 +48,23 @@ class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel) : ImageAnalysis.A
                         val value = barcode.rawValue ?: continue // if value does not exist so move next(continue)
                         Log.d("BARCODE", value)
 
+                        // small vibrate
+                        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+                        //  this work only Android 26+ so check first
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            vibrator.vibrate(
+                                VibrationEffect.createOneShot(
+                                    150,
+                                    VibrationEffect.DEFAULT_AMPLITUDE
+                                )
+                            )
+                        } else {
+                            vibrator.vibrate(150)
+                        }
                         // stop scaning when result number
                         viewModel.stopscanning()
+
 
                     }
                 }

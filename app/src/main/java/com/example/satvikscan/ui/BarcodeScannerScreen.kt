@@ -18,6 +18,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import com.example.satvikscan.analyzer.BarcodeAnalyzer
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
+import java.util.concurrent.Executors
 
 @Composable
 fun BarcodeScannercameraScreen(viewModel: Satvik_ViewModel) {
@@ -65,8 +66,8 @@ fun BarcodeScannercameraScreen(viewModel: Satvik_ViewModel) {
                             val imageAnalysis = ImageAnalysis.Builder().build()
 
                             imageAnalysis.setAnalyzer(
-                                ContextCompat.getMainExecutor(context), // main thread
-                                BarcodeAnalyzer(viewModel)
+                                Executors.newSingleThreadExecutor(), //background thred use
+                                BarcodeAnalyzer(viewModel, context)
                             )
 
                             cameraProvider.unbindAll()
