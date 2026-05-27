@@ -3,6 +3,7 @@ package com.example.satvikscan.ui
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
@@ -15,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import com.example.satvikscan.analyzer.BarcodeAnalyzer
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 
 @Composable
@@ -59,16 +61,25 @@ fun BarcodeScannercameraScreen(viewModel: Satvik_ViewModel) {
                             // provide a surface to the preview
                             preview.setSurfaceProvider(previewView.surfaceProvider)
 
+                            //for join analyser
+                            val imageAnalysis = ImageAnalysis.Builder().build()
+
+                            imageAnalysis.setAnalyzer(
+                                ContextCompat.getMainExecutor(context), // main thread
+                                BarcodeAnalyzer()
+                            )
+
                             cameraProvider.unbindAll()
 
                             cameraProvider.bindToLifecycle(
                                 context as androidx.lifecycle.LifecycleOwner,
                                 androidx.camera.core.CameraSelector.DEFAULT_BACK_CAMERA,
-                                preview
+                                preview,
+                                imageAnalysis
                             )
 
                         },
-                        ContextCompat.getMainExecutor(context)
+                        ContextCompat.getMainExecutor(context) // main thread
                     )
                     previewView
                 },

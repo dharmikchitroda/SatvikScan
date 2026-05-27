@@ -13,11 +13,11 @@ class BarcodeAnalyzer : ImageAnalysis.Analyzer {
 
 
     private val option = BarcodeScannerOptions.Builder().build() // configuration/settings of barcode scanner used for only custumize aur add somthing advance
-    private var scanner = BarcodeScanning.getClient(option)
+
 
 
     @OptIn(ExperimentalGetImage::class)
-    override fun analyze(image: ImageProxy) {
+    override fun analyze(image : ImageProxy) {
 
         val mediaImage = image.image
 
@@ -27,6 +27,8 @@ class BarcodeAnalyzer : ImageAnalysis.Analyzer {
                 mediaImage,
                 image.imageInfo.rotationDegrees
             )
+
+            val scanner = BarcodeScanning.getClient(option)
 
             scanner.process(inputImage)
                 .addOnSuccessListener { barcodes ->
