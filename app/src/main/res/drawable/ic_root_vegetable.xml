@@ -1,0 +1,29 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    
+    <!-- Premium Sprout / Root Vegetable Bulb Outline -->
+    <path
+        android:pathData="M12,2c0,0 -7,6.5 -7,11.5c0,3.87 3.13,7 7,7s7,-3.13 7,-7C19,8.5 12,2 12,2Z"
+        android:strokeColor="#EF6C00"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000"/>
+        
+    <!-- Layer arcs representing organic bulb structure -->
+    <path
+        android:pathData="M9.5,8c-1.5,1.5 -2,4 -2,5.5M14.5,8c1.5,1.5 2,4 2,5.5"
+        android:strokeColor="#EF6C00"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"/>
+        
+    <!-- Fine roots at bottom -->
+    <path
+        android:pathData="M11,21l-0.5,2M12,21v2M13,21l0.5,2"
+        android:strokeColor="#EF6C00"
+        android:strokeWidth="1.4"
+        android:strokeLineCap="round"/>
+</vector>

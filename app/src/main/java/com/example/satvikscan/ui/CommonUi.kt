@@ -179,7 +179,7 @@ fun BottomBar(
                     Icon(
                         painter = painterResource(R.drawable.scan),
                         contentDescription = "Scan",
-                        tint = Color.Black,
+                        tint = Color.White,
                         modifier = Modifier.size(38.dp)
                     )
                 }

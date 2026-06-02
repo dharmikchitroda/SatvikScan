@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,8 +34,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.satvikscan.R
 
-val SatvikGreen = Color(0xFF1B3A2D)
-val SatvikMint = Color(0xFF6FCF97)
 
 @Composable
 fun ScanScreenUI(paddingValues: PaddingValues, nav_fun: () -> Unit) {
@@ -73,7 +72,7 @@ fun ScanScreenUI(paddingValues: PaddingValues, nav_fun: () -> Unit) {
                     .height(52.dp),
                 shape = RoundedCornerShape(14.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = SatvikGreen
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
                 Icon(
@@ -97,19 +96,19 @@ fun ScanScreenUI(paddingValues: PaddingValues, nav_fun: () -> Unit) {
                     .fillMaxWidth()
                     .height(52.dp),
                 shape = RoundedCornerShape(14.dp),
-                border = BorderStroke(1.5.dp, SatvikGreen)
+                border = BorderStroke(1.5.dp, MaterialTheme.colorScheme.primary)
             ) {
                 Icon(
                     painter = painterResource(R.drawable.barcode_scan),
                     contentDescription = null,
-                    tint = SatvikGreen,
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(20.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Scan Barcode",
                     fontSize = 16.sp,
-                    color = SatvikGreen
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -117,7 +116,7 @@ fun ScanScreenUI(paddingValues: PaddingValues, nav_fun: () -> Unit) {
             Text(
                 text = "✏️  Enter Ingredients Manually",
                 fontSize = 14.sp,
-                color = SatvikGreen,
+                color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.clickable { }
             )
@@ -137,7 +136,7 @@ fun ScanBox() {
             .fillMaxWidth()
             .height(200.dp)
             .background(
-                color = SatvikGreen,
+                color = MaterialTheme.colorScheme.primary,
                 shape = RoundedCornerShape(20.dp)
             ),
         contentAlignment = Alignment.Center
@@ -149,7 +148,7 @@ fun ScanBox() {
             Icon(
                 painter = painterResource(R.drawable.scan__1_),
                 contentDescription = null,
-                tint = SatvikMint,
+                tint = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.size(64.dp)
             )
             Text(
