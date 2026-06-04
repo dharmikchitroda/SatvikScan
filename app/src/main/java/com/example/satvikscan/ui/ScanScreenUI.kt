@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -30,6 +31,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.satvikscan.R
@@ -46,7 +48,7 @@ fun ScanScreenUI(paddingValues: PaddingValues, nav_fun: () -> Unit) {
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop,
 
-        )
+            )
         Column(
             Modifier
                 .fillMaxSize()
@@ -118,8 +120,7 @@ fun ScanScreenUI(paddingValues: PaddingValues, nav_fun: () -> Unit) {
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.clickable { }
-            )
+                modifier = Modifier.clickable { })
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -136,10 +137,8 @@ fun ScanBox() {
             .fillMaxWidth()
             .height(200.dp)
             .background(
-                color = MaterialTheme.colorScheme.primary,
-                shape = RoundedCornerShape(20.dp)
-            ),
-        contentAlignment = Alignment.Center
+                color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(20.dp)
+            ), contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -188,3 +187,4 @@ fun FooterText() {
         )
     }
 }
+

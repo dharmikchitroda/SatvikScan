@@ -73,4 +73,9 @@ dependencies {
 
     // ML kit library
     implementation("com.google.mlkit:barcode-scanning:17.3.0") // this dependency to bundle the model with your app not a playstore
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")   // Gson converter (JSON parse karne ke liye)
 }
