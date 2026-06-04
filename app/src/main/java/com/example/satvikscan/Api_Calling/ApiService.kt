@@ -1,13 +1,14 @@
-    package com.example.satvikscan.Api_Calling
+package com.example.satvikscan.Api_Calling
 
-    import com.example.satvikscan.data.model.ProductResponse
-    import retrofit2.http.GET
-    import retrofit2.http.Path
+import com.example.satvikscan.data.model.ProductResponse
+import retrofit2.http.GET
+import retrofit2.http.Path
 
-    interface ApiService {
+interface ApiService {
 
-        @GET("api/v0/product/{barcode}.json")
-        suspend fun getProductDetails(
-            @Path("barcode") barcode: String
-        ): ProductResponse
-    }
+    @GET("api/v0/product/{barcode}.json")
+    suspend fun getProductDetails(
+        @Path("barcode") barcode: String
+    ): ProductResponse
+
+}
