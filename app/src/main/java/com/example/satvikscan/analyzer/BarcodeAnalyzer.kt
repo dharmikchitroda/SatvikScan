@@ -45,6 +45,7 @@ class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val conte
             scanner.process(inputImage)
                 .addOnSuccessListener { barcodes ->
                     for (barcode in barcodes) {
+
                         val value = barcode.rawValue ?: continue // if value does not exist so move next(continue)
                         Log.d("BARCODE", value)
 
@@ -62,6 +63,9 @@ class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val conte
                         } else {
                             vibrator.vibrate(150)
                         }
+                        // send to code viewmodel and would call api
+                        viewModel.ChangeproductUiState(value)
+
                         // stop scaning when result number
                         viewModel.stopscanning()
 
