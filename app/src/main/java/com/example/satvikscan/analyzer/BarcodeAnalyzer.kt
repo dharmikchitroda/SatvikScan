@@ -16,11 +16,8 @@ import com.google.mlkit.vision.common.InputImage
 
 class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val context: Context) :
     ImageAnalysis.Analyzer {
-
-
     private val option = BarcodeScannerOptions.Builder()
         .build() // configuration/settings of barcode scanner used for only custumize aur add somthing advance
-
 
     @OptIn(ExperimentalGetImage::class)
     override fun analyze(image: ImageProxy) {
@@ -47,10 +44,12 @@ class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val conte
                     for (barcode in barcodes) {
 
                         val value = barcode.rawValue ?: continue // if value does not exist so move next(continue)
+
                         Log.d("BARCODE", value)
 
                         // small vibrate
-                        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                        val vibrator =
+                            context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
                         //  this work only Android 26+ so check first
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -68,7 +67,6 @@ class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val conte
 
                         // stop scaning when result number
                         viewModel.stopscanning()
-
 
                     }
                 }

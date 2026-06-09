@@ -1,6 +1,5 @@
 package com.example.satvikscan.ui
 
-import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,8 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,18 +29,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.satvikscan.R
 import com.example.satvikscan.routname
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
-import kotlin.getValue
 
 @Composable
 fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
 
-    val navconroller = rememberNavController()
+    val navconroller = rememberNavController() // return navhostcontroller object
+
     val viewModel: Satvik_ViewModel = viewModel() // made object by android
 
     Scaffold(
@@ -51,19 +50,19 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
         bottomBar = {
             BottomBar(
                 moveScanscreen = {
-                    navconroller.navigate(routname().ScanScreen){
+                    navconroller.navigate(routname().ScanScreen) {
                         popUpTo(navconroller.graph.startDestinationId)
                         launchSingleTop = true
                     }
                 },
                 moveHisscreen = {
-                    navconroller.navigate(routname().HisScreen){
+                    navconroller.navigate(routname().HisScreen) {
                         popUpTo(navconroller.graph.startDestinationId)
                         launchSingleTop = true
                     }
                 },
                 moveProfilescreen = {
-                    navconroller.navigate(routname().ProfileScreen){
+                    navconroller.navigate(routname().ProfileScreen) {
                         popUpTo(navconroller.graph.startDestinationId)
                         launchSingleTop = true
                     }
@@ -73,9 +72,12 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
 
     ) { paddingValues ->
 
+
+
         NavHost(navconroller, startDestination = routname().ScanScreen) {
+
             composable(routname().ScanScreen) {
-                ScanScreenUI(paddingValues,{
+                ScanScreenUI(paddingValues, {
                     navconroller.navigate(routname().CameraScreen)
                 })
             }
@@ -86,13 +88,25 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
                 UserProfileScreen(paddingValues)
             }
             composable(routname().CameraScreen) {
-                BarcodeScannercameraScreen(viewModel)
 
+                BarcodeScannercameraScreen(viewModel)
+            }
+            composable(routname().ResultScreen) {
+                ResultScreen(
+                    onBackClick = { navconroller.popBackStack() },
+                    onScanAgainClick = {
+                        viewModel.startScanning()
+                        navconroller.navigate(routname().CameraScreen) {
+                            popUpTo(routname().ScanScreen)
+                        }
+                    })
             }
 
         }
+
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -101,7 +115,7 @@ fun Topbar() {
         title = {
             Text(
                 "SatvikScan", fontWeight = FontWeight.Bold,
-                    color = Color.White
+                color = Color.White
             )
         },
         actions = {

@@ -91,4 +91,3 @@ fun BarcodeScannercameraScreen(viewModel: Satvik_ViewModel) {
     }
 
 }
-
