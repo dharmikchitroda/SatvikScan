@@ -21,6 +21,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -42,6 +43,10 @@ import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
 
     val navconroller = rememberNavController() // return navhostcontroller object
+
+
+
+
 
     val viewModel: Satvik_ViewModel = viewModel() // made object by android
 
@@ -73,7 +78,6 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
     ) { paddingValues ->
 
 
-
         NavHost(navconroller, startDestination = routname().ScanScreen) {
 
             composable(routname().ScanScreen) {
@@ -92,14 +96,24 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
                 BarcodeScannercameraScreen(viewModel)
             }
             composable(routname().ResultScreen) {
+
+                val ingredientList by viewModel.ingredients.collectAsState()
+
                 ResultScreen(
-                    onBackClick = { navconroller.popBackStack() },
+                    onBackClick = {
+                        viewModel.startScanning() // reset old state , this main use the restart the camerax fatch barcode in one time one
+                        navconroller.popBackStack()
+                    },
                     onScanAgainClick = {
                         viewModel.startScanning()
                         navconroller.navigate(routname().CameraScreen) {
+                            viewModel.startScanning() // reset old state
                             popUpTo(routname().ScanScreen)
                         }
-                    })
+                    },
+                    ingredients = ingredientList
+                )
+
             }
 
         }

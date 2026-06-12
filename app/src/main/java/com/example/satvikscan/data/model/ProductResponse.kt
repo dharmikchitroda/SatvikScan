@@ -18,3 +18,7 @@ data class Product(
     @SerializedName("ingredients_text")
     val ingredientsText: String?
 )
+
+class Hello {
+    fun area() = println("den")
+}

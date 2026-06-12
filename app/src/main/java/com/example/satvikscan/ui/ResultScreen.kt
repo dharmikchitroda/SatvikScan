@@ -51,28 +51,26 @@ enum class IngredientType {
     NON_VEG_ORIGIN,
 
     OTHER
+
 }
 
 data class IngredientData(
     val name: String,
     val reason: String,
     val type: IngredientType
+
 )
 
 @Composable
 fun ResultScreen(
-    modifier: () -> Unit = Modifier,
-    dietName: () -> Unit = "Swaminarayan",
-    ingredients: () -> Unit = listOf(
-        IngredientData("Garlic", "Restricted Root Vegetable", IngredientType.ROOT_VEGETABLE),
-        IngredientData("Gelatin", "Non-vegetarian Origin", IngredientType.NON_VEG_ORIGIN)
-    ),
+    modifier: Modifier = Modifier,
+    dietName: String = "Swaminarayan",
+    ingredients: List<IngredientData> ,
     onBackClick: () -> Unit,
     onScanAgainClick: () -> Unit
 ) {
     Column(
         modifier = modifier
-            .invoke()
             .background(Color(0xFFFAFAFA)) // Ultra-clean premium light grey/off-white background
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
