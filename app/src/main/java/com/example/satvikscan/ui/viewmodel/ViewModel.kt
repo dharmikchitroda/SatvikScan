@@ -6,6 +6,7 @@ import com.example.satvikscan.Api_Calling.RetrofitInstance
 import com.example.satvikscan.data.model.ProductResponse
 import com.example.satvikscan.data.repository.ProductRepository
 import com.example.satvikscan.ui.IngredientData
+import com.example.satvikscan.ui.IngredientType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -70,9 +71,8 @@ class Satvik_ViewModel : ViewModel() {
                 val rawIngredientData = response.product?.ingredientsText
                 val parsedList = parseIngredients(rawIngredientData)
 
-
+                _ingredients.value = parsedList
                 _productUiState.value = ProductUiState.Success(response)
-                _ingredients.value
 
             } catch (e: Exception) {
                 _productUiState.value = ProductUiState.Error(e.message ?: "Unknown Error occurred")
@@ -83,19 +83,56 @@ class Satvik_ViewModel : ViewModel() {
 
     private fun parseIngredients(rawIngredientData: String?): List<IngredientData> {
 
-        // check the list are empty or not if emptry so return the empty list
+        // check the list are empty or not if empty so return the empty list
         if (rawIngredientData.isNullOrBlank()) return emptyList()
 
-        // filter the string and an split them
-        val rawList =
-            rawIngredientData.split(",", ";", "\n")
-                .map { it.trim() }
-                .filter { it.isNotEmpty() }
+        // filter the string and split them
+        val rawList = rawIngredientData.split(",", ";", "\n")
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
 
-        // store the finding ingredentsn
+        // store the finding ingredients
         val DetectedItems = mutableListOf<IngredientData>()
 
-        // check avalble items are restricted ? using the loop`
+        // check available items are restricted using the loop
+        for (ingredient in rawList) {
+            val nameLower = ingredient.lowercase()
 
+            // Swaminarayan diet according restricted keywords check
+            val isGarlic = nameLower.contains("garlic") || nameLower.contains("lasan") || nameLower.contains("lahsun")
+            val isOnion = nameLower.contains("onion") || nameLower.contains("dungri") || nameLower.contains("pyaj") || nameLower.contains("pyaz")
+
+
+            val isRootVegetable = isGarlic || isOnion || nameLower.contains("root") || nameLower.contains("radish") || nameLower.contains("beetroot") || nameLower.contains("sweet potato")
+
+            val isNonVeg = nameLower.contains("chicken") || nameLower.contains("meat") || nameLower.contains("egg") ||
+                    nameLower.contains("fish") || nameLower.contains("gelatin") || nameLower.contains("gelatine") ||
+                    nameLower.contains("beef") || nameLower.contains("pork") || nameLower.contains("mutton") ||
+                    nameLower.contains("lard") || nameLower.contains("albumin")
+
+            if (isRootVegetable) {
+                val displayName = when {
+                    isGarlic -> "Garlic"
+                        isOnion -> "Onion"
+                        else -> ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+                }
+                DetectedItems.add(
+                    IngredientData(
+                        name = displayName,
+                        reason = "Avoided: Root vegetables are restricted in Swaminarayan diet",
+                        type = IngredientType.ROOT_VEGETABLE
+                    )
+                )
+            } else if (isNonVeg) {
+                DetectedItems.add(
+                    IngredientData(
+                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
+                        reason = "Avoided: Non-vegetarian origin ingredient detected",
+                        type = IngredientType.NON_VEG_ORIGIN
+                    )
+                )
+            }
+        }
+        return DetectedItems
     }
 }

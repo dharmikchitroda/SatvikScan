@@ -93,7 +93,7 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
             }
             composable(routname().CameraScreen) {
 
-                BarcodeScannercameraScreen(viewModel)
+                BarcodeScannercameraScreen(viewModel , { })
             }
             composable(routname().ResultScreen) {
 

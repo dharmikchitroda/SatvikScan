@@ -21,7 +21,9 @@ import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 import java.util.concurrent.Executors
 
 @Composable
-fun BarcodeScannercameraScreen(viewModel: Satvik_ViewModel) {
+fun BarcodeScannercameraScreen(
+    viewModel: Satvik_ViewModel, onNavigateToResult: () -> Unit
+) {
 
     val CheckPermisson by viewModel.CameraPermission.collectAsState()
 
