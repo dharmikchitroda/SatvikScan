@@ -1,6 +1,7 @@
 package com.example.satvikscan.ui
 
 import android.Manifest
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.ImageAnalysis
@@ -14,6 +15,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import com.example.satvikscan.analyzer.BarcodeAnalyzer
@@ -22,10 +24,11 @@ import java.util.concurrent.Executors
 
 @Composable
 fun BarcodeScannercameraScreen(
-    viewModel: Satvik_ViewModel, onNavigateToResult: () -> Unit
+    viewModel: Satvik_ViewModel,
 ) {
 
     val CheckPermisson by viewModel.CameraPermission.collectAsState()
+
 
     val cameraluncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
@@ -55,7 +58,7 @@ fun BarcodeScannercameraScreen(
                     cameraProviderFuture.addListener(
                         {
 
-                            // don't use listener ke BAHAR because sometime camera not be ready and i give a object so app happen to the crash
+                            // don't use listener ke bahar because sometime camera not be ready and i give a object so app happen to the crash
                             val cameraProvider = cameraProviderFuture.get()
 
                             // get every frame from the camera

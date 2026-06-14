@@ -31,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -45,35 +44,26 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
     val navconroller = rememberNavController() // return navhostcontroller object
 
 
-
-
-
     val viewModel: Satvik_ViewModel = viewModel() // made object by android
 
-    Scaffold(
-        topBar = { Topbar() },
-        bottomBar = {
-            BottomBar(
-                moveScanscreen = {
-                    navconroller.navigate(routname().ScanScreen) {
-                        popUpTo(navconroller.graph.startDestinationId)
-                        launchSingleTop = true
-                    }
-                },
-                moveHisscreen = {
-                    navconroller.navigate(routname().HisScreen) {
-                        popUpTo(navconroller.graph.startDestinationId)
-                        launchSingleTop = true
-                    }
-                },
-                moveProfilescreen = {
-                    navconroller.navigate(routname().ProfileScreen) {
-                        popUpTo(navconroller.graph.startDestinationId)
-                        launchSingleTop = true
-                    }
-                }
-            )
-        }
+    Scaffold(topBar = { Topbar() }, bottomBar = {
+        BottomBar(moveScanscreen = {
+            navconroller.navigate(routname().ScanScreen) {
+                popUpTo(navconroller.graph.startDestinationId)
+                launchSingleTop = true
+            }
+        }, moveHisscreen = {
+            navconroller.navigate(routname().HisScreen) {
+                popUpTo(navconroller.graph.startDestinationId)
+                launchSingleTop = true
+            }
+        }, moveProfilescreen = {
+            navconroller.navigate(routname().ProfileScreen) {
+                popUpTo(navconroller.graph.startDestinationId)
+                launchSingleTop = true
+            }
+        })
+    }
 
     ) { paddingValues ->
 
@@ -93,25 +83,26 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
             }
             composable(routname().CameraScreen) {
 
-                BarcodeScannercameraScreen(viewModel , { })
+                BarcodeScannercameraScreen(
+                    viewModel
+                )
             }
             composable(routname().ResultScreen) {
 
                 val ingredientList by viewModel.ingredients.collectAsState()
 
                 ResultScreen(
+                    viewModel,
                     onBackClick = {
                         viewModel.startScanning() // reset old state , this main use the restart the camerax fatch barcode in one time one
                         navconroller.popBackStack()
-                    },
-                    onScanAgainClick = {
+                    }, onScanAgainClick = {
                         viewModel.startScanning()
                         navconroller.navigate(routname().CameraScreen) {
                             viewModel.startScanning() // reset old state
                             popUpTo(routname().ScanScreen)
                         }
                     },
-                    ingredients = ingredientList
                 )
 
             }
@@ -128,28 +119,22 @@ fun Topbar() {
     TopAppBar(
         title = {
             Text(
-                "SatvikScan", fontWeight = FontWeight.Bold,
-                color = Color.White
+                "SatvikScan", fontWeight = FontWeight.Bold, color = Color.White
             )
-        },
-        actions = {
+        }, actions = {
             Box(
                 modifier = Modifier
                     .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(20.dp)
+                        color = Color.White, shape = RoundedCornerShape(20.dp)
                     )
                     .padding(horizontal = 10.dp, vertical = 4.dp)
             ) {
                 Text(
                     text = "Swaminarayan", // baad mein DataStore se aayega
-                    fontSize = 11.sp,
-                    color = Color.Black,
-                    fontWeight = FontWeight.Medium
+                    fontSize = 11.sp, color = Color.Black, fontWeight = FontWeight.Medium
                 )
             }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
+        }, colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
         )
 
@@ -158,13 +143,10 @@ fun Topbar() {
 
 @Composable
 fun BottomBar(
-    moveScanscreen: () -> Unit,
-    moveHisscreen: () -> Unit,
-    moveProfilescreen: () -> Unit
+    moveScanscreen: () -> Unit, moveHisscreen: () -> Unit, moveProfilescreen: () -> Unit
 ) {
     BottomAppBar(
-        containerColor = Color.White,
-        tonalElevation = 0.dp
+        containerColor = Color.White, tonalElevation = 0.dp
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
@@ -174,11 +156,9 @@ fun BottomBar(
 
             // History
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.clickable {
+                horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.clickable {
                     moveHisscreen()
-                }
-            ) {
+                }) {
                 Icon(
                     painter = painterResource(R.drawable.baseline_history_24),
                     contentDescription = "History",
@@ -189,20 +169,15 @@ fun BottomBar(
 
             // Scan
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .clickable {
-                        moveScanscreen()
-                    }
-            ) {
+                horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.clickable {
+                    moveScanscreen()
+                }) {
                 Box(
                     modifier = Modifier
                         .size(54.dp)
                         .background(
-                            color = MaterialTheme.colorScheme.primary,
-                            shape = CircleShape
-                        ),
-                    contentAlignment = Alignment.Center
+                            color = MaterialTheme.colorScheme.primary, shape = CircleShape
+                        ), contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.scan),
@@ -221,11 +196,9 @@ fun BottomBar(
 
             // Profile
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.clickable {
+                horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.clickable {
                     moveProfilescreen()
-                }
-            ) {
+                }) {
                 Icon(
                     painter = painterResource(R.drawable.baseline_supervised_user_circle_24),
                     contentDescription = "Profile",
