@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -33,7 +34,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.foundation.layout.statusBarsPadding
 import com.example.satvikscan.R
 import com.example.satvikscan.routname
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
@@ -43,32 +46,43 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
 
     val navconroller = rememberNavController() // return navhostcontroller object
 
+    val navBackStackEntry by navconroller.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+    val showBars = currentRoute != routname().CameraScreen && currentRoute != routname().ResultScreen
 
     val viewModel: Satvik_ViewModel = viewModel() // made object by android
 
-    Scaffold(topBar = { Topbar() }, bottomBar = {
-        BottomBar(moveScanscreen = {
-            navconroller.navigate(routname().ScanScreen) {
-                popUpTo(navconroller.graph.startDestinationId)
-                launchSingleTop = true
+    Scaffold(
+        modifier = modifier,
+        topBar = { if (showBars) Topbar() },
+        bottomBar = {
+            if (showBars) {
+                BottomBar(moveScanscreen = {
+                    navconroller.navigate(routname().ScanScreen) {
+                        popUpTo(navconroller.graph.startDestinationId)
+                        launchSingleTop = true
+                    }
+                }, moveHisscreen = {
+                    navconroller.navigate(routname().HisScreen) {
+                        popUpTo(navconroller.graph.startDestinationId)
+                        launchSingleTop = true
+                    }
+                }, moveProfilescreen = {
+                    navconroller.navigate(routname().ProfileScreen) {
+                        popUpTo(navconroller.graph.startDestinationId)
+                        launchSingleTop = true
+                    }
+                })
             }
-        }, moveHisscreen = {
-            navconroller.navigate(routname().HisScreen) {
-                popUpTo(navconroller.graph.startDestinationId)
-                launchSingleTop = true
-            }
-        }, moveProfilescreen = {
-            navconroller.navigate(routname().ProfileScreen) {
-                popUpTo(navconroller.graph.startDestinationId)
-                launchSingleTop = true
-            }
-        })
-    }
-
+        }
     ) { paddingValues ->
 
 
-        NavHost(navconroller, startDestination = routname().ScanScreen) {
+        NavHost(
+            navconroller,
+            startDestination = routname().ScanScreen,
+            modifier = Modifier.fillMaxSize()
+        ) {
 
             composable(routname().ScanScreen) {
                 ScanScreenUI(paddingValues, {
@@ -82,21 +96,29 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
                 UserProfileScreen(paddingValues)
             }
             composable(routname().CameraScreen) {
-
+                val UiState by viewModel.productUiState.collectAsState()
                 BarcodeScannercameraScreen(
                     viewModel
                 )
+                LaunchedEffect(UiState) {
+                    if (UiState == Satvik_ViewModel.ProductUiState.Loading)
+                        navconroller.navigate(routname().ResultScreen) {
+                            // remove the last screen from the stack
+                            popUpTo(routname().CameraScreen) { inclusive = true }
+                        }
+                }
+
             }
             composable(routname().ResultScreen) {
 
-                val ingredientList by viewModel.ingredients.collectAsState()
-
                 ResultScreen(
-                    viewModel,
+                    viewModel = viewModel,
+                    modifier = Modifier.fillMaxSize().statusBarsPadding(),
                     onBackClick = {
                         viewModel.startScanning() // reset old state , this main use the restart the camerax fatch barcode in one time one
                         navconroller.popBackStack()
-                    }, onScanAgainClick = {
+                    },
+                    onScanAgainClick = {
                         viewModel.startScanning()
                         navconroller.navigate(routname().CameraScreen) {
                             viewModel.startScanning() // reset old state

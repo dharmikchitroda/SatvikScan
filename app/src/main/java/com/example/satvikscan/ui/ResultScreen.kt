@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -87,8 +88,7 @@ fun ResultScreen(
 
             Column(
                 modifier = modifier
-                    .background(Color(0xFFFAFAFA)) // Ultra-clean premium light grey/off-white background
-                    .verticalScroll(rememberScrollState()),
+                    .background(Color(0xFFFAFAFA)), // Ultra-clean premium light grey/off-white background
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Custom Top App Bar
@@ -117,7 +117,13 @@ fun ResultScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState()),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
 
                 // avoid Status Block
                 Box(
@@ -313,67 +319,74 @@ fun ResultScreen(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(28.dp))
+                } // End of scrollable Column
 
-                //  Action Buttons Section
-                Button(
-                    onClick = onScanAgainClick,
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 24.dp)
-                        .height(54.dp),
-                    shape = RoundedCornerShape(14.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                        .background(Color(0xFFFAFAFA))
+                        .navigationBarsPadding()
+                        .padding(bottom = 16.dp, top = 8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    //  Action Buttons Section
+                    Button(
+                        onClick = onScanAgainClick,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp)
+                            .height(54.dp),
+                        shape = RoundedCornerShape(14.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+                        elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                painter = painterResource(R.drawable.baseline_camera_alt_24),
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Scan Again",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    //  Disclaimer Footer Note
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 32.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.Top
+                    ) {
                         Icon(
-                            painter = painterResource(R.drawable.baseline_camera_alt_24),
+                            imageVector = Icons.Default.Info,
                             contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.size(20.dp)
+                            tint = Color(0xFF9E9E9E),
+                            modifier = Modifier
+                                .size(14.dp)
+                                .padding(top = 2.dp)
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
                         Text(
-                            text = "Scan Again",
-                            fontSize = 16.sp,
+                            text = "ANALYSIS BASED ON COMMON DATABASE.\nALWAYS DOUBLE-CHECK LABELS.",
+                            fontSize = 9.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = Color(0xFF9E9E9E),
+                            textAlign = TextAlign.Center,
+                            letterSpacing = 0.5.sp,
+                            lineHeight = 13.sp
                         )
                     }
                 }
-
-                Spacer(modifier = Modifier.height(32.dp))
-
-                //  Disclaimer Footer Note
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 32.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.Top
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Info,
-                        contentDescription = null,
-                        tint = Color(0xFF9E9E9E),
-                        modifier = Modifier
-                            .size(14.dp)
-                            .padding(top = 2.dp)
-                    )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = "ANALYSIS BASED ON COMMON DATABASE.\nALWAYS DOUBLE-CHECK LABELS.",
-                        fontSize = 9.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF9E9E9E),
-                        textAlign = TextAlign.Center,
-                        letterSpacing = 0.5.sp,
-                        lineHeight = 13.sp
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(40.dp))
             }
         }
 
