@@ -52,9 +52,13 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
 
     val viewModel: Satvik_ViewModel = viewModel() // made object by android
 
+    // dietName show in topbar
+    val dietName by viewModel.dietName.collectAsState()
+
+
     Scaffold(
         modifier = modifier,
-        topBar = { if (showBars) Topbar() },
+        topBar = { if (showBars) Topbar(dietName) },
         bottomBar = {
             if (showBars) {
                 BottomBar(moveScanscreen = {
@@ -125,6 +129,7 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
                             popUpTo(routname().ScanScreen)
                         }
                     },
+                    dietName = dietName
                 )
 
             }
@@ -137,7 +142,7 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Topbar() {
+fun Topbar(dietName : String) {
     TopAppBar(
         title = {
             Text(
@@ -152,7 +157,7 @@ fun Topbar() {
                     .padding(horizontal = 10.dp, vertical = 4.dp)
             ) {
                 Text(
-                    text = "Swaminarayan", // baad mein DataStore se aayega
+                    text = dietName,
                     fontSize = 11.sp, color = Color.Black, fontWeight = FontWeight.Medium
                 )
             }

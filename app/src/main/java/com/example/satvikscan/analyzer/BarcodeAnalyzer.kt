@@ -51,7 +51,7 @@ class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val conte
                         val vibrator =
                             context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
-                        //  this work only Android 26+ so check first
+                        //  this work only Android 26+ so check first - Api Level
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             vibrator.vibrate(
                                 VibrationEffect.createOneShot(

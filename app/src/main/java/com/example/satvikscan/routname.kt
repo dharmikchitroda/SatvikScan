@@ -9,4 +9,6 @@ class routname {
 
     var ResultScreen = "ResultScreen"
 
+    var WelcomeScreen = "WelcomeScreen"
+
 }

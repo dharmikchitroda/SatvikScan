@@ -63,7 +63,7 @@ data class IngredientData(
 fun ResultScreen(
     viewModel: Satvik_ViewModel,
     modifier: Modifier = Modifier,
-    dietName: String = "Swaminarayan",
+    dietName: String,
     onBackClick: () -> Unit,
     onScanAgainClick: () -> Unit
 ) {
