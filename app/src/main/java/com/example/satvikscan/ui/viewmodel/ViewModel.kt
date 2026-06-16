@@ -167,23 +167,26 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun addCustomAvoidIngredient(ingredient: String) {
+
         val clean = ingredient.trim().lowercase()
         if (clean.isEmpty()) return // here stop the fun when empty
 
         val currentSet = _customAvoidList.value.toMutableSet()
+
         // currentSet me ae add karenga already nahi hain to true and added
         if (currentSet.add(clean)) {
             _customAvoidList.value = currentSet
             prefManager.saveCustomExclusions(currentSet)
         }
+    }
 
-        fun removeCustomAvoidIngredient(ingredient: String) {
-            val clean = ingredient.trim().lowercase()
-            val currentSet = _customAvoidList.value.toMutableSet()
-            if (currentSet.remove(clean)) {
-                _customAvoidList.value = currentSet
-                prefManager.saveCustomExclusions(currentSet)
-            }
+    fun removeCustomAvoidIngredient(ingredient: String) {
+        val clean = ingredient.trim().lowercase()
+        val currentSet = _customAvoidList.value.toMutableSet()
+        if (currentSet.remove(clean)) {
+            _customAvoidList.value = currentSet
+            prefManager.saveCustomExclusions(currentSet)
         }
     }
+
 }
