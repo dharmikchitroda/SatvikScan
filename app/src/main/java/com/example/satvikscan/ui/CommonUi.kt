@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
@@ -36,7 +37,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.compose.foundation.layout.statusBarsPadding
 import com.example.satvikscan.R
 import com.example.satvikscan.routname
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
@@ -48,9 +48,14 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
 
     val navBackStackEntry by navconroller.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    val showBars = currentRoute != routname().CameraScreen && currentRoute != routname().ResultScreen
+    val showBars =
+        currentRoute != routname().CameraScreen && currentRoute != routname().ResultScreen && currentRoute != routname().WelcomeScreen
 
     val viewModel: Satvik_ViewModel = viewModel() // made object by android
+
+// which screen open when user start the app first time and another time
+    val startDestination =
+        if (viewModel.hasSelectedDiet()) routname().ScanScreen else routname().WelcomeScreen
 
     // dietName show in topbar
     val dietName by viewModel.dietName.collectAsState()
@@ -81,10 +86,9 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
         }
     ) { paddingValues ->
 
-
         NavHost(
             navconroller,
-            startDestination = routname().ScanScreen,
+            startDestination = startDestination,
             modifier = Modifier.fillMaxSize()
         ) {
 
@@ -117,7 +121,9 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
 
                 ResultScreen(
                     viewModel = viewModel,
-                    modifier = Modifier.fillMaxSize().statusBarsPadding(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .statusBarsPadding(),
                     onBackClick = {
                         viewModel.startScanning() // reset old state , this main use the restart the camerax fatch barcode in one time one
                         navconroller.popBackStack()
@@ -133,6 +139,18 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
                 )
 
             }
+            composable(routname().WelcomeScreen) {
+                WelcomeScreen(
+                    { selectedDiet ->
+                        // save Diet
+                        viewModel.updateDiet(selectedDiet)
+
+                        navconroller.navigate(routname().ScanScreen) {
+                            popUpTo(routname().WelcomeScreen) { inclusive = true }
+                        }
+                    }
+                )
+            }
 
         }
 
@@ -142,7 +160,7 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Topbar(dietName : String) {
+fun Topbar(dietName: String) {
     TopAppBar(
         title = {
             Text(

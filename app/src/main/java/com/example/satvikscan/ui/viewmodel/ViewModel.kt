@@ -81,7 +81,11 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
 
                 //Ingredients text parse and restricted items take
                 val rawIngredientData = response.product?.ingredientsText
-                val parsedList = parseIngredients(rawIngredientData)
+                val parsedList = parseIngredients(
+                    rawIngredientData = rawIngredientData,
+                    currentDiet = _dietName.value,
+                    customExclusions = _customAvoidList.value
+                )
 
                 _ingredients.value = parsedList
                 _productUiState.value = ProductUiState.Success(response)
@@ -93,72 +97,7 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    private fun parseIngredients(rawIngredientData: String?): List<IngredientData> {
 
-        // check the list are empty or not if empty so return the empty list
-        if (rawIngredientData.isNullOrBlank()) return emptyList()
-
-        // filter the string and split them
-        val rawList = rawIngredientData.split(",", ";", "\n")
-            .map { it.trim() }
-            .filter { it.isNotEmpty() }
-
-        // store the finding ingredients
-        val DetectedItems = mutableListOf<IngredientData>()
-
-        // check available items are restricted using the loop
-        for (ingredient in rawList) {
-            val nameLower = ingredient.lowercase()
-
-            // Swaminarayan diet according restricted keywords check
-            val isGarlic =
-                nameLower.contains("garlic") || nameLower.contains("lasan") || nameLower.contains("lahsun")
-            val isOnion =
-                nameLower.contains("onion") || nameLower.contains("dungri") || nameLower.contains("pyaj") || nameLower.contains(
-                    "pyaz"
-                )
-
-
-            val isRootVegetable =
-                isGarlic || isOnion || nameLower.contains("root") || nameLower.contains("radish") || nameLower.contains(
-                    "beetroot"
-                ) || nameLower.contains("sweet potato")
-
-            val isNonVeg =
-                nameLower.contains("chicken") || nameLower.contains("meat") || nameLower.contains("egg") ||
-                        nameLower.contains("fish") || nameLower.contains("gelatin") || nameLower.contains(
-                    "gelatine"
-                ) ||
-                        nameLower.contains("beef") || nameLower.contains("pork") || nameLower.contains(
-                    "mutton"
-                ) ||
-                        nameLower.contains("lard") || nameLower.contains("albumin")
-
-            if (isRootVegetable) {
-                val displayName = when {
-                    isGarlic -> "Garlic"
-                    isOnion -> "Onion"
-                    else -> ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
-                }
-                DetectedItems.add(
-                    IngredientData(
-                        name = displayName,
-                        reason = "Avoided: Root vegetables are restricted in Swaminarayan diet",
-                        type = IngredientType.ROOT_VEGETABLE
-                    )
-                )
-            } else if (isNonVeg) {
-                DetectedItems.add(
-                    IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                        reason = "Avoided: Non-vegetarian origin ingredient detected",
-                        type = IngredientType.NON_VEG_ORIGIN
-                    )
-                )
-            }
-        }
-        return DetectedItems
-    }
 
     // when user changes deit
     fun updateDiet(diet: String) {
@@ -187,6 +126,11 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
             _customAvoidList.value = currentSet
             prefManager.saveCustomExclusions(currentSet)
         }
+    }
+
+    // check app first open and check welcome screen open or homescreen
+    fun hasSelectedDiet(): Boolean{
+        return prefManager.getdiet() != null // dont should be null
     }
 
 }

@@ -15,8 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SatvikScanTheme {
-//                CommonUi()
-                WelcomeScreen()
+                CommonUi()
             }
         }
     }
