@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.satvikscan.ui.CommonUi
-import com.example.satvikscan.ui.WelcomeScreen
 import com.example.satvikscan.ui.theme.SatvikScanTheme
 
 class MainActivity : ComponentActivity() {

@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,13 +50,14 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
     val navBackStackEntry by navconroller.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val showBars =
-        currentRoute != routname().CameraScreen && currentRoute != routname().ResultScreen && currentRoute != routname().WelcomeScreen
+        currentRoute != routname().CameraScreen && currentRoute != routname().ResultScreen && currentRoute != routname().WelcomeScreen && currentRoute != routname().CustomExclusionsScreen
 
     val viewModel: Satvik_ViewModel = viewModel() // made object by android
 
 // which screen open when user start the app first time and another time
-    val startDestination =
+    val startDestination = remember {
         if (viewModel.hasSelectedDiet()) routname().ScanScreen else routname().WelcomeScreen
+    }
 
     // dietName show in topbar
     val dietName by viewModel.dietName.collectAsState()
@@ -141,10 +143,25 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
             }
             composable(routname().WelcomeScreen) {
                 WelcomeScreen(
-                    { selectedDiet ->
+                    onContinueClick = { selectedDiet ->
                         // save Diet
                         viewModel.updateDiet(selectedDiet)
 
+                        if (selectedDiet == "Custom") {
+                            navconroller.navigate(routname().CustomExclusionsScreen)
+                        } else {
+                            navconroller.navigate(routname().ScanScreen) {
+                                popUpTo(routname().WelcomeScreen) { inclusive = true }
+                            }
+                        }
+                    }
+                )
+            }
+
+            composable(routname().CustomExclusionsScreen) {
+                CustomExclusionsScreen(
+                    viewModel = viewModel,
+                    onBackClick = {
                         navconroller.navigate(routname().ScanScreen) {
                             popUpTo(routname().WelcomeScreen) { inclusive = true }
                         }

@@ -11,4 +11,6 @@ class routname {
 
     var WelcomeScreen = "WelcomeScreen"
 
+    var CustomExclusionsScreen = "CustomExclusionsScreen"
+
 }
