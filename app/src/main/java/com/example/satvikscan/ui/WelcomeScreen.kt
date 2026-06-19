@@ -135,7 +135,7 @@ fun WelcomeScreen(
                 DietOptionCard(
                     title = "Swaminarayan",
                     subtitle = "No onion, garlic, or eggs.",
-                    iconRes = R.drawable.swaminarayan_tilak,
+                    R.drawable.Swaminarayan_tilak,
                     iconBgColor = Color(0xFFEFEBE9),
                     iconTint = Color(0xFF5D4037),
                     onClick = { selectedDiet = "Swaminarayan" },

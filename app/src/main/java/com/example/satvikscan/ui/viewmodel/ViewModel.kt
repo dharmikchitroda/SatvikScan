@@ -4,13 +4,16 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.satvikscan.Api_Calling.RetrofitInstance
+import com.example.satvikscan.data.Local.AppDatabase
 import com.example.satvikscan.data.Local.PreferenceManager
+import com.example.satvikscan.data.Local.ScanHistoryEntity
 import com.example.satvikscan.data.model.ProductResponse
 import com.example.satvikscan.data.repository.ProductRepository
 import com.example.satvikscan.ui.IngredientData
-import com.example.satvikscan.ui.IngredientType
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class Satvik_ViewModel(application: Application) : AndroidViewModel(application) {
@@ -45,6 +48,18 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
     // load Custom diet name
     private val _customAvoidList = MutableStateFlow(prefManager.getCustomExclusions())
     val customAvoidList: StateFlow<Set<String>> = _customAvoidList
+
+    // for Roomdatabase
+    private val database_obj = AppDatabase.getDatabase(application)
+    private val scanHistoryDao_obj = database_obj.scanHistoryDao()
+
+    // StateFlow to observe scan history updates in UI
+    val scanHistory: StateFlow<List<ScanHistoryEntity>> = scanHistoryDao_obj.getAllScans().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = emptyList()
+    )
+
 
     sealed interface ProductUiState {
 
@@ -90,13 +105,31 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
                 _ingredients.value = parsedList
                 _productUiState.value = ProductUiState.Success(response)
 
+                // save the result in history screen using of Room
+                val name = response.product?.productName ?: "Unknown Product"
+                val rawIngredients = response.product?.ingredientsText ?: ""
+                val isSafe = parsedList.isEmpty()
+
+                viewModelScope.launch {
+                    scanHistoryDao_obj.insertScan(
+                        ScanHistoryEntity(
+                            barcode = barcode,
+                            productName = name,
+                            ingredientsText = rawIngredients,
+                            isSatvik = isSafe,
+                            timestamp = System.currentTimeMillis()
+                        )
+                    )
+
+                }
+
+
             } catch (e: Exception) {
                 _productUiState.value = ProductUiState.Error(e.message ?: "Unknown Error occurred")
             }
 
         }
     }
-
 
 
     // when user changes deit
@@ -129,8 +162,21 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
     }
 
     // check app first open and check welcome screen open or homescreen
-    fun hasSelectedDiet(): Boolean{
+    fun hasSelectedDiet(): Boolean {
         return prefManager.getdiet() != null // dont should be null
     }
 
+    // delete history using room
+    fun deleteScan(barcode: String) {
+        viewModelScope.launch {
+            scanHistoryDao_obj.deleteScan(barcode)
+        }
+    }
+
+    //Clear History
+    fun clearAllScans() {
+        viewModelScope.launch {
+            scanHistoryDao_obj.clearAllScans()
+        }
+    }
 }
