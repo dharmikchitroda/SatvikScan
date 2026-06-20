@@ -6,16 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.satvikscan"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.satvikscan"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -63,7 +59,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.8.0")
 
     //camerax
-    val camerax_version = "1.7.0-alpha01"
+    val camerax_version = "1.4.0"
     implementation("androidx.camera:camera-camera2:${camerax_version}") // camera logic actual
     implementation("androidx.camera:camera-lifecycle:${camerax_version}") // start or stop
     implementation("androidx.camera:camera-view:${camerax_version}") // PreviewView
@@ -81,8 +77,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")   // Gson converter (JSON parse karne ke liye)
 
     // Room
-    val room_version = "2.6.1"
-    implementation("androidx.room:room-runtime:${room_version}")
-    implementation("androidx.room:room-ktx:${room_version}")// Coroutines support
-    ksp("androidx.room:room-compiler:$room_version") // code generate in background
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 }
