@@ -117,7 +117,8 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
                             productName = name,
                             ingredientsText = rawIngredients,
                             isSatvik = isSafe,
-                            timestamp = System.currentTimeMillis()
+                            timestamp = System.currentTimeMillis(),
+                            dietName = _dietName.value
                         )
                     )
 

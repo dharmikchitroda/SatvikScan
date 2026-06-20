@@ -1,5 +1,7 @@
 package com.example.satvikscan.data.Local
 
+
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -10,5 +12,6 @@ data class ScanHistoryEntity(
     val productName: String,
     val ingredientsText: String,
     val isSatvik: Boolean,
-    val timestamp: Long
+    val timestamp: Long,
+    val dietName: String
 )
