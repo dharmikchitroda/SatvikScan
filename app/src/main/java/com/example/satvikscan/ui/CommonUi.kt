@@ -51,6 +51,7 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
     val currentRoute = navBackStackEntry?.destination?.route
     val showBars =
         currentRoute != routname().CameraScreen && currentRoute != routname().ResultScreen && currentRoute != routname().WelcomeScreen && currentRoute != routname().CustomExclusionsScreen
+    val showTopbar = showBars && currentRoute != routname().HisScreen
 
     val viewModel: Satvik_ViewModel = viewModel() // made object by android
 
@@ -65,7 +66,7 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
 
     Scaffold(
         modifier = modifier,
-        topBar = { if (showBars) Topbar(dietName) },
+        topBar = { if (showTopbar) Topbar(dietName) },
         bottomBar = {
             if (showBars) {
                 BottomBar(moveScanscreen = {
