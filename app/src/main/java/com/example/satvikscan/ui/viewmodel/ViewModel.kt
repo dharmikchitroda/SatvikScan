@@ -118,7 +118,8 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
                             ingredientsText = rawIngredients,
                             isSatvik = isSafe,
                             timestamp = System.currentTimeMillis(),
-                            dietName = _dietName.value
+                            dietName = _dietName.value,
+                            imageUrl = response.product?.imageUrl
                         )
                     )
 

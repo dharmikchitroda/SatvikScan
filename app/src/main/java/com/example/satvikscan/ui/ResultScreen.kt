@@ -12,10 +12,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,7 +37,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -46,6 +48,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.satvikscan.R
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 
@@ -125,199 +128,219 @@ fun ResultScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                // avoid Status Block
-                Box(
-                    modifier = Modifier
-                        .size(120.dp)
-                        .background(
-                            // Safe ke liye Light Green, Avoid ke liye Light Red
-                            if (isSafe) Color(0xFF9FFFA5) else Color(0xFFFF7D7D),
-                            shape = RoundedCornerShape(20.dp)
-                        ), // light red card
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        painter = painterResource(
-                            id = if (isSafe) R.drawable.ic_diet_guidelines else R.drawable.restricted_svgrepo_com
-                        ),
-                        contentDescription = if (isSafe) "Safe" else "Avoid",
-                        tint = if (isSafe) Color(0xFF2E7D32) else Color(0xFFC62828),
-                        modifier = Modifier.size(64.dp)
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Text(
-                    text = if (isSafe) "SATVIK" else "AVOID",
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    color = if (isSafe) Color(0xFF2E7D32) else Color(0xFFC62828),
-                    letterSpacing = 1.sp
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = if (isSafe) "Product is safe to consume" else "Contains restricted ingredients",
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color(0xFF555555)
-                )
-
-                Spacer(modifier = Modifier.height(28.dp))
-
-                //  Diet Context Row
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp)
-                        .background(
-                            Color(0xFFF9F5F0), shape = RoundedCornerShape(16.dp)
-                        ) // Cozy beige-brown background
-                        .padding(16.dp), verticalAlignment = Alignment.CenterVertically
-                ) {
+                    // avoid Status Block
                     Box(
                         modifier = Modifier
-                            .size(48.dp)
+                            .size(120.dp)
+                            .clip(RoundedCornerShape(20.dp))
                             .background(
-                                Color(0xFFFFE0B2), shape = CircleShape
-                            ), // Warm peach circle
+                                color = if (isSafe) Color(0xFFE8F5E9) else Color(0xFFFFEBEE)
+                            )
+                            .border(
+                                width = 3.dp,
+                                color = if (isSafe) Color(0xFF2E7D32) else Color(0xFFC62828), // Green border if Safe, Red border if Avoid
+                                shape = RoundedCornerShape(20.dp)
+                            ),
                         contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_diet_guidelines),
-                            contentDescription = "Context",
-                            tint = Color(0xFF5D4037),
-                            modifier = Modifier.size(26.dp)
+                    ) {  // get image from string url
+                        AsyncImage(
+                            model = state.product.product?.imageUrl,
+                            placeholder = painterResource(
+                                id = if (isSafe) R.drawable.safe_foodpacket else R.drawable.avoid_foodpacket
+                            ), // till load image show this
+                            error = painterResource(
+                                id = if (isSafe) R.drawable.safe_foodpacket else R.drawable.avoid_foodpacket
+                            ), // error fallback
+                            contentDescription = "Product Image",
+                            contentScale = ContentScale.Crop, // crops image
+                            modifier = Modifier.fillMaxSize()
                         )
                     }
+                    Spacer(modifier = Modifier.height(20.dp))
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Text(
+                        text = state.product.product?.productName ?: "Unknown Product",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color(0xFF333333),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(horizontal = 24.dp)
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
 
-                    Column {
-                        Text(
-                            text = "CURRENT CONTEXT",
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFF8D6E63), // Brown
-                            letterSpacing = 0.8.sp
-                        )
-                        Spacer(modifier = Modifier.height(2.dp))
+                    Text(
+                        text = if (isSafe) "SATVIK" else "AVOID",
+                        fontSize = 32.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = if (isSafe) Color(0xFF2E7D32) else Color(0xFFC62828),
+                        letterSpacing = 1.sp
+                    )
 
-                        Text(
-                            text = "Diet: $dietName",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.tertiary // Deep brown title
-                        )
-                    }
-                }
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                Spacer(modifier = Modifier.height(24.dp))
+                    Text(
+                        text = if (isSafe) "Product is safe to consume" else "Contains restricted ingredients",
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color(0xFF555555)
+                    )
 
-                //  Detected Ingredients Card
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-                ) {
-                    Column(
+                    Spacer(modifier = Modifier.height(28.dp))
+
+                    //  Diet Context Row
+                    Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(20.dp)
+                            .padding(horizontal = 24.dp)
+                            .background(
+                                Color(0xFFF9F5F0), shape = RoundedCornerShape(16.dp)
+                            ) // Cozy beige-brown background
+                            .padding(16.dp), verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
+                        Box(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .background(
+                                    Color(0xFFFFE0B2), shape = CircleShape
+                                ), // Warm peach circle
+                            contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = "Detected Ingredients",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFF212121)
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_diet_guidelines),
+                                contentDescription = "Context",
+                                tint = Color(0xFF5D4037),
+                                modifier = Modifier.size(26.dp)
                             )
+                        }
 
-                            // Found box
-                            Box(
-                                modifier = Modifier
-                                    .background(
-                                        Color(0xFFFFEAEA), shape = RoundedCornerShape(8.dp)
-                                    )
-                                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                        Spacer(modifier = Modifier.width(16.dp))
+
+                        Column {
+                            Text(
+                                text = "CURRENT CONTEXT",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFF8D6E63), // Brown
+                                letterSpacing = 0.8.sp
+                            )
+                            Spacer(modifier = Modifier.height(2.dp))
+
+                            Text(
+                                text = "Diet: $dietName",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.tertiary // Deep brown title
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    //  Detected Ingredients Card
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color.White),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(20.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = "${ingredientList.size} FOUND", // size of list
-                                    fontSize = 10.sp,
+                                    text = "Detected Ingredients",
+                                    fontSize = 18.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = Color(0xFFC62828)
+                                    color = Color(0xFF212121)
+                                )
+
+                                // Found box
+                                Box(
+                                    modifier = Modifier
+                                        .background(
+                                            Color(0xFFFFEAEA), shape = RoundedCornerShape(8.dp)
+                                        )
+                                        .padding(horizontal = 10.dp, vertical = 4.dp)
+                                ) {
+                                    Text(
+                                        text = "${ingredientList.size} FOUND", // size of list
+                                        fontSize = 10.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color(0xFFC62828)
+                                    )
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            // dynamic list of ingredients
+                            ingredientList.forEachIndexed { index, ingredient ->
+                                val iconRes = when {
+                                    ingredient.name.contains(
+                                        "Garlic", ignoreCase = true
+                                    ) -> R.drawable.ic_garlic
+
+                                    ingredient.name.contains(
+                                        "Potato", ignoreCase = true
+                                    ) -> R.drawable.ic_potato
+
+                                    ingredient.name.contains(
+                                        "Carrot", ignoreCase = true
+                                    ) -> R.drawable.ic_carrot
+
+                                    ingredient.type == IngredientType.ROOT_VEGETABLE -> R.drawable.ic_root_vegetable
+                                    ingredient.type == IngredientType.NON_VEG_ORIGIN -> R.drawable.ic_meat
+                                    else -> R.drawable.ic_chemical
+                                }
+                                IngredientItem(
+                                    name = ingredient.name,
+                                    reason = ingredient.reason,
+                                    iconRes = iconRes       // icon we decided accroding when statement
+                                )
+                                if (index < ingredientList.lastIndex) {
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                } //--> if last index not take a space
+                            }
+
+                            Spacer(modifier = Modifier.height(20.dp))
+
+                            // Context Guidelines Note
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(
+                                        Color(0xFFF5F5F5),
+                                        shape = RoundedCornerShape(12.dp)
+                                    )
+                                    .padding(14.dp)
+                            ) { // this is make variable store string
+
+                                val annotatedString = buildAnnotatedString {
+                                    append("According to ")
+                                    withStyle(
+                                        SpanStyle(
+                                            color = Color(0xFF8D6E63), fontWeight = FontWeight.Bold
+                                        )
+                                    ) {
+                                        append(dietName)
+                                    }
+                                    append(" guidelines, these items are avoided to maintain purity and mindful eating.")
+                                }
+                                Text(
+                                    text = annotatedString, // this is make actual line
+                                    fontSize = 12.sp, color = Color(0xFF616161), lineHeight = 18.sp
                                 )
                             }
                         }
-
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        // dynamic list of ingredients
-                        ingredientList.forEachIndexed { index, ingredient ->
-                            val iconRes = when {
-                                ingredient.name.contains(
-                                    "Garlic", ignoreCase = true
-                                ) -> R.drawable.ic_garlic
-
-                                ingredient.name.contains(
-                                    "Potato", ignoreCase = true
-                                ) -> R.drawable.ic_potato
-
-                                ingredient.name.contains(
-                                    "Carrot", ignoreCase = true
-                                ) -> R.drawable.ic_carrot
-
-                                ingredient.type == IngredientType.ROOT_VEGETABLE -> R.drawable.ic_root_vegetable
-                                ingredient.type == IngredientType.NON_VEG_ORIGIN -> R.drawable.ic_meat
-                                else -> R.drawable.ic_chemical
-                            }
-                            IngredientItem(
-                                name = ingredient.name,
-                                reason = ingredient.reason,
-                                iconRes = iconRes       // icon we decided accroding when statement
-                            )
-                            if (index < ingredientList.lastIndex) {
-                                Spacer(modifier = Modifier.height(12.dp))
-                            } //--> if last index not take a space
-                        }
-
-                        Spacer(modifier = Modifier.height(20.dp))
-
-                        // Context Guidelines Note
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color(0xFFF5F5F5), shape = RoundedCornerShape(12.dp))
-                                .padding(14.dp)
-                        ) { // this is make variable store string
-
-                            val annotatedString = buildAnnotatedString {
-                                append("According to ")
-                                withStyle(
-                                    SpanStyle(
-                                        color = Color(0xFF8D6E63), fontWeight = FontWeight.Bold
-                                    )
-                                ) {
-                                    append(dietName)
-                                }
-                                append(" guidelines, these items are avoided to maintain purity and mindful eating.")
-                            }
-                            Text(
-                                text = annotatedString, // this is make actual line
-                                fontSize = 12.sp, color = Color(0xFF616161), lineHeight = 18.sp
-                            )
-                        }
                     }
-                }
 
                 } // End of scrollable Column
 

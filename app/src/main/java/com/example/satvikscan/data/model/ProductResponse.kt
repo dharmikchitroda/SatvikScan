@@ -16,9 +16,11 @@ data class Product(
     @SerializedName("product_name")
     val productName: String?,
     @SerializedName("ingredients_text")
-    val ingredientsText: String?
+    val ingredientsText: String?,
+    @SerializedName("image_url")
+    val imageUrl: String?,              // main display photo
+    @SerializedName("image_thumb_url")
+    val imageThumbUrl: String?,         // for history rows
+    @SerializedName("image_small_url")
+    val imageSmallUrl: String?          // small image
 )
-
-class Hello {
-    fun area() = println("den")
-}

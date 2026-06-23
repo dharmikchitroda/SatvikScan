@@ -15,8 +15,8 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): AppDatabase {
 
-       // synchronized(this) used to multithreading enter one thred in one time
-            // Also can use  if (INSTANCE == null) {}
+       // synchronized(this) used to multithreading enter one thread in one time
+            // Also can use  if (INSTANCE == null) {}   
             return INSTANCE ?: synchronized(this) {  // return INSTANCE if not null and when is null ( ?: )make a object first time and return
 
                     val instance = Room.databaseBuilder(
