@@ -139,7 +139,7 @@ fun HistoryScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFAFAFA)) // sleek off-white background
+             // sleek off-white background
             .padding(bottom = paddingValues.calculateBottomPadding()) // align with bottom navigation bar
     ) {
         // Custom Top bar

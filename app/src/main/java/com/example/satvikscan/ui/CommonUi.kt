@@ -19,8 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -28,9 +26,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -43,17 +43,23 @@ import com.example.satvikscan.routname
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 
 @Composable
-fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
+fun CommonUi(
+    modifier: Modifier = Modifier.fillMaxSize(),
 
+    ) {
+    val viewModel: Satvik_ViewModel = viewModel()
     val navconroller = rememberNavController() // return navhostcontroller object
 
     val navBackStackEntry by navconroller.currentBackStackEntryAsState()
+
     val currentRoute = navBackStackEntry?.destination?.route
+    // for this both top&bottom bar show or hide
     val showBars =
         currentRoute != routname().CameraScreen && currentRoute != routname().ResultScreen && currentRoute != routname().WelcomeScreen && currentRoute != routname().CustomExclusionsScreen
-    val showTopbar = showBars && currentRoute != routname().HisScreen
+    // only topbar show or hide
+    val showTopbar =
+        showBars && currentRoute != routname().HistoryScreen && currentRoute != routname().ProfileScreen
 
-    val viewModel: Satvik_ViewModel = viewModel() // made object by android
 
 // which screen open when user start the app first time and another time
     val startDestination = remember {
@@ -75,7 +81,7 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
                         launchSingleTop = true
                     }
                 }, moveHisscreen = {
-                    navconroller.navigate(routname().HisScreen) {
+                    navconroller.navigate(routname().HistoryScreen) {
                         popUpTo(navconroller.graph.startDestinationId)
                         launchSingleTop = true
                     }
@@ -100,11 +106,20 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
                     navconroller.navigate(routname().CameraScreen)
                 })
             }
-            composable(routname().HisScreen) {
-                HistoryScreen(paddingValues)
+            composable(routname().HistoryScreen) {
+                HistoryScreen(
+                    paddingValues = paddingValues,
+                    onStartScanningClick = {
+                        navconroller.navigate(routname().ScanScreen) {
+                            popUpTo(navconroller.graph.startDestinationId)
+                            launchSingleTop = true
+                        }
+                    },
+                    viewModel = viewModel
+                )
             }
             composable(routname().ProfileScreen) {
-                UserProfileScreen(paddingValues)
+                UserProfileScreen(paddingValues, viewModel, navconroller)
             }
             composable(routname().CameraScreen) {
                 val UiState by viewModel.productUiState.collectAsState()
@@ -179,12 +194,31 @@ fun CommonUi(modifier: Modifier = Modifier.fillMaxSize()) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Topbar(dietName: String) {
-    TopAppBar(
-        title = {
-            Text(
-                "SatvikScan", fontWeight = FontWeight.Bold, color = Color.White
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(Color(0xFFBEF3CE), Color(0xFFFAFAFA))
+                )
             )
-        }, actions = {
+            .statusBarsPadding()
+            .padding(horizontal = 16.dp, vertical = 16.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+            Text(
+                "SatvikScan", fontSize = 24.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color(0xFF1B3A2D),
+                textAlign = TextAlign.Center
+            )
+
+
             Box(
                 modifier = Modifier
                     .background(
@@ -197,12 +231,10 @@ fun Topbar(dietName: String) {
                     fontSize = 11.sp, color = Color.Black, fontWeight = FontWeight.Medium
                 )
             }
-        }, colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary
-        )
-
-    )
+        }
+    }
 }
+
 
 @Composable
 fun BottomBar(

@@ -140,7 +140,7 @@ fun ResultScreen(
                                 width = 3.dp,
                                 color = if (isSafe) Color(0xFF2E7D32) else Color(0xFFC62828), // Green border if Safe, Red border if Avoid
                                 shape = RoundedCornerShape(20.dp)
-                            ),
+                            ), 
                         contentAlignment = Alignment.Center
                     ) {  // get image from string url
                         AsyncImage(

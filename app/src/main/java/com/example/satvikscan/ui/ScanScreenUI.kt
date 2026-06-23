@@ -39,19 +39,11 @@ import com.example.satvikscan.R
 
 @Composable
 fun ScanScreenUI(paddingValues: PaddingValues, nav_fun: () -> Unit) {
-    //use for this page
-    Box(modifier = Modifier.fillMaxSize()) {
 
-        Image(
-            painter = painterResource(R.drawable.backgroud_photo),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop,
-
-            )
         Column(
             Modifier
                 .fillMaxSize()
+                .background(Color(0xFFFAFAFA))
                 .padding(paddingValues)
                 .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -127,7 +119,7 @@ fun ScanScreenUI(paddingValues: PaddingValues, nav_fun: () -> Unit) {
             // Bottom text
             FooterText()
         }
-    }
+
 }
 
 @Composable
