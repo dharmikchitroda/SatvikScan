@@ -1,7 +1,6 @@
 package com.example.satvikscan.ui
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -27,31 +25,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.satvikscan.R
+import com.example.satvikscan.ui.viewmodel.ScanMode
 
 
 @Composable
-fun ScanScreenUI(paddingValues: PaddingValues, nav_fun: () -> Unit) {
+fun HomeScreenUI(
+    paddingValues: PaddingValues,
+    currentMode: ScanMode,
+    onScanPhotoclick: () -> Unit,
+    onScanBarcodescan: () -> Unit
+) {
 
-        Column(
-            Modifier
-                .fillMaxSize()
-                .background(Color(0xFFFAFAFA))
-                .padding(paddingValues)
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.height(24.dp))
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(Color(0xFFFAFAFA))
+            .padding(paddingValues)
+            .padding(horizontal = 20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(24.dp))
 
-            //scanboxfill
-            ScanBox()
+        //scanboxfill
+        ScanBox()
 
             Spacer(modifier = Modifier.height(32.dp))
 
@@ -114,11 +116,11 @@ fun ScanScreenUI(paddingValues: PaddingValues, nav_fun: () -> Unit) {
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.clickable { })
 
-            Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-            // Bottom text
-            FooterText()
-        }
+        // Bottom text
+        FooterText()
+    }
 
 }
 
