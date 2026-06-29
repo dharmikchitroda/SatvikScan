@@ -55,66 +55,57 @@ fun HomeScreenUI(
         //scanboxfill
         ScanBox()
 
-            Spacer(modifier = Modifier.height(32.dp))
-
-            //Scan Photo Button
-
-            Button(
-                onClick = {
-                    nav_fun()
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(52.dp),
-                shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                )
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.baseline_camera_alt_24),
-                    contentDescription = null,
-                    modifier = Modifier.size(20.dp),
-                    tint = Color.White
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Scan Photo", fontSize = 16.sp, color = Color.White)
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            //Scan Barcode Button
-            OutlinedButton(
-                onClick = {
-                    nav_fun()
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(52.dp),
-                shape = RoundedCornerShape(14.dp),
-                border = BorderStroke(1.5.dp, MaterialTheme.colorScheme.primary)
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.barcode_scan),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(20.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "Scan Barcode",
-                    fontSize = 16.sp,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            //  Manual Entry
+        Spacer(modifier = Modifier.height(32.dp))
+        //Scan Barcode Button
+        OutlinedButton(
+            onClick = {
+                onScanBarcodescan()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(52.dp),
+            shape = RoundedCornerShape(14.dp),
+            border = BorderStroke(1.5.dp, MaterialTheme.colorScheme.primary)
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.barcode_scan),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(20.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "✏️  Enter Ingredients Manually",
-                fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.clickable { })
+                text = "Scan Barcode",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        //Scan Photo Button
+        Button(
+            onClick = {
+                onScanPhotoclick()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(52.dp),
+            shape = RoundedCornerShape(14.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.baseline_camera_alt_24),
+                contentDescription = null,
+                modifier = Modifier.size(20.dp),
+                tint = Color.White
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(text = "Scan Photo", fontSize = 16.sp, color = Color.White)
+        }
+
 
         Spacer(modifier = Modifier.height(24.dp))
 

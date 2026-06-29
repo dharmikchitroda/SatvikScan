@@ -41,12 +41,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.satvikscan.R
 import com.example.satvikscan.routname
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
+import com.example.satvikscan.ui.viewmodel.ScanMode
 
 @Composable
 fun CommonUi(
     modifier: Modifier = Modifier.fillMaxSize(),
 
     ) {
+
     val viewModel: Satvik_ViewModel = viewModel()
     val navconroller = rememberNavController() // return navhostcontroller object
 
@@ -61,7 +63,7 @@ fun CommonUi(
         showBars && currentRoute != routname().HistoryScreen && currentRoute != routname().ProfileScreen
 
 
-// which screen open when user start the app first time and another time
+    // which screen open when user start the app first time and another time
     val startDestination = remember {
         if (viewModel.hasSelectedDiet()) routname().ScanScreen else routname().WelcomeScreen
     }
@@ -69,53 +71,56 @@ fun CommonUi(
     // dietName show in topbar
     val dietName by viewModel.dietName.collectAsState()
 
+    // current cameramode
+    val currentCameramode by viewModel.Scanmode.collectAsState()
 
-    Scaffold(
-        modifier = modifier,
-        topBar = { if (showTopbar) Topbar(dietName) },
-        bottomBar = {
-            if (showBars) {
-                BottomBar(moveScanscreen = {
-                    navconroller.navigate(routname().ScanScreen) {
-                        popUpTo(navconroller.graph.startDestinationId)
-                        launchSingleTop = true
-                    }
-                }, moveHisscreen = {
-                    navconroller.navigate(routname().HistoryScreen) {
-                        popUpTo(navconroller.graph.startDestinationId)
-                        launchSingleTop = true
-                    }
-                }, moveProfilescreen = {
-                    navconroller.navigate(routname().ProfileScreen) {
-                        popUpTo(navconroller.graph.startDestinationId)
-                        launchSingleTop = true
-                    }
-                })
-            }
+    Scaffold(modifier = modifier, topBar = { if (showTopbar) Topbar(dietName) }, bottomBar = {
+        if (showBars) {
+            BottomBar(moveScanscreen = {
+                navconroller.navigate(routname().ScanScreen) {
+                    popUpTo(navconroller.graph.startDestinationId)
+                    launchSingleTop = true
+                }
+            }, moveHisscreen = {
+                navconroller.navigate(routname().HistoryScreen) {
+                    popUpTo(navconroller.graph.startDestinationId)
+                    launchSingleTop = true
+                }
+            }, moveProfilescreen = {
+                navconroller.navigate(routname().ProfileScreen) {
+                    popUpTo(navconroller.graph.startDestinationId)
+                    launchSingleTop = true
+                }
+            })
         }
-    ) { paddingValues ->
+    }) { paddingValues ->
 
         NavHost(
-            navconroller,
-            startDestination = startDestination,
-            modifier = Modifier.fillMaxSize()
+            navconroller, startDestination = startDestination, modifier = Modifier.fillMaxSize()
         ) {
 
             composable(routname().ScanScreen) {
-                ScanScreenUI(paddingValues, {
-                    navconroller.navigate(routname().CameraScreen)
-                })
+                    HomeScreenUI(
+                        paddingValues,
+                        currentMode = currentCameramode,
+                        onScanPhotoclick = {
+                            if (currentCameramode != ScanMode.OCR) viewModel.ChnageScanMode(ScanMode.OCR)
+                            navconroller.navigate(routname().CameraScreen)
+                        },
+                        onScanBarcodescan = {
+                            if (currentCameramode != ScanMode.BARCODE) viewModel.ChnageScanMode(ScanMode.BARCODE)
+                            navconroller.navigate(routname().CameraScreen)
+                        }
+                    )
             }
             composable(routname().HistoryScreen) {
                 HistoryScreen(
-                    paddingValues = paddingValues,
-                    onStartScanningClick = {
+                    paddingValues = paddingValues, onStartScanningClick = {
                         navconroller.navigate(routname().ScanScreen) {
                             popUpTo(navconroller.graph.startDestinationId)
                             launchSingleTop = true
                         }
-                    },
-                    viewModel = viewModel
+                    }, viewModel = viewModel
                 )
             }
             composable(routname().ProfileScreen) {
@@ -123,15 +128,17 @@ fun CommonUi(
             }
             composable(routname().CameraScreen) {
                 val UiState by viewModel.productUiState.collectAsState()
-                BarcodeScannercameraScreen(
-                    viewModel
+                CameraScanScreen(
+                    viewModel,
+                    currentCameramode
                 )
                 LaunchedEffect(UiState) {
-                    if (UiState == Satvik_ViewModel.ProductUiState.Loading)
-                        navconroller.navigate(routname().ResultScreen) {
-                            // remove the last screen from the stack
-                            popUpTo(routname().CameraScreen) { inclusive = true }
-                        }
+                    if (UiState == Satvik_ViewModel.ProductUiState.Loading) navconroller.navigate(
+                        routname().ResultScreen
+                    ) {
+                        // remove the last screen from the stack
+                        popUpTo(routname().CameraScreen) { inclusive = true }
+                    }
                 }
 
             }
@@ -170,19 +177,16 @@ fun CommonUi(
                                 popUpTo(routname().WelcomeScreen) { inclusive = true }
                             }
                         }
-                    }
-                )
+                    })
             }
 
             composable(routname().CustomExclusionsScreen) {
                 CustomExclusionsScreen(
-                    viewModel = viewModel,
-                    onBackClick = {
+                    viewModel = viewModel, onBackClick = {
                         navconroller.navigate(routname().ScanScreen) {
                             popUpTo(routname().WelcomeScreen) { inclusive = true }
                         }
-                    }
-                )
+                    })
             }
 
         }
@@ -212,7 +216,8 @@ fun Topbar(dietName: String) {
         ) {
 
             Text(
-                "SatvikScan", fontSize = 24.sp,
+                "SatvikScan",
+                fontSize = 24.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color(0xFF1B3A2D),
                 textAlign = TextAlign.Center
@@ -228,7 +233,9 @@ fun Topbar(dietName: String) {
             ) {
                 Text(
                     text = dietName,
-                    fontSize = 11.sp, color = Color.Black, fontWeight = FontWeight.Medium
+                    fontSize = 11.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Medium
                 )
             }
         }

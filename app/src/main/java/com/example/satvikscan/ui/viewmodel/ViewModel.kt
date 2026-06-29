@@ -16,6 +16,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+enum class ScanMode {
+    BARCODE,
+    OCR
+}
+
 class Satvik_ViewModel(application: Application) : AndroidViewModel(application) {
 
     // make PreferenceManager object
@@ -60,6 +65,9 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
         initialValue = emptyList()
     )
 
+    // which open camera according the ocr/scanning
+    private val _Scanmode = MutableStateFlow(ScanMode.BARCODE)
+    val Scanmode: StateFlow<ScanMode> = _Scanmode
 
     sealed interface ProductUiState {
 
@@ -180,5 +188,8 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch {
             scanHistoryDao_obj.clearAllScans()
         }
+    }
+    fun ChnageScanMode(mode: ScanMode) {
+        _Scanmode.value = mode
     }
 }
