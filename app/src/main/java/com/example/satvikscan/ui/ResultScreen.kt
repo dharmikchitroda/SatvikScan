@@ -54,11 +54,15 @@ import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 
 // main 3 type show
 enum class IngredientType {
-    ROOT_VEGETABLE, NON_VEG_ORIGIN, OTHER
+    ROOT_VEGETABLE,
+    NON_VEG_ORIGIN,
+    OTHER
 }
 
 data class IngredientData(
-    val name: String, val reason: String, val type: IngredientType
+    val name: String,
+    val reason: String,
+    val type: IngredientType
 
 )
 
