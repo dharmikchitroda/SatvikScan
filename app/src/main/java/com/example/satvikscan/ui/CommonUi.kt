@@ -100,18 +100,20 @@ fun CommonUi(
         ) {
 
             composable(routname().ScanScreen) {
-                    HomeScreenUI(
-                        paddingValues,
-                        currentMode = currentCameramode,
-                        onScanPhotoclick = {
-                            if (currentCameramode != ScanMode.OCR) viewModel.ChnageScanMode(ScanMode.OCR)
-                            navconroller.navigate(routname().CameraScreen)
-                        },
-                        onScanBarcodescan = {
-                            if (currentCameramode != ScanMode.BARCODE) viewModel.ChnageScanMode(ScanMode.BARCODE)
-                            navconroller.navigate(routname().CameraScreen)
-                        }
-                    )
+                HomeScreenUI(
+                    paddingValues,
+                    currentMode = currentCameramode,
+                    onScanPhotoclick = {
+                        if (currentCameramode != ScanMode.OCR) viewModel.ChnageScanMode(ScanMode.OCR)
+                        viewModel.startScanning()
+                        navconroller.navigate(routname().CameraScreen)
+                    },
+                    onScanBarcodescan = {
+                        if (currentCameramode != ScanMode.BARCODE) viewModel.ChnageScanMode(ScanMode.BARCODE)
+                        viewModel.startScanning()
+                        navconroller.navigate(routname().CameraScreen)
+                    }
+                )
             }
             composable(routname().HistoryScreen) {
                 HistoryScreen(
@@ -133,7 +135,8 @@ fun CommonUi(
                     currentCameramode
                 )
                 LaunchedEffect(UiState) {
-                    if (UiState == Satvik_ViewModel.ProductUiState.Loading) navconroller.navigate(
+                    if (UiState == Satvik_ViewModel.ProductUiState.Loading
+                    ) navconroller.navigate(
                         routname().ResultScreen
                     ) {
                         // remove the last screen from the stack

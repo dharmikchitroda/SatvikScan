@@ -3,7 +3,7 @@ package com.example.satvikscan.ui.viewmodel
 import com.example.satvikscan.ui.IngredientData
 import com.example.satvikscan.ui.IngredientType
 
-fun parseIngredients(
+fun IngredientsFilter(
     rawIngredientData: String?,
     currentDiet: String,
     customExclusions: Set<String>

@@ -22,7 +22,7 @@ class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val conte
     @OptIn(ExperimentalGetImage::class)
     override fun analyze(image: ImageProxy) {
 
-        // check resut and close the camera till user not open rescan
+        // check result and close the camera till user not open rescan
         if (!viewModel.isScanning.value) {
             image.close()
             return
