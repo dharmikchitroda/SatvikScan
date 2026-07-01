@@ -15,6 +15,11 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -43,8 +48,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathFillType
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -58,6 +71,7 @@ import com.example.satvikscan.analyzer.OcrAnalyzer
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 import com.example.satvikscan.ui.viewmodel.ScanMode
 import java.util.concurrent.Executors
+
 
 @Composable
 fun CameraScanScreen(
@@ -87,10 +101,19 @@ fun CameraScanScreen(
         cameraLauncher.launch(Manifest.permission.CAMERA)
     }
 
+    LaunchedEffect(cameramode) {
+        if (cameramode == ScanMode.BARCODE) {
+            viewModel.startScanning()  // isScanning is tru '/8
+            // e
+        }
+    }
+
     Box(Modifier.fillMaxSize()) {
+
         if (checkPermission) {
             if (capturedBitmap != null) {
                 Box(Modifier.fillMaxSize()) {
+
                     Image(
                         bitmap = capturedBitmap!!.asImageBitmap(),
                         contentDescription = "capture_image",
@@ -172,10 +195,9 @@ fun CameraScanScreen(
             } else {
                 //key(cameramode)  recreate when mode switches
                 key(cameramode) {
-                    AndroidView(
-                        //factory run once time, first composition, one-time initialization
 
-                        factory = { context ->
+                    AndroidView(
+                        { context ->
 
                             val previewView = PreviewView(context)
 
@@ -221,6 +243,9 @@ fun CameraScanScreen(
                         },
                         modifier = Modifier.fillMaxSize()
                     )
+                    if (cameramode == ScanMode.BARCODE) {
+                        ScannerCustomDesign()
+                    }
                 }
                 if (cameramode == ScanMode.OCR) {
                     Button(
@@ -286,10 +311,107 @@ fun CameraScanScreen(
 
 }
 
+
+@androidx.compose.ui.tooling.preview.Preview(showBackground = true,showSystemUi = true)
 @Composable
 fun ScannerCustomDesign(modifier: Modifier = Modifier) {
+    // 1. Transition and Animation Fraction (runs from 0f to 1f)
+    val infiniteTransition = rememberInfiniteTransition()
+    val animatedFraction by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 2000),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+
     Canvas(modifier.fillMaxSize()) {
         val width = size.width
         val height = size.height
+
+        // box width & hight according entire screen
+        val boxWidth = width * 0.75f // take 75%
+        val boxHeight = boxWidth * 0.75f // for rectangle
+
+        // Center position
+        val left = (width - boxWidth) / 2   // remaining space of one side
+        val top = (height - boxHeight) / 2.3f  // not a center because 2.3 greater of half
+
+        val right = left + boxWidth
+        val bottom = top + boxHeight
+
+        val overlayPath = Path().apply {
+//
+            addRect(Rect(0f, 0f, width, height))
+            addRoundRect(
+                RoundRect(
+                    rect = Rect(left, top, right, bottom),
+                    cornerRadius = CornerRadius(24.dp.toPx(), 24.dp.toPx()) // 24.dp rounded corners
+                )
+            )
+            fillType = PathFillType.EvenOdd
+
+        }
+
+        drawPath(path = overlayPath, color = Color.Black.copy(alpha = 0.55f))
+
+        val radius = 24.dp.toPx()
+        val cornerLen = 43.dp.toPx()
+        val stroke = 6.dp.toPx()
+        val bracketColor = Color(0xFF08733A)
+
+        // Top-left
+        val topLeft = Path().apply {
+            moveTo(left, top + cornerLen)
+            lineTo(left, top + radius)
+            arcTo(Rect(left, top, left + 2 * radius, top + 2 * radius), 180f, 90f, false)
+            lineTo(left + cornerLen, top)
+        }
+        drawPath(topLeft, bracketColor, style = Stroke(stroke, cap = StrokeCap.Round))
+
+        // Top-right
+        val topRight = Path().apply {
+            moveTo(right - cornerLen, top)
+            lineTo(right - radius, top)
+            arcTo(Rect(right - 2 * radius, top, right, top + 2 * radius), 270f, 90f, false)
+            lineTo(right, top + cornerLen)
+        }
+        drawPath(topRight, bracketColor, style = Stroke(stroke, cap = StrokeCap.Round))
+
+        // Bottom-left
+        val bottomLeft = Path().apply {
+            moveTo(left, bottom - cornerLen)
+            lineTo(left, bottom - radius)
+            arcTo(Rect(left, bottom - 2 * radius, left + 2 * radius, bottom), 180f, -90f, false)
+            lineTo(left + cornerLen, bottom)
+        }
+        drawPath(bottomLeft, bracketColor, style = Stroke(stroke, cap = StrokeCap.Round))
+
+        // Bottom-right
+        val bottomRight = Path().apply {
+            moveTo(right - cornerLen, bottom)
+            lineTo(right - radius, bottom)
+            arcTo(Rect(right - 2 * radius, bottom - 2 * radius, right, bottom), 90f, -90f, false)
+            lineTo(right, bottom - cornerLen)
+        }
+        drawPath(bottomRight, bracketColor, style = Stroke(stroke, cap = StrokeCap.Round))
+
+        // thoda space because dont lien touch to scanner border
+        val verticalPadding = 20.dp.toPx()
+
+        // . Calculate lineY from the animatedFraction
+        val lineY =
+            (top + verticalPadding) +
+                    ((bottom - verticalPadding) - (top + verticalPadding)) * animatedFraction
+
+        // 4. Draw horizontal scanning line
+        drawLine(
+            color = bracketColor.copy(alpha = 0.8f),
+            start = Offset(left + 8.dp.toPx(), lineY),
+            end = Offset(right - 8.dp.toPx(), lineY),
+            strokeWidth = 4.dp.toPx()
+        )
+
     }
 }
