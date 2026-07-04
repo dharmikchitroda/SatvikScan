@@ -2,12 +2,16 @@ package com.example.satvikscan.ui
 
 import android.Manifest
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.graphics.Matrix
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.Camera
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -67,8 +71,8 @@ import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -82,11 +86,6 @@ import com.example.satvikscan.analyzer.OcrAnalyzer
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 import com.example.satvikscan.ui.viewmodel.ScanMode
 import java.util.concurrent.Executors
-import android.graphics.ImageDecoder
-import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
-import androidx.compose.ui.platform.LocalContext
 
 
 @Composable
@@ -94,23 +93,33 @@ fun CameraScanScreen(
     viewModel: Satvik_ViewModel,
     cameramode: ScanMode
 ) {
-
+    val context = LocalContext.current
     val checkPermission by viewModel.CameraPermission.collectAsState()
     val imagecaptureReference =
-        remember { mutableStateOf<ImageCapture?>(null) } // made for bhar acess use for btn click used
+        remember { mutableStateOf<ImageCapture?>(null) } // made for bhar aces`s use for btn click used
     var capturedBitmap by remember { mutableStateOf<Bitmap?>(null) }
     val ocrAnalyzer = remember { OcrAnalyzer() } // one time make use multiple time
-    val context = LocalContext.current
+    val barcodeAnalyzer = remember { BarcodeAnalyzer(viewModel, context) }
+    val camera = remember {
+        mutableStateOf<Camera?>(null)
+    }
+    var isFlashOn by remember {
+        mutableStateOf(false)
+    }
 
-    val galleryLauncher =  rememberLauncherForActivityResult (
+    val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
             uri?.let {
                 //   above android 8
-                 capturedBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P )  {
-                    ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, it))
-                }
-                else {
+                capturedBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    ImageDecoder.decodeBitmap(
+                        ImageDecoder.createSource(
+                            context.contentResolver,
+                            it
+                        )
+                    )
+                } else {
                     MediaStore.Images.Media.getBitmap(context.contentResolver, it)
                 }
             }
@@ -118,7 +127,7 @@ fun CameraScanScreen(
     )
 
 
-        val cameraLauncher = rememberLauncherForActivityResult(
+    val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
@@ -185,25 +194,35 @@ fun CameraScanScreen(
                             // OK Button
                             Button(
                                 onClick = {
-                                    capturedBitmap?.let { bmp -> // (bmp = capturedBitmap) when not nulll
-                                        // 1. Loader screen trigger karne ke liye
-                                        viewModel.startOcrScanning()
+                                    if (cameramode == ScanMode.OCR) {
+                                        capturedBitmap?.let { bmp -> // (bmp = capturedBitmap) when not nulll
+                                            // 1. Loader screen trigger karne ke liye
+                                            viewModel.startOcrScanning()
 
-                                        // 2. OCR analyze bitmap call callbacks ke saath
-                                        ocrAnalyzer.analyzeBitmap(
-                                            bitmap = bmp,
-                                            onSuccess = { detectedText ->
-                                                // Success par ingredients check aur display ke liye
-                                                Log.d("OCR_DEBUG", "Detected text: $detectedText")
-                                                viewModel.processOcrText(detectedText)
-                                            },
-                                            onFailure = { error ->
-                                                // Failure par error screen dikhane ke liye
-                                                viewModel.setOcrError(
-                                                    error.message ?: "OCR recognition failed"
-                                                )
-                                            }
-                                        )
+                                            // 2. OCR analyze bitmap call callbacks ke saath
+                                            ocrAnalyzer.analyzeBitmap(
+                                                bitmap = bmp,
+                                                onSuccess = { detectedText ->
+                                                    // Success par ingredients check aur display ke liye
+                                                    Log.d(
+                                                        "OCR_DEBUG",
+                                                        "Detected text: $detectedText"
+                                                    )
+                                                    viewModel.processOcrText(detectedText)
+                                                },
+                                                onFailure = { error ->
+                                                    // Failure par error screen dikhane ke liye
+                                                    viewModel.setOcrError(
+                                                        error.message ?: "OCR recognition failed"
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    } else {
+                                        capturedBitmap?.let { bmp ->
+                                            barcodeAnalyzer.analyzeBitmap(bmp)
+
+                                        }
                                     }
                                 },
                                 modifier = Modifier
@@ -250,17 +269,19 @@ fun CameraScanScreen(
                                             BarcodeAnalyzer(viewModel, context)
                                         )
                                         cameraProvider.unbindAll()
-                                        cameraProvider.bindToLifecycle(
+
+                                        camera.value = cameraProvider.bindToLifecycle(
                                             context as androidx.lifecycle.LifecycleOwner,
                                             androidx.camera.core.CameraSelector.DEFAULT_BACK_CAMERA,
                                             preview,
                                             imageAnalysis
                                         )
+
                                     } else {
                                         val imageCapture = ImageCapture.Builder().build()
                                         imagecaptureReference.value = imageCapture
                                         cameraProvider.unbindAll()
-                                        cameraProvider.bindToLifecycle(
+                                        camera.value = cameraProvider.bindToLifecycle(
                                             context as androidx.lifecycle.LifecycleOwner,
                                             androidx.camera.core.CameraSelector.DEFAULT_BACK_CAMERA,
                                             preview,
@@ -310,7 +331,7 @@ fun CameraScanScreen(
                     }
 
                     // Hint Text below scanner box
-                 if(cameramode == ScanMode.BARCODE){
+                    if (cameramode == ScanMode.BARCODE) {
                         Box(
                             modifier = Modifier
                                 .align(Alignment.Center)
@@ -352,7 +373,7 @@ fun CameraScanScreen(
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
 
-                            ) {
+                                ) {
                                 Box(
                                     modifier = Modifier
                                         .size(56.dp)
@@ -402,7 +423,10 @@ fun CameraScanScreen(
                                             color = Color.White.copy(alpha = 0.35f),
                                             shape = RoundedCornerShape(18.dp)
                                         )
-                                        .clickable { },
+                                        .clickable {
+                                            isFlashOn = !isFlashOn
+                                            camera.value?.cameraControl?.enableTorch(isFlashOn)
+                                        },
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
@@ -525,7 +549,6 @@ fun ScannerCustomDesign(modifier: Modifier = Modifier) {
                 )
             )
             fillType = PathFillType.EvenOdd
-
         }
 
         drawPath(path = overlayPath, color = Color.Black.copy(alpha = 0.55f))
