@@ -1,6 +1,7 @@
 package com.example.satvikscan.analyzer
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -18,6 +19,7 @@ class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val conte
     ImageAnalysis.Analyzer {
     private val option = BarcodeScannerOptions.Builder()
         .build() // configuration/settings of barcode scanner used for only custumize aur add somthing advance
+    private val scanner = BarcodeScanning.getClient(option)
 
     @OptIn(ExperimentalGetImage::class)
     override fun analyze(image: ImageProxy) {
@@ -37,45 +39,57 @@ class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val conte
                 image.imageInfo.rotationDegrees
             )
 
-            val scanner = BarcodeScanning.getClient(option)
-
-            scanner.process(inputImage)
-                .addOnSuccessListener { barcodes ->
-                    for (barcode in barcodes) {
-
-                        val value = barcode.rawValue ?: continue // if value does not exist so move next(continue)
-
-                        Log.d("BARCODE", value)
-
-                        // small vibrate
-                        val vibrator =
-                            context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-
-                        //  this work only Android 26+ so check first - Api Level
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            vibrator.vibrate(
-                                VibrationEffect.createOneShot(
-                                    150,
-                                    VibrationEffect.DEFAULT_AMPLITUDE
-                                )
-                            )
-                        } else {
-                            vibrator.vibrate(150)
-                        }
-                        // send to code viewmodel and would call api
-                        viewModel.ChangeproductUiState(value)
-
-                        // stop scaning when result number
-                        viewModel.stopscanning()
-
-                    }
-                }
-                .addOnFailureListener {
-                    //scan fail
-                }
-                .addOnCompleteListener {
-                    image.close()
-                }
+            processImage(inputImage) {
+                image.close()
+            }
         }
+    }
+
+    fun analyzeBitmap(bitmap: Bitmap) {
+
+        val inputImage = InputImage.fromBitmap(bitmap, 0)
+        processImage(inputImage)
+    }
+
+    private fun processImage(inputImage: InputImage, onComplete: (() -> Unit)? = null) {
+        scanner.process(inputImage)
+            .addOnSuccessListener { barcodes ->
+                for (barcode in barcodes) {
+
+                    val value = barcode.rawValue
+                        ?: continue // if value does not exist so move next(continue)
+
+                    Log.d("BARCODE", value)
+
+                    // small vibrate
+                    val vibrator =
+                        context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+                    //  this work only Android 26+ so check first - Api Level
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        vibrator.vibrate(
+                            VibrationEffect.createOneShot(
+                                150,
+                                VibrationEffect.DEFAULT_AMPLITUDE
+                            )
+                        )
+                    } else {
+                        vibrator.vibrate(150)
+                    }
+                    // send to code viewmodel and would call api
+                    viewModel.ChangeproductUiState(value)
+
+                    // stop scaning when result number
+                    viewModel.stopscanning()
+
+
+                }
+            }
+            .addOnFailureListener {
+                //scan fail
+            }
+            .addOnCompleteListener {
+                onComplete?.invoke()
+            }
     }
 }
