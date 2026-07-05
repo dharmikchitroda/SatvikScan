@@ -70,6 +70,10 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
     private val _Scanmode = MutableStateFlow(ScanMode.BARCODE)
     val Scanmode: StateFlow<ScanMode> = _Scanmode
 
+    // use for scan unsupported barcode
+    private val _barcodeError = MutableStateFlow<String?>(null)
+    val barcodeError: StateFlow<String?> = _barcodeError
+
     sealed interface ProductUiState {
 
         data object Idle : ProductUiState
@@ -262,6 +266,13 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
 
     fun setOcrError(message: String) {
         _productUiState.value = ProductUiState.Error(message)
+    }
+
+    fun setBarcodeError(message: String?) {
+        _barcodeError.value = message
+    }
+    fun clearBarcodeError() {
+        _barcodeError.value = null
     }
 
 }

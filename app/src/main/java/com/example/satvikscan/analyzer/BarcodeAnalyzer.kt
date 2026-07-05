@@ -10,15 +10,20 @@ import androidx.annotation.OptIn
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 
 class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val context: Context) :
     ImageAnalysis.Analyzer {
-    private val option = BarcodeScannerOptions.Builder()
-        .build() // configuration/settings of barcode scanner used for only custumize aur add somthing advance
+
+
+    // configuration/settings of barcode scanner used for only custumize aur add somthing advance
+    private val option = BarcodeScannerOptions.Builder().build()
     private val scanner = BarcodeScanning.getClient(option)
 
     @OptIn(ExperimentalGetImage::class)
@@ -52,35 +57,48 @@ class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val conte
     }
 
     private fun processImage(inputImage: InputImage, onComplete: (() -> Unit)? = null) {
+
+        // small vibrate
+        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
         scanner.process(inputImage)
             .addOnSuccessListener { barcodes ->
                 for (barcode in barcodes) {
 
-                    val value = barcode.rawValue
-                        ?: continue // if value does not exist so move next(continue)
+                    val barcodeFormat = barcode.format
 
-                    Log.d("BARCODE", value)
+                    when(barcodeFormat){
+                        Barcode.FORMAT_EAN_13,
+                        Barcode.FORMAT_UPC_A,
+                        Barcode.FORMAT_EAN_8,
+                        Barcode.FORMAT_UPC_E,
+                        Barcode.FORMAT_CODE_128,
+                        Barcode.FORMAT_CODE_39,
+                        Barcode.FORMAT_CODE_93,
+                        Barcode.FORMAT_ITF-> {
+                            // if value does not exist so move next(continue)
+                            val value = barcode.rawValue?: continue
 
-                    // small vibrate
-                    val vibrator =
-                        context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                            vibrator.vibrate(150)
 
-                    //  this work only Android 26+ so check first - Api Level
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        vibrator.vibrate(
-                            VibrationEffect.createOneShot(
-                                150,
-                                VibrationEffect.DEFAULT_AMPLITUDE
-                            )
-                        )
-                    } else {
-                        vibrator.vibrate(150)
+                            // send to code viewmodel and would call api
+                            viewModel.ChangeproductUiState(value)
+
+                            // stop scaning when result number
+                            viewModel.stopscanning()
+
+                        }
+                        Barcode.FORMAT_QR_CODE -> {
+                            Log.d("Barcode", "no THIS IS PAYMENT QR")
+
+                            viewModel.setBarcodeError("QR codes are not supported. Scan product barcode.")
+
+                        }
+                        else -> {
+
+                            viewModel.setBarcodeError("Unsupported format. Scan a standard product barcode.")
+                        }
                     }
-                    // send to code viewmodel and would call api
-                    viewModel.ChangeproductUiState(value)
-
-                    // stop scaning when result number
-                    viewModel.stopscanning()
 
 
                 }

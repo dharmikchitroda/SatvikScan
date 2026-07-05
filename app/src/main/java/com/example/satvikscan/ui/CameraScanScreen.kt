@@ -19,11 +19,17 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -41,6 +47,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -103,10 +110,19 @@ fun CameraScanScreen(
     val camera = remember {
         mutableStateOf<Camera?>(null)
     }
+    //flashlight state
     var isFlashOn by remember {
         mutableStateOf(false)
     }
+    // eror msg
+    val MissMatchbarcodeError by viewModel.barcodeError.collectAsState()
 
+    LaunchedEffect(MissMatchbarcodeError) {
+    if (MissMatchbarcodeError != null) {
+        kotlinx.coroutines.delay(1800)
+        viewModel.clearBarcodeError() // 2.5s baad clear ho jayega
+    }
+}
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
@@ -140,12 +156,12 @@ fun CameraScanScreen(
 
     LaunchedEffect(Unit) {
         cameraLauncher.launch(Manifest.permission.CAMERA)
+
     }
 
     LaunchedEffect(cameramode) {
         if (cameramode == ScanMode.BARCODE) {
-            viewModel.startScanning()  // isScanning is tru '/8
-            // e
+            viewModel.startScanning()  // isScanning is true
         }
     }
 
@@ -504,9 +520,50 @@ fun CameraScanScreen(
 
             }
         }
+
+
+    // Custom Floating Alert Banner
+    AnimatedVisibility(
+        visible = MissMatchbarcodeError != null,
+        enter = slideInVertically(initialOffsetY = { -it }) + fadeIn(),
+        exit = slideOutVertically(targetOffsetY = { -it }) + fadeOut(),
+        modifier = Modifier
+            .align(Alignment.TopCenter)
+            .statusBarsPadding()
+            .padding(top = 60.dp, start = 16.dp, end = 16.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFFF8B4B4),
+                    shape = RoundedCornerShape(8.dp)
+                )
+                .background(
+                    color = Color(0xFFFDE8E8),
+                    shape = RoundedCornerShape(8.dp)
+                )
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Warning,
+                contentDescription = "Error Icon",
+                tint = Color(0xFFC81E1E),
+                modifier = Modifier.size(20.dp)
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Text(
+                text = MissMatchbarcodeError ?: "",
+                color = Color(0xFF9B1C1C),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.weight(1f)
+            )
+        }
     }
-
-
+}
 }
 
 // custome barcode screen
