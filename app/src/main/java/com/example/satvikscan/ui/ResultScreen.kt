@@ -72,7 +72,8 @@ fun ResultScreen(
     modifier: Modifier = Modifier,
     dietName: String,
     onBackClick: () -> Unit,
-    onScanAgainClick: () -> Unit
+    onScanAgainClick: () -> Unit,
+    ScanIngredient: () -> Unit
 ) {
 
     // collect both state
@@ -82,6 +83,13 @@ fun ResultScreen(
     when (val state = CurrentUiState) {
         is Satvik_ViewModel.ProductUiState.Loading -> {
             LoadingView()
+        }
+
+        is Satvik_ViewModel.ProductUiState.ProductNotFound -> {
+            ProductNotFoundScreen(
+                onBackClick = onBackClick,
+                onScanIngredientLabelClick = ScanIngredient // OCR mode - scan ingredient label directly
+            )
         }
 
         is Satvik_ViewModel.ProductUiState.Error -> {
@@ -144,7 +152,7 @@ fun ResultScreen(
                                 width = 3.dp,
                                 color = if (isSafe) Color(0xFF2E7D32) else Color(0xFFC62828), // Green border if Safe, Red border if Avoid
                                 shape = RoundedCornerShape(20.dp)
-                            ), 
+                            ),
                         contentAlignment = Alignment.Center
                     ) {  // get image from string url
                         AsyncImage(
@@ -227,6 +235,7 @@ fun ResultScreen(
                                 color = Color(0xFF8D6E63), // Brown
                                 letterSpacing = 0.8.sp
                             )
+
                             Spacer(modifier = Modifier.height(2.dp))
 
                             Text(
@@ -424,6 +433,7 @@ fun ResultScreen(
 
 
 }
+
 
 @Composable
 fun ErrorView(message: String) {

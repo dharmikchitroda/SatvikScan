@@ -349,104 +349,104 @@ fun CameraScanScreen(
                                     .padding(horizontal = 20.dp, vertical = 8.dp)
                             )
                         }
-                    }
 
-                    // Bottom bar
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .fillMaxWidth()
-                            .navigationBarsPadding()
-                            .padding(top = 20.dp, bottom = 24.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        // Gallery + Flash Row
-                        Row(
+
+                        // Bottom bar
+                        Column(
                             modifier = Modifier
+                                .align(Alignment.BottomCenter)
                                 .fillMaxWidth()
-                                .padding(horizontal = 60.dp),
-                            horizontalArrangement = Arrangement.SpaceEvenly,
-                            verticalAlignment = Alignment.CenterVertically
+                                .navigationBarsPadding()
+                                .padding(top = 20.dp, bottom = 24.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-
-                            // ── GALLERY ──
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-
-                                ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(56.dp)
-                                        .background(
-                                            color = Color.White.copy(alpha = 0.18f),   // translucent grey fill
-                                            shape = RoundedCornerShape(18.dp)           // squircle, not circle
-                                        )
-                                        .border(
-                                            width = 1.dp,
-                                            color = Color.White.copy(alpha = 0.35f),
-                                            shape = RoundedCornerShape(18.dp)
-                                        )
-                                        .clickable {
-                                            galleryLauncher.launch("image/*")
-                                        },
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Icon(
-                                        painter = painterResource(R.drawable.gallery),
-                                        contentDescription = "Gallery",
-//                                        tint = Color.White,
-                                        modifier = Modifier.size(24.dp)
-                                    )
-                                }
-                                Text(
-                                    text = "GALLERY",
-                                    color = Color.White.copy(alpha = 0.85f),
-                                    fontSize = 11.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    modifier = Modifier.padding(top = 6.dp)
-                                )
-                            }
-
-// ── FLASH ──
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
+                            // Gallery + Flash Row
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 60.dp),
+                                horizontalArrangement = Arrangement.SpaceEvenly,
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(56.dp)
-                                        .background(
-                                            color = Color.White.copy(alpha = 0.18f),
-                                            shape = RoundedCornerShape(18.dp)
+
+                                // ── GALLERY ──
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+
+                                    ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(56.dp)
+                                            .background(
+                                                color = Color.White.copy(alpha = 0.18f),   // translucent grey fill
+                                                shape = RoundedCornerShape(18.dp)           // squircle, not circle
+                                            )
+                                            .border(
+                                                width = 1.dp,
+                                                color = Color.White.copy(alpha = 0.35f),
+                                                shape = RoundedCornerShape(18.dp)
+                                            )
+                                            .clickable {
+                                                galleryLauncher.launch("image/*")
+                                            },
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.gallery),
+                                            contentDescription = "Gallery",
+//                                        tint = Color.White,
+                                            modifier = Modifier.size(24.dp)
                                         )
-                                        .border(
-                                            width = 1.dp,
-                                            color = Color.White.copy(alpha = 0.35f),
-                                            shape = RoundedCornerShape(18.dp)
-                                        )
-                                        .clickable {
-                                            isFlashOn = !isFlashOn
-                                            camera.value?.cameraControl?.enableTorch(isFlashOn)
-                                        },
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Icon(
-                                        painter = painterResource(R.drawable.flash_on),
-                                        contentDescription = "Flash",
-                                        tint = Color.White,
-                                        modifier = Modifier.size(24.dp)
+                                    }
+                                    Text(
+                                        text = "GALLERY",
+                                        color = Color.White.copy(alpha = 0.85f),
+                                        fontSize = 11.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        modifier = Modifier.padding(top = 6.dp)
                                     )
                                 }
-                                Text(
-                                    text = "FLASH",
-                                    color = Color.White.copy(alpha = 0.85f),
-                                    fontSize = 11.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    modifier = Modifier.padding(top = 6.dp)
-                                )
+
+                                // ── FLASH ──
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(56.dp)
+                                            .background(
+                                                color = Color.White.copy(alpha = 0.18f),
+                                                shape = RoundedCornerShape(18.dp)
+                                            )
+                                            .border(
+                                                width = 1.dp,
+                                                color = Color.White.copy(alpha = 0.35f),
+                                                shape = RoundedCornerShape(18.dp)
+                                            )
+                                            .clickable {
+                                                isFlashOn = !isFlashOn
+                                                camera.value?.cameraControl?.enableTorch(isFlashOn)
+                                            },
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.flash_on),
+                                            contentDescription = "Flash",
+                                            tint = Color.White,
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                    }
+                                    Text(
+                                        text = "FLASH",
+                                        color = Color.White.copy(alpha = 0.85f),
+                                        fontSize = 11.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        modifier = Modifier.padding(top = 6.dp)
+                                    )
+                                }
                             }
                         }
                     }
-
 
                 }
                 if (cameramode == ScanMode.OCR) {

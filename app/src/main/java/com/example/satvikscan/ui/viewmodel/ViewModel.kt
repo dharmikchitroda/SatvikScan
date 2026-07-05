@@ -74,6 +74,8 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
 
         data object Idle : ProductUiState
         data object Loading : ProductUiState
+
+        data object ProductNotFound : ProductUiState
         data class Success(val product: ProductResponse) :
             ProductUiState // api respons data as actual object provoded by retrofit
 
@@ -103,35 +105,41 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
                 val response =
                     repository.getProduct(barcode) // return the dataclass object (json->kotlin object )
 
-                //Ingredients text parse and restricted items take
-                val rawIngredientData = response.product?.ingredientsText
-                val FilteredList = IngredientsFilter(
-                    rawIngredientData = rawIngredientData,
-                    currentDiet = _dietName.value,
-                    customExclusions = _customAvoidList.value
-                )
+                // product not found state
+                if (response.status == 0 || response.product == null) {
+                    _productUiState.value = ProductUiState.ProductNotFound
+                } else {
+                    //Ingredients text parse and restricted items take
+                    val rawIngredientData = response.product?.ingredientsText
 
-                _ingredients.value = FilteredList
-                _productUiState.value = ProductUiState.Success(response)
-
-                // save the result in history screen using of Room
-                val name = response.product?.productName ?: "Unknown Product"
-                val rawIngredients = response.product?.ingredientsText ?: ""
-                val isSafe = FilteredList.isEmpty()
-
-                viewModelScope.launch {
-                    scanHistoryDao_obj.insertScan(
-                        ScanHistoryEntity(
-                            barcode = barcode,
-                            productName = name,
-                            ingredientsText = rawIngredients,
-                            isSatvik = isSafe,
-                            timestamp = System.currentTimeMillis(),
-                            dietName = _dietName.value,
-                            imageUrl = response.product?.imageUrl
-                        )
+                    val FilteredList = IngredientsFilter(
+                        rawIngredientData = rawIngredientData,
+                        currentDiet = _dietName.value,
+                        customExclusions = _customAvoidList.value
                     )
 
+                    _ingredients.value = FilteredList
+                    _productUiState.value = ProductUiState.Success(response)
+
+                    // save the result in history screen using of Room
+                    val name = response.product?.productName ?: "Unknown Product"
+                    val rawIngredients = response.product?.ingredientsText ?: ""
+                    val isSafe = FilteredList.isEmpty()
+
+                    viewModelScope.launch {
+                        scanHistoryDao_obj.insertScan(
+                            ScanHistoryEntity(
+                                barcode = barcode,
+                                productName = name,
+                                ingredientsText = rawIngredients,
+                                isSatvik = isSafe,
+                                timestamp = System.currentTimeMillis(),
+                                dietName = _dietName.value,
+                                imageUrl = response.product?.imageUrl
+                            )
+                        )
+
+                    }
                 }
 
 
@@ -202,7 +210,7 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
     // for ocr features
     fun processOcrText(detectedText: String) {
         viewModelScope.launch {
-    // _productUiState.value = ProductUiState.Loading
+            // _productUiState.value = ProductUiState.Loading
 
             try {
                 if (detectedText.isBlank()) {

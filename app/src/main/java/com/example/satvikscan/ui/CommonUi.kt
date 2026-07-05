@@ -163,7 +163,14 @@ fun CommonUi(
                             popUpTo(routname().ScanScreen)
                         }
                     },
-                    dietName = dietName
+                    dietName = dietName,
+                    ScanIngredient = {
+                        if (currentCameramode != ScanMode.OCR) viewModel.ChnageScanMode(ScanMode.OCR)
+                        viewModel.startScanning()
+                        navconroller.navigate(routname().CameraScreen) {
+                            popUpTo(routname().ResultScreen) { inclusive = true }
+                        }
+                    }
                 )
 
             }
