@@ -33,7 +33,8 @@ class OcrAnalyzer {
                         onSuccess(extractedText)
                     }
 
-                    is ValidationResult.Invalid -> {                       onFailure(
+                    is ValidationResult.Invalid -> {
+                        onFailure(
                             Exception(result.message)
                         )
                     }
