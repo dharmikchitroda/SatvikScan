@@ -29,7 +29,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -52,6 +51,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -59,6 +59,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -98,18 +99,30 @@ import java.util.concurrent.Executors
 @Composable
 fun CameraScanScreen(
     viewModel: Satvik_ViewModel,
-    cameramode: ScanMode
+    cameramode: ScanMode,
+    onBackClick: () -> Unit
 ) {
     val context = LocalContext.current
     val checkPermission by viewModel.CameraPermission.collectAsState()
+    val uiState = viewModel.productUiState.collectAsState().value
     val imagecaptureReference =
         remember { mutableStateOf<ImageCapture?>(null) } // made for bhar aces`s use for btn click used
     var capturedBitmap by remember { mutableStateOf<Bitmap?>(null) }
     val ocrAnalyzer = remember { OcrAnalyzer() } // one time make use multiple time
     val barcodeAnalyzer = remember { BarcodeAnalyzer(viewModel, context) }
-    val camera = remember {
-        mutableStateOf<Camera?>(null)
+    val camera = remember { mutableStateOf<Camera?>(null) }
+
+
+    val captureExecutor = remember { Executors.newSingleThreadExecutor() }
+
+// when screen close so executor(thread) close
+    DisposableEffect(Unit) {
+        onDispose {
+            captureExecutor.shutdown()
+        }
     }
+
+
     //flashlight state
     var isFlashOn by remember {
         mutableStateOf(false)
@@ -118,11 +131,11 @@ fun CameraScanScreen(
     val MissMatchbarcodeError by viewModel.barcodeError.collectAsState()
 
     LaunchedEffect(MissMatchbarcodeError) {
-    if (MissMatchbarcodeError != null) {
-        kotlinx.coroutines.delay(1800)
-        viewModel.clearBarcodeError() // 2.5s baad clear ho jayega
+        if (MissMatchbarcodeError != null) {
+            kotlinx.coroutines.delay(1800)
+            viewModel.clearBarcodeError() // 2.5s baad clear ho jayega
+        }
     }
-}
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
@@ -156,12 +169,15 @@ fun CameraScanScreen(
 
     LaunchedEffect(Unit) {
         cameraLauncher.launch(Manifest.permission.CAMERA)
-
     }
 
     LaunchedEffect(cameramode) {
         if (cameramode == ScanMode.BARCODE) {
             viewModel.startScanning()  // isScanning is true
+            if (!viewModel.isNetworkAvailable()) {
+                viewModel.setOcrError("NO_INTERNET")
+                viewModel.stopscanning()
+            }
         }
     }
 
@@ -281,7 +297,7 @@ fun CameraScanScreen(
                                         val imageAnalysis = ImageAnalysis.Builder().build()
 
                                         imageAnalysis.setAnalyzer(
-                                            Executors.newSingleThreadExecutor(),
+                                            captureExecutor,
                                             BarcodeAnalyzer(viewModel, context)
                                         )
                                         cameraProvider.unbindAll()
@@ -327,7 +343,7 @@ fun CameraScanScreen(
                             .padding(horizontal = 4.dp, vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        IconButton(onClick = { }) {
+                        IconButton(onClick = onBackClick) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Back",
@@ -364,104 +380,105 @@ fun CameraScanScreen(
                                     )
                                     .padding(horizontal = 20.dp, vertical = 8.dp)
                             )
-                        }}
+                        }
+                    }
 
 
-                        // Bottom bar
-                        Column(
+                    // Bottom bar
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .fillMaxWidth()
+                            .navigationBarsPadding()
+                            .padding(top = 20.dp, bottom = 24.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        // Gallery + Flash Row
+                        Row(
                             modifier = Modifier
-                                .align(Alignment.BottomCenter)
                                 .fillMaxWidth()
-                                .navigationBarsPadding()
-                                .padding(top = 20.dp, bottom = 24.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                                .padding(horizontal = 60.dp),
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            // Gallery + Flash Row
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 60.dp),
-                                horizontalArrangement = Arrangement.SpaceEvenly,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
 
-                                // ── GALLERY ──
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
+                            // ── GALLERY ──
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
 
-                                    ) {
-                                    Box(
-                                        modifier = Modifier
-                                            .size(56.dp)
-                                            .background(
-                                                color = Color.White.copy(alpha = 0.18f),   // translucent grey fill
-                                                shape = RoundedCornerShape(18.dp)           // squircle, not circle
-                                            )
-                                            .border(
-                                                width = 1.dp,
-                                                color = Color.White.copy(alpha = 0.35f),
-                                                shape = RoundedCornerShape(18.dp)
-                                            )
-                                            .clickable {
-                                                galleryLauncher.launch("image/*")
-                                            },
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Icon(
-                                            painter = painterResource(R.drawable.gallery),
-                                            contentDescription = "Gallery",
-//                                        tint = Color.White,
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                    }
-                                    Text(
-                                        text = "GALLERY",
-                                        color = Color.White.copy(alpha = 0.85f),
-                                        fontSize = 11.sp,
-                                        fontWeight = FontWeight.Medium,
-                                        modifier = Modifier.padding(top = 6.dp)
-                                    )
-                                }
-
-                                // ── FLASH ──
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
                                 ) {
-                                    Box(
-                                        modifier = Modifier
-                                            .size(56.dp)
-                                            .background(
-                                                color = Color.White.copy(alpha = 0.18f),
-                                                shape = RoundedCornerShape(18.dp)
-                                            )
-                                            .border(
-                                                width = 1.dp,
-                                                color = Color.White.copy(alpha = 0.35f),
-                                                shape = RoundedCornerShape(18.dp)
-                                            )
-                                            .clickable {
-                                                isFlashOn = !isFlashOn
-                                                camera.value?.cameraControl?.enableTorch(isFlashOn)
-                                            },
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Icon(
-                                            painter = painterResource(R.drawable.flash_on),
-                                            contentDescription = "Flash",
-                                            tint = Color.White,
-                                            modifier = Modifier.size(24.dp)
+                                Box(
+                                    modifier = Modifier
+                                        .size(56.dp)
+                                        .background(
+                                            color = Color.White.copy(alpha = 0.18f),   // translucent grey fill
+                                            shape = RoundedCornerShape(18.dp)           // squircle, not circle
                                         )
-                                    }
-                                    Text(
-                                        text = "FLASH",
-                                        color = Color.White.copy(alpha = 0.85f),
-                                        fontSize = 11.sp,
-                                        fontWeight = FontWeight.Medium,
-                                        modifier = Modifier.padding(top = 6.dp)
+                                        .border(
+                                            width = 1.dp,
+                                            color = Color.White.copy(alpha = 0.35f),
+                                            shape = RoundedCornerShape(18.dp)
+                                        )
+                                        .clickable {
+                                            galleryLauncher.launch("image/*")
+                                        },
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        painter = painterResource(R.drawable.gallery),
+                                        contentDescription = "Gallery",
+//                                        tint = Color.White,
+                                        modifier = Modifier.size(24.dp)
                                     )
                                 }
+                                Text(
+                                    text = "GALLERY",
+                                    color = Color.White.copy(alpha = 0.85f),
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    modifier = Modifier.padding(top = 6.dp)
+                                )
+                            }
+
+                            // ── FLASH ──
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(56.dp)
+                                        .background(
+                                            color = Color.White.copy(alpha = 0.18f),
+                                            shape = RoundedCornerShape(18.dp)
+                                        )
+                                        .border(
+                                            width = 1.dp,
+                                            color = Color.White.copy(alpha = 0.35f),
+                                            shape = RoundedCornerShape(18.dp)
+                                        )
+                                        .clickable {
+                                            isFlashOn = !isFlashOn
+                                            camera.value?.cameraControl?.enableTorch(isFlashOn)
+                                        },
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        painter = painterResource(R.drawable.flash_on),
+                                        contentDescription = "Flash",
+                                        tint = Color.White,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
+                                Text(
+                                    text = "FLASH",
+                                    color = Color.White.copy(alpha = 0.85f),
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    modifier = Modifier.padding(top = 6.dp)
+                                )
                             }
                         }
+                    }
 
 
                 }
@@ -475,7 +492,7 @@ fun CameraScanScreen(
                             .border(3.dp, Color.White.copy(alpha = 0.3f), CircleShape)
                             .clickable {
                                 imagecaptureReference.value?.takePicture(
-                                    Executors.newSingleThreadExecutor(),
+                                    captureExecutor,
                                     object : ImageCapture.OnImageCapturedCallback() {
 
                                         override fun onCaptureSuccess(image: ImageProxy) {
@@ -522,48 +539,59 @@ fun CameraScanScreen(
         }
 
 
-    // Custom Floating Alert Banner
-    AnimatedVisibility(
-        visible = MissMatchbarcodeError != null,
-        enter = slideInVertically(initialOffsetY = { -it }) + fadeIn(),
-        exit = slideOutVertically(targetOffsetY = { -it }) + fadeOut(),
-        modifier = Modifier
-            .align(Alignment.TopCenter)
-            .statusBarsPadding()
-            .padding(top = 60.dp, start = 16.dp, end = 16.dp)
-    ) {
-        Row(
+        // Custom Floating Alert Banner
+        AnimatedVisibility(
+            visible = MissMatchbarcodeError != null,
+            enter = slideInVertically(initialOffsetY = { -it }) + fadeIn(),
+            exit = slideOutVertically(targetOffsetY = { -it }) + fadeOut(),
             modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = Color(0xFFF8B4B4),
-                    shape = RoundedCornerShape(8.dp)
-                )
-                .background(
-                    color = Color(0xFFFDE8E8),
-                    shape = RoundedCornerShape(8.dp)
-                )
-                .padding(horizontal = 16.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .align(Alignment.TopCenter)
+                .statusBarsPadding()
+                .padding(top = 60.dp, start = 16.dp, end = 16.dp)
         ) {
-            Icon(
-                imageVector = Icons.Filled.Warning,
-                contentDescription = "Error Icon",
-                tint = Color(0xFFC81E1E),
-                modifier = Modifier.size(20.dp)
-            )
-            Spacer(modifier = Modifier.width(12.dp))
-            Text(
-                text = MissMatchbarcodeError ?: "",
-                color = Color(0xFF9B1C1C),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.weight(1f)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(
+                        width = 1.dp,
+                        color = Color(0xFFF8B4B4),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .background(
+                        color = Color(0xFFFDE8E8),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Warning,
+                    contentDescription = "Error Icon",
+                    tint = Color(0xFFC81E1E),
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(12.dp))
+                Text(
+                    text = MissMatchbarcodeError ?: "",
+                    color = Color(0xFF9B1C1C),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        }
+
+        if (uiState is Satvik_ViewModel.ProductUiState.Error && uiState.message == "NO_INTERNET") {
+            NoInternetDialog(
+                onRetry = {
+                    viewModel.retryLastScan(onNoBarcodeAndHasInternet = {})
+                },
+                onDismiss = {
+                    onBackClick()
+                }
             )
         }
     }
-}
 }
 
 // custome barcode screen

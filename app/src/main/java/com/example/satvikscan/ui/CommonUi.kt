@@ -129,18 +129,25 @@ fun CommonUi(
                 UserProfileScreen(paddingValues, viewModel, navconroller)
             }
             composable(routname().CameraScreen) {
-                val UiState by viewModel.productUiState.collectAsState()
+                val uiState = viewModel.productUiState.collectAsState().value
                 CameraScanScreen(
-                    viewModel,
-                    currentCameramode
+                    viewModel = viewModel,
+                    cameramode = currentCameramode,
+                    onBackClick = {
+                        viewModel.startScanning()
+                        navconroller.popBackStack()
+                    }
                 )
-                LaunchedEffect(UiState) {
-                    if (UiState == Satvik_ViewModel.ProductUiState.Loading
-                    ) navconroller.navigate(
-                        routname().ResultScreen
+                LaunchedEffect(uiState) {
+                    if (uiState != Satvik_ViewModel.ProductUiState.Idle &&
+                        !(uiState is Satvik_ViewModel.ProductUiState.Error && uiState.message == "NO_INTERNET")
                     ) {
-                        // remove the last screen from the stack
-                        popUpTo(routname().CameraScreen) { inclusive = true }
+                        navconroller.navigate(
+                            routname().ResultScreen
+                        ) {
+                            // remove the last screen from the stack
+                            popUpTo(routname().CameraScreen) { inclusive = true }
+                        }
                     }
                 }
 

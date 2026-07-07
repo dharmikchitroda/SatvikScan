@@ -39,10 +39,17 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
 
         return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
-// retry button
-    fun retryLastScan() {
-        lastScannedBarcode?.let { barcode ->
+    fun retryLastScan(onNoBarcodeAndHasInternet: () -> Unit) {
+        if (!isNetworkAvailable()) {
+            _productUiState.value = ProductUiState.Error("NO_INTERNET")
+            return
+        }
+        val barcode = lastScannedBarcode
+        if (barcode != null) {
             ChangeproductUiState(barcode)
+        } else {
+            startScanning()
+            onNoBarcodeAndHasInternet()
         }
     }
 

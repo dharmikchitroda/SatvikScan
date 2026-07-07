@@ -103,7 +103,7 @@ fun ResultScreen(
                 Box(modifier = Modifier.fillMaxSize()) {
                     LoadingView()
                     NoInternetDialog(
-                        onRetry = { viewModel.retryLastScan() },
+                        onRetry = { viewModel.retryLastScan(onNoBarcodeAndHasInternet = onScanAgainClick) },
                         onDismiss = { onBackClick() }
                     )
                 }
