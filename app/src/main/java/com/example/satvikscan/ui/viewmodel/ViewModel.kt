@@ -1,6 +1,9 @@
 package com.example.satvikscan.ui.viewmodel
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.satvikscan.Api_Calling.RetrofitInstance
@@ -23,6 +26,25 @@ enum class ScanMode {
 }
 
 class Satvik_ViewModel(application: Application) : AndroidViewModel(application) {
+
+    private var lastScannedBarcode: String? = null
+
+    fun isNetworkAvailable(): Boolean {
+
+        val connectivityManager = getApplication<Application>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val network = connectivityManager.activeNetwork ?: return false
+
+        val capabilities  = connectivityManager.getNetworkCapabilities(network) ?: return false
+
+        return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    }
+// retry button
+    fun retryLastScan() {
+        lastScannedBarcode?.let { barcode ->
+            ChangeproductUiState(barcode)
+        }
+    }
 
     // make PreferenceManager object
     private val prefManager = PreferenceManager(application)
@@ -101,9 +123,17 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun ChangeproductUiState(barcode: String) {
+
+        lastScannedBarcode = barcode
+
         viewModelScope.launch {
 
             _productUiState.value = ProductUiState.Loading
+
+            if (!isNetworkAvailable()) {
+                _productUiState.value = ProductUiState.Error("NO_INTERNET")
+                return@launch
+            }
 
             try {
                 val response =
@@ -151,7 +181,11 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
 
 
             } catch (e: Exception) {
-                _productUiState.value = ProductUiState.Error(e.message ?: "Unknown Error occurred")
+                if (e is java.io.IOException || e is java.net.UnknownHostException) {
+                    _productUiState.value = ProductUiState.Error("NO_INTERNET")
+                } else {
+                    _productUiState.value = ProductUiState.Error(e.message ?: "Unknown Error occurred")
+                }
             }
 
         }
