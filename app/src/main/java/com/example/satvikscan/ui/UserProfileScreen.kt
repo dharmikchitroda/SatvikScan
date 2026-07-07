@@ -49,7 +49,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.example.satvikscan.R
 import com.example.satvikscan.routname
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
@@ -58,7 +57,8 @@ import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 fun UserProfileScreen(
     paddingValues: PaddingValues,
     viewModel: Satvik_ViewModel,
-    navController: NavHostController
+    onBackClick: () -> Unit,
+    onChangeDietClick: () -> Unit
 ) {
 //    val isDarkMode by viewModel.isDarkMode.collectAsState()
     var isDarkMode = false
@@ -99,7 +99,7 @@ fun UserProfileScreen(
             contentAlignment = Alignment.Center
         ) {
             IconButton(
-                onClick = { navController.popBackStack() },
+                onClick = onBackClick,
                 modifier = Modifier.align(Alignment.CenterStart)
             ) {
                 Icon(
@@ -131,7 +131,7 @@ fun UserProfileScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        navController.navigate(routname().WelcomeScreen)
+                        onChangeDietClick()
                     },
                 shape = RoundedCornerShape(20.dp),
                 colors = CardDefaults.cardColors(

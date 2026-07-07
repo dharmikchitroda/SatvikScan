@@ -126,7 +126,12 @@ fun CommonUi(
                 )
             }
             composable(routname().ProfileScreen) {
-                UserProfileScreen(paddingValues, viewModel, navconroller)
+                UserProfileScreen(
+                    paddingValues = paddingValues,
+                    viewModel = viewModel,
+                    onBackClick = { navconroller.popBackStack() },
+                    onChangeDietClick = { navconroller.navigate(routname().WelcomeScreen) }
+                )
             }
             composable(routname().CameraScreen) {
                 val uiState = viewModel.productUiState.collectAsState().value

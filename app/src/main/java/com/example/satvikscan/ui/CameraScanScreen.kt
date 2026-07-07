@@ -1,6 +1,7 @@
 package com.example.satvikscan.ui
 
 import android.Manifest
+import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.graphics.Matrix
@@ -66,6 +67,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -87,6 +89,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.satvikscan.R
 import com.example.satvikscan.analyzer.BarcodeAnalyzer
@@ -94,6 +97,14 @@ import com.example.satvikscan.analyzer.OcrAnalyzer
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 import com.example.satvikscan.ui.viewmodel.ScanMode
 import java.util.concurrent.Executors
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 
 
 @Composable
@@ -103,7 +114,16 @@ fun CameraScanScreen(
     onBackClick: () -> Unit
 ) {
     val context = LocalContext.current
+
     val checkPermission by viewModel.CameraPermission.collectAsState()
+
+    var permissionRequested by rememberSaveable { mutableStateOf(false) }
+
+
+    var showPermissionDialog by remember { mutableStateOf(false) }
+    var hasOpenedSettings by remember { mutableStateOf(false) }
+
+
     val uiState = viewModel.productUiState.collectAsState().value
     val imagecaptureReference =
         remember { mutableStateOf<ImageCapture?>(null) } // made for bhar aces`s use for btn click used
@@ -119,6 +139,28 @@ fun CameraScanScreen(
     DisposableEffect(Unit) {
         onDispose {
             captureExecutor.shutdown()
+        }
+    }
+
+    val lifecycleOwner = context as androidx.lifecycle.LifecycleOwner
+    DisposableEffect(lifecycleOwner) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+                val hasPermission = ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.CAMERA
+                ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+                
+                viewModel.PermissionResult(hasPermission)
+                
+                if (hasOpenedSettings && !hasPermission) {
+                    onBackClick()
+                }
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
 
@@ -155,19 +197,31 @@ fun CameraScanScreen(
         }
     )
 
+    val activity = context as Activity
 
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
+
         if (isGranted) {
-            viewModel.PermissionResult(isGranted)
+            viewModel.PermissionResult(true)
         } else {
-            // future plan when user permission is deny while
-            // go to-> direct setting and show popup
+            val permanentlyDenied =
+                permissionRequested &&!ActivityCompat.shouldShowRequestPermissionRationale(  activity,Manifest.permission.CAMERA )
+
+            if (permanentlyDenied) {
+
+                showPermissionDialog = true
+
+            } else {
+                onBackClick()
+            }
+
         }
     }
 
     LaunchedEffect(Unit) {
+        permissionRequested = true
         cameraLauncher.launch(Manifest.permission.CAMERA)
     }
 
@@ -590,6 +644,131 @@ fun CameraScanScreen(
                     onBackClick()
                 }
             )
+        }
+
+        if (showPermissionDialog) {
+            CameraPermissionDialog(
+                onDismiss = { 
+                    showPermissionDialog = false 
+                    onBackClick()
+                },
+                onOpenSettings = {
+                    showPermissionDialog = false
+                    hasOpenedSettings = true
+                    val intent = Intent(
+                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.fromParts("package", context.packageName, null)
+                    )
+
+                    context.startActivity(intent)
+                }
+            )
+        }
+    }
+    
+}
+
+@Composable
+fun CameraPermissionDialog(
+    onDismiss: () -> Unit ,
+    onOpenSettings: () -> Unit
+) {
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = false)
+    ) {
+        Card(
+            modifier = Modifier
+                .width(350.dp)
+                .padding(horizontal = 8.dp),
+            shape = RoundedCornerShape(28.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.permison),
+                    contentDescription = "Camera Permission",
+                    modifier = Modifier
+                        .size(150.dp),
+                    contentScale = ContentScale.Fit
+                )
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                Text(
+                    text = "App Permission",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Text(
+                    text = "Please enable Camera permission from App Settings",
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color(0xFF666666),
+                    textAlign = TextAlign.Center,
+                    maxLines = 1
+                )
+
+                Spacer(modifier = Modifier.height(18.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedButton(
+                        onClick = onDismiss,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(48.dp),
+                        shape = RoundedCornerShape(14.dp),
+                        border = BorderStroke(1.dp, Color(0xFFE5E7EB)),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            containerColor = Color.White,
+                            contentColor = Color(0xFF08733A)
+                        )
+                    ) {
+                        Text(
+                            text = "Cancel",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+
+                    Button(
+                        onClick = onOpenSettings,
+                        modifier = Modifier
+                            .weight(1.3f)
+                            .height(48.dp),
+                        shape = RoundedCornerShape(14.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF00C853),
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text(
+                            text = "OK, Open Settings",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                }
+            }
         }
     }
 }
