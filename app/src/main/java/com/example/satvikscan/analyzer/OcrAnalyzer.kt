@@ -4,6 +4,8 @@ import android.graphics.Bitmap
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.example.satvikscan.ui.viewmodel.OcrTextValidator
+import com.example.satvikscan.ui.viewmodel.ValidationResult
 
 class OcrAnalyzer {
 
@@ -21,7 +23,21 @@ class OcrAnalyzer {
         recognizer.process(inputImage)
 
             .addOnSuccessListener { visionText ->
-                onSuccess(visionText.text)
+
+                val extractedText = visionText.text
+
+                val result = OcrTextValidator.validate(extractedText)
+                when (result) {
+
+                    is ValidationResult.Valid -> {
+                        onSuccess(extractedText)
+                    }
+
+                    is ValidationResult.Invalid -> {                       onFailure(
+                            Exception(result.message)
+                        )
+                    }
+                }
 
             }.addOnFailureListener { e ->
                 // error aane par callback call hoga

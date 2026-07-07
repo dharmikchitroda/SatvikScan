@@ -111,8 +111,11 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
 
                 // product not found state
                 if (response.status == 0 || response.product == null) {
+
                     _productUiState.value = ProductUiState.ProductNotFound
-                } else {
+
+                }
+                else {
                     //Ingredients text parse and restricted items take
                     val rawIngredientData = response.product?.ingredientsText
 
@@ -217,6 +220,7 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
             // _productUiState.value = ProductUiState.Loading
 
             try {
+
                 if (detectedText.isBlank()) {
                     _productUiState.value =
                         ProductUiState.Error("No text found in the image. Please try again.")

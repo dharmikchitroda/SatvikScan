@@ -364,7 +364,7 @@ fun CameraScanScreen(
                                     )
                                     .padding(horizontal = 20.dp, vertical = 8.dp)
                             )
-                        }
+                        }}
 
 
                         // Bottom bar
@@ -462,7 +462,7 @@ fun CameraScanScreen(
                                 }
                             }
                         }
-                    }
+
 
                 }
                 if (cameramode == ScanMode.OCR) {
