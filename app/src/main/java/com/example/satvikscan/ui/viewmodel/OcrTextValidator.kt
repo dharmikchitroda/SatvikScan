@@ -2,7 +2,7 @@ package com.example.satvikscan.ui.viewmodel
 
 object OcrTextValidator {
 
-    private const val MINIMUM_FOOD_SCORE = 10
+    private const val MINIMUM_FOOD_SCORE = 6
 
     private val TIER_3_KEYWORDS = setOf(
         "ingredients",
@@ -12,7 +12,9 @@ object OcrTextValidator {
         "allergen",
         "allergens",
         "allergen information",
-        "fssai"
+        "fssai",
+        "potato",
+        "Palmolein"
     )
     private val TIER_2_KEYWORDS = setOf(
         "contains",

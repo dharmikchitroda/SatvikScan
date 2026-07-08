@@ -14,5 +14,6 @@ data class ScanHistoryEntity(
     val isSatvik: Boolean,
     val timestamp: Long,
     val dietName: String ,
-    val imageUrl: String?
+    val imageUrl: String?,
+    val imageIndex: Int = 0
 )

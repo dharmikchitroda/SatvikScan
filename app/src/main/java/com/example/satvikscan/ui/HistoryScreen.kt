@@ -1,6 +1,5 @@
 package com.example.satvikscan.ui
 
-import android.icu.text.CaseMap
 import androidx.compose.foundation.Image
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
@@ -33,7 +32,6 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -65,7 +63,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import com.example.satvikscan.R
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 import java.text.SimpleDateFormat
@@ -80,7 +77,8 @@ data class HistoryItem(
     val timestamp: Long,
     val dietName: String,
     val isMock: Boolean, // history screen are empty ?
-    val imageUrl    : String?
+    val imageUrl: String?,
+    val imageIndex: Int
 )
 
 
@@ -93,8 +91,7 @@ fun HistoryScreen(
 
     val scanHistory by viewModel.scanHistory.collectAsState()
     val currentDiet by viewModel.dietName.collectAsState()
-    val focusManager =
-        LocalFocusManager.current // return FocusManager object so esily find user click kaha kar raha ahin kaha nahi
+    val focusManager = LocalFocusManager.current // return FocusManager object so esily find user click kaha kar raha ahin kaha nahi
 
     // State parameters
     var selectedFilter_btn by remember { mutableStateOf("All") }
@@ -114,7 +111,8 @@ fun HistoryScreen(
                 timestamp = entity.timestamp,
                 dietName = entity.dietName,
                 isMock = false,
-                imageUrl = entity.imageUrl
+                imageUrl = entity.imageUrl,
+                imageIndex = entity.imageIndex
             )
         }
     }
@@ -461,7 +459,7 @@ fun HistoryCardItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Food product illustration box (with emojis as premium icons)
-            ProductImage(imageUrl = item.imageUrl, isSatvik = item.isSatvik)
+            ProductImage(imageUrl = item.imageUrl, isSatvik = item.isSatvik, imageIndex = item.imageIndex)
 
             Spacer(modifier = Modifier.width(16.dp))
 
@@ -597,7 +595,27 @@ fun HistoryCardItem(
 }
 
 @Composable
-fun ProductImage(imageUrl: String?, isSatvik: Boolean) {
+fun ProductImage(imageUrl: String?, isSatvik: Boolean, imageIndex: Int) {
+
+    val satvikOcrDrawables = listOf(
+        R.drawable.satvik1,
+        R.drawable.satvik2,
+        R.drawable.satvik3,
+        R.drawable.safe_foodpacket,
+
+    )
+    val avoidOcrDrawables = listOf(
+        R.drawable.nonsatvik1,
+        R.drawable.nonsatvik2,
+        R.drawable.nonsatvik3,
+        R.drawable.avoid_foodpacket,
+        R.drawable.foodpacket
+    )
+
+    // Select drawable based on the database-stored index
+    val ocrList = if (isSatvik) satvikOcrDrawables else avoidOcrDrawables
+    val placeholderRes = ocrList[imageIndex % ocrList.size]
+
     Box(
         modifier = Modifier
             .size(72.dp)
@@ -608,23 +626,18 @@ fun ProductImage(imageUrl: String?, isSatvik: Boolean) {
         if (!imageUrl.isNullOrEmpty()) {
             AsyncImage(
                 model = imageUrl,
-                placeholder = painterResource(
-                    id = if (isSatvik) R.drawable.safe_foodpacket else R.drawable.avoid_foodpacket
-                ),
-                error = painterResource(
-                    id = if (isSatvik) R.drawable.safe_foodpacket else R.drawable.avoid_foodpacket
-                ),
+                placeholder = painterResource(id = placeholderRes),
+                error = painterResource(id = placeholderRes),
                 contentDescription = "History Product Image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
         } else {
             Image(
-                painter = painterResource(
-                    id = if (isSatvik) R.drawable.safe_foodpacket else R.drawable.avoid_foodpacket
-                ),
+                painter = painterResource(id = placeholderRes),
                 contentDescription = "Default Product Image",
                 modifier = Modifier.fillMaxSize()
+
             )
         }
     }

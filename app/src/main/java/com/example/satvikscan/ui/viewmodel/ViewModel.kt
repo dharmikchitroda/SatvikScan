@@ -291,15 +291,24 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
                     _productUiState.value = ProductUiState.Success(productResponse)
 
                     // save in roomDb
+
+          // Calculate sequential index based on current saved OCRscans
+
+                val count = scanHistory.value.count {
+                    it.imageUrl.isNullOrEmpty() && it.isSatvik == FilteredList.isEmpty()
+                }
+                    val allocatedIndex = count % 3
+
                     scanHistoryDao_obj.insertScan(
                         ScanHistoryEntity(
                             barcode = "OCR_${System.currentTimeMillis()}", // unique ID
-                            productName = "OCR Scanned Packet",
+                            productName = "Scanned Packet",
                             ingredientsText = detectedText,
                             isSatvik = FilteredList.isEmpty(),
                             timestamp = System.currentTimeMillis(),
                             dietName = _dietName.value,
-                            imageUrl = null  // OCR dont have an image
+                            imageUrl = null , // OCR dont have an image
+                            imageIndex = allocatedIndex
                         )
                     )
                 }

@@ -181,7 +181,7 @@ fun ResultScreen(
                             ), // error fallback
                             contentDescription = "Product Image",
                             contentScale = ContentScale.Crop, // crops image
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier.padding(7.dp).fillMaxSize()
                         )
                     }
                     Spacer(modifier = Modifier.height(20.dp))
