@@ -71,6 +71,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
@@ -131,6 +132,7 @@ fun CameraScanScreen(
     val ocrAnalyzer = remember { OcrAnalyzer() } // one time make use multiple time
     val barcodeAnalyzer = remember { BarcodeAnalyzer(viewModel, context) }
     val camera = remember { mutableStateOf<Camera?>(null) }
+    val cameraProviderState = remember { mutableStateOf<ProcessCameraProvider?>(null) }
 
 
     val captureExecutor = remember { Executors.newSingleThreadExecutor() }
@@ -138,11 +140,21 @@ fun CameraScanScreen(
 // when screen close so executor(thread) close
     DisposableEffect(Unit) {
         onDispose {
+            try {
+                camera.value?.cameraControl?.enableTorch(false)
+            } catch (e: Exception) {
+                Log.e("CameraScanScreen", "Error disabling torch", e)
+            }
+            try {
+                cameraProviderState.value?.unbindAll()
+            } catch (e: Exception) {
+                Log.e("CameraScanScreen", "Error unbinding camera", e)
+            }
             captureExecutor.shutdown()
         }
     }
 
-    val lifecycleOwner = context as androidx.lifecycle.LifecycleOwner
+    val lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner) {
         val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
             if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
@@ -150,9 +162,9 @@ fun CameraScanScreen(
                     context,
                     Manifest.permission.CAMERA
                 ) == android.content.pm.PackageManager.PERMISSION_GRANTED
-                
+
                 viewModel.PermissionResult(hasPermission)
-                
+
                 if (hasOpenedSettings && !hasPermission) {
                     onBackClick()
                 }
@@ -343,6 +355,7 @@ fun CameraScanScreen(
                             cameraProviderFuture.addListener(
                                 {
                                     val cameraProvider = cameraProviderFuture.get()
+                                    cameraProviderState.value = cameraProvider
 
                                     val preview = Preview.Builder().build()
                                     preview.setSurfaceProvider(previewView.surfaceProvider)
@@ -357,7 +370,7 @@ fun CameraScanScreen(
                                         cameraProvider.unbindAll()
 
                                         camera.value = cameraProvider.bindToLifecycle(
-                                            context as androidx.lifecycle.LifecycleOwner,
+                                            lifecycleOwner,
                                             androidx.camera.core.CameraSelector.DEFAULT_BACK_CAMERA,
                                             preview,
                                             imageAnalysis
@@ -368,7 +381,7 @@ fun CameraScanScreen(
                                         imagecaptureReference.value = imageCapture
                                         cameraProvider.unbindAll()
                                         camera.value = cameraProvider.bindToLifecycle(
-                                            context as androidx.lifecycle.LifecycleOwner,
+                                            lifecycleOwner,
                                             androidx.camera.core.CameraSelector.DEFAULT_BACK_CAMERA,
                                             preview,
                                             imageCapture
@@ -436,115 +449,116 @@ fun CameraScanScreen(
                             )
                         }
                     }
+                }
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth()
+                        .padding(bottom = 140.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
 
-
-                    // Bottom bar
+                    // ── GALLERY ──
                     Column(
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .fillMaxWidth()
-                            .navigationBarsPadding()
-                            .padding(top = 20.dp, bottom = 24.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        // Gallery + Flash Row
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 60.dp),
-                            horizontalArrangement = Arrangement.SpaceEvenly,
-                            verticalAlignment = Alignment.CenterVertically
+                        horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-
-                            // ── GALLERY ──
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-
-                                ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(56.dp)
-                                        .background(
-                                            color = Color.White.copy(alpha = 0.18f),   // translucent grey fill
-                                            shape = RoundedCornerShape(18.dp)           // squircle, not circle
-                                        )
-                                        .border(
-                                            width = 1.dp,
-                                            color = Color.White.copy(alpha = 0.35f),
-                                            shape = RoundedCornerShape(18.dp)
-                                        )
-                                        .clickable {
-                                            galleryLauncher.launch("image/*")
-                                        },
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Icon(
-                                        painter = painterResource(R.drawable.gallery),
-                                        contentDescription = "Gallery",
+                        Box(
+                            modifier = Modifier
+                                .size(60.dp)
+                                .background(
+                                    color = Color.White.copy(alpha = 0.18f),   // translucent grey fill
+                                    shape = CircleShape          // squircle, not circle
+                                )
+                                .border(
+                                    width = 1.dp,
+                                    color = Color.White.copy(alpha = 0.35f),
+                                    shape = CircleShape
+                                )
+                                .clip(CircleShape)
+                                .clickable {
+                                    galleryLauncher.launch("image/*")
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.gallery),
+                                contentDescription = "Gallery",
 //                                        tint = Color.White,
-                                        modifier = Modifier.size(24.dp)
-                                    )
-                                }
-                                Text(
-                                    text = "GALLERY",
-                                    color = Color.White.copy(alpha = 0.85f),
-                                    fontSize = 11.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    modifier = Modifier.padding(top = 6.dp)
-                                )
-                            }
-
-                            // ── FLASH ──
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(56.dp)
-                                        .background(
-                                            color = Color.White.copy(alpha = 0.18f),
-                                            shape = RoundedCornerShape(18.dp)
-                                        )
-                                        .border(
-                                            width = 1.dp,
-                                            color = Color.White.copy(alpha = 0.35f),
-                                            shape = RoundedCornerShape(18.dp)
-                                        )
-                                        .clickable {
-                                            isFlashOn = !isFlashOn
-                                            camera.value?.cameraControl?.enableTorch(isFlashOn)
-                                        },
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Icon(
-                                        painter = painterResource(R.drawable.flash_on),
-                                        contentDescription = "Flash",
-                                        tint = Color.White,
-                                        modifier = Modifier.size(24.dp)
-                                    )
-                                }
-                                Text(
-                                    text = "FLASH",
-                                    color = Color.White.copy(alpha = 0.85f),
-                                    fontSize = 11.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    modifier = Modifier.padding(top = 6.dp)
-                                )
-                            }
+                                modifier = Modifier.size(27.dp)
+                            )
                         }
+                        Text(
+                            text = "GALLERY",
+                            color = Color.White.copy(alpha = 0.85f),
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier.padding(top = 6.dp)
+                        )
                     }
 
+                    if (cameramode == ScanMode.OCR) {
+                        Spacer(modifier = Modifier.width(15.dp))
+                    }
 
+                    // ── FLASH ──
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(60.dp)
+                                .background(
+                                    color = Color.White.copy(alpha = 0.18f),
+                                    shape = CircleShape
+                                )
+                                .border(
+                                    width = 1.dp,
+                                      color = Color.White.copy(alpha = 0.35f),
+                                    shape = CircleShape
+                                )
+                                .clip(CircleShape)
+                                .clickable {
+                                    isFlashOn = !isFlashOn
+                                    camera.value?.cameraControl?.enableTorch(isFlashOn)
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(
+                                    if (isFlashOn) R.drawable.flash_on_ else R.drawable.flash_off
+                                ),
+                                contentDescription = "Flash",
+                                tint = Color.White,
+                                modifier = Modifier.size(29.dp)
+                            )
+                        }
+                        Text(
+                            text = "FLASH",
+                            color = Color.White.copy(alpha = 0.85f),
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier.padding(top = 6.dp)
+                        )
+                    }
                 }
+
+                // OCR Click Button
                 if (cameramode == ScanMode.OCR) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
-                            .padding(bottom = 150.dp)
-                            .size(72.dp)
-                            .background(Color(0xFF08733A), CircleShape)
-                            .border(3.dp, Color.White.copy(alpha = 0.3f), CircleShape)
-                            .clickable {
+                            .padding(bottom = 155.dp, start = 3.dp, end = 3.dp)
+                            .size(84.dp)
+                            .border(2.dp, Color.White, CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(70.dp)
+                                .background(Color(0xFF19592E), CircleShape)
+                                .clip(CircleShape)
+                                .clickable {
                                 imagecaptureReference.value?.takePicture(
                                     captureExecutor,
                                     object : ImageCapture.OnImageCapturedCallback() {
@@ -558,6 +572,7 @@ fun CameraScanScreen(
                                             )
 
                                             var bmp = image.toBitmap()
+
                                             if (imageInfo != 0) {
                                                 val matrix = Matrix()
                                                 matrix.postRotate(imageInfo.toFloat())
@@ -569,9 +584,28 @@ fun CameraScanScreen(
                                             }
                                             image.close()
 
+                                            //  CROP LOGIC TO MATCH SCREEN VIEW ──
+                                           // Get screen aspect ratio in pixels
+                                            val displayMetrics = context.resources.displayMetrics
+                                            val screenRatio =
+                                                displayMetrics.heightPixels.toFloat() / displayMetrics.widthPixels.toFloat()
+
                                             Handler(Looper.getMainLooper()).post {
                                                 capturedBitmap = bmp
                                             }
+
+                                            // Get captured bitmap ratio
+                                            val bitmapRatio = bmp.height.toFloat() / bmp.width.toFloat()
+
+                                            // Crop the sides if the captured image is wider than the preview screen
+                                            if (bitmapRatio < screenRatio) {
+                                                val targetWidth = (bmp.height / screenRatio).toInt()
+                                                val xOffset = (bmp.width - targetWidth) / 2
+                                                if (targetWidth > 0 && xOffset >= 0 && (xOffset + targetWidth) <= bmp.width) {
+                                                    bmp = Bitmap.createBitmap(bmp, xOffset, 0, targetWidth, bmp.height)
+                                                }
+                                            }
+
                                         }
 
                                         override fun onError(exception: ImageCaptureException) {}
@@ -581,11 +615,12 @@ fun CameraScanScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.baseline_qr_code_scanner_24),
+                            painter = painterResource(R.drawable.baseline_camera_alt_24),
                             contentDescription = "Capture",
                             tint = Color.White,
                             modifier = Modifier.size(32.dp)
                         )
+                    }
                     }
                 }
 
@@ -648,8 +683,8 @@ fun CameraScanScreen(
 
         if (showPermissionDialog) {
             CameraPermissionDialog(
-                onDismiss = { 
-                    showPermissionDialog = false 
+                onDismiss = {
+                    showPermissionDialog = false
                     onBackClick()
                 },
                 onOpenSettings = {
@@ -665,7 +700,7 @@ fun CameraScanScreen(
             )
         }
     }
-    
+
 }
 
 @Composable
