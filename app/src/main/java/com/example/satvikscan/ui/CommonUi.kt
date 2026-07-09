@@ -1,5 +1,6 @@
 package com.example.satvikscan.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -8,9 +9,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
@@ -24,6 +30,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -38,10 +45,27 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.ui.text.input.ImeAction
 import com.example.satvikscan.R
 import com.example.satvikscan.routname
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 import com.example.satvikscan.ui.viewmodel.ScanMode
+import kotlinx.coroutines.launch
 
 @Composable
 fun CommonUi(
@@ -55,17 +79,15 @@ fun CommonUi(
     val navBackStackEntry by navconroller.currentBackStackEntryAsState()
 
     val currentRoute = navBackStackEntry?.destination?.route
-    // for this both top&bottom bar show or hide
-    val showBars =
-        currentRoute != routname().CameraScreen && currentRoute != routname().ResultScreen && currentRoute != routname().WelcomeScreen && currentRoute != routname().CustomExclusionsScreen
+    // for this both top & bottom bar show or hide
+    val showBars = currentRoute == routname().HomeScreen
     // only topbar show or hide
-    val showTopbar =
-        showBars && currentRoute != routname().HistoryScreen && currentRoute != routname().ProfileScreen
+    val showTopbar = showBars
 
 
     // which screen open when user start the app first time and another time
     val startDestination = remember {
-        if (viewModel.hasSelectedDiet()) routname().ScanScreen else routname().WelcomeScreen
+        if (viewModel.hasSelectedDiet()) routname().HomeScreen else routname().WelcomeScreen
     }
 
     // dietName show in topbar
@@ -74,24 +96,71 @@ fun CommonUi(
     // current cameramode
     val currentCameramode by viewModel.Scanmode.collectAsState()
 
-    Scaffold(modifier = modifier, topBar = { if (showTopbar) Topbar(dietName) }, bottomBar = {
+    // Hoisted search state for History top bar
+    var isSearchActive by remember { mutableStateOf(false) }
+    var searchQuery by remember { mutableStateOf("") }
+    var showClearHistoryDialog by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
+
+    // Pager state: 0 = History, 1 = Home, 2 = Profile
+    val pagerState = rememberPagerState(initialPage = 1, pageCount = { 3 })
+    val coroutineScope = rememberCoroutineScope()
+    val currentPage = pagerState.currentPage
+
+    // Reset search state when leaving History tab
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.currentPage }.collect { page ->
+            if (page != 0) {
+                isSearchActive = false
+                searchQuery = ""
+            }
+        }
+    }
+
+    Scaffold(modifier = modifier,
+        topBar = {
+            if (showTopbar) {
+                Topbar {
+                    when(currentPage) {
+                        0 -> {
+                            HistoryTopBar(
+                                isSearchActive = isSearchActive,
+                                searchQuery = searchQuery,
+                                onSearchActiveChange = { isSearchActive = it },
+                                onSearchQueryChange = { searchQuery = it },
+                                onDeleteClick = { showClearHistoryDialog = true }
+                            )
+                        }
+                        1 -> {
+                            homeScreentopbar(dietName)
+                        }
+                        2 -> {
+                            ProfileScreentopbar()
+                        }
+                    }
+                }
+            }
+
+    }, bottomBar = {
         if (showBars) {
-            BottomBar(moveScanscreen = {
-                navconroller.navigate(routname().ScanScreen) {
-                    popUpTo(navconroller.graph.startDestinationId)
-                    launchSingleTop = true
+            BottomBar(
+                currentPage = currentPage,
+                moveScanscreen = {
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(1)
+                    }
+                },
+                moveHisscreen = {
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(0)
+                    }
+                },
+                moveProfilescreen = {
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(2)
+                    }
                 }
-            }, moveHisscreen = {
-                navconroller.navigate(routname().HistoryScreen) {
-                    popUpTo(navconroller.graph.startDestinationId)
-                    launchSingleTop = true
-                }
-            }, moveProfilescreen = {
-                navconroller.navigate(routname().ProfileScreen) {
-                    popUpTo(navconroller.graph.startDestinationId)
-                    launchSingleTop = true
-                }
-            })
+            )
         }
     }) { paddingValues ->
 
@@ -99,39 +168,66 @@ fun CommonUi(
             navconroller, startDestination = startDestination, modifier = Modifier.fillMaxSize()
         ) {
 
-            composable(routname().ScanScreen) {
-                HomeScreenUI(
-                    paddingValues,
-                    currentMode = currentCameramode,
-                    onScanPhotoclick = {
-                        if (currentCameramode != ScanMode.OCR) viewModel.ChnageScanMode(ScanMode.OCR)
-                        viewModel.startScanning()
-                        navconroller.navigate(routname().CameraScreen)
-                    },
-                    onScanBarcodescan = {
-                        if (currentCameramode != ScanMode.BARCODE) viewModel.ChnageScanMode(ScanMode.BARCODE)
-                        viewModel.startScanning()
-                        navconroller.navigate(routname().CameraScreen)
+            composable(routname().HomeScreen) {
+                // BackHandler: if user is on History or Profile page, go back to Home tab
+                BackHandler(enabled = currentPage != 1) {
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(1)
                     }
-                )
-            }
-            composable(routname().HistoryScreen) {
-                HistoryScreen(
-                    paddingValues = paddingValues, onStartScanningClick = {
-                        navconroller.navigate(routname().ScanScreen) {
-                            popUpTo(navconroller.graph.startDestinationId)
-                            launchSingleTop = true
+                }
+
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier.fillMaxSize()
+                ) { page ->
+                    when (page) {
+                        0 -> {
+                            HistoryScreen(
+                                paddingValues = paddingValues,
+                                onStartScanningClick = {
+                                    coroutineScope.launch {
+                                        pagerState.animateScrollToPage(1)
+                                    }
+                                },
+                                viewModel = viewModel,
+                                isSearchActive = isSearchActive,
+                                searchQuery = searchQuery,
+                                onSearchActiveChange = { isSearchActive = it },
+                                onSearchQueryChange = { searchQuery = it },
+                                showClearHistoryDialog = showClearHistoryDialog,
+                                onShowClearHistoryDialogChange = { showClearHistoryDialog = it }
+                            )
                         }
-                    }, viewModel = viewModel
-                )
-            }
-            composable(routname().ProfileScreen) {
-                UserProfileScreen(
-                    paddingValues = paddingValues,
-                    viewModel = viewModel,
-                    onBackClick = { navconroller.popBackStack() },
-                    onChangeDietClick = { navconroller.navigate(routname().WelcomeScreen) }
-                )
+                        1 -> {
+                            HomeScreenUI(
+                                paddingValues,
+                                currentMode = currentCameramode,
+                                onScanPhotoclick = {
+                                    if (currentCameramode != ScanMode.OCR) viewModel.ChnageScanMode(ScanMode.OCR)
+                                    viewModel.startScanning()
+                                    navconroller.navigate(routname().CameraScreen)
+                                },
+                                onScanBarcodescan = {
+                                    if (currentCameramode != ScanMode.BARCODE) viewModel.ChnageScanMode(ScanMode.BARCODE)
+                                    viewModel.startScanning()
+                                    navconroller.navigate(routname().CameraScreen)
+                                }
+                            )
+                        }
+                        2 -> {
+                            UserProfileScreen(
+                                paddingValues = paddingValues,
+                                viewModel = viewModel,
+                                onBackClick = {
+                                    coroutineScope.launch {
+                                        pagerState.animateScrollToPage(1)
+                                    }
+                                },
+                                onChangeDietClick = { navconroller.navigate(routname().WelcomeScreen) }
+                            )
+                        }
+                    }
+                }
             }
             composable(routname().CameraScreen) {
                 val uiState = viewModel.productUiState.collectAsState().value
@@ -172,7 +268,7 @@ fun CommonUi(
                         viewModel.startScanning()
                         navconroller.navigate(routname().CameraScreen) {
                             viewModel.startScanning() // reset old state
-                            popUpTo(routname().ScanScreen)
+                            popUpTo(routname().HomeScreen)
                         }
                     },
                     dietName = dietName,
@@ -195,7 +291,7 @@ fun CommonUi(
                         if (selectedDiet == "Custom") {
                             navconroller.navigate(routname().CustomExclusionsScreen)
                         } else {
-                            navconroller.navigate(routname().ScanScreen) {
+                            navconroller.navigate(routname().HomeScreen) {
                                 popUpTo(routname().WelcomeScreen) { inclusive = true }
                             }
                         }
@@ -205,7 +301,7 @@ fun CommonUi(
             composable(routname().CustomExclusionsScreen) {
                 CustomExclusionsScreen(
                     viewModel = viewModel, onBackClick = {
-                        navconroller.navigate(routname().ScanScreen) {
+                        navconroller.navigate(routname().HomeScreen) {
                             popUpTo(routname().WelcomeScreen) { inclusive = true }
                         }
                     })
@@ -217,9 +313,12 @@ fun CommonUi(
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+
+
 @Composable
-fun Topbar(dietName: String) {
+fun Topbar(
+    content: @Composable () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -229,45 +328,21 @@ fun Topbar(dietName: String) {
                 )
             )
             .statusBarsPadding()
-            .padding(horizontal = 16.dp, vertical = 16.dp)
+            .height(56.dp)
+            .padding(horizontal = 16.dp),
+        contentAlignment = Alignment.CenterStart
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-
-            Text(
-                "SatvikScan",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.ExtraBold,
-                color = Color(0xFF1B3A2D),
-                textAlign = TextAlign.Center
-            )
-
-
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White, shape = RoundedCornerShape(20.dp)
-                    )
-                    .padding(horizontal = 10.dp, vertical = 4.dp)
-            ) {
-                Text(
-                    text = dietName,
-                    fontSize = 11.sp,
-                    color = Color.Black,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-        }
+        content()
     }
 }
 
 
 @Composable
 fun BottomBar(
-    moveScanscreen: () -> Unit, moveHisscreen: () -> Unit, moveProfilescreen: () -> Unit
+    currentPage: Int,
+    moveScanscreen: () -> Unit,
+    moveHisscreen: () -> Unit,
+    moveProfilescreen: () -> Unit
 ) {
     BottomAppBar(
         containerColor = Color.White, tonalElevation = 0.dp
@@ -280,15 +355,22 @@ fun BottomBar(
 
             // History
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.clickable {
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.clickable {
                     moveHisscreen()
                 }) {
                 Icon(
                     painter = painterResource(R.drawable.baseline_history_24),
                     contentDescription = "History",
-                    tint = Color.Gray
+                    tint = if (currentPage == 0) Color(0xFF1B3A2D) else Color.Gray,
+                    modifier = Modifier.size(24.dp)
                 )
-                Text(text = "History", fontSize = 11.sp, color = Color.Gray)
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "History",
+                    fontSize = 11.sp,
+                    color = if (currentPage == 0) Color(0xFF1B3A2D) else Color.Gray
+                )
             }
 
             // Scan
@@ -310,6 +392,7 @@ fun BottomBar(
                         modifier = Modifier.size(38.dp)
                     )
                 }
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "Scan",
                     fontSize = 11.sp,
@@ -324,12 +407,164 @@ fun BottomBar(
                     moveProfilescreen()
                 }) {
                 Icon(
-                    painter = painterResource(R.drawable.baseline_supervised_user_circle_24),
+                    painter = painterResource(R.drawable.user),
                     contentDescription = "Profile",
-                    tint = Color.Gray
+                    tint = if (currentPage == 2) Color(0xFFD35400) else Color.Gray,
+                    modifier = Modifier.size(24.dp)
                 )
-                Text(text = "Profile", fontSize = 11.sp, color = Color.Gray)
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Profile",
+                    fontSize = 11.sp,
+                    color = if (currentPage == 2) Color(0xFFD35400) else Color.Gray
+                )
             }
         }
+    }
+}
+
+
+@Composable
+fun HistoryTopBar(
+    isSearchActive: Boolean,
+    searchQuery: String,
+    onSearchActiveChange: (Boolean) -> Unit,
+    onSearchQueryChange: (String) -> Unit,
+    onDeleteClick: () -> Unit
+) {
+    val focusManager = LocalFocusManager.current
+    if (isSearchActive) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = {
+                onSearchActiveChange(false)
+                onSearchQueryChange("")
+            }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Close Search",
+                    tint = Color(0xFF1B3A2D)
+                )
+            }
+
+            TextField(
+                value = searchQuery,
+                onValueChange = { onSearchQueryChange(it) },
+                placeholder = { Text("Search products...", color = Color.Gray) },
+                textStyle = androidx.compose.ui.text.TextStyle(
+                    color = Color.Black,
+                    fontSize = 16.sp
+                ),
+                modifier = Modifier
+                    .weight(1f)
+                    .height(48.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    cursorColor = Color(0xFF1B3A2D)
+                ),
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(onSearch = { focusManager.clearFocus() })
+            )
+
+            if (searchQuery.isNotEmpty()) {
+                IconButton(onClick = { onSearchQueryChange("") }) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Clear Text",
+                        tint = Color(0xFF1B3A2D)
+                    )
+                }
+            }
+        }
+    } else {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "History",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color(0xFF1B3A2D),
+                textAlign = TextAlign.Center
+            )
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = { onSearchActiveChange(true) }) {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search",
+                        tint = Color(0xFF1B3A2D),
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.width(4.dp))
+                IconButton(onClick = onDeleteClick) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Clear History",
+                        tint = Color(0xFF1B3A2D),
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+fun homeScreentopbar(dietName: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+
+        Text(
+            "SatvikScan",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.ExtraBold,
+            color = Color(0xFF1B3A2D),
+            textAlign = TextAlign.Center
+        )
+
+
+        Box(
+            modifier = Modifier
+                .background(
+                    color = Color.White, shape = RoundedCornerShape(20.dp)
+                )
+                .padding(horizontal = 10.dp, vertical = 4.dp)
+        ) {
+            Text(
+                text = dietName,
+                fontSize = 11.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.Medium
+            )
+        }
+    }
+}
+
+@Composable
+fun ProfileScreentopbar() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            "Settings",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.ExtraBold,
+            color = Color(0xFF1B3A2D)
+        )
     }
 }

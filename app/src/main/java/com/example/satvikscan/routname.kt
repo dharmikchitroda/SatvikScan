@@ -1,7 +1,7 @@
 package com.example.satvikscan;
 
 class routname {
-    var ScanScreen = "ScanScreen"
+    var HomeScreen = "HomeScreen"
     var HistoryScreen = "HistoryScreen"
     var ProfileScreen = "ProfileScreen"
 

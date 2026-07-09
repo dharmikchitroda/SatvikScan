@@ -86,7 +86,13 @@ data class HistoryItem(
 fun HistoryScreen(
     paddingValues: PaddingValues,
     viewModel: Satvik_ViewModel,
-    onStartScanningClick: () -> Unit
+    onStartScanningClick: () -> Unit,
+    isSearchActive: Boolean,
+    searchQuery: String,
+    onSearchActiveChange: (Boolean) -> Unit,
+    onSearchQueryChange: (String) -> Unit,
+    showClearHistoryDialog: Boolean,
+    onShowClearHistoryDialogChange: (Boolean) -> Unit
 ) {
 
     val scanHistory by viewModel.scanHistory.collectAsState()
@@ -95,10 +101,7 @@ fun HistoryScreen(
 
     // State parameters
     var selectedFilter_btn by remember { mutableStateOf("All") }
-    var searchQuery by remember { mutableStateOf("") }
-    var isSearchActive by remember { mutableStateOf(false) }
     var expandedMenuBarcode by remember { mutableStateOf<String?>(null) }
-    var showClearHistoryDialog by remember { mutableStateOf(false) }// for dialog
 
 
     // Map database items to unified model
@@ -137,106 +140,11 @@ fun HistoryScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            . background(Color.White) // sleek off-white background
-            .padding(bottom = paddingValues.calculateBottomPadding()) // align with bottom navigation bar
+            .background(Color(0xFFFAF9F9)) // sleek off-white background
+            .padding(paddingValues) // align with both top bar and bottom bar
     ) {
         // Custom Top bar
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(Color(0xFFBEF3CE), Color(0xFFFAFAFA))
-                    )
-                )
-                .statusBarsPadding()
-                .padding(horizontal = 16.dp, vertical = 16.dp)
-        ) {
-            if (isSearchActive) {
-                // Active Search Bar Layout
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(onClick = {
-                        isSearchActive = false
-                        searchQuery = ""
-                    }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Close Search",
-                            tint = Color(0xFF1B3A2D)
-                        )
-                    }
 
-                    TextField(
-                        value = searchQuery,
-                        onValueChange = { searchQuery = it },
-                        placeholder = { Text("Search products...", color = Color.Black) },
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(52.dp),
-                        colors = TextFieldDefaults.colors(
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                            cursorColor = Color(0xFF1B3A2D)
-                        ),
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                        keyboardActions = KeyboardActions(onSearch = { focusManager.clearFocus() })
-                    )
-
-                    if (searchQuery.isNotEmpty()) {
-                        IconButton(onClick = { searchQuery = "" }) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "Clear Text",
-                                tint = Color(0xFF1B3A2D)
-                            )
-                        }
-                    }
-                }
-            } else {
-                // Static Default Header
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "History",
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = Color(0xFF1B3A2D),
-                        textAlign = TextAlign.Center
-                    )
-
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        IconButton(onClick = { isSearchActive = true }) {
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = "Search",
-                                tint = Color(0xFF1B3A2D),
-                                modifier = Modifier.size(28.dp)
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(4.dp))
-                        IconButton(onClick = {
-                            showClearHistoryDialog = true
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = "Clear History",
-                                tint = Color(0xFF1B3A2D),
-                                modifier = Modifier.size(28.dp)
-                            )
-                        }
-                    }
-                }
-            }
-        }
 
         if (dbItems.isEmpty()) {
             EmptyHistoryState(
@@ -323,9 +231,9 @@ fun HistoryScreen(
 
         if (showClearHistoryDialog) {
             ClearHistoryDialog(
-                onDismissRequest = { showClearHistoryDialog = false },
+                onDismissRequest = { onShowClearHistoryDialogChange(false) },
                 onConfirm = {
-                    showClearHistoryDialog = false
+                    onShowClearHistoryDialogChange(false)
                     viewModel.clearAllScans()
                 }
             )

@@ -77,45 +77,9 @@ fun UserProfileScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(if (isDarkMode) Color(0xFF121212) else Color(0xFFFAF9F9))
-            .padding(bottom = paddingValues.calculateBottomPadding())
+            .padding(paddingValues)
     ) {
-        // Custom  Top Bar
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    if (isDarkMode) {
-                        Brush.verticalGradient(
-                            colors = listOf(Color(0xFFADFDD4), Color(0xFF121212))
-                        )
-                    } else {
-                        Brush.verticalGradient(
-                            colors = listOf(Color(0xFFEAF4EF), Color(0xFFFAF9F9))
-                        )
-                    }
-                )
-                .statusBarsPadding()
-                .padding(horizontal = 16.dp, vertical = 6.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            IconButton(
-                onClick = onBackClick,
-                modifier = Modifier.align(Alignment.CenterStart)
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
-                    tint = if (isDarkMode) Color.White else Color(0xFF2D6A4F)  ,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-            Text(
-                text = "Settings",
-                fontSize = 19.sp,
-                fontWeight = FontWeight.Bold,
-                color = if (isDarkMode) Color.White else Color(0xFF2D6A4F)
-            )
-        }
+
 
         // Main content inside Column (non-scrollable layout)
         Column(

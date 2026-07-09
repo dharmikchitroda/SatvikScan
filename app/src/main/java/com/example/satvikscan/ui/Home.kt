@@ -45,7 +45,7 @@ fun HomeScreenUI(
     Column(
         Modifier
             .fillMaxSize()
-            .background(Color(0xFFFAFAFA))
+            .background(Color(0xFFFAF9F9))
             .padding(paddingValues)
             .padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -68,7 +68,7 @@ fun HomeScreenUI(
             border = BorderStroke(1.5.dp, MaterialTheme.colorScheme.primary)
         ) {
             Icon(
-                painter = painterResource(R.drawable.barcode_scan),
+                painter = painterResource(R.drawable.barcode_scan__1_),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(20.dp)
