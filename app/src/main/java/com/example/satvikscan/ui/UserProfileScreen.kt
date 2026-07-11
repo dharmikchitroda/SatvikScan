@@ -58,13 +58,12 @@ fun UserProfileScreen(
     paddingValues: PaddingValues,
     viewModel: Satvik_ViewModel,
     onBackClick: () -> Unit,
-    onChangeDietClick: () -> Unit
+    onChangeDietClick: () -> Unit,
+    onCustomExclusionsClick: () -> Unit
 ) {
-//    val isDarkMode by viewModel.isDarkMode.collectAsState()
-    var isDarkMode = false
+    // val isDarkMode by viewModel.isDarkMode.collectAsState()
+    val isDarkMode = false
     val dietName by viewModel.dietName.collectAsState()
-
-
 
     val CardBg = Color(0xFFF5F3F3)           // Main Card / List item Background (#f5f3f3)
     val RowIconColor = Color(0xFF333333)     // Dark Gray/Black for main setting icons
@@ -119,10 +118,15 @@ fun UserProfileScreen(
                             ),
                         contentAlignment = Alignment.Center
                     ) {
+                        val iconRes = when (dietName) {
+                            "Swaminarayan" -> R.drawable.swaminarayan_tilak
+                            "Jain" -> R.drawable.jain_logo
+                            else -> R.drawable.ic_custom_diet
+                        }
                         Icon(
-                            painter = painterResource(R.drawable.swaminarayan_tilak),
+                            painter = painterResource(iconRes),
                             contentDescription = "Diet preferences",
-                            tint = Color(0xFFD35400),
+                            tint = if (dietName == "Swaminarayan") Color(0xFFD35400) else if (dietName == "Jain") Color(0xFF2E7D32) else Color(0xFF1B3A2D),
                             modifier = Modifier.size(28.dp)
                         )
                     }
@@ -149,7 +153,7 @@ fun UserProfileScreen(
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
                             text = when (dietName) {
-                                "Swaminarayan" -> "Strict Satvik guidelines enabled."
+                                "Swaminarayan" -> "No onion, garlic, or eggs."
                                 "Jain" -> "No root vegetables or honey."
                                 else -> "Custom ingredient exclusions enabled."
                             },
@@ -166,7 +170,8 @@ fun UserProfileScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
+
 
             // 3. APP SETTINGS section
             SectionHeader(title = "APP SETTINGS", isDarkMode = isDarkMode, headerColor = Color(0xFF7E8B85))
@@ -197,7 +202,7 @@ fun UserProfileScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.moon_svg),
+                                painter = painterResource(R.drawable.moon ),
                                 contentDescription = "Dark Mode",
                                 tint = Color.Unspecified,
                                 modifier = Modifier.size(26.dp)

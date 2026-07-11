@@ -146,8 +146,11 @@ fun CommonUi(
                 currentPage = currentPage,
                 moveScanscreen = {
                     coroutineScope.launch {
-                        pagerState.animateScrollToPage(1)
+                        pagerState.scrollToPage(1)
                     }
+                    if (currentCameramode != ScanMode.BARCODE) viewModel.ChnageScanMode(ScanMode.BARCODE)
+                    viewModel.startScanning()
+                    navconroller.navigate(routname().CameraScreen)
                 },
                 moveHisscreen = {
                     coroutineScope.launch {

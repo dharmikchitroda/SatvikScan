@@ -318,15 +318,55 @@ fun ResultScreen(
                                     ) -> R.drawable.ic_garlic
 
                                     ingredient.name.contains(
+                                        "Onion", ignoreCase = true
+                                    ) -> R.drawable.ic_onion
+
+                                    ingredient.name.contains(
                                         "Potato", ignoreCase = true
                                     ) -> R.drawable.ic_potato
 
                                     ingredient.name.contains(
                                         "Carrot", ignoreCase = true
-                                    ) -> R.drawable.ic_carrot
+                                    ) -> R.drawable.ic_carrot_1
+
+                                    ingredient.name.contains(
+                                        "Egg", ignoreCase = true
+                                    ) -> R.drawable.ic_egg
+
+                                    ingredient.name.contains(
+                                        "Poppy", ignoreCase = true
+                                    ) || ingredient.name.contains(
+                                        "Khus", ignoreCase = true
+                                    ) -> R.drawable.ic_poppy_seeds
+
+                                    ingredient.name.contains(
+                                        "Vinegar", ignoreCase = true
+                                    ) || ingredient.name.contains(
+                                        "Sirka", ignoreCase = true
+                                    ) -> R.drawable.ic_vinegar
 
                                     ingredient.type == IngredientType.ROOT_VEGETABLE -> R.drawable.ic_root_vegetable
                                     ingredient.type == IngredientType.NON_VEG_ORIGIN -> R.drawable.ic_meat
+
+                                    // Check for alcohol and intoxicants to display the general restricted icon
+                                    ingredient.name.contains("alcohol", ignoreCase = true) ||
+                                            ingredient.name.contains("wine", ignoreCase = true) ||
+                                            ingredient.name.contains("beer", ignoreCase = true) ||
+                                            ingredient.name.contains("rum", ignoreCase = true) ||
+                                            ingredient.name.contains("whisky", ignoreCase = true) ||
+                                            ingredient.name.contains("whiskey", ignoreCase = true) ||
+                                            ingredient.name.contains("brandy", ignoreCase = true) ||
+                                            ingredient.name.contains("vodka", ignoreCase = true) ||
+                                            ingredient.name.contains("gin", ignoreCase = true) ||
+                                            ingredient.name.contains("spirit", ignoreCase = true) ||
+                                            ingredient.name.contains("ethanol", ignoreCase = true) ||
+                                            ingredient.name.contains("cannabis", ignoreCase = true) ||
+                                            ingredient.name.contains("bhang", ignoreCase = true) ||
+                                            ingredient.name.contains("marijuana", ignoreCase = true) ||
+                                            ingredient.name.contains("ganja", ignoreCase = true) ||
+                                            ingredient.name.contains("opium", ignoreCase = true) ||
+                                            ingredient.name.contains("hashish", ignoreCase = true) -> R.drawable.restricted_svgrepo_com
+
                                     else -> R.drawable.ic_chemical
                                 }
                                 IngredientItem(

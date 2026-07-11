@@ -146,7 +146,7 @@ fun WelcomeScreen(
                 DietOptionCard(
                     title = "Jain",
                     subtitle = "No root vegetables or honey.",
-                    iconRes = R.drawable.ic_jain,
+                    iconRes = R.drawable.jain_logo,
                     iconBgColor = Color(0xFFE8F5E9),
                     iconTint = Color(0xFF2E7D32),
                     selected = selectedDiet == "Jain",
