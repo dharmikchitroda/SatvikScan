@@ -69,9 +69,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun CommonUi(
-    modifier: Modifier = Modifier.fillMaxSize(),
-
-    ) {
+    modifier: Modifier = Modifier.fillMaxSize()
+) {
 
     val viewModel: Satvik_ViewModel = viewModel()
     val navconroller = rememberNavController() // return navhostcontroller object
@@ -223,7 +222,8 @@ fun CommonUi(
                                         pagerState.animateScrollToPage(1)
                                     }
                                 },
-                                onChangeDietClick = { navconroller.navigate(routname().WelcomeScreen) }
+                                onChangeDietClick = { navconroller.navigate(routname().SelectDietScreen) },
+                                onCustomExclusionsClick = { navconroller.navigate(routname().CustomExclusionsScreen) }
                             )
                         }
                     }
@@ -300,9 +300,21 @@ fun CommonUi(
 
             composable(routname().CustomExclusionsScreen) {
                 CustomExclusionsScreen(
-                    viewModel = viewModel, onBackClick = {
-                        navconroller.navigate(routname().HomeScreen) {
-                            popUpTo(routname().WelcomeScreen) { inclusive = true }
+                    viewModel = viewModel,
+                    onBackClick = {
+                        navconroller.popBackStack()
+                    })
+            }
+
+            composable(routname().SelectDietScreen) {
+                SelectDietScreen(
+                    viewModel = viewModel,
+                    onContinueClick = { selectedDiet ->
+                        navconroller.popBackStack()
+                    },
+                    onCustomClick = {
+                        navconroller.navigate(routname().CustomExclusionsScreen) {
+                            popUpTo(routname().SelectDietScreen) { inclusive = true }
                         }
                     })
             }
@@ -386,13 +398,13 @@ fun BottomBar(
                         ), contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.scan),
+                        painter = painterResource(R.drawable.barcode_scan__1_),
                         contentDescription = "Scan",
                         tint = Color.White,
-                        modifier = Modifier.size(38.dp)
+                        modifier = Modifier.size(50.dp)
                     )
                 }
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(3.dp))
                 Text(
                     text = "Scan",
                     fontSize = 11.sp,
@@ -409,14 +421,14 @@ fun BottomBar(
                 Icon(
                     painter = painterResource(R.drawable.user),
                     contentDescription = "Profile",
-                    tint = if (currentPage == 2) Color(0xFFD35400) else Color.Gray,
+                    tint = if (currentPage == 2) Color(0xFF1B3A2D) else Color.Gray,
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "Profile",
                     fontSize = 11.sp,
-                    color = if (currentPage == 2) Color(0xFFD35400) else Color.Gray
+                    color = if (currentPage == 2) Color(0xFF1B3A2D) else Color.Gray
                 )
             }
         }

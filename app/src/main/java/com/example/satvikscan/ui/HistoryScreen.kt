@@ -502,23 +502,22 @@ fun HistoryCardItem(
     }
 }
 
+private val satvikOcrDrawables = listOf(
+    R.drawable.satvik1,
+    R.drawable.satvik2,
+    R.drawable.satvik3,
+    R.drawable.safe_foodpacket
+)
+private val avoidOcrDrawables = listOf(
+    R.drawable.nonsatvik1,
+    R.drawable.nonsatvik2,
+    R.drawable.nonsatvik3,
+    R.drawable.avoid_foodpacket,
+    R.drawable.foodpacket
+)
+
 @Composable
 fun ProductImage(imageUrl: String?, isSatvik: Boolean, imageIndex: Int) {
-
-    val satvikOcrDrawables = listOf(
-        R.drawable.satvik1,
-        R.drawable.satvik2,
-        R.drawable.satvik3,
-        R.drawable.safe_foodpacket,
-
-    )
-    val avoidOcrDrawables = listOf(
-        R.drawable.nonsatvik1,
-        R.drawable.nonsatvik2,
-        R.drawable.nonsatvik3,
-        R.drawable.avoid_foodpacket,
-        R.drawable.foodpacket
-    )
 
     // Select drawable based on the database-stored index
     val ocrList = if (isSatvik) satvikOcrDrawables else avoidOcrDrawables
