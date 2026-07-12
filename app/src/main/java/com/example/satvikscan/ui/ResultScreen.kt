@@ -194,6 +194,17 @@ fun ResultScreen(
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(horizontal = 24.dp)
                     )
+                    if (!state.product.code.isNullOrBlank()) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = "Barcode: ${state.product.code}",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color(0xFF757575),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(horizontal = 24.dp)
+                        )
+                    }
                     Spacer(modifier = Modifier.height(24.dp))
 
                     Text(

@@ -79,11 +79,14 @@ fun CustomExclusionsScreen(
 
     val customExclusions by viewModel.customAvoidList.collectAsState()
 
+    // Most common allergens - elegant order
     val commonAllergens = listOf(
-        "Peanuts",
-        "Gluten",
         "Dairy",
+        "Gluten",
+        "Peanuts",
+        "Eggs",
         "Soy",
+        "Tree Nuts",
         "Mustard",
         "Onion"
     )
@@ -195,7 +198,9 @@ fun CustomExclusionsScreen(
                     focusedBorderColor = Color(0xFF1B3A2D),
                     unfocusedBorderColor = Color(0xFFE0E0E0),
                     focusedContainerColor = Color(0xFFEEEEEE),
-                    unfocusedContainerColor = Color(0xFFEEEEEE)
+                    unfocusedContainerColor = Color(0xFFEEEEEE),
+                    focusedTextColor = Color(0xFF212121),
+                    unfocusedTextColor = Color(0xFF212121)
                 )
             )
 
@@ -239,101 +244,94 @@ fun CustomExclusionsScreen(
                                 val allergen = commonAllergens[j]
                                 val isSelected = customExclusions.contains(allergen.lowercase())
                                 val allergenIcon = when (allergen.lowercase()) {
-                                    "peanuts" -> R.drawable.peanut
-                                    "gluten" -> R.drawable.gluten
-                                    "dairy" -> R.drawable.dairy
-                                    "soy" -> R.drawable.soy
-                                    "mustard" -> R.drawable.mustard
-                                    "onion" -> R.drawable.onion
-                                    else -> R.drawable.download__1_
+                                    "dairy"     -> R.drawable.allergen_dairy
+                                    "gluten"    -> R.drawable.allergen_gluten
+                                    "peanuts"   -> R.drawable.allergen_peanuts
+                                    "eggs"      -> R.drawable.allergen_eggs
+                                    "soy"       -> R.drawable.allergen_soy
+                                    "tree nuts" -> R.drawable.allergen_treenuts
+                                    "mustard"   -> R.drawable.allergen_mustard
+                                    "onion"     -> R.drawable.allergen_onion
+                                    else        -> R.drawable.allergen_peanuts
                                 }
-                                Card(
+                                 Card(
                                     modifier = Modifier
                                         .weight(1f)
-                                        .height(120.dp)
+                                        .height(70.dp)
                                         .clickable {
                                             if (isSelected) {
-                                                // select kia gya ahin by user so, isSelected = true and second vahi clik remove it
                                                 viewModel.removeCustomAvoidIngredient(allergen)
                                             } else {
-                                                // first time click nahi kia hoga is liye add bhi nahi hua hoga - firt click add this
                                                 viewModel.addCustomAvoidIngredient(allergen)
                                             }
                                         },
-                                    shape = RoundedCornerShape(20.dp),
+                                    shape = RoundedCornerShape(16.dp),
                                     colors = CardDefaults.cardColors(
-                                        containerColor = if (isSelected) Color(0xFFFFEBEE) else Color(
-                                            0xFFFAFAFA
-                                        )
+                                        containerColor = if (isSelected) Color(0xFFFFEBEE) else Color.White
                                     ),
                                     border = BorderStroke(
-                                        width = if (isSelected) 2.dp else 1.dp,
-                                        color = if (isSelected) Color(0xFFC62828) else Color(
-                                            0xFFEEEEEE
-                                        )
+                                        width = if (isSelected) 1.5.dp else 1.dp,
+                                        color = if (isSelected) Color(0xFFC62828) else Color(0xFFEEEEEE)
                                     ),
-                                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                                    elevation = CardDefaults.cardElevation(
+                                        defaultElevation = if (isSelected) 0.dp else 1.dp
+                                    )
                                 ) {
-                                    Box(
-                                        modifier = Modifier.fillMaxSize()
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(horizontal = 10.dp),
+                                        verticalAlignment = Alignment.CenterVertically
                                     ) {
-                                        // Top-Right Indicator (+ or Check)
+                                        // Left Image Circle
                                         Box(
                                             modifier = Modifier
-                                                .padding(top = 10.dp, end = 10.dp)
-                                                .size(22.dp)
-                                                .border(
-                                                    width = 1.dp,
-                                                    color = if (isSelected) Color(0xFFC62828) else Color(
-                                                        0xFF9E9E9E
-                                                    ),
+                                                .size(42.dp)
+                                                .background(
+                                                    color = if (isSelected) Color(0xFFFFF0F0) else Color(0xFFF5F5F5),
                                                     shape = CircleShape
                                                 )
-                                                .align(Alignment.TopEnd),
+                                                .border(
+                                                    width = 1.dp,
+                                                    color = if (isSelected) Color(0xFFFFCDD2) else Color(0xFFE8E8E8),
+                                                    shape = CircleShape
+                                                ),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            androidx.compose.foundation.Image(
+                                                painter = painterResource(id = allergenIcon),
+                                                contentDescription = allergen,
+                                                modifier = Modifier.size(28.dp)
+                                            )
+                                        }
+
+                                        Spacer(modifier = Modifier.width(8.dp))
+
+                                        // Center Name
+                                        Text(
+                                            text = allergen,
+                                            fontWeight = FontWeight.SemiBold,
+                                            fontSize = 12.5.sp,
+                                            color = if (isSelected) Color(0xFFC62828) else Color(0xFF2C2C2C),
+                                            modifier = Modifier.weight(1f),
+                                            maxLines = 1
+                                        )
+
+                                        // Right Check or Plus Indicator
+                                        Box(
+                                            modifier = Modifier
+                                                .size(20.dp)
+                                                .background(
+                                                    color = if (isSelected) Color(0xFFC62828) else Color(0xFFF0F0F0),
+                                                    shape = CircleShape
+                                                ),
                                             contentAlignment = Alignment.Center
                                         ) {
                                             Icon(
                                                 imageVector = if (isSelected) Icons.Default.Check else Icons.Default.Add,
                                                 contentDescription = if (isSelected) "Selected" else "Add",
-                                                tint = if (isSelected) Color(0xFFC62828) else Color(
-                                                    0xFF757575
-                                                ),
-                                                modifier = Modifier.size(12.dp)
-                                            )
-                                        }
-
-                                        // Central Content: Image & Text
-                                        Column(
-                                            modifier = Modifier
-                                                .fillMaxSize()
-                                                .padding(bottom = 12.dp),
-                                            horizontalAlignment = Alignment.CenterHorizontally,
-                                            verticalArrangement = Arrangement.Center
-                                        ) {
-                                            Box(
-                                                modifier = Modifier
-                                                    .size(44.dp)
-                                                    .background(Color.White, shape = CircleShape)
-                                                    .border(1.dp, Color(0xFFE0E0E0), CircleShape),
-                                                contentAlignment = Alignment.Center
-                                            ) {
-                                                Image(
-                                                    painter = painterResource(id = allergenIcon),
-                                                    contentDescription = allergen,
-                                                    modifier = Modifier.size(24.dp)
-                                                )
-                                            }
-
-                                            Spacer(modifier = Modifier.height(8.dp))
-
-                                            Text(
-                                                text = allergen,
-                                                fontWeight = FontWeight.Bold,
-                                                fontSize = 14.sp,
-                                                color = if (isSelected) Color(0xFFC62828) else Color(
-                                                    0xFF212121
-                                                ),
-                                                textAlign = TextAlign.Center
+                                                tint = if (isSelected) Color.White else Color(0xFF9E9E9E),
+                                                modifier = Modifier.size(11.dp)
                                             )
                                         }
                                     }
