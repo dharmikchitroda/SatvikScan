@@ -7,8 +7,6 @@ import retrofit2.http.Path
 interface ApiService {
 
     @GET("api/v0/product/{barcode}.json")
-    suspend fun getProductDetails(
-        @Path("barcode") barcode: String
-    ): ProductResponse
+    suspend fun getProductDetails(@Path("barcode") barcode: String): ProductResponse
 
 }

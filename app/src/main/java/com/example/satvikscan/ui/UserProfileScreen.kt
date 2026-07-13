@@ -173,8 +173,8 @@ fun UserProfileScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
 
-            // 3. APP SETTINGS section
-            SectionHeader(title = "APP SETTINGS", isDarkMode = isDarkMode, headerColor = Color(0xFF7E8B85))
+            // 3. RELIGION GUIDE section
+            SectionHeader(title = "RELIGION GUIDE", isDarkMode = isDarkMode, headerColor = Color(0xFF7E8B85))
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -185,59 +185,11 @@ fun UserProfileScreen(
                 elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
             ) {
                 Column {
-                    // Dark Mode Row
+                    // Jain Ingredient Guide Row
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(46.dp)
-                                .background(
-                                    if (isDarkMode) Color(0xFF2C2C2C) else Color.White,
-                                    shape = CircleShape
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.moon ),
-                                contentDescription = "Dark Mode",
-                                tint = Color.Unspecified,
-                                modifier = Modifier.size(26.dp)
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Text(
-                            text = "Dark Mode",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = if (isDarkMode) Color.White else Color(0xFF1F1F1F),
-                            modifier = Modifier.weight(1f)
-                        )
-                        Switch(
-                            checked = isDarkMode,
-                            onCheckedChange = { /* Toggle dark mode */ },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = Color.White,
-                                checkedTrackColor =  Color(0xFF2D6A4F),
-                                uncheckedThumbColor = Color.Gray,
-                                uncheckedTrackColor = Color.LightGray.copy(alpha = 0.5f)
-                            )
-                        )
-                    }
-
-                    HorizontalDivider(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        color = if (isDarkMode) Color(0xFF2A2A2A) else Color(0xFFE5E3E3)
-                    )
-
-                    // Language Row
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { /* Language details could be added */ }
+                            .clickable { /* Open Jain Ingredient Guide */ }
                             .padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -251,25 +203,64 @@ fun UserProfileScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.langues_png),
-                                contentDescription = "Language",
-                                tint = Color.Unspecified,
+                                painter = painterResource(R.drawable.jain_logo),
+                                contentDescription = "Jain Ingredient Guide",
+                                tint = if (isDarkMode) Color(0xFF4CAF50) else Color(0xFF2E7D32),
                                 modifier = Modifier.size(26.dp)
                             )
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Text(
-                            text = "Language",
+                            text = "Jain Ingredient Guide",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = if (isDarkMode) Color.White else Color(0xFF1F1F1F),
                             modifier = Modifier.weight(1f)
                         )
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                            contentDescription = "Go",
+                            tint = Color.Gray,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+
+                    HorizontalDivider(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        color = if (isDarkMode) Color(0xFF2A2A2A) else Color(0xFFE5E3E3)
+                    )
+
+                    // Swaminarayan Ingredient Guide Row
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { /* Open Swaminarayan Ingredient Guide */ }
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(46.dp)
+                                .background(
+                                    if (isDarkMode) Color(0xFF2C2C2C) else Color.White,
+                                    shape = CircleShape
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.swaminarayan_tilak),
+                                contentDescription = "Swaminarayan Ingredient Guide",
+                                tint = if (isDarkMode) Color(0xFFFFB74D) else Color(0xFFD35400),
+                                modifier = Modifier.size(26.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(16.dp))
                         Text(
-                            text = "English",
-                            fontSize = 14.sp,
-                            color = Color.Gray,
-                            modifier = Modifier.padding(end = 4.dp)
+                            text = "Swaminarayan Ingredient Guide",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = if (isDarkMode) Color.White else Color(0xFF1F1F1F),
+                            modifier = Modifier.weight(1f)
                         )
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,

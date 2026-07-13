@@ -143,8 +143,7 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
             }
 
             try {
-                val response =
-                    repository.getProduct(barcode) // return the dataclass object (json->kotlin object )
+                val response = repository.getProduct(barcode) // return the dataclass object (json->kotlin object )
 
                 // product not found state
                 if (response.status == 0 || response.product == null) {
