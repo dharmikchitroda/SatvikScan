@@ -121,7 +121,7 @@ fun UserProfileScreen(
                         val iconRes = when (dietName) {
                             "Swaminarayan" -> R.drawable.swaminarayan_tilak
                             "Jain" -> R.drawable.jain_logo
-                            else -> R.drawable.ic_custom_diet
+                            else -> R.drawable.custom_icon
                         }
                         Icon(
                             painter = painterResource(iconRes),

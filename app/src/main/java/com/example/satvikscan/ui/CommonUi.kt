@@ -2,6 +2,7 @@ package com.example.satvikscan.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -54,7 +55,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.LocalFocusManager
@@ -99,6 +99,8 @@ fun CommonUi(
     var isSearchActive by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
     var showClearHistoryDialog by remember { mutableStateOf(false) }
+    val scanHistory by viewModel.scanHistory.collectAsState()
+    val hasHistory = scanHistory.isNotEmpty()
     val focusManager = LocalFocusManager.current
 
     // Pager state: 0 = History, 1 = Home, 2 = Profile
@@ -127,7 +129,8 @@ fun CommonUi(
                                 searchQuery = searchQuery,
                                 onSearchActiveChange = { isSearchActive = it },
                                 onSearchQueryChange = { searchQuery = it },
-                                onDeleteClick = { showClearHistoryDialog = true }
+                                onDeleteClick = { showClearHistoryDialog = true },
+                                hasHistory = hasHistory
                             )
                         }
                         1 -> {
@@ -343,7 +346,7 @@ fun Topbar(
                 )
             )
             .statusBarsPadding()
-            .height(56.dp)
+            .height(46.dp)
             .padding(horizontal = 16.dp),
         contentAlignment = Alignment.CenterStart
     ) {
@@ -445,7 +448,8 @@ fun HistoryTopBar(
     searchQuery: String,
     onSearchActiveChange: (Boolean) -> Unit,
     onSearchQueryChange: (String) -> Unit,
-    onDeleteClick: () -> Unit
+    onDeleteClick: () -> Unit,
+    hasHistory: Boolean = true
 ) {
     val focusManager = LocalFocusManager.current
     if (isSearchActive) {
@@ -514,22 +518,24 @@ fun HistoryTopBar(
             )
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = { onSearchActiveChange(true) }) {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search",
-                        tint = Color(0xFF1B3A2D),
-                        modifier = Modifier.size(28.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.width(4.dp))
-                IconButton(onClick = onDeleteClick) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Clear History",
-                        tint = Color(0xFF1B3A2D),
-                        modifier = Modifier.size(28.dp)
-                    )
+                if (hasHistory) {
+                    IconButton(onClick = { onSearchActiveChange(true) }) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Search",
+                            tint = Color(0xFF1B3A2D),
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(4.dp))
+                    IconButton(onClick = onDeleteClick) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Clear History",
+                            tint = Color(0xFF1B3A2D),
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
                 }
             }
         }
@@ -542,29 +548,65 @@ fun homeScreentopbar(dietName: String) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
+        // SatvikScan Logo with leaf icon
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
 
-        Text(
-            "SatvikScan",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.ExtraBold,
-            color = Color(0xFF1B3A2D),
-            textAlign = TextAlign.Center
-        )
+            Text(
+                "SatvikScan",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color(0xFF1B3A2D)
+            )
+        }
 
+        // Premium Diet Capsule
+        val dietIconRes = when {
+            dietName.contains("Swaminarayan", ignoreCase = true) -> R.drawable.swaminarayan_tilak
+            dietName.contains("Jain", ignoreCase = true) -> R.drawable.jain_logo
+            dietName.contains("Custom", ignoreCase = true) -> R.drawable.custom_icon
+            else -> R.drawable.leaf_svg
+        }
+        val dietIconTint = when {
+            dietName.contains("Swaminarayan", ignoreCase = true) -> Color(0xFF5D4037)
+            dietName.contains("Jain", ignoreCase = true) -> Color(0xFF2E7D32)
+            dietName.contains("Custom", ignoreCase = true) -> Color(0xFF455A64)
+            else -> Color(0xFF2E7D32)
+        }
 
         Box(
             modifier = Modifier
                 .background(
-                    color = Color.White, shape = RoundedCornerShape(20.dp)
+                    color = Color.White,
+                    shape = RoundedCornerShape(24.dp)
                 )
-                .padding(horizontal = 10.dp, vertical = 4.dp)
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFF1B3A2D).copy(alpha = 0.15f),
+                    shape = RoundedCornerShape(24.dp)
+                )
+                .padding(horizontal = 14.dp, vertical = 7.dp)
         ) {
-            Text(
-                text = dietName,
-                fontSize = 11.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.Medium
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = dietIconRes),
+                    contentDescription = null,
+                    tint = dietIconTint,
+                    modifier = Modifier.size(18.dp)
+                )
+                Text(
+                    text = dietName,
+                    fontSize = 12.sp,
+                    color = Color(0xFF1B3A2D),
+                    fontWeight = FontWeight.SemiBold,
+                    letterSpacing = 0.3.sp
+                )
+            }
         }
     }
 }

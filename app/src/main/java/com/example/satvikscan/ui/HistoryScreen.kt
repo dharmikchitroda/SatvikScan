@@ -255,7 +255,7 @@ fun EmptyHistoryState(
     ) {
         // Lotus Image
         Image(
-            painter = painterResource(R.drawable._cc821cc_6328_4934_8a6c_a3f27e5ca3a0),
+            painter = painterResource(R.drawable.history_empty_img),
             contentDescription = "No scans yet",
             modifier = Modifier
                 .size(240.dp)

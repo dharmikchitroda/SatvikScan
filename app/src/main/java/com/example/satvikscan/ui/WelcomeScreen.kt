@@ -157,7 +157,7 @@ fun WelcomeScreen(
                 DietOptionCard(
                     title = "Custom Diet",
                     subtitle = "Choose specific ingredients you want to avoid.",
-                    iconRes = R.drawable.ic_custom_diet,
+                    iconRes = R.drawable.custom_icon,
                     iconBgColor = Color(0xFFECEFF1),
                     iconTint = Color(0xFF455A64),
                     selected = selectedDiet == "Custom",
