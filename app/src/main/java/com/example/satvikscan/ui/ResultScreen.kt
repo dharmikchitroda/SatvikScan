@@ -52,6 +52,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import android.os.Build
+import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
 import androidx.compose.ui.platform.LocalContext
@@ -377,6 +379,42 @@ fun ResultScreen(
                                         "Sirka", ignoreCase = true
                                     ) -> R.drawable.ic_vinegar
 
+                                    ingredient.name.contains(
+                                        "Turmeric", ignoreCase = true
+                                    ) || ingredient.name.contains(
+                                        "Haldi", ignoreCase = true
+                                    ) -> R.drawable.ic_turmeric
+
+                                    ingredient.name.contains(
+                                        "Honey", ignoreCase = true
+                                    ) || ingredient.name.contains(
+                                        "Shehad", ignoreCase = true
+                                    ) || ingredient.name.contains(
+                                        "Madh", ignoreCase = true
+                                    ) -> R.drawable.ic_honey
+
+                                    ingredient.name.contains(
+                                        "Cheese", ignoreCase = true
+                                    ) || ingredient.name.contains(
+                                        "Paneer", ignoreCase = true
+                                    ) || ingredient.name.contains(
+                                        "Cottage Cheese", ignoreCase = true
+                                    ) -> R.drawable.ic_cheese
+
+                                    ingredient.name.contains(
+                                        "Chocolate", ignoreCase = true
+                                    ) || ingredient.name.contains(
+                                        "Cocoa", ignoreCase = true
+                                    ) || ingredient.name.contains(
+                                        "Cacao", ignoreCase = true
+                                    ) -> R.drawable.ic_chocolate
+
+                                    ingredient.name.contains(
+                                        "Hing", ignoreCase = true
+                                    ) || ingredient.name.contains(
+                                        "Asafoetida", ignoreCase = true
+                                    ) -> R.drawable.ic_powder
+
                                     ingredient.type == IngredientType.ROOT_VEGETABLE -> R.drawable.ic_root_vegetable
                                     ingredient.type == IngredientType.NON_VEG_ORIGIN -> R.drawable.ic_meat
 
@@ -404,7 +442,7 @@ fun ResultScreen(
                                 IngredientItem(
                                     name = ingredient.name,
                                     reason = ingredient.reason,
-                                    iconRes = iconRes       // icon we decided accroding when statement
+                                    iconRes = iconRes       // icon we decid accroding when statement
                                 )
                                 if (index < ingredientList.lastIndex) {
                                     Spacer(modifier = Modifier.height(12.dp))
@@ -564,7 +602,13 @@ fun LoadingView() {
         AsyncImage(
             model = ImageRequest.Builder(context)
                 .data(R.drawable.food_scan_anim)
-                .decoderFactory(ImageDecoderDecoder.Factory())
+                .decoderFactory(
+                    if (Build.VERSION.SDK_INT >= 28) {
+                        ImageDecoderDecoder.Factory()
+                    } else {
+                        GifDecoder.Factory()
+                    }
+                )
                 .build(),
             contentDescription = "Scanning Loader",
             modifier = Modifier.size(240.dp)
