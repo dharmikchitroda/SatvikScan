@@ -1,5 +1,6 @@
 package com.example.satvikscan.ui
 
+import android.graphics.ImageDecoder
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -51,6 +52,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.decode.ImageDecoderDecoder
+import coil.request.ImageRequest
+import androidx.compose.ui.platform.LocalContext
 import com.example.satvikscan.R
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 import androidx.compose.ui.window.Dialog
@@ -226,6 +230,23 @@ fun ResultScreen(
 
                     Spacer(modifier = Modifier.height(28.dp))
 
+                    // Dynamic Diet icon and color mapping
+                    val contextIconRes = when (dietName) {
+                        "Swaminarayan" -> R.drawable.swaminarayan_tilak
+                        "Jain" -> R.drawable.jain_logo
+                        else -> R.drawable.custom_icon
+                    }
+                    val contextIconTint = when (dietName) {
+                        "Swaminarayan" -> Color(0xFFD35400)
+                        "Jain" -> Color(0xFF2E7D32)
+                        else -> Color(0xFF1B3A2D)
+                    }
+                    val contextBgColor = when (dietName) {
+                        "Swaminarayan" -> Color(0xFFFFF2EC)
+                        "Jain" -> Color(0xFFE8F5E9)
+                        else -> Color(0xFFE2EFE9)
+                    }
+
                     //  Diet Context Row
                     Row(
                         modifier = Modifier
@@ -240,14 +261,14 @@ fun ResultScreen(
                             modifier = Modifier
                                 .size(48.dp)
                                 .background(
-                                    Color(0xFFFFE0B2), shape = CircleShape
-                                ), // Warm peach circle
+                                    contextBgColor, shape = CircleShape
+                                ),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painter = painterResource(id = R.drawable.ic_diet_guidelines),
+                                painter = painterResource(id = contextIconRes),
                                 contentDescription = "Context",
-                                tint = Color(0xFF5D4037),
+                                tint = contextIconTint,
                                 modifier = Modifier.size(26.dp)
                             )
                         }
@@ -533,13 +554,21 @@ fun ErrorView(message: String) {
 
 @Composable
 fun LoadingView() {
+    val context = LocalContext.current
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFAFAFA)),
+            .background(Color(0xFFEFEFEF)),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+        AsyncImage(
+            model = ImageRequest.Builder(context)
+                .data(R.drawable.food_scan_anim)
+                .decoderFactory(ImageDecoderDecoder.Factory())
+                .build(),
+            contentDescription = "Scanning Loader",
+            modifier = Modifier.size(240.dp)
+        )
     }
 }
 
