@@ -59,7 +59,8 @@ fun UserProfileScreen(
     viewModel: Satvik_ViewModel,
     onBackClick: () -> Unit,
     onChangeDietClick: () -> Unit,
-    onCustomExclusionsClick: () -> Unit
+    onCustomExclusionsClick: () -> Unit,
+    onDietGyanClick: (String) -> Unit = {}
 ) {
     // val isDarkMode by viewModel.isDarkMode.collectAsState()
     val isDarkMode = false
@@ -189,7 +190,7 @@ fun UserProfileScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { /* Open Jain Ingredient Guide */ }
+                            .clickable { onDietGyanClick("Jain") }
                             .padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -234,7 +235,7 @@ fun UserProfileScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { /* Open Swaminarayan Ingredient Guide */ }
+                            .clickable { onDietGyanClick("Swaminarayan") }
                             .padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {

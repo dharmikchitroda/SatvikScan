@@ -229,7 +229,10 @@ fun CommonUi(
                                     }
                                 },
                                 onChangeDietClick = { navconroller.navigate(routname().SelectDietScreen) },
-                                onCustomExclusionsClick = { navconroller.navigate(routname().CustomExclusionsScreen) }
+                                onCustomExclusionsClick = { navconroller.navigate(routname().CustomExclusionsScreen) },
+                                onDietGyanClick = { dietType ->
+                                    navconroller.navigate("${routname().DietGyanScreen}/$dietType")
+                                }
                             )
                         }
                     }
@@ -325,6 +328,14 @@ fun CommonUi(
                     })
             }
 
+            composable("${routname().DietGyanScreen}/{dietType}") { backStackEntry ->
+                val dietType = backStackEntry.arguments?.getString("dietType") ?: "Jain"
+                DietGyanScreen(
+                    dietType = dietType,
+                    onBackClick = { navconroller.popBackStack() }
+                )
+            }
+
         }
 
     }
@@ -400,8 +411,13 @@ fun BottomBar(
                     modifier = Modifier
                         .size(54.dp)
                         .background(
-                            color = MaterialTheme.colorScheme.primary, shape = CircleShape
-                        ), contentAlignment = Alignment.Center
+                            brush = Brush.verticalGradient(
+                                colors = listOf(Color(0xFF2E7D32), Color(0xFF1B5E20))
+                            ), shape = CircleShape )
+//                        .background(
+//                            color = MaterialTheme.colorScheme.primary
+//                        )
+                            , contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.barcode_scan__1_),
@@ -457,16 +473,16 @@ fun HistoryTopBar(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = {
-                onSearchActiveChange(false)
-                onSearchQueryChange("")
-            }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Close Search",
-                    tint = Color(0xFF1B3A2D)
-                )
-            }
+//            IconButton(onClick = {
+//                onSearchActiveChange(false)
+//                onSearchQueryChange("")
+//            }) {(R.drawable.barcode_scan__1_)
+//                Icon(
+//                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+//                    contentDescription = "Close Search",
+//                    tint = Color(0xFF1B3A2D)
+//                )
+//            }(R.drawable.barcode_scan__1_)
 
             TextField(
                 value = searchQuery,

@@ -84,6 +84,7 @@ dependencies {
 
     // coil - load image in our app from api
     implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("io.coil-kt:coil-gif:2.6.0")
 
     // text recognizaion Ml kit
     implementation("com.google.mlkit:text-recognition:16.0.1")  

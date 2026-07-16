@@ -11,5 +11,6 @@ class routname {
 
     var CustomExclusionsScreen = "CustomExclusionsScreen"
     var SelectDietScreen = "SelectDietScreen"
+    var DietGyanScreen = "DietGyanScreen"
 
 }
