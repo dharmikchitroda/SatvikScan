@@ -162,8 +162,8 @@ fun WelcomeScreen(
                     iconTint = Color(0xFF455A64),
                     selected = selectedDiet == "Custom",
                     onClick = {
+                        // Sirf selection update karo — navigate "Continue" button se hoga
                         selectedDiet = "Custom"
-                        onContinueClick("Custom")
                     }
                 )
             }
