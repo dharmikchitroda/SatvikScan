@@ -1,16 +1,15 @@
 package com.example.satvikscan;
 
-class routname {
-    var HomeScreen = "HomeScreen"
+object routname {
+    val HomeScreen = "HomeScreen"
 
-    var CameraScreen = "CameraProfileScreen"
+    val CameraScreen = "CameraProfileScreen"
 
-    var ResultScreen = "ResultScreen"
+    val ResultScreen = "ResultScreen"
 
-    var WelcomeScreen = "WelcomeScreen"
+    val WelcomeScreen = "WelcomeScreen"
 
-    var CustomExclusionsScreen = "CustomExclusionsScreen"
-    var SelectDietScreen = "SelectDietScreen"
-    var DietGyanScreen = "DietGyanScreen"
-
+    val CustomExclusionsScreen = "CustomExclusionsScreen"
+    val SelectDietScreen = "SelectDietScreen"
+    val DietGyanScreen = "DietGyanScreen"
 }

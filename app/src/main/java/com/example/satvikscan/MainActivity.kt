@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import com.example.satvikscan.ui.CommonUi
 import com.example.satvikscan.ui.theme.SatvikScanTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivity :  ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

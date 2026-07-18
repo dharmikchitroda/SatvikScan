@@ -23,7 +23,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -73,20 +72,20 @@ fun CommonUi(
 ) {
 
     val viewModel: Satvik_ViewModel = viewModel()
-    val navconroller = rememberNavController() // return navhostcontroller object
+    val navController = rememberNavController() // return navhostcontroller object
 
-    val navBackStackEntry by navconroller.currentBackStackEntryAsState()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
 
     val currentRoute = navBackStackEntry?.destination?.route
     // for this both top & bottom bar show or hide
-    val showBars = currentRoute == routname().HomeScreen
+    val showBars = currentRoute == routname.HomeScreen
     // only topbar show or hide
     val showTopbar = showBars
 
 
     // which screen open when user start the app first time and another time
     val startDestination = remember {
-        if (viewModel.hasSelectedDiet()) routname().HomeScreen else routname().WelcomeScreen
+        if (viewModel.hasSelectedDiet()) routname.HomeScreen else routname.WelcomeScreen
     }
 
     // dietName show in topbar
@@ -153,7 +152,7 @@ fun CommonUi(
                     }
                     if (currentCameramode != ScanMode.BARCODE) viewModel.ChnageScanMode(ScanMode.BARCODE)
                     viewModel.startScanning()
-                    navconroller.navigate(routname().CameraScreen)
+                    navController.navigate(routname.CameraScreen)
                 },
                 moveHisscreen = {
                     coroutineScope.launch {
@@ -170,10 +169,10 @@ fun CommonUi(
     }) { paddingValues ->
 
         NavHost(
-            navconroller, startDestination = startDestination, modifier = Modifier.fillMaxSize()
+            navController, startDestination = startDestination, modifier = Modifier.fillMaxSize()
         ) {
 
-            composable(routname().HomeScreen) {
+            composable(routname.HomeScreen) {
                 // BackHandler: if user is on History or Profile page, go back to Home tab
                 BackHandler(enabled = currentPage != 1) {
                     coroutineScope.launch {
@@ -206,16 +205,15 @@ fun CommonUi(
                         1 -> {
                             HomeScreenUI(
                                 paddingValues,
-                                currentMode = currentCameramode,
                                 onScanPhotoclick = {
                                     if (currentCameramode != ScanMode.OCR) viewModel.ChnageScanMode(ScanMode.OCR)
                                     viewModel.startScanning()
-                                    navconroller.navigate(routname().CameraScreen)
+                                    navController.navigate(routname.CameraScreen)
                                 },
                                 onScanBarcodescan = {
                                     if (currentCameramode != ScanMode.BARCODE) viewModel.ChnageScanMode(ScanMode.BARCODE)
                                     viewModel.startScanning()
-                                    navconroller.navigate(routname().CameraScreen)
+                                    navController.navigate(routname.CameraScreen)
                                 }
                             )
                         }
@@ -228,41 +226,41 @@ fun CommonUi(
                                         pagerState.animateScrollToPage(1)
                                     }
                                 },
-                                onChangeDietClick = { navconroller.navigate(routname().SelectDietScreen) },
-                                onCustomExclusionsClick = { navconroller.navigate(routname().CustomExclusionsScreen) },
+                                onChangeDietClick = { navController.navigate(routname.SelectDietScreen) },
+                                onCustomExclusionsClick = { navController.navigate(routname.CustomExclusionsScreen) },
                                 onDietGyanClick = { dietType ->
-                                    navconroller.navigate("${routname().DietGyanScreen}/$dietType")
+                                    navController.navigate("${routname.DietGyanScreen}/$dietType")
                                 }
                             )
                         }
                     }
                 }
             }
-            composable(routname().CameraScreen) {
+            composable(routname.CameraScreen) {
                 val uiState = viewModel.productUiState.collectAsState().value
                 CameraScanScreen(
                     viewModel = viewModel,
                     cameramode = currentCameramode,
                     onBackClick = {
                         viewModel.startScanning()
-                        navconroller.popBackStack()
+                        navController.popBackStack()
                     }
                 )
                 LaunchedEffect(uiState) {
                     if (uiState != Satvik_ViewModel.ProductUiState.Idle &&
                         !(uiState is Satvik_ViewModel.ProductUiState.Error && uiState.message == "NO_INTERNET")
                     ) {
-                        navconroller.navigate(
-                            routname().ResultScreen
+                        navController.navigate(
+                            routname.ResultScreen
                         ) {
                             // remove the last screen from the stack
-                            popUpTo(routname().CameraScreen) { inclusive = true }
+                            popUpTo(routname.CameraScreen) { inclusive = true }
                         }
                     }
                 }
 
             }
-            composable(routname().ResultScreen) {
+            composable(routname.ResultScreen) {
 
                 ResultScreen(
                     viewModel = viewModel,
@@ -270,69 +268,69 @@ fun CommonUi(
                         .fillMaxSize()
                         .statusBarsPadding(),
                     onBackClick = {
-                        viewModel.startScanning() // reset old state , this main use the restart the camerax fatch barcode in one time one
-                        navconroller.popBackStack()
+                        viewModel.startScanning() // reset old state, restart camerax barcode fetch
+                        navController.popBackStack()
                     },
                     onScanAgainClick = {
                         viewModel.startScanning()
-                        navconroller.navigate(routname().CameraScreen) {
+                        navController.navigate(routname.CameraScreen) {
                             viewModel.startScanning() // reset old state
-                            popUpTo(routname().HomeScreen)
+                            popUpTo(routname.HomeScreen)
                         }
                     },
                     dietName = dietName,
                     ScanIngredient = {
                         if (currentCameramode != ScanMode.OCR) viewModel.ChnageScanMode(ScanMode.OCR)
                         viewModel.startScanning()
-                        navconroller.navigate(routname().CameraScreen) {
-                            popUpTo(routname().ResultScreen) { inclusive = true }
+                        navController.navigate(routname.CameraScreen) {
+                            popUpTo(routname.ResultScreen) { inclusive = true }
                         }
                     }
                 )
 
             }
-            composable(routname().WelcomeScreen) {
+            composable(routname.WelcomeScreen) {
                 WelcomeScreen(
                     onContinueClick = { selectedDiet ->
                         // save Diet
                         viewModel.updateDiet(selectedDiet)
 
                         if (selectedDiet == "Custom") {
-                            navconroller.navigate(routname().CustomExclusionsScreen)
+                            navController.navigate(routname.CustomExclusionsScreen)
                         } else {
-                            navconroller.navigate(routname().HomeScreen) {
-                                popUpTo(routname().WelcomeScreen) { inclusive = true }
+                            navController.navigate(routname.HomeScreen) {
+                                popUpTo(routname.WelcomeScreen) { inclusive = true }
                             }
                         }
                     })
             }
 
-            composable(routname().CustomExclusionsScreen) {
+            composable(routname.CustomExclusionsScreen) {
                 CustomExclusionsScreen(
                     viewModel = viewModel,
                     onBackClick = {
-                        navconroller.popBackStack()
+                        navController.popBackStack()
                     })
             }
 
-            composable(routname().SelectDietScreen) {
+            composable(routname.SelectDietScreen) {
                 SelectDietScreen(
                     viewModel = viewModel,
                     onContinueClick = { selectedDiet ->
-                        navconroller.popBackStack()
+                        navController.popBackStack()
                     },
                     onCustomClick = {
-                        navconroller.navigate(routname().CustomExclusionsScreen) {
-                            popUpTo(routname().SelectDietScreen) { inclusive = true }
+                        navController.navigate(routname.CustomExclusionsScreen) {
+                            popUpTo(routname.SelectDietScreen) { inclusive = true }
                         }
                     })
             }
 
-            composable("${routname().DietGyanScreen}/{dietType}") { backStackEntry ->
+            composable("${routname.DietGyanScreen}/{dietType}") { backStackEntry ->
                 val dietType = backStackEntry.arguments?.getString("dietType") ?: "Jain"
                 DietGyanScreen(
                     dietType = dietType,
-                    onBackClick = { navconroller.popBackStack() }
+                    onBackClick = { navController.popBackStack() }
                 )
             }
 
@@ -413,11 +411,9 @@ fun BottomBar(
                         .background(
                             brush = Brush.verticalGradient(
                                 colors = listOf(Color(0xFF2E7D32), Color(0xFF1B5E20))
-                            ), shape = CircleShape )
-//                        .background(
-//                            color = MaterialTheme.colorScheme.primary
-//                        )
-                            , contentAlignment = Alignment.Center
+                            ), shape = CircleShape
+                        ),
+                    contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.barcode_scan__1_),
@@ -473,17 +469,6 @@ fun HistoryTopBar(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-//            IconButton(onClick = {
-//                onSearchActiveChange(false)
-//                onSearchQueryChange("")
-//            }) {(R.drawable.barcode_scan__1_)
-//                Icon(
-//                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-//                    contentDescription = "Close Search",
-//                    tint = Color(0xFF1B3A2D)
-//                )
-//            }(R.drawable.barcode_scan__1_)
-
             TextField(
                 value = searchQuery,
                 onValueChange = { onSearchQueryChange(it) },
