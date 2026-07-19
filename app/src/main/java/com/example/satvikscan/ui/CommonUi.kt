@@ -204,7 +204,7 @@ fun CommonUi(
                         }
                         1 -> {
                             HomeScreenUI(
-                                paddingValues,
+                                paddingValues = paddingValues,
                                 onScanPhotoclick = {
                                     if (currentCameramode != ScanMode.OCR) viewModel.ChnageScanMode(ScanMode.OCR)
                                     viewModel.startScanning()
@@ -214,7 +214,8 @@ fun CommonUi(
                                     if (currentCameramode != ScanMode.BARCODE) viewModel.ChnageScanMode(ScanMode.BARCODE)
                                     viewModel.startScanning()
                                     navController.navigate(routname.CameraScreen)
-                                }
+                                },
+                                dietName = dietName
                             )
                         }
                         2 -> {
