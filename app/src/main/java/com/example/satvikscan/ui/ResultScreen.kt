@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -37,6 +39,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,6 +64,9 @@ import coil.request.ImageRequest
 import androidx.compose.ui.platform.LocalContext
 import com.example.satvikscan.R
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
@@ -72,8 +80,8 @@ enum class IngredientType {
 data class IngredientData(
     val name: String,
     val reason: String,
-    val type: IngredientType
-
+    val type: IngredientType,
+    val scientificReason: String = ""
 )
 
 @Composable
@@ -394,6 +402,18 @@ fun ResultScreen(
                                 Spacer(modifier = Modifier.height(16.dp))
 
                                 // dynamic list of ingredients
+                                // State to track which ingredient was tapped by user
+                                var selectedIngredient by remember { mutableStateOf<IngredientData?>(null) }
+
+                                // Show the "Why Avoid?" Dialog when an ingredient is tapped
+                                    selectedIngredient?.let { ing ->
+                                    WhyAvoidDialog(
+                                        ingredient = ing,
+                                        dietName = dietName,
+                                        onDismiss = { selectedIngredient = null }
+                                    )
+                                }
+
                                 ingredientList.forEachIndexed { index, ingredient ->
                                     val iconRes = when {
                                         ingredient.name.contains(
@@ -491,14 +511,15 @@ fun ResultScreen(
                                     IngredientItem(
                                         name = ingredient.name,
                                         reason = ingredient.reason,
-                                        iconRes = iconRes
+                                        iconRes = iconRes,
+                                        onClick = { selectedIngredient = ingredient }
                                     )
                                     if (index < ingredientList.lastIndex) {
                                         Spacer(modifier = Modifier.height(12.dp))
                                     }
                                 }
 
-                                Spacer(modifier = Modifier.height(20.dp))
+                                Spacer(modifier = Modifier.height(28.dp))
 
                                 // Context Guidelines Note
                                 Box(
@@ -530,6 +551,7 @@ fun ResultScreen(
                         }
                     }
 
+                    Spacer(modifier = Modifier.height(24.dp))
                 } // End of scrollable Column
 
                 Column(
@@ -537,7 +559,7 @@ fun ResultScreen(
                         .fillMaxWidth()
                         .background(Color(0xFFFAFAFA))
                         .navigationBarsPadding()
-                        .padding(bottom = 16.dp, top = 8.dp),
+                        .padding(bottom = 16.dp, top = 12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     //  Action Buttons Section
@@ -665,19 +687,24 @@ fun LoadingView() {
     }
 }
 
-// IngredientItem box
+// IngredientItem box — now clickable to show "Why Avoid?" dialog
 @Composable
 private fun IngredientItem(
-    name: String, reason: String, iconRes: Int
+    name: String,
+    reason: String,
+    iconRes: Int,
+    onClick: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(
                 Color(0xFFFFF9F9), shape = RoundedCornerShape(14.dp)
-            ) // Soft red background tint
+            )
             .border(BorderStroke(1.dp, Color(0xFFFFF0F0)), shape = RoundedCornerShape(14.dp))
-            .padding(14.dp), verticalAlignment = Alignment.CenterVertically
+            .clickable { onClick() }
+            .padding(14.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         // Red Icon container
         Box(
@@ -701,7 +728,7 @@ private fun IngredientItem(
                 text = name,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF7A1C1C) // Deep dark warnings red
+                color = Color(0xFF7A1C1C)
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
@@ -709,13 +736,257 @@ private fun IngredientItem(
             )
         }
 
-        // Warning icon
+        // Tap hint — question mark icon
         Icon(
-            imageVector = Icons.Default.Warning,
-            contentDescription = "Warning",
-            tint = Color(0xFFC62828),
-            modifier = Modifier.size(24.dp)
+            painter = painterResource(id = R.drawable.question_mark),
+            contentDescription = "Why Avoid?",
+            tint = Color(0xFFC62828).copy(alpha = 0.7f),
+            modifier = Modifier.size(22.dp)
         )
+    }
+}
+
+// Why Avoid? dialog
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WhyAvoidDialog(
+    ingredient: IngredientData,
+    dietName: String,
+    onDismiss: () -> Unit
+) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = sheetState,
+        containerColor = Color(0xFFF9F9F9),
+        shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
+        dragHandle = null
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .navigationBarsPadding()
+                .padding(horizontal = 20.dp)
+                .padding(top = 24.dp, bottom = 28.dp)
+        ) {
+            //  Header
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Why Avoid?",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Color(0xFF1A1A1A)
+                )
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .background(Color(0xFFF0F0F0), shape = CircleShape)
+                        .clickable { onDismiss() },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close",
+                        tint = Color(0xFF555555),
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            //  Ingredient Card (white box, red left border)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Min)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color.White, shape = RoundedCornerShape(12.dp))
+                    .border(1.dp, Color(0xFFE8E8E8), shape = RoundedCornerShape(12.dp))
+            ) {
+                // Red left accent bar — fills full height of card
+                Box(
+                    modifier = Modifier
+                        .width(4.dp)
+                        .fillMaxHeight()
+                        .background(Color(0xFFC62828))
+                )
+                Column(
+                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp)
+                ) {
+                    Text(
+                        text = "INGREDIENT",
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF9E9E9E),
+                        letterSpacing = 1.sp
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = ingredient.name,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = Color(0xFF1A1A1A)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
+
+            //  STATUS row
+            Row(
+                verticalAlignment = Alignment.Top,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                // circle icon
+                Box(
+                    modifier = Modifier
+                        .size(16.dp)
+                        .border(2.dp, Color(0xFFC62828), CircleShape)
+                        .padding(3.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color(0xFFC62828), CircleShape)
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Column {
+                    Text(
+                        text = "STATUS",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = Color(0xFFC62828),
+                        letterSpacing = 1.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(2.dp))
+
+                    Text(
+                        text = "Non-Permissible for $dietName",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF1A1A1A),
+                        lineHeight = 20.sp
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            //  Two info cards
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                // Religious Guidance card
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .background(Color(0xFF333333), shape = RoundedCornerShape(14.dp))
+                        .padding(14.dp)
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.leaf_svg),
+                            contentDescription = null,
+                            tint = Color(0xFF2E7D32),
+                            modifier = Modifier.size(14.dp)
+                        )
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Text(
+                            text = "RELIGIOUS GUIDANCE",
+                            fontSize = 9.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color(0xFF333333),
+                            letterSpacing = 0.5.sp,
+                            lineHeight = 12.sp
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = ingredient.reason
+                            .removePrefix("Avoided: ")
+                            .removePrefix("Caution: "),
+                        fontSize = 11.5.sp,
+                        color = Color(0xFF444444),
+                        lineHeight = 16.sp
+                    )
+                }
+
+                // Industry Origin card
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .background(Color(0xFFF2F2F2), shape = RoundedCornerShape(14.dp))
+                        .padding(14.dp)
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_chemical),
+                            contentDescription = null,
+                            tint = Color(0xFF1565C0),
+                            modifier = Modifier.size(14.dp)
+                        )
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Text(
+                            text = "INDUSTRY ORIGIN",
+                            fontSize = 9.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color(0xFF333333),
+                            letterSpacing = 0.5.sp,
+                            lineHeight = 12.sp
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = if (ingredient.scientificReason.isNotBlank())
+                            ingredient.scientificReason
+                        else
+                            "Derived from natural or industrial sources. Verify label for exact origin.",
+                        fontSize = 11.5.sp,
+                        color = Color(0xFF444444),
+                        lineHeight = 16.sp
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(28.dp))
+
+            // ── I Understand button ──────────────────────────────────────────
+            Button(
+                onClick = onDismiss,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1B5E20))
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "I Understand",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_safe_tick1),
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(18.dp)
+                    )
+                }
+            }
+        }
     }
 }
 
