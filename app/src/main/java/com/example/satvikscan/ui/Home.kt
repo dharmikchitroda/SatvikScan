@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -58,29 +59,29 @@ fun getQuickTips(dietName: String): List<QuickTip> {
     val commonTips = listOf(
         QuickTip(
             emoji = "🔍",
-            title = "Labels Padhna Zaroori Hai",
-            body = "Ingredients list me highest quantity wala item sabse pehle hota hai. E-codes dhyan se check karo!",
+            title = "Always Read Labels",
+            body = "The first ingredient listed is present in the highest quantity. Always check E-codes carefully before consuming!",
             bgColor = Color(0xFFE8F5E9),
             accentColor = Color(0xFF2E7D32)
         ),
         QuickTip(
             emoji = "📦",
-            title = "Barcode Scan Better Hai",
-            body = "Packaged goods ke liye barcode scan photo scan se zyada accurate results deta hai.",
+            title = "Barcode Scan is More Accurate",
+            body = "For packaged goods, barcode scanning gives more accurate and detailed results than a photo scan.",
             bgColor = Color(0xFFE3F2FD),
             accentColor = Color(0xFF1565C0)
         ),
         QuickTip(
             emoji = "⚠️",
             title = "\"Natural Flavors\" Alert",
-            body = "\"Natural flavors\" mein kabhi kabhi animal-derived sources hote hain. Hamesha verify karo!",
+            body = "\"Natural flavors\" can sometimes be derived from animal sources. Always verify before consuming!",
             bgColor = Color(0xFFFFF8E1),
             accentColor = Color(0xFFF57F17)
         ),
         QuickTip(
             emoji = "🌿",
-            title = "Satvik Food Kya Hai?",
-            body = "Fresh, whole aur minimally processed foods hamesha safest choice hoti hain.",
+            title = "What is Satvik Food?",
+            body = "Fresh, whole and minimally processed foods are always the safest and healthiest choice.",
             bgColor = Color(0xFFE8F5E9),
             accentColor = Color(0xFF388E3C)
         )
@@ -91,58 +92,59 @@ fun getQuickTips(dietName: String): List<QuickTip> {
             QuickTip(
                 emoji = "🥕",
                 title = "Root Vegetables Alert",
-                body = "Aalu, Pyaz, Lehsun, Gajar — Jain diet mein avoid kiye jaate hain. Ingredients mein dhundo!",
+                body = "Potatoes, onions, garlic and carrots are avoided in the Jain diet. Always check the ingredients list!",
                 bgColor = Color(0xFFFCE4EC),
                 accentColor = Color(0xFFC62828)
             ),
             QuickTip(
                 emoji = "🍯",
                 title = "Honey in Products",
-                body = "Kaafi energy bars aur sweets mein honey hoti hai. Jain tradition mein yeh Mahavigai hai.",
+                body = "Many energy bars and sweets contain honey. Consuming honey is considered a major sin (Mahavigai) in Jain tradition.",
                 bgColor = Color(0xFFFFF3E0),
                 accentColor = Color(0xFFE65100)
             ),
             QuickTip(
                 emoji = "🧀",
-                title = "Cheese ka Source",
-                body = "Kuch cheese animal-derived rennet se banti hai. Source verify karo consuming se pehle.",
+                title = "Source of Cheese",
+                body = "Some cheeses are made using animal-derived rennet. Always verify the source before consuming.",
                 bgColor = Color(0xFFF3E5F5),
                 accentColor = Color(0xFF6A1B9A)
             ),
             QuickTip(
                 emoji = "🌾",
-                title = "E-Codes Dhyan Rakhna",
-                body = "E120 (Carmine), E441 (Gelatin), E901 (Beeswax) — sab animal-derived hain. Avoid karo!",
+                title = "Watch Out for E-Codes",
+                body = "E120 (Carmine), E441 (Gelatin), E901 (Beeswax) — all are animal-derived additives. Strictly avoid!",
                 bgColor = Color(0xFFFCE4EC),
                 accentColor = Color(0xFFB71C1C)
             )
         )
         dietName.contains("Swaminarayan", ignoreCase = true) -> listOf(
             QuickTip(
-                emoji = "🧅",
-                title = "Pyaz & Lehsun Check Karo",
-                body = "Allium family strictly avoid hai. Spice blends mein garlic powder ya onion extract dhundo.",
-                bgColor = Color(0xFFFCE4EC),
-                accentColor = Color(0xFFC62828)
-            ),
-            QuickTip(
                 emoji = "🍺",
-                title = "Food mein Alcohol?",
-                body = "Kuch sauces, vinegars aur bakery items mein alcohol hota hai. Scan karo pehle!",
+                title = "Hidden Alcohol in Food?",
+                body = "Some sauces, vinegars and bakery items contain alcohol. Always scan the product first!",
                 bgColor = Color(0xFFFFF3E0),
                 accentColor = Color(0xFFBF360C)
             ),
             QuickTip(
+                emoji = "🧅",
+                title = "Check for Onion & Garlic",
+                body = "The Allium family is strictly prohibited. Look for garlic powder or onion extract in spice blends.",
+                bgColor = Color(0xFFFCE4EC),
+                accentColor = Color(0xFFC62828)
+            ),
+
+            QuickTip(
                 emoji = "🌾",
-                title = "Hing ki Purity",
-                body = "Commercial Hing mein aksar wheat flour milta hai. Use karne se pehle purity verify karo.",
+                title = "Purity of Asafoetida (Hing)",
+                body = "Commercial Hing often contains wheat flour as a filler. Verify its purity before use.",
                 bgColor = Color(0xFFE8EAF6),
                 accentColor = Color(0xFF283593)
             ),
             QuickTip(
                 emoji = "🥦",
-                title = "Shikshapatri Guideline",
-                body = "Meat, eggs, alcohol aur narcotics — Shikshapatri ke Verse 15 & 18 ke anusar avoid karo.",
+                title = "Shikshapatri Guidelines",
+                body = "Meat, eggs, alcohol and narcotics are prohibited as per Shikshapatri Verses 15 & 18.",
                 bgColor = Color(0xFFE8F5E9),
                 accentColor = Color(0xFF1B5E20)
             )
@@ -150,15 +152,15 @@ fun getQuickTips(dietName: String): List<QuickTip> {
         else -> listOf(
             QuickTip(
                 emoji = "🥦",
-                title = "Plant-Based Raho",
-                body = "Packaged foods mein dairy aur meat derivatives ke plant-based alternatives dhundo.",
+                title = "Stay Plant-Based",
+                body = "Look for plant-based alternatives to dairy and meat derivatives in packaged foods.",
                 bgColor = Color(0xFFE8F5E9),
                 accentColor = Color(0xFF1B5E20)
             ),
             QuickTip(
                 emoji = "💊",
-                title = "Avoid E-Codes",
-                body = "E120 (Carmine), E441 (Gelatin), E901 (Beeswax) — sab animal-derived. Watch out!",
+                title = "Avoid Harmful E-Codes",
+                body = "E120 (Carmine), E441 (Gelatin), E901 (Beeswax) — all are animal-derived additives. Watch out!",
                 bgColor = Color(0xFFFCE4EC),
                 accentColor = Color(0xFFB71C1C)
             )
@@ -167,6 +169,7 @@ fun getQuickTips(dietName: String): List<QuickTip> {
 
     return dietSpecific + commonTips
 }
+
 
 
 @Composable
@@ -186,7 +189,7 @@ fun HomeScreenUI(
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds,
-            alpha = 0.15f
+            alpha = 0.18f
         )
 
         Column(
@@ -209,11 +212,34 @@ fun HomeScreenUI(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
+
+                // Scan & Discover Card (Barcode Scan)
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(150.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color.White)
+                        .border(
+                            width = 1.dp,
+                            color = Color(0xFF1B3A2D).copy(alpha = 0.12f),
+                            shape = RoundedCornerShape(16.dp)
+                        )
+                        .clickable { onScanBarcodescan() }
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.scan_discover_banner),
+                        contentDescription = "Scan & Discover",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Fit
+                    )
+                }
+
                 // Capture & Discover Card (Photo Scan)
                 Box(
                     modifier = Modifier
                         .weight(1f)
-                        .height(148.dp)
+                        .height(150.dp)
                         .clip(RoundedCornerShape(16.dp))
                         .background(Color.White)
                         .border(
@@ -231,27 +257,6 @@ fun HomeScreenUI(
                     )
                 }
 
-                // Scan & Discover Card (Barcode Scan)
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(148.dp)
-                        .clip(RoundedCornerShape(16.dp))
-                        .background(Color.White)
-                        .border(
-                            width = 1.dp,
-                            color = Color(0xFF1B3A2D).copy(alpha = 0.12f),
-                            shape = RoundedCornerShape(16.dp)
-                        )
-                        .clickable { onScanBarcodescan() }
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.scan_discover_banner),
-                        contentDescription = "Scan & Discover",
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Fit
-                    )
-                }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -261,7 +266,7 @@ fun HomeScreenUI(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Bottom text
+            // Bottom text — full width clean lines
             FooterText()
         }
     }
@@ -280,7 +285,7 @@ fun QuickTipsSection(dietName: String) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "💡 Did You Know?",
+                text = " Did You Know?",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF1B3A2D)
@@ -352,9 +357,8 @@ fun TipCard(tip: QuickTip) {
 }
 
 
-//  Image Slider
-
-@Composable
+//  Image Slider 
+ @Composable
 fun ImageSlider() {
 
     val sliderImages = listOf(
@@ -442,19 +446,31 @@ fun ImageSlider() {
 }
 
 @Composable
-fun FooterText() {
-    // Bottom Tagline Section
-    Text(
-        text = "Purity in Every Bite\nThat's SatvikScan! \uD83C\uDF43",
-        fontSize = 34.sp,
-        fontWeight = FontWeight.ExtraBold,
-        color = Color(0xFFA2A2A2),
-        textAlign = TextAlign.Center,
-        lineHeight = 42.sp,
-        modifier = Modifier
+fun FooterText(modifier: Modifier = Modifier) {
+    // Bottom Tagline Section — two separate full-width text lines aligned to start
+    Column(
+        modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 24.dp)
-    )
+            .padding(vertical = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        Text(
+            text = "Purity  in  Every  Bite",
+            fontSize = 38.sp,
+            fontWeight = FontWeight.ExtraBold,
+            color = Color(0xFFA2A2A2),
+            textAlign = TextAlign.Start,
+            lineHeight = 40.sp,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Text(
+            text = "That's SatvikScan! \uD83C\uDF43",
+            fontSize = 35.sp,
+            fontWeight = FontWeight.ExtraBold,
+            color = Color(0xFFA2A2A2),
+            textAlign = TextAlign.Start,
+            lineHeight = 40.sp,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
 }
-
-

@@ -31,6 +31,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     buildFeatures {
         compose = true
     }
@@ -57,15 +58,14 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     //for navigation
-    implementation("androidx.navigation:navigation-compose:2.8.0")
+    implementation(libs.androidx.navigation.compose)
 
     //camerax
-    val camerax_version = "1.4.0"
-    implementation("androidx.camera:camera-camera2:${camerax_version}") // camera logic actual
-    implementation("androidx.camera:camera-lifecycle:${camerax_version}") // start or stop
-    implementation("androidx.camera:camera-view:${camerax_version}") // PreviewView
+    implementation(libs.androidx.camera.camera2) // camera logic actual
+    implementation(libs.androidx.camera.lifecycle) // start or stop
+    implementation(libs.androidx.camera.view) // PreviewView
 
-    // viewmodel library1
+    // viewmodel library
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0") // ViewModel
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")  // Lifecycles only (without ViewModel or LiveData)
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0") // use compose
