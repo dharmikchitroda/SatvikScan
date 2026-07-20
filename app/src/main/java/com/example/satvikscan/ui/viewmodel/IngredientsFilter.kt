@@ -116,7 +116,8 @@ fun IngredientsFilter(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Avoided: Matches custom excluded ingredient '$matchedExclusion'",
-                        type = IngredientType.OTHER
+                        type = IngredientType.OTHER,
+                        scientificReason = "Personally excluded ingredient based on your custom diet preferences."
                     )
                 )
             }
@@ -135,7 +136,8 @@ fun IngredientsFilter(
                 IngredientData(
                     name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                     reason = reasonStr,
-                    type = IngredientType.NON_VEG_ORIGIN
+                    type = IngredientType.NON_VEG_ORIGIN,
+                    scientificReason = "Derived from animal, poultry, or marine sources. Includes meat, eggs, gelatin (animal collagen), carmine (cochineal insect), shellac (lac insect resin), and beeswax."
                 )
             )
             continue
@@ -152,7 +154,8 @@ fun IngredientsFilter(
                 IngredientData(
                     name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                     reason = reasonStr,
-                    type = IngredientType.OTHER
+                    type = IngredientType.OTHER,
+                    scientificReason = "Produced by fermentation of sugars, grains, or fruits yielding ethanol. Cannabis and narcotics are psychoactive substances that impair neurological functions."
                 )
             )
             continue
@@ -169,7 +172,8 @@ fun IngredientsFilter(
                 IngredientData(
                     name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                     reason = reasonStr,
-                    type = IngredientType.ROOT_VEGETABLE
+                    type = IngredientType.ROOT_VEGETABLE,
+                    scientificReason = "Plants of the Allium family (Allium cepa, Allium sativum). Rich in organosulfur compounds responsible for their characteristic pungent aroma."
                 )
             )
             continue
@@ -182,7 +186,8 @@ fun IngredientsFilter(
                 IngredientData(
                     name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                     reason = reasonStr,
-                    type = IngredientType.OTHER
+                    type = IngredientType.OTHER,
+                    scientificReason = "Industrially produced food additives (E322 Lecithin, E471 Mono-diglycerides, E570 Fatty acids, E920 L-Cysteine) that may be derived from vegetable oils, animal fats, or eggs depending on manufacturer."
                 )
             )
             continue
@@ -195,7 +200,8 @@ fun IngredientsFilter(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Asafoetida (Hing) is avoided in some Swaminarayan traditions as it is considered Rajasic/Tamasic.",
-                        type = IngredientType.OTHER
+                        type = IngredientType.OTHER,
+                        scientificReason = "Oleogum resin from Ferula plant roots. Commercial Hing often contains wheat flour, rice flour, or gum arabic as carrier/filler substances."
                     )
                 )
                 continue
@@ -209,7 +215,8 @@ fun IngredientsFilter(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Avoided: Root vegetables (Anantkaya) are restricted in Jain diet",
-                        type = IngredientType.ROOT_VEGETABLE
+                        type = IngredientType.ROOT_VEGETABLE,
+                        scientificReason = "Underground storage organs (bulbs, tubers, rhizomes) that harbour entire colonies of micro-organisms. Uprooting destroys the complete plant."
                     )
                 )
                 continue
@@ -219,7 +226,8 @@ fun IngredientsFilter(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Avoided: Honey is restricted in Jain diet (Mahavigai principle)",
-                        type = IngredientType.OTHER
+                        type = IngredientType.OTHER,
+                        scientificReason = "Natural sweet substance produced by honeybees (Apis spp.) from flower nectar. Its collection involves destruction of micro-organisms within the hive."
                     )
                 )
                 continue
@@ -229,7 +237,8 @@ fun IngredientsFilter(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Avoided: Butter is considered Mahavigai in Jain tradition (avoided due to rapid microorganism growth)",
-                        type = IngredientType.OTHER
+                        type = IngredientType.OTHER,
+                        scientificReason = "Dairy fat separated from milk by churning. Fresh butter becomes stale rapidly due to microbial activity, leading to proliferation of micro-organisms."
                     )
                 )
                 continue
@@ -239,7 +248,8 @@ fun IngredientsFilter(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Avoided: Fig (Anjeer) is an Udumbara fruit containing microscopic life/wasps, prohibited in Jain diet",
-                        type = IngredientType.OTHER
+                        type = IngredientType.OTHER,
+                        scientificReason = "Ficus carica — a syconium-type fruit whose pollination requires a symbiotic life cycle with the Fig Wasp (Blastophaga psenes) inside the fruit."
                     )
                 )
                 continue
@@ -249,7 +259,8 @@ fun IngredientsFilter(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Avoided: Poppy seeds (Khus Khus) contain innumerable seeds and are avoided in Jain diet",
-                        type = IngredientType.OTHER
+                        type = IngredientType.OTHER,
+                        scientificReason = "Dried mature seeds of Papaver somniferum. Each pod contains thousands of tiny seeds (Bahubiji), making them multi-seeded. Seeds may also contain trace opioid compounds."
                     )
                 )
                 continue
@@ -259,7 +270,8 @@ fun IngredientsFilter(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Makhana/Water Chestnut grows in water bodies; harvesting may harm aquatic life. Avoided by some Acharyas.",
-                        type = IngredientType.OTHER
+                        type = IngredientType.OTHER,
+                        scientificReason = "Euryale ferox (Makhana) / Trapa spp. (Singhara) — aquatic plants growing in ponds and lakes. Harvesting disturbs and potentially destroys aquatic ecosystems."
                     )
                 )
                 continue
@@ -269,7 +281,8 @@ fun IngredientsFilter(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Fermented product (Vinegar/Cheese/Paneer). Cheese may contain animal rennet; verify source.",
-                        type = IngredientType.OTHER
+                        type = IngredientType.OTHER,
+                        scientificReason = "Vinegar: produced by Acetic Acid Bacteria fermenting alcohol. Cheese: coagulated milk using rennet (which can be animal, microbial, or vegetarian-sourced)."
                     )
                 )
                 continue
@@ -279,7 +292,8 @@ fun IngredientsFilter(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Citric Acid (E330) / MSG (E621) are produced via fermentation. Verification of source recommended.",
-                        type = IngredientType.OTHER
+                        type = IngredientType.OTHER,
+                        scientificReason = "Citric Acid (E330): naturally from citrus fruits or industrially via Aspergillus niger fermentation. MSG (E621): produced by bacterial fermentation of starch, sugarcane, or molasses."
                     )
                 )
                 continue
@@ -289,7 +303,8 @@ fun IngredientsFilter(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Refined flour (Maida) / Semolina (Rava/Suji) are wheat products; avoidance recommended by some Maharaj Sahebs.",
-                        type = IngredientType.OTHER
+                        type = IngredientType.OTHER,
+                        scientificReason = "Maida: finely milled endosperm of wheat, stripped of bran and germ. Rava/Suji: coarsely milled wheat endosperm. Both are refined wheat products with low nutritional fibre."
                     )
                 )
                 continue
@@ -299,7 +314,8 @@ fun IngredientsFilter(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Chocolate/Cocoa powder may contain microscopic insect fragments. Avoided by some Maharaj Sahebs.",
-                        type = IngredientType.OTHER
+                        type = IngredientType.OTHER,
+                        scientificReason = "Food products from Theobroma cacao beans. During industrial cocoa processing, regulatory limits allow trace insect fragments (FDA: up to 60 insect fragments per 100g cocoa powder)."
                     )
                 )
                 continue
@@ -309,7 +325,8 @@ fun IngredientsFilter(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Dry fruits are avoided in some Jain traditions during specific lunar months (Phagan to Kartak).",
-                        type = IngredientType.OTHER
+                        type = IngredientType.OTHER,
+                        scientificReason = "Dried seeds and nuts (almonds, cashews, pistachios, walnuts) of various trees. During rainy seasons, these may harbour micro-organisms more readily as per traditional understanding."
                     )
                 )
                 continue
