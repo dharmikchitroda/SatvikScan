@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+    <!-- Outer Loka outline -->
+    <path d="M 40 10 L 60 10 L 68 28 L 60 50 L 73 88 L 27 88 L 40 50 L 32 28 Z" 
+          fill="none" 
+          stroke="#E5A823" 
+          stroke-width="3" 
+          stroke-linejoin="round" />
+        
+    <!-- Crescent Moon -->
+    <path d="M 42 15 A 8 8 0 0 0 58 15" 
+          fill="none" 
+          stroke="#E5A823" 
+          stroke-width="1.5" />
+        
+    <!-- Dot above Crescent -->
+    <circle cx="50" cy="11" r="1.5" fill="#D8232A" />
+        
+    <!-- Three dots below Crescent -->
+    <circle cx="45" cy="21" r="1.5" fill="#D8232A" />
+    <circle cx="50" cy="21" r="1.5" fill="#D8232A" />
+    <circle cx="55" cy="21" r="1.5" fill="#D8232A" />
+        
+    <!-- Swastika -->
+    <path d="M 42 31 L 42 39 L 58 39 L 58 47" 
+          fill="none" 
+          stroke="#D8232A" 
+          stroke-width="2.5" 
+          stroke-linejoin="miter" />
+    <path d="M 58 31 L 50 31 L 50 47 L 42 47" 
+          fill="none" 
+          stroke="#D8232A" 
+          stroke-width="2.5" 
+          stroke-linejoin="miter" />
+        
+    <!-- Hand outline (Detailed curved fingers centered at 50) -->
+    <path d="M 45.5 86 C 44.5 83 43.5 78 43.5 68 C 43.5 64 41.5 62 41.5 60 C 41.5 58 42.5 58 42.5 60 L 42.5 48 C 42.5 46 45 46 45 48 L 45 58 A 0.5 0.5 0 0 0 45.5 58 L 45.5 42 C 45.5 40 48 40 48 42 L 48 58 A 0.5 0.5 0 0 0 48.5 58 L 48.5 38 C 48.5 36 51 36 51 38 L 51 58 A 0.5 0.5 0 0 0 51.5 58 L 51.5 42 C 51.5 40 54 40 54 42 L 54 58 A 0.5 0.5 0 0 0 54.5 58 L 54.5 62 C 54.5 58 56.5 58 58.5 58 C 60.5 58 62.5 60 62.5 64 C 62.5 67 61.5 70 59.5 73 C 58.5 75 58.5 80 58.5 86 Z" 
+          fill="none" 
+          stroke="#E5A823" 
+          stroke-width="1.5" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+        
+    <!-- Wheel (Dharmachakra Outer Rim) -->
+    <circle cx="50" cy="72" r="10" fill="none" stroke="#D8232A" stroke-width="1.2" />
+    <circle cx="50" cy="72" r="8.5" fill="none" stroke="#D8232A" stroke-width="0.6" />
+    <circle cx="50" cy="72" r="3" fill="none" stroke="#D8232A" stroke-width="0.8" />
+    
+    <!-- 24 Spokes of Wheel -->
+    <path d="M 40.00,72.00 L 60.00,72.00 M 40.34,69.41 L 59.66,74.59 M 41.34,67.00 L 58.66,77.00 M 42.93,64.93 L 57.07,79.07 M 45.00,63.34 L 55.00,80.66 M 47.41,62.34 L 52.59,81.66 M 50.00,62.00 L 50.00,82.00 M 52.59,62.34 L 47.41,81.66 M 55.00,63.34 L 45.00,80.66 M 57.07,64.93 L 42.93,79.07 M 58.66,67.00 L 41.34,77.00 M 59.66,69.41 L 40.34,74.59" 
+          fill="none" 
+          stroke="#D8232A" 
+          stroke-width="0.5" />
+          
+    <!-- Devanagari text "अहिंसा" in Palm -->
+    <!-- Shirorekha -->
+    <path d="M 43.5 70 L 56.5 70" fill="none" stroke="#D8232A" stroke-width="0.6" />
+    <!-- "अ" -->
+    <path d="M 44.5 70.5 C 43.5 70.5 43.5 71.3 44.5 71.7 C 43.5 71.7 43.5 72.5 44.5 73 M 44.5 71.8 L 46 71.8 M 46 70 L 46 73.5" fill="none" stroke="#D8232A" stroke-width="0.5" />
+    <!-- "हि" -->
+    <path d="M 48 70 L 48 73.5 M 48 70.2 C 47.2 70.2 47.2 72 47.2 73.5 M 48.8 70.2 C 49.3 70.2 49.3 71.2 48.8 71.7 C 49.3 71.7 49.3 72.7 48.8 73.5" fill="none" stroke="#D8232A" stroke-width="0.5" />
+    <!-- Dot "ं" -->
+    <circle cx="50.8" cy="69" r="0.3" fill="#D8232A" />
+    <!-- "सा" -->
+    <path d="M 52.2 70.5 C 51.5 70.5 51.5 71.3 52.2 71.7 C 51.5 71.7 51.5 72.5 52.2 73 M 52.2 71.8 L 53.5 71.8 M 53.5 70 L 53.5 73.5 M 55 70 L 55 73.5" fill="none" stroke="#D8232A" stroke-width="0.5" />
+</svg>
