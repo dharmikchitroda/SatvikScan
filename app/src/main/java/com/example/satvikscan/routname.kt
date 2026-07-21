@@ -12,4 +12,6 @@ object routname {
     val CustomExclusionsScreen = "CustomExclusionsScreen"
     val SelectDietScreen = "SelectDietScreen"
     val DietGyanScreen = "DietGyanScreen"
+    val PrivacyPolicyScreen = "PrivacyPolicyScreen"
+    val AboutSatvikScreen = "AboutSatvikScreen"
 }

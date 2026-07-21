@@ -60,7 +60,9 @@ fun UserProfileScreen(
     onBackClick: () -> Unit,
     onChangeDietClick: () -> Unit,
     onCustomExclusionsClick: () -> Unit,
-    onDietGyanClick: (String) -> Unit = {}
+    onDietGyanClick: (String) -> Unit = {},
+    onPrivacyPolicyClick: () -> Unit = {},
+    onAboutClick: () -> Unit = {}
 ) {
     // val isDarkMode by viewModel.isDarkMode.collectAsState()
     val isDarkMode = false
@@ -307,7 +309,7 @@ fun UserProfileScreen(
                         title = "Privacy Policy",
                         isDarkMode = isDarkMode,
                         iconColor = RowIconColor,
-                        onClick = { /* Handle privacy policy */ }
+                        onClick = { onPrivacyPolicyClick() }
                     )
 
                     HorizontalDivider(
@@ -321,7 +323,7 @@ fun UserProfileScreen(
                         title = "About SatvikScan",
                         isDarkMode = isDarkMode,
                         iconColor = RowIconColor,
-                        onClick = { /* Handle About screen */ }
+                        onClick = { onAboutClick() }
                     )
                 }
             }

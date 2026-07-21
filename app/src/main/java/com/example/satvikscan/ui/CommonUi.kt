@@ -231,6 +231,12 @@ fun CommonUi(
                                 onCustomExclusionsClick = { navController.navigate(routname.CustomExclusionsScreen) },
                                 onDietGyanClick = { dietType ->
                                     navController.navigate("${routname.DietGyanScreen}/$dietType")
+                                },
+                                onPrivacyPolicyClick = {
+                                    navController.navigate(routname.PrivacyPolicyScreen)
+                                },
+                                onAboutClick = {
+                                    navController.navigate(routname.AboutSatvikScreen)
                                 }
                             )
                         }
@@ -334,6 +340,21 @@ fun CommonUi(
                     onBackClick = { navController.popBackStack() }
                 )
             }
+
+            composable(routname.PrivacyPolicyScreen) {
+                PrivacyPolicyScreen(
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
+
+            composable(routname.AboutSatvikScreen) {
+                AboutSatvikScreen(
+                    onBackClick = { navController.popBackStack() },
+                    onPrivacyPolicyClick = { navController.navigate(routname.PrivacyPolicyScreen) },
+                    onSettingsClick = { navController.navigate(routname.SelectDietScreen) }
+                )
+            }
+
 
         }
 
