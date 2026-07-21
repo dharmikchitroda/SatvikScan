@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SatvikScan</string>
+
+    <!-- UI General Labels -->
+    <string name="diet_gyan_badge_jain">ઋષિઓનું જ્ઞાન</string>
+    <string name="diet_gyan_badge_swami">ભક્તિ અને પવિત્રતા</string>
+    <string name="diet_gyan_tagline_jain">આધ્યાત્મિક વિકાસ માટે પવિત્ર આહાર નિયમો</string>
+    <string name="diet_gyan_tagline_swami">આધ્યાત્મિક ઉન્નતિ માટે પવિત્ર શાકાહારી નિયમો</string>
+    <string name="diet_gyan_download_btn">આહાર માર્ગદર્શિકા ડાઉનલોડ કરો</string>
+    <string name="diet_gyan_footer_jain">જાગૃતિ સાથે આહાર કરો 🙏</string>
+    <string name="diet_gyan_footer_swami">આહાર અને વિચારોની પવિત્રતા 🙏</string>
+    <string name="diet_gyan_footer_tagline">તમે જેવું ખાશો તેવા જ બનશો - Satvik Scan</string>
+    <string name="diet_gyan_label_religious">ધાર્મિક કારણ અને સંદર્ભ</string>
+    <string name="diet_gyan_label_scientific">વૈજ્ઞાનિક ઉત્પત્તિ</string>
+    <string name="diet_gyan_toast_downloading">માર્ગદર્શિકા ડાઉનલોડ પ્રારંભ થઈ…</string>
+    <string name="diet_gyan_title_jain">જૈન આહાર જ્ઞાન</string>
+    <string name="diet_gyan_title_swami">સ્વામિનારાયણ આહાર જ્ઞાન</string>
+
+
+    <!--            JAIN GUIDELINES                  -->
+
+    <!-- 1. Root Vegetables -->
+    <string name="jain_root_title">કંદમૂળ</string>
+    <string name="jain_root_subtitle">ડુંગળી, લસણ, બટાકા, આદુ, ગાજર, મૂળા, બીટ, શક્કરિયા, સૂરણ તથા અન્ય કંદમૂળ</string>
+    <string name="jain_root_rel">"અનંતકાય કંદમૂળ હોવાથી તેને જમીનમાંથી ઉપાડતાં સમગ્ર વનસ્પતિનો નાશ થાય છે તથા તેની સાથે સંકળાયેલા અસંખ્ય નિગોદ જીવની હિંસા થાય છે. તેથી જૈન પરંપરામાં આવા કંદમૂળનો ત્યાગ કરવામાં આવે છે. (જૈન આગમો – અનંતકાય સિદ્ધાંત)"</string>
+    <string name="jain_root_sci">જમીનની અંદર ઉગતા કંદ, મૂળ, ગાંઠ અથવા રાઇઝોમ (Bulb, Root, Tuber, Rhizome).</string>
+
+    <!-- 2. Vinegar -->
+    <string name="jain_vinegar_title">સરકો (Vinegar)</string>
+    <string name="jain_vinegar_subtitle">સૂક્ષ્મજીવો દ્વારા આથવણ</string>
+    <string name="jain_vinegar_rel">"સૂક્ષ્મજીવો દ્વારા થતી આથવણ (Fermentation)ની પ્રક્રિયા દ્વારા બનતું હોવાથી કેટલીક જૈન પરંપરાઓમાં તેનો ત્યાગ કરવામાં આવે છે અથવા સાવધાની રાખવામાં આવે છે. આ અંગે વિવિધ જૈન સંપ્રદાયોમાં মতભેદ જોવા મળે છે. (જૈન પરંપરા – સંપ્રદાય મુજબ મતભેદ)"</string>
+    <string name="jain_vinegar_sci">આલ્કોહોલનું એસિટિક એસિડ બેક્ટેરિયા (Acetic Acid Bacteria) દ્વારા આથવણ (Fermentation) થતાં બનતું દ્રાવણ.</string>
+
+    <!-- 3. Citric Acid E330 -->
+    <string name="jain_citric_title">સાઇટ્રિક એસિડ (E330)</string>
+    <string name="jain_citric_subtitle">પ્રિઝર્વેટિવ / એસિડિટી રેગ્યુલેટર</string>
+    <string name="jain_citric_rel">"જૈન ગ્રંથોમાં તેનો સ્પષ્ટ પ્રતિબંધ નથી. તેની સ્વીકાર્યતા તેના ઉત્પાદનના સ્ત્રોત પર આધાર રાખે છે, કારણ કે તે કુદરતી રીતે ફળોમાંથી અથવા સૂક્ષ્મજીવો દ્વારા આથવણ (Fermentation)થી પણ બનાવવામાં આવી શકે છે. તેથી વિવિધ જૈન સંપ્રદાયોમાં આ અંગે મતભેદ જોવા મળે છે. (જૈન પરંપરા – સંપ્રદાય અને ઉત્પાદનના સ્ત્રોત મુજબ મતભેદ)"</string>
+    <string name="jain_citric_sci">કુદરતી રીતે લીંબુ તથા અન્ય સિટ્રસ ફળોમાં મળે છે અથવા ઔદ્યોગિક રીતે Aspergillus niger દ્વારા આથવણ (Fermentation)થી બનાવવામાં આવે છે.</string>
+
+    <!-- 4. Ajinomoto / MSG E621 -->
+    <string name="jain_msg_title">અજીનોમોટો (E621)</string>
+    <string name="jain_msg_subtitle">મોનોસોડિયમ ગ્લુટામેટ – સ્વાદવર્ધક</string>
+    <string name="jain_msg_rel">"જૈન ગ્રંથોમાં તેનો સ્પષ્ટ પ્રતિબંધ નથી. સામાન્ય રીતે વનસ્પતિ આધારિત આથવણ (Fermentation)થી બનાવવામાં આવે છે, પરંતુ તેનો સ્વીકાર સંપ્રદાય અને વ્યક્તિગત ધાર્મિક આચરણ મુજબ બદલાઈ શકે છે. (જૈન પરંપરા – સંપ્રદાય મુજબ મતભેદ)"</string>
+    <string name="jain_msg_sci">સ્ટાર્ચ, શેરડી અથવા મોલાસિસ જેવા વનસ્પતિ આધારિત સ્ત્રોતોમાંથી બેક્ટેરિયલ આથવણ (Fermentation) દ્વારા બનાવવામાં આવતો સ્વાદવર્ધક (Flavor Enhancer).</string>
+
+    <!-- 5. Sabudana -->
+    <string name="jain_sabudana_title">સાબુદાણા</string>
+    <string name="jain_sabudana_subtitle">ટેપિયોકા / કસાવા સ્ટાર્ચ</string>
+    <string name="jain_sabudana_rel">"કંદમૂળ (ટેપિયોકા/કસાવા)માંથી બનાવવામાં આવતું હોવાથી અનંતકાય સિદ્ધાંત અનુસાર જૈન પરંપરામાં તેનો ત્યાગ કરવામાં આવે છે. (જૈન આગમો – અનંતકાય સિદ્ધાંત)"</string>
+    <string name="jain_sabudana_sci">કસાવા/ટેપિયોકા (Manihot esculenta)ના ભૂગર્ભ કંદમાંથી મેળવેલા સ્ટાર્ચમાંથી બનાવવામાં આવે છે.</string>
+
+    <!-- 6. Mahavigai – Honey, Meat, Butter, Alcohol -->
+    <string name="jain_mahavigai_title">મહાવિગઈ (૪ વર્જિત)</string>
+    <string name="jain_mahavigai_subtitle">મધ, માંસ, માખણ, મદ્ય/દારૂ</string>
+    <string name="jain_mahavigai_rel">"જૈન પરંપરામાં આ ચારને \'મહાવિગઈ\' તરીકે વર્ણવવામાં આવ્યા છે. અહિંસા, જીવહિંસા તથા ધાર્મિક આહાર સિદ્ધાંતોને ધ્યાનમાં રાખીને તેમના ત્યાગની ભલામણ કરવામાં આવે છે. (પરંપરાગત જૈન સાહિત્ય – મહાવિગઈ)"</string>
+    <string name="jain_mahavigai_sci">મધ – મધમાખીજન્ય ઉત્પાદન; માંસ – પ્રાણીજન્ય ખોરાક; માખણ – દૂધમાંથી પ્રાપ્ત દુગ્ધજન્ય ચરબી; મદ્ય/દારૂ – આથવણ (Fermentation) અથવા નિસ્યંદન (Distillation) દ્વારા બનતું મદ્યપાન.</string>
+
+    <!-- 7. Stale Paneer -->
+    <string name="jain_paneer_title">વાસી પનીર</string>
+    <string name="jain_paneer_subtitle">જૂનું / વાસી થયેલું પનીર</string>
+    <string name="jain_paneer_rel">"વાસી ખોરાકમાં સૂક્ષ્મજીવોની વૃદ્ધિ થવાની શક્યતા હોવાથી જૈન પરંપરામાં તેનો ત્યાગ કરવામાં આવે છે. (પરંપરાગત જૈન આહાર સિદ્ધાંતો)"</string>
+    <string name="jain_paneer_sci">દૂધમાંથી બનાવેલ તાજું પનીર સમય જતાં સૂક્ષ્મજીવોની વૃદ્ધિને કારણે વાસી બને છે.</string>
+
+    <!-- 8. Cheese -->
+    <string name="jain_cheese_title">ચીઝ (Cheese)</string>
+    <string name="jain_cheese_subtitle">આથવણ દ્વારા બનતું દુગ્ધ ઉત્પાદન</string>
+    <string name="jain_cheese_rel">"આથવણ (Fermentation) દ્વારા બનતું હોવાથી તથા કેટલાક પ્રકારોમાં પ્રાણીજન્ય રેનેટ (Rennet) વપરાતું હોઈ શકે છે. તેથી તેનો સ્ત્રોત ચકાસવો જરૂરી છે. આ અંગે વિવિધ જૈન પરંપરાઓમાં મતભેદ જોવા મળે છે. (જૈન પરંપરા – સંપ્રદાય અને ઉત્પાદનના સ્ત્રોત મુજબ મતભેદ)"</string>
+    <string name="jain_cheese_sci">દૂધને જમાવી અને પરિપક્વ (Aged/Fermented) કરીને બનાવવામાં આવતું દુગ્ધજન્ય ઉત્પાદન; કેટલાક પ્રકારોમાં પ્રાણીજન્ય અથવા માઇક્રોબિયલ રેનેટનો ઉપયોગ થાય છે.</string>
+
+    <!-- 9. Fig -->
+    <string name="jain_fig_title">અંજીર (Fig)</string>
+    <string name="jain_fig_subtitle">ઉદુંબર વર્ગનું ફળ</string>
+    <string name="jain_fig_rel">"અંજીર ઉદુંબર વર્ગના ફળમાં આવે છે. જૈન પરંપરામાં ઉદુંબર ફળોનો ત્યાગ કરવામાં આવે છે, કારણ કે તેમાં સૂક્ષ્મ જીવસૃષ્ટિ અને અંજીર ભમરી (Fig Wasp) સાથેનો સહજીવી જીવનચક્ર સંકળાયેલો માનવામાં આવે છે. (જૈન આગમો – ઉદુંબર ફળ)"</string>
+    <string name="jain_fig_sci">અંજીર (Ficus carica) એક Syconium પ્રકારનું ફળ છે, જેનું પરાગણ વિશિષ્ટ Fig Wasp દ્વારા થાય છે.</string>
+
+    <!-- 10. Poppy Seeds -->
+    <string name="jain_poppy_title">ખસખસ (Poppy Seed)</string>
+    <string name="jain_poppy_subtitle">બહૂબીજ (અસંખ્ય બીજ ધરાવતું)</string>
+    <string name="jain_poppy_rel">"બહૂબીજ (અસંખ્ય બીજ ધરાવતું) હોવાથી જૈન પરંપરામાં તેનો ત્યાગ કરવામાં આવે છે. (પરંપરાગત જૈન માર્ગદર્શન)"</string>
+    <string name="jain_poppy_sci">અફીણના છોડ (Papaver somniferum)ના સૂકા અને પરિપક્વ બીજ.</string>
+
+    <!-- 11. Makhana -->
+    <string name="jain_makhana_title">મખાણા (Makhana)</string>
+    <string name="jain_makhana_subtitle">Euryale ferox ના બીજ</string>
+    <string name="jain_makhana_rel">"કેટલાક જૈન મહારાજ સાહેબોના માર્ગદર્શન મુજબ મખાણાનું ઉત્પાદન તળાવ અથવા અન્ય જળાશયોમાં થતું હોવાથી તેમાં જળજીવોની હિંસાની સંભાવનાને ધ્યાનમાં રાખીને તેનો ત્યાગ કરવાની સલાહ આપવામાં આવે છે. (પરંપરાગત જૈન માર્ગદર્શન – કેટલાક આચાર્યોના મત મુજબ)"</string>
+    <string name="jain_makhana_sci">મખાણા (Euryale ferox)ના બીજ, જે તળાવ, સરોવર અને અન્ય જળાશયોમાં ઉગે છે.</string>
+
+    <!-- 12. Water Chestnut -->
+    <string name="jain_singhoda_title">શિંગોડા (Water Chestnut)</string>
+    <string name="jain_singhoda_subtitle">જળાશયોમાં ઉગતું જળફળ</string>
+    <string name="jain_singhoda_rel">"કેટલાક જૈન મહારાજ સાહેબોના માર્ગદર્શન મુજબ શિંગોડા જળાશયોમાં ઉગતો હોવાથી જળજીવોની હિંસાની સંભાવનાને ધ્યાનમાં રાખીને તેનો ત્યાગ કરવાની સલાહ આપવામાં આવે છે. (પરંપરાગત જૈન માર્ગદર્શન – કેટલાક આચાર્યોના મત મુજબ)"</string>
+    <string name="jain_singhoda_sci">શિંગોડા (Trapa spp.) જળાશયોમાં ઉગતું જળફળ છે, જેને સામાન્ય રીતે Water Chestnut અથવા Singhara તરીકે ઓળખવામાં આવે છે.</string>
+
+    <!-- 13. Arrowroot -->
+    <string name="jain_arrowroot_title">આરારૂટ / આરાનો લોટ</string>
+    <string name="jain_arrowroot_subtitle">Arrowroot Powder (Maranta arundinacea)</string>
+    <string name="jain_arrowroot_rel">"અનંતકાય કંદમૂળમાંથી બનાવવામાં આવતું હોવાથી જૈન પરંપરામાં તેનો ત્યાગ કરવામાં આવે છે. (જૈન આગમો – અનંતકાય સિદ્ધાંત)"</string>
+    <string name="jain_arrowroot_sci">આરારૂટના છોડ (Maranta arundinacea)ના ભૂગર્ભ કંદ/મૂળમાંથી મેળવવામાં આવતો સ્ટાર્ચ.</string>
+
+    <!-- 14. Chocolate / Cocoa -->
+    <string name="jain_chocolate_title">ચોકલેટ અને કોકો</string>
+    <string name="jain_chocolate_subtitle">કોકો પાવડર અને ચોકલેટ ઉત્પાદનો</string>
+    <string name="jain_chocolate_rel">"જૈન ગ્રંથોમાં તેનો સ્પષ્ટ પ્રતિબંધ નથી. જોકે કેટલાક જૈન મહારાજ સાહેબોના માર્ગદર્શન મુજબ કોકોના ઉત્પાદન અને પ્રોસેસિંગ દરમિયાન ઝીણા જીવજંતુઓની સંભાવના હોવાથી તેનો ત્યાગ કરવાની સલાહ આપવામાં આવે છે. (પરંપરાગત જૈન માર્ગદર્શન – કેટલાક આચાર્યોના મત મુજબ)"</string>
+    <string name="jain_chocolate_sci">કોકો (Theobroma cacao)ના બીજમાંથી બનાવવામાં આવતા ખાદ્ય પદાર્થો. ઔદ્યોગિક પ્રક્રિયા દરમિયાન, નિયમનકારી મર્યાદામાં જીવજંતુઓના અંશનું અસ્તિત્વ શક્ય હોઈ શકે છે.</string>
+
+    <!-- 15. Maida -->
+    <string name="jain_maida_title">મૈદો (Maida)</string>
+    <string name="jain_maida_subtitle">રિફાઇન્ડ લોટ અને યીસ્ટ આધારિત ઉત્પાદનો</string>
+    <string name="jain_maida_rel">"જૈન ગ્રંથોમાં મૈદાનો સ્પષ્ટ પ્રતિબંધ નથી. જોકે કેટલાક જૈન મહારાજ સાહેબોના માર્ગદર્શન મુજબ મૈદા તથા તેમાંથી બનતી આથવણ (Fermentation/Yeast)વાળી ખાદ્ય વસ્તુઓનો ત્યાગ કરવાની સલાહ આપવામાં આવે છે. (પરંપરાગત જૈન માર્ગદર્શન – કેટલાક આચાર્યોના મત મુજબ)"</string>
+    <string name="jain_maida_sci">ઘઉંના એન્ડોસ્પર્મ (Endosperm)ને પીસીને બનાવવામાં આવતો પરિષ્કૃત (Refined) લોટ.</string>
+
+    <!-- 16. Rava / Suji -->
+    <string name="jain_rava_title">રવો / સૂજી</string>
+    <string name="jain_rava_subtitle">દરદરો ઘઉંનો લોટ</string>
+    <string name="jain_rava_rel">"જૈન ગ્રંથોમાં રવાનો સ્પષ્ટ પ્રતિબંધ નથી. જોકે કેટલાક જૈન મહારાજ સાહેબોના માર્ગદર્શન મુજબ ચાતુર્માસ અને પર્યુષણ દરમિયાન રવાનો ત્યાગ કરવાની સલાહ આપવામાં આવે છે. (પરંપરાગત જૈન માર્ગદર્શન – કેટલાક આચાર્યોના મત મુજબ)"</string>
+    <string name="jain_rava_sci">ઘઉંના એન્ડોસ્પર્મને દરદરું પીસીને બનાવવામાં આવતો પરિષ્કૃત ઘઉંનો ઉત્પાદ (Coarsely Milled Wheat Endosperm).</string>
+
+    <!-- 17. Dry Fruits (Seasonal) -->
+    <string name="jain_dryfruits_title">સૂકા મેવા (સીઝનલ)</string>
+    <string name="jain_dryfruits_subtitle">બદામ, કાજુ, પિસ્તા, અખરોટ વગેરે</string>
+    <string name="jain_dryfruits_rel">"કેટલીક જૈન પરંપરાઓમાં ફાગણ સુદ ચૌદશથી કારતક સુદ પૂર્ણિમા સુધી સૂકા મેવાનો ત્યાગ કરવામાં આવે છે, જ્યારે કારતક સુદ પૂર્ણિમાથી ફાગણ સુદ પૂર્ણિમા સુધી તેનો ઉપયોગ સ્વીકાર્ય માનવામાં આવે છે. (પરંપરાગત જૈન માર્ગદર્શન)"</string>
+    <string name="jain_dryfruits_sci">વિવિધ વૃક્ષોના સૂકવેલા ફળ અને બીજ, જેમ કે બદામ, કાજુ, પિસ્તા, અખરોટ વગેરે.</string>
+
+    <!-- 18. E471/E472/E422/E570/E627 Food Additives -->
+    <string name="jain_additives_veg_title">E471 / E472 / E422 / E570 / E627</string>
+    <string name="jain_additives_veg_subtitle">Mono &amp; Diglycerides, Glycerol, Fatty Acids, Disodium Guanylate</string>
+    <string name="jain_additives_veg_rel">"આ ફૂડ એડિટિવ્સ વનસ્પતિ અથવા પ્રાણીજન્ય સ્ત્રોતમાંથી બનતા હોઈ શકે છે. તેથી જૈન પરંપરા અનુસાર તેનો ઉપયોગ કરતા પહેલાં તેનો સ્ત્રોત (Source) ચકાસવો જરૂરી છે. (પરંપરાગત જૈન માર્ગદર્શન)"</string>
+    <string name="jain_additives_veg_sci">ઔદ્યોગિક રીતે બનાવવામાં આવતા ફૂડ એડિટિવ્સ, જે વનસ્પતિ તેલ, પ્રાણીજન્ય ચરબી અથવા સૂક્ષ્મજીવ આધારિત પ્રક્રિયાથી તૈયાર થઈ શકે છે.</string>
+    <string name="jain_additives_veg_chip1">સ્ત્રોત ચકાસો</string>
+    <string name="jain_additives_veg_chip2">પ્રાણીજન્ય હોઈ શકે</string>
+
+    <!-- 19. E1105 Lysozyme -->
+    <string name="jain_lysozyme_title">E1105 (Lysozyme)</string>
+    <string name="jain_lysozyme_subtitle">ઇંડા આધારિત એન્ઝાઇમ</string>
+    <string name="jain_lysozyme_rel">"સામાન્ય રીતે ઇંડાના સફેદ ભાગમાંથી મેળવવામાં આવતું હોવાથી જૈન આહાર અનુસાર તેનો ત્યાગ કરવામાં આવે છે. (પરંપરાગત જૈન માર્ગદર્શન)"</string>
+    <string name="jain_lysozyme_sci">ઇંડાના સફેદ ભાગમાંથી મેળવવામાં આવતું કુદરતી એન્ઝાઇમ (Enzyme).</string>
+
+    <!-- 20. E901 Beeswax -->
+    <string name="jain_beeswax_title">E901 (Beeswax)</string>
+    <string name="jain_beeswax_subtitle">મધમાખીનું મીણ</string>
+    <string name="jain_beeswax_rel">"મધમાખી દ્વારા ઉત્પન્ન થતું પ્રાણીજન્ય ઉત્પાદન હોવાથી જૈન પરંપરામાં તેનો ત્યાગ કરવામાં આવે છે. (પરંપરાગત જૈન માર્ગદર્શન)"</string>
+    <string name="jain_beeswax_sci">મધમાખી (Apis spp.) દ્વારા મધપૂડામાં ઉત્પન્ન કરવામાં આવતું કુદરતી મીણ (Natural Wax).</string>
+
+    <!-- 21. E120/E441/E542/E904 Animal Additives -->
+    <string name="jain_additives_animal_title">E120 / E441 / E542 / E904</string>
+    <string name="jain_additives_animal_subtitle">Carmine, Gelatin, Bone Phosphate, Shellac</string>
+    <string name="jain_additives_animal_rel">"આ ફૂડ એડિટિવ્સ જીવાતો અથવા પ્રાણીજન્ય સ્ત્રોતમાંથી મેળવવામાં આવતા હોવાથી જૈન પરંપરામાં તેનો ત્યાગ કરવામાં આવે છે. (પરંપરાગત જૈન માર્ગદર્શન)"</string>
+    <string name="jain_additives_animal_sci">અનુક્રમે કોચિનિયલ જીવાતમાંથી મળતો કુદરતી રંગ, પ્રાણીના કોલાજનમાંથી બનતો જેલિંગ એજન્ટ, પ્રાણીના હાડકાંમાંથી મળતું બોન ફોસ્ફેટ અને લાખની જીવાત દ્વારા ઉત્પન્ન થતું કુદરતી રેઝિન.</string>
+    <string name="jain_additives_animal_chip1">પ્રાણીજન્ય</string>
+    <string name="jain_additives_animal_chip2">સંપૂર્ણ ત્યાગ</string>
+
+    <!-- 22. E631/E635 Flavor Enhancers -->
+    <string name="jain_flavor_enhancers_title">E631 / E635</string>
+    <string name="jain_flavor_enhancers_subtitle">Disodium Inosinate, Disodium Ribonucleotides</string>
+    <string name="jain_flavor_enhancers_rel">"આ ફૂડ એડિટિવ્સ વનસ્પતિ, સૂક્ષ્મજીવ આધારિત અથવા પ્રાણીજન્ય સ્ત્રોતમાંથી બનતા હોઈ શકે છે. તેથી જૈન પરંપરા અનુસાર તેનો સ્ત્રોત (Source) ચકાસવો જરૂરી છે. (પરંપરાગત જૈન માર્ગદર્શન)"</string>
+    <string name="jain_flavor_enhancers_sci">સ્વાદવર્ધક (Flavor Enhancers), જે આથવણ (Fermentation) અથવા પ્રાણીજન્ય સ્ત્રોતમાંથી તૈયાર થઈ શકે છે.</string>
+    <string name="jain_flavor_enhancers_chip1">સ્ત્રોત ચકાસો</string>
+
+    <!-- 23. Alcohol (All varieties) -->
+    <string name="jain_alcohol_title">મદ્ય / દારૂ (તમામ પ્રકાર)</string>
+    <string name="jain_alcohol_subtitle">Wine, Beer, Rum, Whisky, Brandy, Vodka, Gin, Food Ethanol</string>
+    <string name="jain_alcohol_rel">"આ તમામ આથવણ (Fermentation) અથવા નિસ્યંદન (Distillation) દ્વારા બનતા મદ્યપાન હોવાથી જૈન પરંપરામાં તેનો ત્યાગ કરવામાં આવે છે. (પરંપરાગત જૈન સાહિત્ય – મહાવિગઈ)"</string>
+    <string name="jain_alcohol_sci">ખાંડ, અનાજ, દ્રાક્ષ, ફળો અથવા અન્ય વનસ્પતિજન્ય સ્ત્રોતોના આથવણ (Fermentation) તથા નિસ્યંદન (Distillation) દ્વારા બનતા આલ્કોહોલિક પદાર્થો.</string>
+
+    <!-- 24. Meat / Eggs / Seafood -->
+    <string name="jain_meat_title">માંસ, ઈંડા અને સીફૂડ</string>
+    <string name="jain_meat_subtitle">માંસ, ચિકન, માછલી, ઝીંગા, કરચલો, ડુક્કર, ગાય, બકરું, ટર્કી, ઈંડા</string>
+    <string name="jain_meat_rel">"પ્રાણીજન્ય ખાદ્ય પદાર્થો હોવાથી અહિંસાના સિદ્ધાંત અનુસાર જૈન પરંપરામાં તેમનો ત્યાગ કરવામાં આવે છે. (જૈન આહાર સિદ્ધાંતો)"</string>
+    <string name="jain_meat_sci">પ્રાણીઓ, પક્ષીઓ તથા જળચર જીવોમાંથી મેળવવામાં આવતા ખાદ્ય પદાર્થો (Animal-derived Food Products).</string>
+    <string name="jain_meat_chip1">માંસાહાર</string>
+    <string name="jain_meat_chip2">અહિંસા</string>
+
+
+    <!--         SWAMINARAYAN GUIDELINES              -->
+
+    <!-- 1. Meat, Eggs & Non-Veg -->
+    <string name="swami_meat_title">માંસ, ઇંડા અને પ્રાણીજ આહાર</string>
+    <string name="swami_meat_subtitle">માંસ, ચિકન, માછલી, સીફૂડ, ઝીંગા, કરચલો, ઓઇસ્ટર, ડુક્કર, ગાય, બકરું, ટર્કી, ઈંડા</string>
+    <string name="swami_meat_rel">"ભગવાન સ્વામિનારાયણે શિક્ષાપત્રી શ્લોક ૧૫ માં માંસાહાર અને ઈંડા સહિત તમામ પ્રાણીજન્ય ખોરાકનો ત્યાગ કરવાનો આદેશ આપ્યો છે. આ અહિંસા અને શુદ્ધ સાત્વિક આહારના સિદ્ધાંત પર આધારિત છે. (શિક્ષાપત્રી – શ્લોક ૧૫)"</string>
+    <string name="swami_meat_sci">પ્રાણી, પક્ષી અથવા જળચર જીવમાંથી મેળવવામાં આવતા Animal-derived Food Products.</string>
+    <string name="swami_meat_chip1">માંસાહાર</string>
+    <string name="swami_meat_chip2">અહિંસા</string>
+
+    <!-- 2. Onion & Garlic (Allium) -->
+    <string name="swami_allium_title">ડુંગળી અને લસણ</string>
+    <string name="swami_allium_subtitle">Allium કુળ – ડુંગળી, લસણ, લીક, શેલોટ, ચાઈવ્સ</string>
+    <string name="swami_allium_rel">"સ્વામિનારાયણ પરંપરામાં આ Allium કુળના પદાર્થોને રાજસિક અને તામસિક માનવામાં આવે છે. મનમાં કામ, ક્રોધ, ચંચળતા તથા દુર્ગંધ વધે છે, તેથી તેનો ત્યાગ કરવામાં આવે છે. (શિક્ષાપત્રી પરંપરા તથા BAPS/વડતાલ માર્ગદર્શન)"</string>
+    <string name="swami_allium_sci">Allium પરિવારની વનસ્પતિઓ, જેમાં સલ્ફરયુક્ત સંયોજનો (Sulfur Compounds) વધુ હોય છે.</string>
+
+    <!-- 3. Alcohol (All varieties) -->
+    <string name="swami_alcohol_title">દારૂ અને મદ્યપાન</string>
+    <string name="swami_alcohol_subtitle">વાઇન, બિયર, રમ, વ્હિસ્કી, બ્રાન્ડી, વોડકા, જિન, સ્પિરિટ, Food Ethanol</string>
+    <string name="swami_alcohol_rel">"શિક્ષાપત્રી શ્લોક ૧૫ અને ૧૮ મુજબ તમામ પ્રકારના મદ્યપાન અને નશીલા પદાર્થોનો ત્યાગ કરવો. (શિક્ષાપત્રી – શ્લોક ૧૫ અને ૧૮)"</string>
+    <string name="swami_alcohol_sci">Fermentation અથવા Distillation દ્વારા બનતા Alcoholic Products.</string>
+
+    <!-- 4. Cannabis & Narcotics -->
+    <string name="swami_narcotics_title">ભાંગ અને નશીલા પદાર્થો</string>
+    <string name="swami_narcotics_subtitle">ભાંગ, ગાંજો, અફીણ, હશીશ તથા અન્ય નશીલા પદાર્થો</string>
+    <string name="swami_narcotics_rel">"મન અને ઇન્દ્રિયોને અશુદ્ધ બનાવતા હોવાથી સ્વામિનારાયણ પરંપરામાં આવા તમામ નશીલા પદાર્થોનો સંપૂર્ણ ત્યાગ કરવાનો નિર્દેશ આપવામાં આવ્યો છે. (શિક્ષાપત્રી – શ્લોક ૧૮)"</string>
+    <string name="swami_narcotics_sci">Psychoactive / Narcotic Substances.</string>
+    <string name="swami_narcotics_chip1">નશા મુક્તિ</string>
+    <string name="swami_narcotics_chip2">માનસિક પવિત્રતા</string>
+
+    <!-- 5. Animal-derived Additives (E120/E441/E542/E901/E904/E1105) -->
+    <string name="swami_additives_animal_title">E120 / E441 / E542 / E901 / E904 / E1105</string>
+    <string name="swami_additives_animal_subtitle">Carmine, Gelatin, Bone Phosphate, Beeswax, Shellac, Lysozyme</string>
+    <string name="swami_additives_animal_rel">"આ ફૂડ એડિટિવ્સ જીવાતો, મધમાખી, ઈંડા અથવા પ્રાણીજન્ય સ્ત્રોતોમાંથી મેળવવામાં આવતા હોવાથી સ્વામિનારાયણ આહાર સિદ્ધાંતો અનુસાર સ્વીકાર્ય નથી. (શિક્ષાપત્રીમાં પ્રાણીજન્ય આહારના ત્યાગનો સિદ્ધાંત તથા સ્વામિનારાયણ પરંપરાગત માર્ગદર્શન)"</string>
+    <string name="swami_additives_animal_sci">અનુક્રમે કોચિનિયલ જીવાતમાંથી મળતો કુદરતી રંગ, પ્રાણીના કોલાજનમાંથી બનતો જેલિંગ એજન્ટ, પ્રાણીના હાડકાંમાંથી મળતું બોન ફોસ્ફેટ, મધમાખીનું કુદરતી મીણ, લાખની જીવાત દ્વારા ઉત્પન્ન થતું કુદરતી રેઝિન અને ઈંડાના સફેદ ભાગમાંથી મળતું એન્ઝાઇમ.</string>
+    <string name="swami_additives_animal_chip1">પ્રાણીજન્ય</string>
+    <string name="swami_additives_animal_chip2">સંપૂર્ણ ત્યાગ</string>
+
+    <!-- 6. Source-dependent Additives (E322/E422/E471/E472/E570/E627/E631/E635/E920) -->
+    <string name="swami_additives_source_title">E322 / E471 / E472 / E570 / E920 વગેરે</string>
+    <string name="swami_additives_source_subtitle">Lecithin, Mono &amp; Diglycerides, Fatty Acids, L-Cysteine, Glycerol વગેરે</string>
+    <string name="swami_additives_source_rel">"આ ફૂડ એડિટિવ્સ વનસ્પતિ, સૂક્ષ્મજીવ અથવા પ્રાણીજન્ય સ્ત્રોતમાંથી બનતા હોઈ શકે છે. જો તેનો સ્ત્રોત (Source) સ્પષ્ટ ન હોય તો સ્વામિનારાયણ પરંપરા મુજબ તેનો સ્ત્રોત ચકાસવો અથવા ધાર્મિક માર્ગદર્શન મુજબ તેનો ત્યાગ કરવો."</string>
+    <string name="swami_additives_source_sci">ઔદ્યોગિક રીતે બનાવવામાં આવતા ફૂડ એડિટિવ્સ, જે વનસ્પતિ તેલ, પ્રાણીજન્ય ચરબી, ઈંડા, પીંછાં (Feathers), વાળ (Hair) અથવા સૂક્ષ્મજીવ આધારિત આથવણ (Fermentation) દ્વારા તૈયાર થઈ શકે છે.</string>
+    <string name="swami_additives_source_chip1">સ્ત્રોત ચકાસો</string>
+    <string name="swami_additives_source_chip2">પ્રાણીજન્ય હોઈ શકે</string>
+
+    <!-- 7. Hing (Asafoetida) -->
+    <string name="swami_hing_title">હિંગ (Asafoetida)</string>
+    <string name="swami_hing_subtitle">Ferula છોડનો દૂધિયા રસ – મસાલો</string>
+    <string name="swami_hing_rel">"કેટલીક સ્વામિનારાયણ પરંપરાઓમાં હિંગનો ત્યાગ કરવાની સલાહ આપવામાં આવે છે, કારણ કે તેને રાજસિક/તામસિક માનવામાં આવે છે તથા વ્યાવસાયિક હિંગમાં ઘઉંનો લોટ, ગુંદર અથવા અન્ય મિશ્રણો હોવાની સંભાવના રહે છે. આ અંગે વિવિધ સ્વામિનારાયણ સંસ્થાઓમાં આચરણમાં ભિન્નતા જોવા મળે છે. (પરંપરાગત સ્વામિનારાયણ માર્ગદર્શન)"</string>
+    <string name="swami_hing_sci">Ferula પ્રજાતિના છોડના દૂધિયા રસ (Oleogum Resin)માંથી બનતો મસાલો. બજારમાં મળતી હિંગમાં ઘણીવાર ઘઉંનો લોટ, ચોખાનો લોટ અથવા ગમ જેવા મિશ્રણો ઉમેરવામાં આવતા હોય છે.</string>
+</resources>

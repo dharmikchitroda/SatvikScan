@@ -1,3 +1,227 @@
 <resources>
     <string name="app_name">SatvikScan</string>
+
+    <!-- UI General Labels -->
+    <string name="diet_gyan_badge_jain">WISDOM OF SAGES</string>
+    <string name="diet_gyan_badge_swami">DEVOTION &amp; PURITY</string>
+    <string name="diet_gyan_tagline_jain">Sacred dietary principles for spiritual growth</string>
+    <string name="diet_gyan_tagline_swami">Pure vegetarian principles for spiritual elevation</string>
+    <string name="diet_gyan_download_btn">Download Full Dietary Guide</string>
+    <string name="diet_gyan_footer_jain">Eat with awareness 🙏</string>
+    <string name="diet_gyan_footer_swami">Purity in thoughts and food 🙏</string>
+    <string name="diet_gyan_footer_tagline">You are what you eat - Satvik Scan</string>
+    <string name="diet_gyan_label_religious">RELIGIOUS REASON</string>
+    <string name="diet_gyan_label_scientific">SCIENTIFIC ORIGIN</string>
+    <string name="diet_gyan_toast_downloading">Downloading Full Guide PDF…</string>
+    <string name="diet_gyan_title_jain">Jain DietGyan</string>
+    <string name="diet_gyan_title_swami">Swaminarayan DietGyan</string>
+
+
+    <!--             JAIN GUIDELINES                 -->
+
+
+    <!-- 1. Root Vegetables -->
+    <string name="jain_root_title">Root Vegetables</string>
+    <string name="jain_root_subtitle">Onion, Garlic, Potato, Ginger, Carrot, Radish, Beetroot, Sweet Potato, Suran, etc.</string>
+    <string name="jain_root_rel">"Anantkaya (multi-bodied) root vegetables – uprooting them destroys the entire plant along with countless Nigod organisms associated with it. Hence Jain tradition renounces all such underground produce. (Jain Agamas – Anantkaya Principle)"</string>
+    <string name="jain_root_sci">Bulbs, roots, tubers and rhizomes growing underground serve as storage organs that harbour entire colonies of micro-organisms.</string>
+
+    <!-- 2. Vinegar -->
+    <string name="jain_vinegar_title">Vinegar</string>
+    <string name="jain_vinegar_subtitle">Sirko (સરકો)</string>
+    <string name="jain_vinegar_rel">"Vinegar is produced through fermentation by micro-organisms. Some Jain traditions renounce it or exercise caution. Opinions vary across different Jain sects. (Jain Tradition – Sect-wise Differences)"</string>
+    <string name="jain_vinegar_sci">A solution produced by the fermentation of alcohol into acetic acid by Acetic Acid Bacteria.</string>
+
+    <!-- 3. Citric Acid E330 -->
+    <string name="jain_citric_title">Citric Acid (E330)</string>
+    <string name="jain_citric_subtitle">Preservative / Acidity Regulator</string>
+    <string name="jain_citric_rel">"No explicit prohibition in Jain scriptures. Its acceptability depends on the production source, as it can be derived naturally from fruits or produced via fermentation by micro-organisms. Opinions vary across different Jain sects. (Jain Tradition – Source-dependent Differences)"</string>
+    <string name="jain_citric_sci">Naturally found in citrus fruits like lemon, or industrially produced via fermentation using Aspergillus niger.</string>
+
+    <!-- 4. Ajinomoto / MSG E621 -->
+    <string name="jain_msg_title">Ajinomoto / MSG (E621)</string>
+    <string name="jain_msg_subtitle">Monosodium Glutamate – Flavor Enhancer</string>
+    <string name="jain_msg_rel">"No explicit prohibition in Jain scriptures. Generally made via plant-based fermentation, but its acceptance varies by sect and individual religious practice. (Jain Tradition – Sect-wise Differences)"</string>
+    <string name="jain_msg_sci">A flavor enhancer manufactured by bacterial fermentation of plant-based sources such as starch, sugarcane or molasses.</string>
+
+    <!-- 5. Sabudana -->
+    <string name="jain_sabudana_title">Sabudana (Sago)</string>
+    <string name="jain_sabudana_subtitle">Tapioca / Cassava Starch Pearls</string>
+    <string name="jain_sabudana_rel">"Made from Tapioca/Cassava root tubers, hence classified under the Anantkaya principle. Renounced in Jain tradition. (Jain Agamas – Anantkaya Principle)"</string>
+    <string name="jain_sabudana_sci">Starch pearls extracted from the underground tuber of Cassava plant (Manihot esculenta).</string>
+
+    <!-- 6. Mahavigai – Honey, Meat, Butter, Alcohol -->
+    <string name="jain_mahavigai_title">Mahavigai (4 Prohibited)</string>
+    <string name="jain_mahavigai_subtitle">Honey, Meat, Butter, Alcohol (Wine)</string>
+    <string name="jain_mahavigai_rel">"These four are described as \'Mahavigai\' in Jain tradition. Considering ahimsa (non-violence), jiv-himsa (harm to life) and religious dietary principles, their renunciation is strongly recommended. (Traditional Jain Literature – Mahavigai)"</string>
+    <string name="jain_mahavigai_sci">Honey – bee-derived product; Meat – animal-derived food; Butter – dairy fat from milk; Alcohol – produced by fermentation or distillation.</string>
+
+    <!-- 7. Stale Paneer -->
+    <string name="jain_paneer_title">Stale Paneer</string>
+    <string name="jain_paneer_subtitle">Aged / Leftover Cottage Cheese</string>
+    <string name="jain_paneer_rel">"Stale food promotes rapid growth of micro-organisms, hence renounced in Jain tradition. (Traditional Jain Dietary Principles)"</string>
+    <string name="jain_paneer_sci">Fresh paneer made from milk becomes stale over time due to rapid microbial growth and spoilage.</string>
+
+    <!-- 8. Cheese -->
+    <string name="jain_cheese_title">Cheese</string>
+    <string name="jain_cheese_subtitle">Fermented Dairy Product</string>
+    <string name="jain_cheese_rel">"Produced through fermentation, and some varieties may use animal-derived Rennet. Its source must be verified. Opinions vary across Jain sects. (Jain Tradition – Source-dependent Differences)"</string>
+    <string name="jain_cheese_sci">A dairy product made by coagulating and aging/fermenting milk; some types use animal-derived or microbial rennet.</string>
+
+    <!-- 9. Fig -->
+    <string name="jain_fig_title">Fig (Anjeer)</string>
+    <string name="jain_fig_subtitle">Udumbar Fruit (Ficus carica)</string>
+    <string name="jain_fig_rel">"Figs belong to the Udumbar category. Jain tradition renounces Udumbar fruits because they are associated with a symbiotic life cycle involving the Fig Wasp and micro-organisms. (Jain Agamas – Udumbar Fruit)"</string>
+    <string name="jain_fig_sci">Fig (Ficus carica) is a Syconium-type fruit whose pollination occurs through a specific Fig Wasp.</string>
+
+    <!-- 10. Poppy Seeds -->
+    <string name="jain_poppy_title">Poppy Seeds (Khaskhas)</string>
+    <string name="jain_poppy_subtitle">Multi-seeded (Bahubiji)</string>
+    <string name="jain_poppy_rel">"Being Bahubiji (containing innumerable tiny seeds), poppy seeds are renounced in Jain tradition. (Traditional Jain Guidance)"</string>
+    <string name="jain_poppy_sci">Dried and mature seeds of the opium plant (Papaver somniferum).</string>
+
+    <!-- 11. Makhana -->
+    <string name="jain_makhana_title">Makhana (Fox Nuts)</string>
+    <string name="jain_makhana_subtitle">Euryale ferox Seeds</string>
+    <string name="jain_makhana_rel">"As per guidance of some Jain Acharyas, Makhana grows in ponds and water bodies, and its harvesting may cause harm to aquatic life. Hence its renunciation is advised. (Traditional Jain Guidance – Some Acharyas)"</string>
+    <string name="jain_makhana_sci">Seeds of Euryale ferox, an aquatic plant that grows in ponds, lakes and other water bodies.</string>
+
+    <!-- 12. Water Chestnut -->
+    <string name="jain_singhoda_title">Water Chestnut (Singhoda)</string>
+    <string name="jain_singhoda_subtitle">Trapa spp. – Aquatic Fruit</string>
+    <string name="jain_singhoda_rel">"As per guidance of some Jain Acharyas, Water Chestnut grows in water bodies and its harvesting may harm aquatic organisms. Hence its renunciation is advised. (Traditional Jain Guidance – Some Acharyas)"</string>
+    <string name="jain_singhoda_sci">Water Chestnut (Trapa spp.) is an aquatic fruit that grows in water bodies, commonly known as Singhara.</string>
+
+    <!-- 13. Arrowroot -->
+    <string name="jain_arrowroot_title">Arrowroot Powder</string>
+    <string name="jain_arrowroot_subtitle">Arrowroot Starch (Maranta arundinacea)</string>
+    <string name="jain_arrowroot_rel">"Made from underground Anantkaya rhizomes, hence renounced in Jain tradition. (Jain Agamas – Anantkaya Principle)"</string>
+    <string name="jain_arrowroot_sci">Starch derived from the underground rhizome of the Arrowroot plant (Maranta arundinacea).</string>
+
+    <!-- 14. Chocolate / Cocoa -->
+    <string name="jain_chocolate_title">Chocolate &amp; Cocoa</string>
+    <string name="jain_chocolate_subtitle">Cocoa Powder, Chocolate Products</string>
+    <string name="jain_chocolate_rel">"No explicit prohibition in Jain scriptures. However, some Jain Acharyas advise renunciation as cocoa production and processing may involve contamination with traces of insects. (Traditional Jain Guidance – Some Acharyas)"</string>
+    <string name="jain_chocolate_sci">Food products made from Cocoa (Theobroma cacao) beans. During industrial processing, trace amounts of insect fragments may be present within regulatory limits.</string>
+
+    <!-- 15. Maida -->
+    <string name="jain_maida_title">Maida (Refined Flour)</string>
+    <string name="jain_maida_subtitle">All-purpose Flour &amp; Yeast-based Items</string>
+    <string name="jain_maida_rel">"No explicit prohibition in Jain scriptures. However, some Jain Acharyas advise renouncing Maida and yeast-based fermented food items made from it. (Traditional Jain Guidance – Some Acharyas)"</string>
+    <string name="jain_maida_sci">Refined flour made by milling the endosperm of wheat grains.</string>
+
+    <!-- 16. Rava / Suji -->
+    <string name="jain_rava_title">Rava / Suji (Semolina)</string>
+    <string name="jain_rava_subtitle">Coarsely Milled Wheat</string>
+    <string name="jain_rava_rel">"No explicit prohibition in Jain scriptures. However, some Jain Acharyas advise renouncing Rava during Chaturmas and Paryushan. (Traditional Jain Guidance – Some Acharyas)"</string>
+    <string name="jain_rava_sci">A coarsely milled product of wheat endosperm (Coarsely Milled Wheat Endosperm).</string>
+
+    <!-- 17. Dry Fruits (Seasonal) -->
+    <string name="jain_dryfruits_title">Dry Fruits (Seasonal)</string>
+    <string name="jain_dryfruits_subtitle">Almonds, Cashew, Pistachio, Walnuts, etc.</string>
+    <string name="jain_dryfruits_rel">"In some Jain traditions, dry fruits are renounced from Fagan Sud Chaudas to Kartik Sud Purnima, while their use is acceptable from Kartik Sud Purnima to Fagan Sud Purnima. (Traditional Jain Guidance)"</string>
+    <string name="jain_dryfruits_sci">Dried fruits and seeds of various trees, such as almonds, cashews, pistachios, walnuts, etc.</string>
+
+    <!-- 18. E471/E472/E422/E570/E627 Food Additives -->
+    <string name="jain_additives_veg_title">E471 / E472 / E422 / E570 / E627</string>
+    <string name="jain_additives_veg_subtitle">Mono &amp; Diglycerides, Glycerol, Fatty Acids, Disodium Guanylate</string>
+    <string name="jain_additives_veg_rel">"These food additives may be derived from plant or animal sources. As per Jain tradition, their source (plant vs animal) must be verified before use. (Traditional Jain Guidance)"</string>
+    <string name="jain_additives_veg_sci">Industrially produced food additives that can be derived from vegetable oils, animal fats, or microbial processes.</string>
+    <string name="jain_additives_veg_chip1">Check Source</string>
+    <string name="jain_additives_veg_chip2">May Be Animal-derived</string>
+
+    <!-- 19. E1105 Lysozyme -->
+    <string name="jain_lysozyme_title">E1105 (Lysozyme)</string>
+    <string name="jain_lysozyme_subtitle">Egg-derived Enzyme</string>
+    <string name="jain_lysozyme_rel">"Generally derived from egg whites, hence renounced as per Jain dietary guidelines. (Traditional Jain Guidance)"</string>
+    <string name="jain_lysozyme_sci">A natural enzyme (Enzyme) typically extracted from the white of chicken eggs.</string>
+
+    <!-- 20. E901 Beeswax -->
+    <string name="jain_beeswax_title">E901 (Beeswax)</string>
+    <string name="jain_beeswax_subtitle">Bee-derived Wax Coating</string>
+    <string name="jain_beeswax_rel">"Being an animal-derived product produced by honeybees, it is renounced in Jain tradition. (Traditional Jain Guidance)"</string>
+    <string name="jain_beeswax_sci">Natural wax produced by honeybees (Apis spp.) in their hive combs.</string>
+
+    <!-- 21. E120/E441/E542/E904 Animal Additives -->
+    <string name="jain_additives_animal_title">E120 / E441 / E542 / E904</string>
+    <string name="jain_additives_animal_subtitle">Carmine, Gelatin, Bone Phosphate, Shellac</string>
+    <string name="jain_additives_animal_rel">"These food additives are derived from insects or animal sources, hence renounced in Jain tradition. (Traditional Jain Guidance)"</string>
+    <string name="jain_additives_animal_sci">Carmine – natural dye from Cochineal insect; Gelatin – gelling agent from animal collagen; Bone Phosphate – from animal bones; Shellac – natural resin from Lac insect.</string>
+    <string name="jain_additives_animal_chip1">Animal-derived</string>
+    <string name="jain_additives_animal_chip2">Strictly Avoid</string>
+
+    <!-- 22. E631/E635 Flavor Enhancers -->
+    <string name="jain_flavor_enhancers_title">E631 / E635</string>
+    <string name="jain_flavor_enhancers_subtitle">Disodium Inosinate, Disodium Ribonucleotides</string>
+    <string name="jain_flavor_enhancers_rel">"These flavor enhancers may be derived from plant, microbial, or animal sources. As per Jain tradition, their source must be verified. (Traditional Jain Guidance)"</string>
+    <string name="jain_flavor_enhancers_sci">Flavor enhancers that can be produced via fermentation or from animal-derived sources.</string>
+    <string name="jain_flavor_enhancers_chip1">Check Source</string>
+
+    <!-- 23. Alcohol (All varieties) -->
+    <string name="jain_alcohol_title">All Alcohol &amp; Spirits</string>
+    <string name="jain_alcohol_subtitle">Wine, Beer, Rum, Whisky, Brandy, Vodka, Gin, Food Ethanol</string>
+    <string name="jain_alcohol_rel">"All fermented or distilled alcoholic beverages are renounced in Jain tradition as they are classified under Mahavigai (major prohibited substances). (Traditional Jain Literature – Mahavigai)"</string>
+    <string name="jain_alcohol_sci">Alcoholic substances produced by fermentation and/or distillation of sugars, grains, grapes, fruits or other plant sources.</string>
+
+    <!-- 24. Meat / Eggs / Seafood -->
+    <string name="jain_meat_title">Meat, Eggs &amp; Seafood</string>
+    <string name="jain_meat_subtitle">Meat, Chicken, Fish, Prawn, Crab, Pork, Beef, Mutton, Turkey, Eggs</string>
+    <string name="jain_meat_rel">"All animal-derived food products are renounced following the principle of Ahimsa (non-violence) in Jain tradition. (Jain Dietary Principles)"</string>
+    <string name="jain_meat_sci">Food products derived from animals, birds, and aquatic creatures (Animal-derived Food Products).</string>
+    <string name="jain_meat_chip1">Non-Veg</string>
+    <string name="jain_meat_chip2">Ahimsa</string>
+
+
+    <!--         SWAMINARAYAN GUIDELINES              -->
+
+
+    <!-- 1. Meat, Eggs & Non-Veg -->
+    <string name="swami_meat_title">Meat, Eggs &amp; Non-Veg</string>
+    <string name="swami_meat_subtitle">Meat, Chicken, Fish, Seafood, Prawn, Crab, Oyster, Pork, Beef, Mutton, Turkey, Eggs</string>
+    <string name="swami_meat_rel">"Bhagwan Swaminarayan, in Shikshapatri Verse 15, has instructed the complete renunciation of meat, eggs, and all animal-derived foods. This is based on the principle of Ahimsa and pure Satvik diet. (Shikshapatri – Verse 15)"</string>
+    <string name="swami_meat_sci">Animal-derived food products obtained from animals, birds or aquatic creatures.</string>
+    <string name="swami_meat_chip1">Non-Veg</string>
+    <string name="swami_meat_chip2">Ahimsa</string>
+
+    <!-- 2. Onion & Garlic (Allium) -->
+    <string name="swami_allium_title">Onion &amp; Garlic</string>
+    <string name="swami_allium_subtitle">Allium Family – Onion, Garlic, Leek, Shallot, Chives</string>
+    <string name="swami_allium_rel">"In the Swaminarayan tradition, these Allium family substances are considered Rajasic and Tamasic. They increase lust, anger, restlessness and foul odor, hence they are renounced. (Shikshapatri tradition &amp; BAPS/Vadtal Guidance)"</string>
+    <string name="swami_allium_sci">Plants of the Allium family that contain high levels of organosulfur compounds (Sulfur Compounds).</string>
+
+    <!-- 3. Alcohol (All varieties) -->
+    <string name="swami_alcohol_title">Alcohol &amp; Spirits</string>
+    <string name="swami_alcohol_subtitle">Wine, Beer, Rum, Whisky, Brandy, Vodka, Gin, Spirit, Food Ethanol</string>
+    <string name="swami_alcohol_rel">"As per Shikshapatri Verses 15 and 18, all types of alcoholic beverages and intoxicating substances must be renounced. (Shikshapatri – Verses 15 &amp; 18)"</string>
+    <string name="swami_alcohol_sci">Alcoholic products produced through fermentation or distillation.</string>
+
+    <!-- 4. Cannabis & Narcotics -->
+    <string name="swami_narcotics_title">Cannabis &amp; Narcotics</string>
+    <string name="swami_narcotics_subtitle">Bhang, Ganja, Opium, Hashish &amp; other intoxicants</string>
+    <string name="swami_narcotics_rel">"Since they contaminate the mind and senses, the Swaminarayan tradition instructs complete renunciation of all such narcotic substances. (Shikshapatri – Verse 18)"</string>
+    <string name="swami_narcotics_sci">Psychoactive / Narcotic Substances that impair neurological and cognitive functions.</string>
+    <string name="swami_narcotics_chip1">No Intoxicants</string>
+    <string name="swami_narcotics_chip2">Mental Purity</string>
+
+    <!-- 5. Animal-derived Additives (E120/E441/E542/E901/E904/E1105) -->
+    <string name="swami_additives_animal_title">E120 / E441 / E542 / E901 / E904 / E1105</string>
+    <string name="swami_additives_animal_subtitle">Carmine, Gelatin, Bone Phosphate, Beeswax, Shellac, Lysozyme</string>
+    <string name="swami_additives_animal_rel">"These food additives are derived from insects, bees, eggs or animal sources, hence not acceptable as per Swaminarayan dietary principles. (Shikshapatri principle of animal-food renunciation &amp; traditional Swaminarayan guidance)"</string>
+    <string name="swami_additives_animal_sci">Carmine – natural dye from Cochineal insect; Gelatin – gelling agent from animal collagen; Bone Phosphate – from animal bones; Beeswax – natural wax from honeybees; Shellac – natural resin from Lac insect; Lysozyme – enzyme from egg whites.</string>
+    <string name="swami_additives_animal_chip1">Animal-derived</string>
+    <string name="swami_additives_animal_chip2">Strictly Avoid</string>
+
+    <!-- 6. Source-dependent Additives (E322/E422/E471/E472/E570/E627/E631/E635/E920) -->
+    <string name="swami_additives_source_title">E322 / E471 / E472 / E570 / E920 &amp; more</string>
+    <string name="swami_additives_source_subtitle">Lecithin, Mono &amp; Diglycerides, Fatty Acids, L-Cysteine, Glycerol, etc.</string>
+    <string name="swami_additives_source_rel">"These food additives may be derived from plant, microbial or animal sources. If their source is unclear, as per Swaminarayan tradition, their source should be verified or they should be renounced as per religious guidance."</string>
+    <string name="swami_additives_source_sci">Industrially produced food additives that may be derived from vegetable oils, animal fats, eggs, feathers, hair, or microbial fermentation processes.</string>
+    <string name="swami_additives_source_chip1">Check Source</string>
+    <string name="swami_additives_source_chip2">May Be Animal-derived</string>
+
+    <!-- 7. Hing (Asafoetida) -->
+    <string name="swami_hing_title">Hing (Asafoetida)</string>
+    <string name="swami_hing_subtitle">Ferula Oleogum Resin – Spice</string>
+    <string name="swami_hing_rel">"In some Swaminarayan traditions, Hing is advised to be renounced as it is considered Rajasic/Tamasic. Commercial Hing may also contain wheat flour, gum or other additives. Practices vary across different Swaminarayan institutions. (Traditional Swaminarayan Guidance)"</string>
+    <string name="swami_hing_sci">A spice made from the milky resin (Oleogum Resin) of the Ferula plant. Commercial Hing often contains wheat flour, rice flour or gum as additives.</string>
 </resources>
