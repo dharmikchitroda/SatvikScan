@@ -62,7 +62,8 @@ fun UserProfileScreen(
     onCustomExclusionsClick: () -> Unit,
     onDietGyanClick: (String) -> Unit = {},
     onPrivacyPolicyClick: () -> Unit = {},
-    onAboutClick: () -> Unit = {}
+    onAboutClick: () -> Unit = {},
+    onFeedbackClick: () -> Unit = {}
 ) {
     // val isDarkMode by viewModel.isDarkMode.collectAsState()
     val isDarkMode = false
@@ -206,7 +207,7 @@ fun UserProfileScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.jain_logo),
+                                painter = painterResource(R.drawable.jain_guide_logo),
                                 contentDescription = "Jain Ingredient Guide",
                                 tint = if (isDarkMode) Color(0xFF4CAF50) else Color(0xFF2E7D32),
                                 modifier = Modifier.size(26.dp)
@@ -251,7 +252,7 @@ fun UserProfileScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.swaminarayan_tilak),
+                                painter = painterResource(R.drawable.swaminarayan_guide_logo),
                                 contentDescription = "Swaminarayan Ingredient Guide",
                                 tint = if (isDarkMode) Color(0xFFFFB74D) else Color(0xFFD35400),
                                 modifier = Modifier.size(26.dp)
@@ -295,7 +296,7 @@ fun UserProfileScreen(
                         title = "Send Feedback",
                         isDarkMode = isDarkMode,
                         iconColor = RowIconColor,
-                        onClick = { /* Handle feedback */ }
+                        onClick = { onFeedbackClick() }
                     )
 
                     HorizontalDivider(
