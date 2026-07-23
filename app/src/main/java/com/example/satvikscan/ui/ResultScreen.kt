@@ -709,15 +709,15 @@ private fun IngredientItem(
         // Red Icon container
         Box(
             modifier = Modifier
-                .size(44.dp)
-                .background(Color(0xFFFFEAEA), shape = RoundedCornerShape(10.dp)),
+                .size(50.dp)
+                .background(Color(0xFFFFEAEA), shape = RoundedCornerShape(12.dp)),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 painter = painterResource(id = iconRes),
                 contentDescription = null,
                 tint = Color(0xFFC62828),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(30.dp)
             )
         }
 
@@ -730,10 +730,6 @@ private fun IngredientItem(
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF7A1C1C)
             )
-            Spacer(modifier = Modifier.height(2.dp))
-            Text(
-                text = reason, fontSize = 12.sp, color = Color(0xFF757575)
-            )
         }
 
         // Tap hint — question mark icon
@@ -741,7 +737,7 @@ private fun IngredientItem(
             painter = painterResource(id = R.drawable.question_mark),
             contentDescription = "Why Avoid?",
             tint = Color(0xFFC62828).copy(alpha = 0.7f),
-            modifier = Modifier.size(22.dp)
+            modifier = Modifier.size(26.dp)
         )
     }
 }
@@ -891,7 +887,7 @@ fun WhyAvoidDialog(
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .background(Color(0xFF333333), shape = RoundedCornerShape(14.dp))
+                        .background(Color(0xFFF0FDF4), shape = RoundedCornerShape(14.dp))
                         .padding(14.dp)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -906,7 +902,7 @@ fun WhyAvoidDialog(
                             text = "RELIGIOUS GUIDANCE",
                             fontSize = 9.sp,
                             fontWeight = FontWeight.ExtraBold,
-                            color = Color(0xFF333333),
+                            color = Color(0xFF15803D),
                             letterSpacing = 0.5.sp,
                             lineHeight = 12.sp
                         )
@@ -917,7 +913,7 @@ fun WhyAvoidDialog(
                             .removePrefix("Avoided: ")
                             .removePrefix("Caution: "),
                         fontSize = 11.5.sp,
-                        color = Color(0xFF444444),
+                        color = Color(0xFF1F2937),
                         lineHeight = 16.sp
                     )
                 }

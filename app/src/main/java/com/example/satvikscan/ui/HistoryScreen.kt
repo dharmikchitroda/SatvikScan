@@ -567,7 +567,7 @@ fun PromoCard() {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Maintain the Purity\nof Your Kitchen.",
+                text = "Maintain the Purity\nof Your Packet.",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color(0xFF1B3A2D),
@@ -587,10 +587,10 @@ fun PromoCard() {
         Box(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .offset(x = 16.dp, y = 16.dp)
+
         ) {
             Icon(
-                painter = painterResource(R.drawable.leaf_svg),
+                painter = painterResource(R.drawable.ic_safe_tick),
                 contentDescription = null,
                 tint = Color(0xFF1B3A2D).copy(alpha = 0.08f),
                 modifier = Modifier.size(96.dp)

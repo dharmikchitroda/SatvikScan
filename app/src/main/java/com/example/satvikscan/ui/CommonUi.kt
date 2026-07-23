@@ -237,6 +237,9 @@ fun CommonUi(
                                 },
                                 onAboutClick = {
                                     navController.navigate(routname.AboutSatvikScreen)
+                                },
+                                onFeedbackClick = {
+                                    navController.navigate(routname.FeedbackScreen)
                                 }
                             )
                         }
@@ -351,7 +354,12 @@ fun CommonUi(
                 AboutSatvikScreen(
                     onBackClick = { navController.popBackStack() },
                     onPrivacyPolicyClick = { navController.navigate(routname.PrivacyPolicyScreen) },
-                    onSettingsClick = { navController.navigate(routname.SelectDietScreen) }
+                )
+            }
+
+            composable(routname.FeedbackScreen) {
+                SendFeedbackScreen(
+                    onBackClick = { navController.popBackStack() }
                 )
             }
 

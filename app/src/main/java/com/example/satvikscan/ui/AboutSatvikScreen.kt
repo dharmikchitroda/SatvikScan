@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -56,25 +57,25 @@ import com.example.satvikscan.R
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AboutSatvikScreen(
-    paddingValues: PaddingValues = PaddingValues(0.dp),
     onBackClick: () -> Unit = {},
     onPrivacyPolicyClick: () -> Unit = {},
-    onSettingsClick: () -> Unit = {}
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFFF8F9FF)) // Soft off-white surface
-            .padding(paddingValues)
+            .background(Color(0xFFFDFDFD)) // Soft off-white surface
+            .statusBarsPadding()
     ) {
-        // --- Top Bar (Centered Title) ---
+        //  Top Bar (Centered Title) 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 8.dp),
+                .height(64.dp),
             contentAlignment = Alignment.Center
+    
         ) {
             IconButton(
                 onClick = onBackClick,
@@ -96,7 +97,7 @@ fun AboutSatvikScreen(
             )
         }
 
-        // --- Main Scrollable Content ---
+        //  Main Scrollable Content 
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -104,13 +105,14 @@ fun AboutSatvikScreen(
                 .padding(horizontal = 20.dp, vertical = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // --- 1. Header Section ---
+            //  1. Header Section 
             Box(
                 modifier = Modifier
                     .size(64.dp)
                     .background(Color(0xFFBEF3CE), shape = RoundedCornerShape(18.dp)),
                 contentAlignment = Alignment.Center
             ) {
+                // TODO: change orignal logo
                 Icon(
                     painter = painterResource(id = R.drawable.leaf_svg),
                     contentDescription = "SatvikScan Logo",
@@ -152,7 +154,7 @@ fun AboutSatvikScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // --- 2. Mission Card (Single Surface) ---
+            //  2. Mission Card (Single Surface) 
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(24.dp),
@@ -226,7 +228,7 @@ fun AboutSatvikScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // --- 3. Satvik Food Info Cards (Vertical List) ---
+            //  3. Satvik Food Info Cards (Vertical List) 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = "What is Satvik Food?",
@@ -239,7 +241,7 @@ fun AboutSatvikScreen(
 
                 // Item 1: Sattva
                 SatvikInfoCard(
-                    iconRes = R.drawable.leaf_svg,
+                    R.drawable.leaf_svg,
                     heading = "Sattva",
                     description = "Fresh, pure, natural, non-violent food."
                 )
@@ -265,7 +267,7 @@ fun AboutSatvikScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // --- 4. Diets Supported Section ---
+            //  4. Diets Supported Section 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = "Diets Supported",
@@ -282,7 +284,7 @@ fun AboutSatvikScreen(
                 ) {
                     DietGridCard(
                         modifier = Modifier.weight(1f),
-                        iconRes = R.drawable.leaf_svg,
+                        iconRes = R.drawable.custom_icon,
                         text = "custom"
                     )
                     DietGridCard(
@@ -313,7 +315,7 @@ fun AboutSatvikScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // --- 5. Key Features Grid (2x2) ---
+            //  5. Key Features Grid (2x2) 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = "Key Features",
@@ -361,7 +363,7 @@ fun AboutSatvikScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            // --- 6. Footer & Actions ---
+            //  6. Footer & Actions 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
@@ -422,7 +424,7 @@ fun AboutSatvikScreen(
                         color = Color(0xFF404943),
                         modifier = Modifier.clickable {
                             val intent = Intent(Intent.ACTION_SENDTO).apply {
-                                data = Uri.parse("mailto:support@satvikscan.com")
+                                data = Uri.parse("mailto:support.satvikscan@gmail.com")
                                 putExtra(Intent.EXTRA_SUBJECT, "SatvikScan Feedback & Support")
                             }
                             try {
@@ -495,7 +497,7 @@ private fun SatvikInfoCard(
                 .height(68.dp)
                 .align(Alignment.CenterStart)
                 .background(
-                    Color(0xFF34D399),
+                    Color(0xFF38684B),
                     shape = RoundedCornerShape(topStart = 20.dp, bottomStart = 20.dp)
                 )
         )
@@ -544,8 +546,8 @@ private fun DietGridCard(
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        color = Color(0xFFEFFDF5),
-        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFA7F3D0))
+        color = Color(0xFFE8F7EA),
+        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFD0E7D8))
     ) {
         Row(
             modifier = Modifier
@@ -553,19 +555,14 @@ private fun DietGridCard(
                 .padding(horizontal = 8.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                modifier = Modifier
-                    .size(34.dp)
-                    .background(Color(0xFFBEF3CE), CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
+
                 Icon(
                     painter = painterResource(id = iconRes),
                     contentDescription = text,
                     tint = Color(0xFF1B3A2D),
                     modifier = Modifier.size(18.dp)
                 )
-            }
+
 
             Spacer(modifier = Modifier.width(8.dp))
 
