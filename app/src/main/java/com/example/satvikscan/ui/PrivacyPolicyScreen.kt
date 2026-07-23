@@ -1,6 +1,5 @@
 package com.example.satvikscan.ui
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,8 +18,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -31,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.satvikscan.R
@@ -40,133 +42,129 @@ fun PrivacyPolicyScreen(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val backgroundColor = Color(0xFFF2F2F2)
-    val cardBgColor = Color(0xFFFFFFFF)
-    val borderColor = Color(0xFFECEFF1)
-    val primaryTextColor = Color(0xFF1E293B)
-    val secondaryTextColor = Color(0xFF64748B)
-    val accentIconColor = Color(0xFF0284C7)
-    val greenBannerBg = Color(0xFFE8F5E9)
-    val greenBannerBorder = Color(0xFFA5D6A7)
-    val greenBannerText = Color(0xFF1B5E20)
-    val greenBannerSubtitle = Color(0xFF2E7D32)
+    val topBarTextColor  = Color(0xFF1B1C1C)
+    val cardSurface      = Color(0xFFFFFFFF)
+    val primaryText      = Color(0xFF1B1C1C)
+    val secondaryText    = Color(0xFF5F6368)
+    val dividerColor     = Color(0xFFF1F3F4)
+    val badgeBgColor     = Color(0xFFDCFCE7)
+    val badgeTextColor   = Color(0xFF15803D)
+    val versionTextColor = Color(0xFF9CA3AF)
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(backgroundColor)
+            .background(Color(0xFFFAFAFA))
             .statusBarsPadding()
     ) {
-        // Top Header Bar
-        Row(
+        // ─── Top App Bar ───
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .height(64.dp),
+            contentAlignment = Alignment.Center
         ) {
-            IconButton(onClick = onBackClick) {
+            IconButton(
+                onClick = onBackClick,
+                modifier = Modifier.align(Alignment.CenterStart)
+            ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    tint = primaryTextColor
+                    tint = topBarTextColor,
+                    modifier = Modifier.size(24.dp)
                 )
             }
-            Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = "Privacy & Legal Policy",
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = primaryTextColor
+                color = topBarTextColor,
+                textAlign = TextAlign.Center
             )
         }
 
-        // Main Scrollable Content
+        // ─── Main Content List ───
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
-            // 1. Top Green Banner Card
+
+            // ─── 0. Hero Privacy Card ───
             item {
+                Spacer(modifier = Modifier.height(4.dp))
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = greenBannerBg),
-                    border = BorderStroke(1.dp, greenBannerBorder),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = cardSurface),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp),
-                        verticalAlignment = Alignment.Top
+                            .padding(20.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(40.dp)
-                                .background(Color(0xFFC8E6C9), shape = CircleShape),
+                                .size(52.dp)
+                                .background(Color(0xFFDCFCE7), CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
-                            // TODO: Replace with real shield icon
                             Icon(
-                                painter = painterResource(R.drawable.policy_icon),
-                                contentDescription = "Privacy Shield",
-                                tint = greenBannerText,
-                                modifier = Modifier.size(24.dp)
+                                painter = painterResource(R.drawable.lock_icon),
+                                contentDescription = null,
+                                tint = Color(0xFF15803D),
+                                modifier = Modifier.size(26.dp)
                             )
                         }
-
-                        Spacer(modifier = Modifier.width(12.dp))
-
+                        Spacer(modifier = Modifier.width(16.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = "100% On-Device Privacy",
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = greenBannerText
+                                color = primaryText
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
                                 text = "Your scans and diet preferences are processed locally. No personal data ever leaves your phone.",
                                 fontSize = 13.sp,
-                                fontWeight = FontWeight.Normal,
-                                color = greenBannerSubtitle,
-                                lineHeight = 18.sp
+                                lineHeight = 19.sp,
+                                color = secondaryText
                             )
                         }
                     }
                 }
             }
 
-            // 2. Legal and Data Source Card
+            // ─── 1. Legal and Data Source Card ───
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = cardBgColor),
-                    border = BorderStroke(1.dp, borderColor),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = cardSurface),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp)
+                            .padding(20.dp)
                     ) {
                         Text(
                             text = "Legal and data source",
-                            fontSize = 16.sp,
+                            fontSize = 17.sp,
                             fontWeight = FontWeight.Bold,
-                            color = primaryTextColor
+                            color = primaryText
                         )
-                        Spacer(modifier = Modifier.height(2.dp))
+                        Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = "Read these limits before relying on scan results.",
                             fontSize = 13.sp,
-                            color = secondaryTextColor
+                            color = secondaryText
                         )
-
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(14.dp))
 
                         val bullets = listOf(
                             "Result based on Open Food Facts data for accurate ingredient analysis.",
@@ -176,189 +174,161 @@ fun PrivacyPolicyScreen(
                             "No official affiliation with Open Food Facts or its contributors.",
                             "The application is provided as-is without guarantee of 100% product coverage."
                         )
-
-                        bullets.forEach { bullet ->
+                        bullets.forEachIndexed { index, bullet ->
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 4.dp),
                                 verticalAlignment = Alignment.Top
                             ) {
-                                Text(
-                                    text = "• ",
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = secondaryTextColor
+                                Box(
+                                    modifier = Modifier
+                                        .padding(top = 6.dp)
+                                        .size(6.dp)
+                                        .background(secondaryText, CircleShape)
                                 )
+                                Spacer(modifier = Modifier.width(12.dp))
                                 Text(
                                     text = bullet,
                                     fontSize = 13.sp,
-                                    color = primaryTextColor,
-                                    lineHeight = 18.sp
+                                    lineHeight = 18.sp,
+                                    color = secondaryText
                                 )
+                            }
+                            if (index < bullets.lastIndex) {
+                                Spacer(modifier = Modifier.height(4.dp))
                             }
                         }
                     }
                 }
             }
 
-            // 3. Data Collection & Storage Card
+            // ─── 2. Data Collection & Storage Card ───
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = cardBgColor),
-                    border = BorderStroke(1.dp, borderColor),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = cardSurface),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp)
+                            .padding(20.dp)
                     ) {
                         Text(
                             text = "Data Collection & Storage",
-                            fontSize = 16.sp,
+                            fontSize = 17.sp,
                             fontWeight = FontWeight.Bold,
-                            color = primaryTextColor
+                            color = primaryText
                         )
-
-                        Spacer(modifier = Modifier.height(14.dp))
-
-                        // TODO: Replace with real Zero Personal Tracking icon
+                        Spacer(modifier = Modifier.height(12.dp))
                         PolicyFeatureRow(
-                            icon = painterResource(R.drawable.policy_icon),
-                            iconColor = accentIconColor,
+                            icon = painterResource(R.drawable.lock_icon),
                             title = "Zero Personal Tracking",
-                            subtitle = "No account required, no personal data collected.",
-                            primaryTextColor = primaryTextColor,
-                            secondaryTextColor = secondaryTextColor
+                            subtitle = "No account required, no personal ID collected.",
+                            primaryTextColor = primaryText,
+                            secondaryTextColor = secondaryText
                         )
-
-                        Spacer(modifier = Modifier.height(14.dp))
-
-                        // TODO: Replace with real On-Device Storage (Room DB) icon
+                        HorizontalDivider(color = dividerColor, thickness = 1.dp)
                         PolicyFeatureRow(
-                            icon = painterResource(R.drawable.info_icon),
-                            iconColor = accentIconColor,
+                            icon = painterResource(R.drawable.db_icon),
                             title = "On-Device Storage (Room DB)",
                             subtitle = "Scan history and custom exclusions stay on your phone.",
-                            primaryTextColor = primaryTextColor,
-                            secondaryTextColor = secondaryTextColor
+                            primaryTextColor = primaryText,
+                            secondaryTextColor = secondaryText
                         )
-
-                        Spacer(modifier = Modifier.height(14.dp))
-
-                        // TODO: Replace with real No Cloud Uploads icon
+                        HorizontalDivider(color = dividerColor, thickness = 1.dp)
                         PolicyFeatureRow(
                             icon = painterResource(R.drawable.ic_cloud_off),
-                            iconColor = accentIconColor,
                             title = "No Cloud Uploads",
-                            subtitle = "Your diet preferences and scan history never sent to cloud servers.",
-                            primaryTextColor = primaryTextColor,
-                            secondaryTextColor = secondaryTextColor
+                            subtitle = "Your dietary choices and scans are never sent to remote servers.",
+                            primaryTextColor = primaryText,
+                            secondaryTextColor = secondaryText
                         )
                     }
                 }
             }
 
-            // 4. Camera Permissions Card
+            // ─── 3. Camera Permissions Card ───
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = cardBgColor),
-                    border = BorderStroke(1.dp, borderColor),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = cardSurface),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp)
+                            .padding(20.dp)
                     ) {
                         Text(
                             text = "Camera Permissions",
-                            fontSize = 16.sp,
+                            fontSize = 17.sp,
                             fontWeight = FontWeight.Bold,
-                            color = primaryTextColor
+                            color = primaryText
                         )
-
-                        Spacer(modifier = Modifier.height(14.dp))
-
-                        // TODO: Replace with real Real-Time Label Scanning icon
+                        Spacer(modifier = Modifier.height(12.dp))
                         PolicyFeatureRow(
-                            icon = painterResource(R.drawable.baseline_camera_alt_24),
-                            iconColor = accentIconColor,
+                            icon = painterResource(R.drawable.camera_ic),
                             title = "Real-Time Label Scanning",
-                            subtitle = "Camera used exclusively for live barcodes, ingredients OCR scanning via Google ML Kit.",
-                            primaryTextColor = primaryTextColor,
-                            secondaryTextColor = secondaryTextColor
+                            subtitle = "Camera used exclusively for live barcode & ingredient OCR reading via Google ML Kit.",
+                            primaryTextColor = primaryText,
+                            secondaryTextColor = secondaryText
                         )
-
-                        Spacer(modifier = Modifier.height(14.dp))
-
-                        // TODO: Replace with real No Image Recording icon
+                        HorizontalDivider(color = dividerColor, thickness = 1.dp)
                         PolicyFeatureRow(
-                            icon = painterResource(R.drawable.baseline_qr_code_scanner_24),
-                            iconColor = accentIconColor,
+                            icon = painterResource(R.drawable.no_image_ic),
                             title = "No Image Recording",
                             subtitle = "Frames are processed in real-time memory and instantly discarded.",
-                            primaryTextColor = primaryTextColor,
-                            secondaryTextColor = secondaryTextColor
+                            primaryTextColor = primaryText,
+                            secondaryTextColor = secondaryText
                         )
                     }
                 }
             }
 
-            // 5. Network & API Transparency Card
+            // ─── 4. Network & API Transparency Card ───
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = cardBgColor),
-                    border = BorderStroke(1.dp, borderColor),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = cardSurface),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp)
+                            .padding(20.dp)
                     ) {
                         Text(
                             text = "Network & API Transparency",
-                            fontSize = 16.sp,
+                            fontSize = 17.sp,
                             fontWeight = FontWeight.Bold,
-                            color = primaryTextColor
+                            color = primaryText
                         )
-
-                        Spacer(modifier = Modifier.height(14.dp))
-
-                        // TODO: Replace with real Open Food Facts Barcode API icon
+                        Spacer(modifier = Modifier.height(12.dp))
                         PolicyFeatureRow(
-                            icon = painterResource(R.drawable.barcode_scan),
-                            iconColor = accentIconColor,
+                            icon = painterResource(R.drawable.openfc_icon),
                             title = "Open Food Facts Barcode API",
-                            subtitle = "Only the numerical barcode strings are queried to fetch product details.",
-                            primaryTextColor = primaryTextColor,
-                            secondaryTextColor = secondaryTextColor
+                            subtitle = "Only the anonymous numerical barcode string is queried to fetch product details.",
+                            primaryTextColor = primaryText,
+                            secondaryTextColor = secondaryText
                         )
-
-                        Spacer(modifier = Modifier.height(14.dp))
-
-                        // TODO: Replace with real No Tracking Identifiers icon
+                        HorizontalDivider(color = dividerColor, thickness = 1.dp)
                         PolicyFeatureRow(
-                            icon = painterResource(R.drawable.policy_icon),
-                            iconColor = accentIconColor,
+                            icon = painterResource(R.drawable.key_ic),
                             title = "No Tracking Identifiers",
-                            subtitle = "No device ID or user tracking headers sent with network requests.",
-                            primaryTextColor = primaryTextColor,
-                            secondaryTextColor = secondaryTextColor
+                            subtitle = "No device ID or user tracking token is sent with network requests.",
+                            primaryTextColor = primaryText,
+                            secondaryTextColor = secondaryText
                         )
                     }
                 }
             }
 
-            // 6. Footer Badge & Version info
+            // ─── 5. Footer: Verified Badge & Version ───
             item {
                 Column(
                     modifier = Modifier
@@ -368,44 +338,42 @@ fun PrivacyPolicyScreen(
                 ) {
                     Box(
                         modifier = Modifier
-                            .background(
-                                color = greenBannerBg,
-                                shape = RoundedCornerShape(100.dp)
-                            )
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                            .background(badgeBgColor, RoundedCornerShape(50))
+                            .padding(horizontal = 18.dp, vertical = 8.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            // TODO: Replace with real footer shield icon
-                            Icon(
-                                painter = painterResource(R.drawable.policy_icon),
-                                contentDescription = null,
-                                tint = greenBannerSubtitle,
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Box(
+                                modifier = Modifier
+                                    .size(16.dp)
+                                    .background(badgeTextColor, CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Check,
+                                    contentDescription = null,
+                                    tint = Color.White,
+                                    modifier = Modifier.size(11.dp)
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "100% UPHOLD SATVIKSCAN PRIVACY STANDARDS",
-                                fontSize = 10.sp,
+                                text = "VERIFIED SATVIKSCAN PRIVACY STANDARD",
+                                fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = greenBannerSubtitle,
+                                color = badgeTextColor,
                                 letterSpacing = 0.5.sp
                             )
                         }
                     }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
+                    Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = "v1.0.0 • Last updated: July 2026",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Color.Gray
+                        fontSize = 11.sp,
+                        color = versionTextColor,
+                        textAlign = TextAlign.Center
                     )
-
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(24.dp))
                 }
             }
         }
@@ -415,48 +383,37 @@ fun PrivacyPolicyScreen(
 @Composable
 private fun PolicyFeatureRow(
     icon: Painter,
-    iconColor: Color,
     title: String,
     subtitle: String,
     primaryTextColor: Color,
     secondaryTextColor: Color
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 12.dp),
         verticalAlignment = Alignment.Top
     ) {
-        Box(
-            modifier = Modifier
-                .size(38.dp)
-                .background(
-                    color = iconColor.copy(alpha = 0.1f),
-                    shape = CircleShape
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                painter = icon,
-                contentDescription = title,
-                tint = iconColor,
-                modifier = Modifier.size(20.dp)
-            )
-        }
-
-        Spacer(modifier = Modifier.width(12.dp))
-
+        Icon(
+            painter = icon,
+            contentDescription = title,
+            tint = primaryTextColor,
+            modifier = Modifier.size(24.dp)
+        )
+        Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
-                fontSize = 14.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
                 color = primaryTextColor
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = subtitle,
-                fontSize = 12.sp,
-                color = secondaryTextColor,
-                lineHeight = 16.sp
+                fontSize = 13.sp,
+                lineHeight = 18.sp,
+                color = secondaryTextColor
             )
         }
     }
