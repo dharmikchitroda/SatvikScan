@@ -155,6 +155,8 @@ fun SelectDietScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(16.dp))
+                        , alpha = 0.75f
+
                 )
             }
         }
@@ -257,7 +259,7 @@ fun SelectDietOptionCard(
                     painter = painterResource(id = iconRes),
                     contentDescription = null,
                     tint = iconTint,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(35.dp)
                 )
             }
 

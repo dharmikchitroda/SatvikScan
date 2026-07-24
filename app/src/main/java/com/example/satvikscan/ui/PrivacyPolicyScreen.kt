@@ -3,6 +3,7 @@ package com.example.satvikscan.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -57,7 +58,7 @@ fun PrivacyPolicyScreen(
             .background(Color(0xFFFAFAFA))
             .statusBarsPadding()
     ) {
-        // ─── Top App Bar ───
+        //  Top App Bar 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -83,7 +84,7 @@ fun PrivacyPolicyScreen(
             )
         }
 
-        // ─── Main Content List ───
+        //  Main Content List 
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -91,7 +92,7 @@ fun PrivacyPolicyScreen(
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
 
-            // ─── 0. Hero Privacy Card ───
+            // Privacy Card
             item {
                 Spacer(modifier = Modifier.height(4.dp))
                 Card(
@@ -139,7 +140,7 @@ fun PrivacyPolicyScreen(
                 }
             }
 
-            // ─── 1. Legal and Data Source Card ───
+            //  Legal and Data Source Card
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -203,7 +204,7 @@ fun PrivacyPolicyScreen(
                 }
             }
 
-            // ─── 2. Data Collection & Storage Card ───
+            //  Data Collection & Storage Card
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -233,7 +234,7 @@ fun PrivacyPolicyScreen(
                         HorizontalDivider(color = dividerColor, thickness = 1.dp)
                         PolicyFeatureRow(
                             icon = painterResource(R.drawable.db_icon),
-                            title = "On-Device Storage (Room DB)",
+                            title = "On-Device Storage ",
                             subtitle = "Scan history and custom exclusions stay on your phone.",
                             primaryTextColor = primaryText,
                             secondaryTextColor = secondaryText
@@ -250,7 +251,7 @@ fun PrivacyPolicyScreen(
                 }
             }
 
-            // ─── 3. Camera Permissions Card ───
+            //  Camera Permissions Card
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -289,7 +290,7 @@ fun PrivacyPolicyScreen(
                 }
             }
 
-            // ─── 4. Network & API Transparency Card ───
+            //  Network & API Transparency Card
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -328,7 +329,7 @@ fun PrivacyPolicyScreen(
                 }
             }
 
-            // ─── 5. Footer: Verified Badge & Version ───
+            //  Footer: Verified Badge & Version
             item {
                 Column(
                     modifier = Modifier
