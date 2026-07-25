@@ -285,7 +285,7 @@ fun AboutSatvikScreen(
                     DietGridCard(
                         modifier = Modifier.weight(1f),
                         iconRes = R.drawable.custom_icon,
-                        text = "custom"
+                        text = "Custom Diet"
                     )
                     DietGridCard(
                         modifier = Modifier.weight(1f),

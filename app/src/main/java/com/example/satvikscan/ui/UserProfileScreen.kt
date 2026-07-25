@@ -50,7 +50,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.satvikscan.R
-import com.example.satvikscan.routname
 import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
 
 @Composable
@@ -148,7 +147,7 @@ fun UserProfileScreen(
                             text = when (dietName) {
                                 "Swaminarayan" -> "Swaminarayan (Strict)"
                                 "Jain" -> "Jain (Strict)"
-                                else -> "$dietName Diet"
+                                else -> if (dietName.endsWith("Diet", ignoreCase = true)) dietName else "$dietName Diet"
                             },
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,

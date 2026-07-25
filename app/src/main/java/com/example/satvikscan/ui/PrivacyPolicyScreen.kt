@@ -272,7 +272,7 @@ fun PrivacyPolicyScreen(
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                         PolicyFeatureRow(
-                            icon = painterResource(R.drawable.camera_ic),
+                            icon = painterResource(R.drawable.baseline_camera_alt_24),
                             title = "Real-Time Label Scanning",
                             subtitle = "Camera used exclusively for live barcode & ingredient OCR reading via Google ML Kit.",
                             primaryTextColor = primaryText,
