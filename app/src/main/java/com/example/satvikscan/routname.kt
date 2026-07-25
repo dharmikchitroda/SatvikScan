@@ -14,4 +14,5 @@ object routname {
     val DietGyanScreen = "DietGyanScreen"
     val PrivacyPolicyScreen = "PrivacyPolicyScreen"
     val AboutSatvikScreen = "AboutSatvikScreen"
+    val FeedbackScreen = "FeedbackScreen"
 }
