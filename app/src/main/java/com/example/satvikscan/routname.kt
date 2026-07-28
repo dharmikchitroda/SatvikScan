@@ -1,18 +1,18 @@
 package com.example.satvikscan;
 
 object routname {
-    val HomeScreen = "HomeScreen"
+    const val HomeScreen = "HomeScreen"
 
-    val CameraScreen = "CameraProfileScreen"
+    const val CameraScreen = "CameraProfileScreen"
 
-    val ResultScreen = "ResultScreen"
+    const val ResultScreen = "ResultScreen"
 
-    val WelcomeScreen = "WelcomeScreen"
+    const val WelcomeScreen = "WelcomeScreen"
 
-    val CustomExclusionsScreen = "CustomExclusionsScreen"
-    val SelectDietScreen = "SelectDietScreen"
-    val DietGyanScreen = "DietGyanScreen"
-    val PrivacyPolicyScreen = "PrivacyPolicyScreen"
-    val AboutSatvikScreen = "AboutSatvikScreen"
-    val FeedbackScreen = "FeedbackScreen"
+    const val CustomExclusionsScreen = "CustomExclusionsScreen"
+    const val SelectDietScreen = "SelectDietScreen"
+    const val DietGyanScreen = "DietGyanScreen"
+    const val PrivacyPolicyScreen = "PrivacyPolicyScreen"
+    const val AboutSatvikScreen = "AboutSatvikScreen"
+    const val FeedbackScreen = "FeedbackScreen"
 }

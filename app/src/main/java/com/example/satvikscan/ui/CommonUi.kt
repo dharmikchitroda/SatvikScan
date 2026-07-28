@@ -284,7 +284,6 @@ fun CommonUi(
                     onScanAgainClick = {
                         viewModel.startScanning()
                         navController.navigate(routname.CameraScreen) {
-                            viewModel.startScanning() // reset old state
                             popUpTo(routname.HomeScreen)
                         }
                     },
