@@ -50,12 +50,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.satvikscan.R
-import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
+import com.example.satvikscan.ui.viewmodel.SatvikViewModel
 
 @Composable
 fun UserProfileScreen(
     paddingValues: PaddingValues,
-    viewModel: Satvik_ViewModel,
+    viewModel: SatvikViewModel,
     onBackClick: () -> Unit,
     onChangeDietClick: () -> Unit,
     onCustomExclusionsClick: () -> Unit,

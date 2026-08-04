@@ -64,7 +64,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.satvikscan.R
-import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
+import com.example.satvikscan.ui.viewmodel.SatvikViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -85,7 +85,7 @@ data class HistoryItem(
 @Composable
 fun HistoryScreen(
     paddingValues: PaddingValues,
-    viewModel: Satvik_ViewModel,
+    viewModel: SatvikViewModel,
     onStartScanningClick: () -> Unit,
     isSearchActive: Boolean,
     searchQuery: String,

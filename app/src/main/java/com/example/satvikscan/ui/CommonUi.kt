@@ -61,8 +61,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.ui.text.input.ImeAction
 import com.example.satvikscan.R
-import com.example.satvikscan.routname
-import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
+import com.example.satvikscan.R
+import com.example.satvikscan.RouteName
+import com.example.satvikscan.ui.viewmodel.SatvikViewModel
 import com.example.satvikscan.ui.viewmodel.ScanMode
 import kotlinx.coroutines.launch
 
@@ -71,28 +72,28 @@ fun CommonUi(
     modifier: Modifier = Modifier.fillMaxSize()
 ) {
 
-    val viewModel: Satvik_ViewModel = viewModel()
+    val viewModel: SatvikViewModel = viewModel()
     val navController = rememberNavController() // return navhostcontroller object
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
 
     val currentRoute = navBackStackEntry?.destination?.route
     // for this both top & bottom bar show or hide
-    val showBars = currentRoute == routname.HomeScreen
+    val showBars = currentRoute == RouteName.HomeScreen
     // only topbar show or hide
     val showTopbar = showBars
 
 
     // which screen open when user start the app first time and another time
     val startDestination = remember {
-        if (viewModel.hasSelectedDiet()) routname.HomeScreen else routname.WelcomeScreen
+        if (viewModel.hasSelectedDiet()) RouteName.HomeScreen else RouteName.WelcomeScreen
     }
 
     // dietName show in topbar
     val dietName by viewModel.dietName.collectAsState()
 
     // current cameramode
-    val currentCameramode by viewModel.Scanmode.collectAsState()
+    val currentCameramode by viewModel.scanMode.collectAsState()
 
     // Hoisted search state for History top bar
     var isSearchActive by remember { mutableStateOf(false) }
@@ -150,9 +151,9 @@ fun CommonUi(
                     coroutineScope.launch {
                         pagerState.scrollToPage(1)
                     }
-                    if (currentCameramode != ScanMode.BARCODE) viewModel.ChnageScanMode(ScanMode.BARCODE)
+                    if (currentCameramode != ScanMode.BARCODE) viewModel.changeScanMode(ScanMode.BARCODE)
                     viewModel.startScanning()
-                    navController.navigate(routname.CameraScreen)
+                    navController.navigate(RouteName.CameraScreen)
                 },
                 moveHisscreen = {
                     coroutineScope.launch {
@@ -172,7 +173,7 @@ fun CommonUi(
             navController, startDestination = startDestination, modifier = Modifier.fillMaxSize()
         ) {
 
-            composable(routname.HomeScreen) {
+            composable(RouteName.HomeScreen) {
                 // BackHandler: if user is on History or Profile page, go back to Home tab
                 BackHandler(enabled = currentPage != 1) {
                     coroutineScope.launch {
@@ -206,14 +207,14 @@ fun CommonUi(
                             HomeScreenUI(
                                 paddingValues = paddingValues,
                                 onScanPhotoclick = {
-                                    if (currentCameramode != ScanMode.OCR) viewModel.ChnageScanMode(ScanMode.OCR)
+                                    if (currentCameramode != ScanMode.OCR) viewModel.changeScanMode(ScanMode.OCR)
                                     viewModel.startScanning()
-                                    navController.navigate(routname.CameraScreen)
+                                    navController.navigate(RouteName.CameraScreen)
                                 },
                                 onScanBarcodescan = {
-                                    if (currentCameramode != ScanMode.BARCODE) viewModel.ChnageScanMode(ScanMode.BARCODE)
+                                    if (currentCameramode != ScanMode.BARCODE) viewModel.changeScanMode(ScanMode.BARCODE)
                                     viewModel.startScanning()
-                                    navController.navigate(routname.CameraScreen)
+                                    navController.navigate(RouteName.CameraScreen)
                                 },
                                 dietName = dietName
                             )
@@ -227,26 +228,26 @@ fun CommonUi(
                                         pagerState.animateScrollToPage(1)
                                     }
                                 },
-                                onChangeDietClick = { navController.navigate(routname.SelectDietScreen) },
-                                onCustomExclusionsClick = { navController.navigate(routname.CustomExclusionsScreen) },
+                                onChangeDietClick = { navController.navigate(RouteName.SelectDietScreen) },
+                                onCustomExclusionsClick = { navController.navigate(RouteName.CustomExclusionsScreen) },
                                 onDietGyanClick = { dietType ->
-                                    navController.navigate("${routname.DietGyanScreen}/$dietType")
+                                    navController.navigate("${RouteName.DietGyanScreen}/$dietType")
                                 },
                                 onPrivacyPolicyClick = {
-                                    navController.navigate(routname.PrivacyPolicyScreen)
+                                    navController.navigate(RouteName.PrivacyPolicyScreen)
                                 },
                                 onAboutClick = {
-                                    navController.navigate(routname.AboutSatvikScreen)
+                                    navController.navigate(RouteName.AboutSatvikScreen)
                                 },
                                 onFeedbackClick = {
-                                    navController.navigate(routname.FeedbackScreen)
+                                    navController.navigate(RouteName.FeedbackScreen)
                                 }
                             )
                         }
                     }
                 }
             }
-            composable(routname.CameraScreen) {
+            composable(RouteName.CameraScreen) {
                 val uiState = viewModel.productUiState.collectAsState().value
                 CameraScanScreen(
                     viewModel = viewModel,
@@ -257,20 +258,20 @@ fun CommonUi(
                     }
                 )
                 LaunchedEffect(uiState) {
-                    if (uiState != Satvik_ViewModel.ProductUiState.Idle &&
-                        !(uiState is Satvik_ViewModel.ProductUiState.Error && uiState.message == "NO_INTERNET")
+                    if (uiState != SatvikViewModel.ProductUiState.Idle &&
+                        !(uiState is SatvikViewModel.ProductUiState.Error && uiState.message == "NO_INTERNET")
                     ) {
                         navController.navigate(
-                            routname.ResultScreen
+                            RouteName.ResultScreen
                         ) {
                             // remove the last screen from the stack
-                            popUpTo(routname.CameraScreen) { inclusive = true }
+                            popUpTo(RouteName.CameraScreen) { inclusive = true }
                         }
                     }
                 }
 
             }
-            composable(routname.ResultScreen) {
+            composable(RouteName.ResultScreen) {
 
                 ResultScreen(
                     viewModel = viewModel,
@@ -283,38 +284,38 @@ fun CommonUi(
                     },
                     onScanAgainClick = {
                         viewModel.startScanning()
-                        navController.navigate(routname.CameraScreen) {
-                            popUpTo(routname.HomeScreen)
+                        navController.navigate(RouteName.CameraScreen) {
+                            popUpTo(RouteName.HomeScreen)
                         }
                     },
                     dietName = dietName,
-                    ScanIngredient = {
-                        if (currentCameramode != ScanMode.OCR) viewModel.ChnageScanMode(ScanMode.OCR)
+                    scanIngredient = {
+                        if (currentCameramode != ScanMode.OCR) viewModel.changeScanMode(ScanMode.OCR)
                         viewModel.startScanning()
-                        navController.navigate(routname.CameraScreen) {
-                            popUpTo(routname.ResultScreen) { inclusive = true }
+                        navController.navigate(RouteName.CameraScreen) {
+                            popUpTo(RouteName.ResultScreen) { inclusive = true }
                         }
                     }
                 )
 
             }
-            composable(routname.WelcomeScreen) {
+            composable(RouteName.WelcomeScreen) {
                 WelcomeScreen(
                     onContinueClick = { selectedDiet ->
                         // save Diet
                         viewModel.updateDiet(selectedDiet)
 
                         if (selectedDiet == "Custom") {
-                            navController.navigate(routname.CustomExclusionsScreen)
+                            navController.navigate(RouteName.CustomExclusionsScreen)
                         } else {
-                            navController.navigate(routname.HomeScreen) {
-                                popUpTo(routname.WelcomeScreen) { inclusive = true }
+                            navController.navigate(RouteName.HomeScreen) {
+                                popUpTo(RouteName.WelcomeScreen) { inclusive = true }
                             }
                         }
                     })
             }
 
-            composable(routname.CustomExclusionsScreen) {
+            composable(RouteName.CustomExclusionsScreen) {
                 CustomExclusionsScreen(
                     viewModel = viewModel,
                     onBackClick = {
@@ -322,20 +323,20 @@ fun CommonUi(
                     })
             }
 
-            composable(routname.SelectDietScreen) {
+            composable(RouteName.SelectDietScreen) {
                 SelectDietScreen(
                     viewModel = viewModel,
                     onContinueClick = { selectedDiet ->
                         navController.popBackStack()
                     },
                     onCustomClick = {
-                        navController.navigate(routname.CustomExclusionsScreen) {
-                            popUpTo(routname.SelectDietScreen) { inclusive = true }
+                        navController.navigate(RouteName.CustomExclusionsScreen) {
+                            popUpTo(RouteName.SelectDietScreen) { inclusive = true }
                         }
                     })
             }
 
-            composable("${routname.DietGyanScreen}/{dietType}") { backStackEntry ->
+            composable("${RouteName.DietGyanScreen}/{dietType}") { backStackEntry ->
                 val dietType = backStackEntry.arguments?.getString("dietType") ?: "Jain"
                 DietGyanScreen(
                     dietType = dietType,
@@ -343,20 +344,20 @@ fun CommonUi(
                 )
             }
 
-            composable(routname.PrivacyPolicyScreen) {
+            composable(RouteName.PrivacyPolicyScreen) {
                 PrivacyPolicyScreen(
                     onBackClick = { navController.popBackStack() }
                 )
             }
 
-            composable(routname.AboutSatvikScreen) {
+            composable(RouteName.AboutSatvikScreen) {
                 AboutSatvikScreen(
                     onBackClick = { navController.popBackStack() },
-                    onPrivacyPolicyClick = { navController.navigate(routname.PrivacyPolicyScreen) },
+                    onPrivacyPolicyClick = { navController.navigate(RouteName.PrivacyPolicyScreen) },
                 )
             }
 
-            composable(routname.FeedbackScreen) {
+            composable(RouteName.FeedbackScreen) {
                 SendFeedbackScreen(
                     onBackClick = { navController.popBackStack() }
                 )

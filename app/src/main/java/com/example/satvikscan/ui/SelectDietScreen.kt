@@ -42,11 +42,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.satvikscan.R
-import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
+import com.example.satvikscan.ui.viewmodel.SatvikViewModel
 
 @Composable
 fun SelectDietScreen(
-    viewModel: Satvik_ViewModel,
+    viewModel: SatvikViewModel,
     onContinueClick: (String) -> Unit,
     onCustomClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -155,7 +155,7 @@ fun SelectDietScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(16.dp))
-                        , alpha = 0.75f
+                        , alpha = 0.75
 
                 )
             }

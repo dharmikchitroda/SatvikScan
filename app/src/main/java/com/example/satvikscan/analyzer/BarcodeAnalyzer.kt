@@ -12,13 +12,13 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
+import com.example.satvikscan.ui.viewmodel.SatvikViewModel
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 
-class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val context: Context) :
+class BarcodeAnalyzer(private val viewModel: SatvikViewModel, private val context: Context) :
     ImageAnalysis.Analyzer {
 
 
@@ -82,10 +82,10 @@ class BarcodeAnalyzer(private val viewModel: Satvik_ViewModel, private val conte
                             vibrator.vibrate(150)
 
                             // send to code viewmodel and would call api
-                            viewModel.ChangeproductUiState(value)
+                            viewModel.changeProductUiState(value)
 
                             // stop scaning when result number
-                            viewModel.stopscanning()
+                            viewModel.stopScanning()
 
                         }
                         Barcode.FORMAT_QR_CODE -> {

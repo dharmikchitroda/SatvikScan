@@ -95,7 +95,10 @@ import androidx.core.content.ContextCompat
 import com.example.satvikscan.R
 import com.example.satvikscan.analyzer.BarcodeAnalyzer
 import com.example.satvikscan.analyzer.OcrAnalyzer
-import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
+import com.example.satvikscan.R
+import com.example.satvikscan.analyzer.BarcodeAnalyzer
+import com.example.satvikscan.analyzer.OcrAnalyzer
+import com.example.satvikscan.ui.viewmodel.SatvikViewModel
 import com.example.satvikscan.ui.viewmodel.ScanMode
 import java.util.concurrent.Executors
 import android.content.Intent
@@ -110,13 +113,13 @@ import androidx.compose.ui.window.DialogProperties
 
 @Composable
 fun CameraScanScreen(
-    viewModel: Satvik_ViewModel,
+    viewModel: SatvikViewModel,
     cameramode: ScanMode,
     onBackClick: () -> Unit
 ) {
     val context = LocalContext.current
 
-    val checkPermission by viewModel.CameraPermission.collectAsState()
+    val checkPermission by viewModel.cameraPermission.collectAsState()
 
     var permissionRequested by rememberSaveable { mutableStateOf(false) }
 
@@ -163,7 +166,7 @@ fun CameraScanScreen(
                     Manifest.permission.CAMERA
                 ) == android.content.pm.PackageManager.PERMISSION_GRANTED
 
-                viewModel.PermissionResult(hasPermission)
+                viewModel.onPermissionResult(hasPermission)
 
                 if (hasOpenedSettings && !hasPermission) {
                     onBackClick()
@@ -182,10 +185,10 @@ fun CameraScanScreen(
         mutableStateOf(false)
     }
     // eror msg
-    val MissMatchbarcodeError by viewModel.barcodeError.collectAsState()
+    val missMatchbarcodeError by viewModel.barcodeError.collectAsState()
 
-    LaunchedEffect(MissMatchbarcodeError) {
-        if (MissMatchbarcodeError != null) {
+    LaunchedEffect(missMatchbarcodeError) {
+        if (missMatchbarcodeError != null) {
             kotlinx.coroutines.delay(1800)
             viewModel.clearBarcodeError() // 2.5s baad clear ho jayega
         }
@@ -216,7 +219,7 @@ fun CameraScanScreen(
     ) { isGranted ->
 
         if (isGranted) {
-            viewModel.PermissionResult(true)
+            viewModel.onPermissionResult(true)
         } else {
             val permanentlyDenied =
                 permissionRequested &&!ActivityCompat.shouldShowRequestPermissionRationale(  activity,Manifest.permission.CAMERA )
@@ -242,7 +245,7 @@ fun CameraScanScreen(
             viewModel.startScanning()  // isScanning is true
             if (!viewModel.isNetworkAvailable()) {
                 viewModel.setOcrError("NO_INTERNET")
-                viewModel.stopscanning()
+                viewModel.stopScanning()
             }
         }
     }
@@ -630,7 +633,7 @@ fun CameraScanScreen(
 
         // Custom Floating Alert Banner
         AnimatedVisibility(
-            visible = MissMatchbarcodeError != null,
+            visible = missMatchbarcodeError != null,
             enter = slideInVertically(initialOffsetY = { -it }) + fadeIn(),
             exit = slideOutVertically(targetOffsetY = { -it }) + fadeOut(),
             modifier = Modifier
@@ -661,7 +664,7 @@ fun CameraScanScreen(
                 )
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
-                    text = MissMatchbarcodeError ?: "",
+                    text = missMatchbarcodeError ?: "",
                     color = Color(0xFF9B1C1C),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
@@ -670,7 +673,7 @@ fun CameraScanScreen(
             }
         }
 
-        if (uiState is Satvik_ViewModel.ProductUiState.Error && uiState.message == "NO_INTERNET") {
+        if (uiState is SatvikViewModel.ProductUiState.Error && uiState.message == "NO_INTERNET") {
             NoInternetDialog(
                 onRetry = {
                     viewModel.retryLastScan(onNoBarcodeAndHasInternet = {})

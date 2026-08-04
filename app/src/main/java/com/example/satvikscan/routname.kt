@@ -1,6 +1,6 @@
 package com.example.satvikscan;
 
-object routname {
+object RouteName {
     const val HomeScreen = "HomeScreen"
 
     const val CameraScreen = "CameraProfileScreen"

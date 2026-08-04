@@ -68,12 +68,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.layout.ContentScale
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.satvikscan.R
-import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
+import com.example.satvikscan.ui.viewmodel.SatvikViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun CustomExclusionsScreen(
-    viewModel: Satvik_ViewModel,
+    viewModel: SatvikViewModel,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {

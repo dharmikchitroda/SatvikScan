@@ -3,7 +3,7 @@ package com.example.satvikscan.ui.viewmodel
 import com.example.satvikscan.ui.IngredientData
 import com.example.satvikscan.ui.IngredientType
 
-fun IngredientsFilter(
+fun ingredientsFilter(
     rawIngredientData: String?,
     currentDiet: String,
     customExclusions: Set<String>
@@ -18,7 +18,7 @@ fun IngredientsFilter(
         .filter { it.isNotEmpty() }
 
     // store the detected ingredients
-    val DetectedItems = mutableListOf<IngredientData>()
+    val detectedItems = mutableListOf<IngredientData>()
 
     // Regex for strict check
     val nonVegRegex = Regex(
@@ -112,7 +112,7 @@ fun IngredientsFilter(
         if (currentDiet == "Custom") {
             val matchedExclusion = customExclusions.find { nameLower.contains(it) }
             if (matchedExclusion != null) {
-                DetectedItems.add(
+                detectedItems.add(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Avoided: Matches custom excluded ingredient '$matchedExclusion'",
@@ -132,7 +132,7 @@ fun IngredientsFilter(
                 "Jain" -> "Avoided: Animal-derived ingredients are strictly prohibited in Jain diet (Ahimsa)"
                 else -> "Avoided: Non-vegetarian origin ingredient detected"
             }
-            DetectedItems.add(
+            detectedItems.add(
                 IngredientData(
                     name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                     reason = reasonStr,
@@ -150,7 +150,7 @@ fun IngredientsFilter(
                 "Jain" -> "Avoided: Alcohol/intoxicants are restricted in Jain diet due to fermentation/violence"
                 else -> "Avoided: Intoxicating substance/alcohol detected"
             }
-            DetectedItems.add(
+            detectedItems.add(
                 IngredientData(
                     name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                     reason = reasonStr,
@@ -168,7 +168,7 @@ fun IngredientsFilter(
                 "Jain" -> "Avoided: Onion, garlic, and Allium family are root vegetables, restricted in Jain diet"
                 else -> "Avoided: Allium family ingredient (onion/garlic) detected"
             }
-            DetectedItems.add(
+            detectedItems.add(
                 IngredientData(
                     name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                     reason = reasonStr,
@@ -182,7 +182,7 @@ fun IngredientsFilter(
         // Check Suspect Additives (caution in Swaminarayan, Jain)
         if (suspectAdditivesRegex.containsMatchIn(nameLower)) {
             val reasonStr = "Caution: May be derived from animal sources. Swaminarayan and Jain traditions advise verifying the source."
-            DetectedItems.add(
+            detectedItems.add(
                 IngredientData(
                     name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                     reason = reasonStr,
@@ -196,7 +196,7 @@ fun IngredientsFilter(
         // Diet-specific checks: Swaminarayan
         if (currentDiet == "Swaminarayan") {
             if (hingRegex.containsMatchIn(nameLower)) {
-                DetectedItems.add(
+                detectedItems.add(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Asafoetida (Hing) is avoided in some Swaminarayan traditions as it is considered Rajasic/Tamasic.",
@@ -211,7 +211,7 @@ fun IngredientsFilter(
         // Diet-specific checks: Jain
         if (currentDiet == "Jain") {
             if (otherRootVegRegex.containsMatchIn(nameLower)) {
-                DetectedItems.add(
+                detectedItems.add(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Avoided: Root vegetables (Anantkaya) are restricted in Jain diet",
@@ -222,7 +222,7 @@ fun IngredientsFilter(
                 continue
             }
             if (honeyRegex.containsMatchIn(nameLower)) {
-                DetectedItems.add(
+                detectedItems.add(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Avoided: Honey is restricted in Jain diet (Mahavigai principle)",
@@ -233,7 +233,7 @@ fun IngredientsFilter(
                 continue
             }
             if (jainButterRegex.containsMatchIn(nameLower)) {
-                DetectedItems.add(
+                detectedItems.add(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Avoided: Butter is considered Mahavigai in Jain tradition (avoided due to rapid microorganism growth)",
@@ -244,7 +244,7 @@ fun IngredientsFilter(
                 continue
             }
             if (jainUdumbaraRegex.containsMatchIn(nameLower)) {
-                DetectedItems.add(
+                detectedItems.add(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Avoided: Fig (Anjeer) is an Udumbara fruit containing microscopic life/wasps, prohibited in Jain diet",
@@ -255,7 +255,7 @@ fun IngredientsFilter(
                 continue
             }
             if (jainPoppyRegex.containsMatchIn(nameLower)) {
-                DetectedItems.add(
+                detectedItems.add(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Avoided: Poppy seeds (Khus Khus) contain innumerable seeds and are avoided in Jain diet",
@@ -266,7 +266,7 @@ fun IngredientsFilter(
                 continue
             }
             if (jainAquaticPlantsRegex.containsMatchIn(nameLower)) {
-                DetectedItems.add(
+                detectedItems.add(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Makhana/Water Chestnut grows in water bodies; harvesting may harm aquatic life. Avoided by some Acharyas.",
@@ -277,7 +277,7 @@ fun IngredientsFilter(
                 continue
             }
             if (jainFermentedRegex.containsMatchIn(nameLower)) {
-                DetectedItems.add(
+                detectedItems.add(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Fermented product (Vinegar/Cheese/Paneer). Cheese may contain animal rennet; verify source.",
@@ -288,7 +288,7 @@ fun IngredientsFilter(
                 continue
             }
             if (jainFermentedAdditivesRegex.containsMatchIn(nameLower)) {
-                DetectedItems.add(
+                detectedItems.add(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Citric Acid (E330) / MSG (E621) are produced via fermentation. Verification of source recommended.",
@@ -299,7 +299,7 @@ fun IngredientsFilter(
                 continue
             }
             if (jainProcessedWheatRegex.containsMatchIn(nameLower)) {
-                DetectedItems.add(
+                detectedItems.add(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Refined flour (Maida) / Semolina (Rava/Suji) are wheat products; avoidance recommended by some Maharaj Sahebs.",
@@ -310,7 +310,7 @@ fun IngredientsFilter(
                 continue
             }
             if (jainCocoaRegex.containsMatchIn(nameLower)) {
-                DetectedItems.add(
+                detectedItems.add(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Chocolate/Cocoa powder may contain microscopic insect fragments. Avoided by some Maharaj Sahebs.",
@@ -321,7 +321,7 @@ fun IngredientsFilter(
                 continue
             }
             if (jainDryFruitsRegex.containsMatchIn(nameLower)) {
-                DetectedItems.add(
+                detectedItems.add(
                     IngredientData(
                         name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         reason = "Caution: Dry fruits are avoided in some Jain traditions during specific lunar months (Phagan to Kartak).",
@@ -333,5 +333,5 @@ fun IngredientsFilter(
             }
         }
     }
-    return DetectedItems
+    return detectedItems
 }

@@ -25,7 +25,7 @@ enum class ScanMode {
     OCR
 }
 
-class Satvik_ViewModel(application: Application) : AndroidViewModel(application) {
+class SatvikViewModel(application: Application) : AndroidViewModel(application) {
 
     private var lastScannedBarcode: String? = null
 
@@ -46,7 +46,7 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
         }
         val barcode = lastScannedBarcode
         if (barcode != null) {
-            ChangeproductUiState(barcode)
+            changeProductUiState(barcode)
         } else {
             startScanning()
             onNoBarcodeAndHasInternet()
@@ -57,8 +57,8 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
     private val prefManager = PreferenceManager(application)
 
     // for this portion permission get or not
-    private val _CameraPermission = MutableStateFlow(false)
-    val CameraPermission: StateFlow<Boolean> = _CameraPermission
+    private val _cameraPermission = MutableStateFlow(false)
+    val cameraPermission: StateFlow<Boolean> = _cameraPermission
 
 
     // stop / start scanner
@@ -85,19 +85,19 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
     val customAvoidList: StateFlow<Set<String>> = _customAvoidList
 
     // for Roomdatabase
-    private val database_obj = AppDatabase.getDatabase(application)
-    private val scanHistoryDao_obj = database_obj.scanHistoryDao()
+    private val database = AppDatabase.getDatabase(application)
+    private val scanHistoryDao = database.scanHistoryDao()
 
     // StateFlow to observe scan history updates in UI
-    val scanHistory: StateFlow<List<ScanHistoryEntity>> = scanHistoryDao_obj.getAllScans().stateIn(
+    val scanHistory: StateFlow<List<ScanHistoryEntity>> = scanHistoryDao.getAllScans().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = emptyList()
     )
 
     // which open camera according the ocr/scanning
-    private val _Scanmode = MutableStateFlow(ScanMode.BARCODE)
-    val Scanmode: StateFlow<ScanMode> = _Scanmode
+    private val _scanMode = MutableStateFlow(ScanMode.BARCODE)
+    val scanMode: StateFlow<ScanMode> = _scanMode
 
     // use for scan unsupported barcode
     private val _barcodeError = MutableStateFlow<String?>(null)
@@ -115,11 +115,11 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
         data class Error(val message: String) : ProductUiState
     }
 
-    fun PermissionResult(isGranted: Boolean) {
-        _CameraPermission.value = isGranted
+    fun onPermissionResult(isGranted: Boolean) {
+        _cameraPermission.value = isGranted
     }
 
-    fun stopscanning() {
+    fun stopScanning() {
         _isScanning.value = false
     }
 
@@ -129,7 +129,7 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
         _ingredients.value = emptyList() // Clear previous ingredients
     }
 
-    fun ChangeproductUiState(barcode: String) {
+    fun changeProductUiState(barcode: String) {
 
         lastScannedBarcode = barcode
 
@@ -155,22 +155,22 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
                     //Ingredients text parse and restricted items take
                     val rawIngredientData = response.product?.ingredientsText
 
-                    val FilteredList = IngredientsFilter(
+                    val filteredList = ingredientsFilter(
                         rawIngredientData = rawIngredientData,
                         currentDiet = _dietName.value,
                         customExclusions = _customAvoidList.value
                     )
 
-                    _ingredients.value = FilteredList
+                    _ingredients.value = filteredList
                     _productUiState.value = ProductUiState.Success(response)
 
                     // save the result in history screen using of Room
                     val name = response.product?.productName ?: "Unknown Product"
                     val rawIngredients = response.product?.ingredientsText ?: ""
-                    val isSafe = FilteredList.isEmpty()
+                    val isSafe = filteredList.isEmpty()
 
                     viewModelScope.launch {
-                        scanHistoryDao_obj.insertScan(
+                        scanHistoryDao.insertScan(
                             ScanHistoryEntity(
                                 barcode = barcode,
                                 productName = name,
@@ -235,19 +235,19 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
     // delete history using room
     fun deleteScan(barcode: String) {
         viewModelScope.launch {
-            scanHistoryDao_obj.deleteScan(barcode)
+            scanHistoryDao.deleteScan(barcode)
         }
     }
 
     //Clear History
     fun clearAllScans() {
         viewModelScope.launch {
-            scanHistoryDao_obj.clearAllScans()
+            scanHistoryDao.clearAllScans()
         }
     }
 
-    fun ChnageScanMode(mode: ScanMode) {
-        _Scanmode.value = mode
+    fun changeScanMode(mode: ScanMode) {
+        _scanMode.value = mode
     }
 
     fun startOcrScanning() {
@@ -267,13 +267,13 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
                     return@launch
                 } else {
 
-                    val FilteredList = IngredientsFilter(
+                    val filteredList = ingredientsFilter(
                         rawIngredientData = detectedText,
                         currentDiet = _dietName.value,
                         customExclusions = _customAvoidList.value
                     )
 
-                    _ingredients.value = FilteredList
+                    _ingredients.value = filteredList
 
                     val productResponse = ProductResponse(
                         code = "OCR_${System.currentTimeMillis()}",
@@ -294,16 +294,16 @@ class Satvik_ViewModel(application: Application) : AndroidViewModel(application)
           // Calculate sequential index based on current saved OCRscans
 
                 val count = scanHistory.value.count {
-                    it.imageUrl.isNullOrEmpty() && it.isSatvik == FilteredList.isEmpty()
+                    it.imageUrl.isNullOrEmpty() && it.isSatvik == filteredList.isEmpty()
                 }
                     val allocatedIndex = count % 3
 
-                    scanHistoryDao_obj.insertScan(
+                    scanHistoryDao.insertScan(
                         ScanHistoryEntity(
                             barcode = "OCR_${System.currentTimeMillis()}", // unique ID
                             productName = "Scanned Packet",
                             ingredientsText = detectedText,
-                            isSatvik = FilteredList.isEmpty(),
+                            isSatvik = filteredList.isEmpty(),
                             timestamp = System.currentTimeMillis(),
                             dietName = _dietName.value,
                             imageUrl = null , // OCR dont have an image

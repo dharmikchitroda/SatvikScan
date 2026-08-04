@@ -63,7 +63,7 @@ import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
 import androidx.compose.ui.platform.LocalContext
 import com.example.satvikscan.R
-import com.example.satvikscan.ui.viewmodel.Satvik_ViewModel
+import com.example.satvikscan.ui.viewmodel.SatvikViewModel
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -86,31 +86,31 @@ data class IngredientData(
 
 @Composable
 fun ResultScreen(
-    viewModel: Satvik_ViewModel,
+    viewModel: SatvikViewModel,
     modifier: Modifier = Modifier,
     dietName: String,
     onBackClick: () -> Unit,
     onScanAgainClick: () -> Unit,
-    ScanIngredient: () -> Unit
+    scanIngredient: () -> Unit
 ) {
 
     // collect both state
-    val CurrentUiState by viewModel.productUiState.collectAsState()
+    val currentUiState by viewModel.productUiState.collectAsState()
     val ingredientList by viewModel.ingredients.collectAsState()
 
-    when (val state = CurrentUiState) {
-        is Satvik_ViewModel.ProductUiState.Loading -> {
+    when (val state = currentUiState) {
+        is SatvikViewModel.ProductUiState.Loading -> {
             LoadingView()
         }
 
-        is Satvik_ViewModel.ProductUiState.ProductNotFound -> {
+        is SatvikViewModel.ProductUiState.ProductNotFound -> {
             ProductNotFoundScreen(
                 onBackClick = onBackClick,
-                onScanIngredientLabelClick = ScanIngredient // OCR mode - scan ingredient label directly
+                onScanIngredientLabelClick = scanIngredient // OCR mode - scan ingredient label directly
             )
         }
 
-        is Satvik_ViewModel.ProductUiState.Error -> {
+        is SatvikViewModel.ProductUiState.Error -> {
 
             if (state.message == "NO_INTERNET") {
 
@@ -126,7 +126,7 @@ fun ResultScreen(
             }
         }
 
-        is Satvik_ViewModel.ProductUiState.Success -> {
+        is SatvikViewModel.ProductUiState.Success -> {
 
             val isSafe = ingredientList.isEmpty() // if list is blanck so it is safe
 
