@@ -61,7 +61,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.ui.text.input.ImeAction
 import com.example.satvikscan.R
-import com.example.satvikscan.R
 import com.example.satvikscan.RouteName
 import com.example.satvikscan.ui.viewmodel.SatvikViewModel
 import com.example.satvikscan.ui.viewmodel.ScanMode
@@ -656,3 +655,5 @@ fun ProfileScreentopbar() {
         )
     }
 }
+
+

@@ -24,6 +24,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
@@ -92,7 +93,8 @@ fun SelectDietScreen(
                 fontSize = 32.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color(0xFF1F1F1F),
-                lineHeight = 40.sp
+                lineHeight = 40.sp,
+                style = MaterialTheme.typography.bodyLarge
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -155,7 +157,7 @@ fun SelectDietScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(16.dp))
-                        , alpha = 0.75
+                        , alpha = 0.75f
 
                 )
             }

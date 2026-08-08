@@ -95,9 +95,6 @@ import androidx.core.content.ContextCompat
 import com.example.satvikscan.R
 import com.example.satvikscan.analyzer.BarcodeAnalyzer
 import com.example.satvikscan.analyzer.OcrAnalyzer
-import com.example.satvikscan.R
-import com.example.satvikscan.analyzer.BarcodeAnalyzer
-import com.example.satvikscan.analyzer.OcrAnalyzer
 import com.example.satvikscan.ui.viewmodel.SatvikViewModel
 import com.example.satvikscan.ui.viewmodel.ScanMode
 import java.util.concurrent.Executors
