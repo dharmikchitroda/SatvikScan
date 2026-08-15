@@ -240,6 +240,9 @@ fun CommonUi(
                                 },
                                 onFeedbackClick = {
                                     navController.navigate(RouteName.FeedbackScreen)
+                                },
+                                onLanguageClick = {
+                                    navController.navigate(RouteName.LanguageSelectionScreen)
                                 }
                             )
                         }
@@ -359,6 +362,14 @@ fun CommonUi(
             composable(RouteName.FeedbackScreen) {
                 SendFeedbackScreen(
                     onBackClick = { navController.popBackStack() }
+                )
+            }
+
+            composable(RouteName.LanguageSelectionScreen) {
+                LanguageSelectionScreen(
+                    viewModel = viewModel,
+                    onBackClick = { navController.popBackStack() },
+                    onContinueClick = { navController.popBackStack() }
                 )
             }
 

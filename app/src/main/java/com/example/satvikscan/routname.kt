@@ -15,4 +15,5 @@ object RouteName {
     const val PrivacyPolicyScreen = "PrivacyPolicyScreen"
     const val AboutSatvikScreen = "AboutSatvikScreen"
     const val FeedbackScreen = "FeedbackScreen"
+    const val LanguageSelectionScreen = "LanguageSelectionScreen"
 }

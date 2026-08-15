@@ -28,4 +28,15 @@ class PreferenceManager(context: Context) {
     fun getCustomExclusions(): Set<String> {
         return sharedPrefs.getStringSet("custom_avoid_ingredients", emptySet()) ?: emptySet()
     }
+
+    // Save Selected Language (en, hi, gu)
+    fun saveLanguage(language: String) {
+        val sharedPrefsEdit = sharedPrefs.edit()
+        sharedPrefsEdit.putString("selected_language", language).apply()
+    }
+
+    // Read Selected Language
+    fun getLanguage(): String {
+        return sharedPrefs.getString("selected_language", "en") ?: "en"
+    }
 }
