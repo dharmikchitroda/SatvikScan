@@ -62,7 +62,8 @@ fun UserProfileScreen(
     onDietGyanClick: (String) -> Unit = {},
     onPrivacyPolicyClick: () -> Unit = {},
     onAboutClick: () -> Unit = {},
-    onFeedbackClick: () -> Unit = {}
+    onFeedbackClick: () -> Unit = {},
+    onLanguageClick: () -> Unit = {}
 ) {
     // val isDarkMode by viewModel.isDarkMode.collectAsState()
     val isDarkMode = false
@@ -177,7 +178,7 @@ fun UserProfileScreen(
 
 
             // 3. RELIGION GUIDE section
-            SectionHeader(title = "RELIGION GUIDE", isDarkMode = isDarkMode, headerColor = Color(0xFF7E8B85))
+            SectionHeader(title = "RELIGIOIN GUIDE", isDarkMode = isDarkMode, headerColor = Color(0xFF7E8B85))
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -188,11 +189,11 @@ fun UserProfileScreen(
                 elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
             ) {
                 Column {
-                    // Jain Ingredient Guide Row
+                    // Only show the guide matching the active diet
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { onDietGyanClick("Jain") }
+                            .clickable { onDietGyanClick(dietName) }
                             .padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -206,15 +207,22 @@ fun UserProfileScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.jain_guide_logo),
-                                contentDescription = "Jain Ingredient Guide",
-                                tint = if (isDarkMode) Color(0xFF4CAF50) else Color(0xFF2E7D32),
+                                painter = painterResource(
+                                    if (dietName == "Jain") R.drawable.jain_guide_logo
+                                    else R.drawable.swaminarayan_guide_logo
+                                ),
+                                contentDescription = "$dietName Ingredient Guide",
+                                tint = if (dietName == "Jain") {
+                                    if (isDarkMode) Color(0xFF4CAF50) else Color(0xFF2E7D32)
+                                } else {
+                                    if (isDarkMode) Color(0xFFFFB74D) else Color(0xFFD35400)
+                                },
                                 modifier = Modifier.size(26.dp)
                             )
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Text(
-                            text = "Jain Ingredient Guide",
+                            text = "$dietName Ingredient Guide",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = if (isDarkMode) Color.White else Color(0xFF1F1F1F),
@@ -233,11 +241,11 @@ fun UserProfileScreen(
                         color = if (isDarkMode) Color(0xFF2A2A2A) else Color(0xFFE5E3E3)
                     )
 
-                    // Swaminarayan Ingredient Guide Row
+                    // App Language Row
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { onDietGyanClick("Swaminarayan") }
+                            .clickable { onLanguageClick() }
                             .padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -251,15 +259,15 @@ fun UserProfileScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.swaminarayan_guide_logo),
-                                contentDescription = "Swaminarayan Ingredient Guide",
-                                tint = if (isDarkMode) Color(0xFFFFB74D) else Color(0xFFD35400),
+                                painter = painterResource(R.drawable.ic_language),
+                                contentDescription = "App Language",
+                                tint = if (isDarkMode) Color(0xFF90CAF9) else Color(0xFF333333),
                                 modifier = Modifier.size(26.dp)
                             )
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Text(
-                            text = "Swaminarayan Ingredient Guide",
+                            text = "App Language",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = if (isDarkMode) Color.White else Color(0xFF1F1F1F),

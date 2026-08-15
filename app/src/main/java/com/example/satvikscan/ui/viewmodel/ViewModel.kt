@@ -84,9 +84,13 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
     private val _customAvoidList = MutableStateFlow(prefManager.getCustomExclusions())
     val customAvoidList: StateFlow<Set<String>> = _customAvoidList
 
+    // load app language
+    private val _appLanguage = MutableStateFlow(prefManager.getLanguage())
+    val appLanguage: StateFlow<String> = _appLanguage
+
     // for Roomdatabase
-    private val database = AppDatabase.getDatabase(application)
-    private val scanHistoryDao = database.scanHistoryDao()
+    private val database_obj = AppDatabase.getDatabase(application)
+    private val scanHistoryDao = database_obj.scanHistoryDao()
 
     // StateFlow to observe scan history updates in UI
     val scanHistory: StateFlow<List<ScanHistoryEntity>> = scanHistoryDao.getAllScans().stateIn(
@@ -202,6 +206,12 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
     fun updateDiet(diet: String) {
         _dietName.value = diet
         prefManager.SaveDiet(diet)
+    }
+
+    // when user changes app language
+    fun updateLanguage(lang: String) {
+        _appLanguage.value = lang
+        prefManager.saveLanguage(lang)
     }
 
     fun addCustomAvoidIngredient(ingredient: String) {
