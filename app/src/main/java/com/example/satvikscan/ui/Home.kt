@@ -367,7 +367,7 @@ fun ImageSlider() {
         R.drawable.banner_3
     )
 
-    val pagerState = rememberPagerState(pageCount = { sliderImages.size })
+    val pagerState = rememberPagerState( pageCount = { sliderImages.size })
 
     // Auto-scroll every 5 seconds
     LaunchedEffect(pagerState) {

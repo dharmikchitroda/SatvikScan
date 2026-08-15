@@ -67,6 +67,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.layout.ContentScale
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.platform.LocalContext
+import android.widget.Toast
 import com.example.satvikscan.R
 import com.example.satvikscan.ui.viewmodel.SatvikViewModel
 
@@ -77,6 +79,7 @@ fun CustomExclusionsScreen(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     var searchQuery by remember { mutableStateOf("") }
 
     val customExclusions by viewModel.customAvoidList.collectAsState()
@@ -482,13 +485,30 @@ fun CustomExclusionsScreen(
                 .padding(horizontal = 24.dp, vertical = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            val hasExclusions = customExclusions.isNotEmpty()
+
             Button(
-                onClick = onBackClick,
+                onClick = {
+                    if (hasExclusions) {
+                        Toast.makeText(
+                            context,
+                            "${customExclusions.size} exclusions saved successfully! ✓",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        onBackClick()
+                    }
+                },
+                enabled = hasExclusions,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
                 shape = RoundedCornerShape(28.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1B3A2D))
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF1B3A2D),
+                    contentColor = Color.White,
+                    disabledContainerColor = Color(0xFF1B3A2D).copy(alpha = 0.3f),
+                    disabledContentColor = Color.White.copy(alpha = 0.5f)
+                )
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,

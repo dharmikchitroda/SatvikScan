@@ -42,6 +42,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
+import android.widget.Toast
 import com.example.satvikscan.R
 import com.example.satvikscan.ui.viewmodel.SatvikViewModel
 
@@ -52,6 +54,7 @@ fun SelectDietScreen(
     onCustomClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     val currentDiet by viewModel.dietName.collectAsState()
     var selectedDiet by remember { mutableStateOf(currentDiet) }
 
@@ -176,6 +179,7 @@ fun SelectDietScreen(
                     if (selectedDiet == "Custom") {
                         onCustomClick()       // → Navigate to Custom Exclusions Screen
                     } else {
+                        Toast.makeText(context, "$selectedDiet diet saved successfully! ✓", Toast.LENGTH_SHORT).show()
                         onContinueClick(selectedDiet)  // → Navigate to Home
                     }
                 },
