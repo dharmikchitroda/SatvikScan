@@ -7,6 +7,11 @@ object RouteName {
 
     const val ResultScreen = "ResultScreen"
 
+    // Onboarding Flow
+    const val ReligiousOnboardingScreen = "ReligiousOnboardingScreen"
+    const val ScanDetectOnboardingScreen = "ScanDetectOnboardingScreen"
+    const val DisclaimerConsentScreen = "DisclaimerConsentScreen"
+
     const val WelcomeScreen = "WelcomeScreen"
 
     const val CustomExclusionsScreen = "CustomExclusionsScreen"

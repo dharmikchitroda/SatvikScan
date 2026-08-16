@@ -85,7 +85,7 @@ fun CommonUi(
 
     // which screen open when user start the app first time and another time
     val startDestination = remember {
-        if (viewModel.hasSelectedDiet()) RouteName.HomeScreen else RouteName.WelcomeScreen
+        if (viewModel.hasSelectedDiet()) RouteName.HomeScreen else RouteName.ReligiousOnboardingScreen
     }
 
     // dietName show in topbar
@@ -301,6 +301,32 @@ fun CommonUi(
                 )
 
             }
+            composable(RouteName.ReligiousOnboardingScreen) {
+                ReligiousOnboardingScreen(
+                    onLetsBeginClick = {
+                        navController.navigate(RouteName.ScanDetectOnboardingScreen)
+                    }
+                )
+            }
+
+            composable(RouteName.ScanDetectOnboardingScreen) {
+                ScanDetectOnboardingScreen(
+                    onNextClick = {
+                        navController.navigate(RouteName.DisclaimerConsentScreen)
+                    }
+                )
+            }
+
+            composable(RouteName.DisclaimerConsentScreen) {
+                DisclaimerConsentScreen(
+                    onUnderstandClick = {
+                        navController.navigate(RouteName.WelcomeScreen) {
+                            popUpTo(RouteName.ReligiousOnboardingScreen) { inclusive = true }
+                        }
+                    }
+                )
+            }
+
             composable(RouteName.WelcomeScreen) {
                 WelcomeScreen(
                     onContinueClick = { selectedDiet ->
