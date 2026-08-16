@@ -39,4 +39,18 @@ class PreferenceManager(context: Context) {
     fun getLanguage(): String {
         return sharedPrefs.getString("selected_language", "en") ?: "en"
     }
+
+    // Onboarding completion status
+    fun setOnboardingCompleted(completed: Boolean) {
+        sharedPrefs.edit().putBoolean("is_onboarding_completed", completed).apply()
+    }
+
+    fun isOnboardingCompleted(): Boolean {
+        return sharedPrefs.getBoolean("is_onboarding_completed", false)
+    }
+
+    // Clear all preferences (for reset/logout)
+    fun clearAllPreferences() {
+        sharedPrefs.edit().clear().apply()
+    }
 }

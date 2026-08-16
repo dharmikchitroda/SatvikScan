@@ -237,9 +237,23 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    // check app first open and check welcome screen open or homescreen
+    // check app first open and check onboarding open or homescreen
     fun hasSelectedDiet(): Boolean {
-        return prefManager.getdiet() != null // dont should be null
+        return prefManager.getdiet() != null
+    }
+
+    fun isOnboardingCompleted(): Boolean {
+        return prefManager.isOnboardingCompleted() && prefManager.getdiet() != null
+    }
+
+    fun completeOnboarding() {
+        prefManager.setOnboardingCompleted(true)
+    }
+
+    fun resetAppOnboarding() {
+        prefManager.clearAllPreferences()
+        _dietName.value = "Swaminarayan"
+        _customAvoidList.value = emptySet()
     }
 
     // delete history using room
