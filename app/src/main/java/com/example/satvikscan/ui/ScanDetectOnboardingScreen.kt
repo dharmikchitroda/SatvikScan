@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -20,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -65,9 +68,9 @@ fun ScanDetectOnboardingScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
+            .background(Color(0xFFF7F7F7))
+            .padding(bottom = 28.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // ==========================================
         // 1. TOP HERO AREA (Animated WebP Video/Graphic)
@@ -92,13 +95,13 @@ fun ScanDetectOnboardingScreen(
         }
 
         // ==========================================
-        // 2. CONTENT AREA (Tagline, Step Indicator, Headline, Description, Button)
+        // 2. CONTENT AREA (Tagline, Step Indicator, Headline, Description)
         // ==========================================
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(0.95f)
-                .padding(horizontal = 24.dp, vertical = 16.dp),
+                .weight(0.85f)
+                .padding(horizontal = 24.dp, vertical = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -152,45 +155,73 @@ fun ScanDetectOnboardingScreen(
                 )
             }
 
-            // Dynamic Headline
-            Text(
-                text = buildAnnotatedString {
-                    withStyle(SpanStyle(color = darkCharcoal)) {
-                        append("Scan & Detect\n")
-                    }
-                    withStyle(SpanStyle(color = emeraldGreen)) {
-                        append("Hidden Non-Satvik\nItems")
-                    }
-                },
-                fontSize = 28.sp,
-                fontWeight = FontWeight.ExtraBold,
-                textAlign = TextAlign.Center,
-                lineHeight = 36.sp
-            )
+            // Dynamic Headline (Fixed min height container to prevent shift)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 100.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(SpanStyle(color = darkCharcoal)) {
+                            append("Scan & Detect\n")
+                        }
+                        withStyle(SpanStyle(color = emeraldGreen)) {
+                            append("Hidden Non-Satvik\nItems")
+                        }
+                    },
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 36.sp
+                )
+            }
 
-            // Subtitle Description
-            Text(
-                text = "Instantly uncover onion, garlic, animal fats, and\ncomplex E-codes by scanning the barcode or\ningredient label.",
-                fontSize = 13.sp,
-                fontWeight = FontWeight.Normal,
-                color = slateGrey,
-                textAlign = TextAlign.Center,
-                lineHeight = 20.sp
-            )
+            // Subtitle Description (Fixed min height container to prevent shift)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 60.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Instantly uncover onion, garlic, animal fats, and\ncomplex E-codes by scanning the barcode or\ningredient label.",
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = slateGrey,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 20.sp
+                )
+            }
+        }
 
-            // Full-Width CTA Button: "Next ->"
+        // ==========================================
+        // 3. FIXED BOTTOM CTA BUTTON: "Next ->"
+        // ==========================================
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp, top = 8.dp)
+        ) {
             Button(
                 onClick = onNextClick,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(54.dp),
-                shape = RoundedCornerShape(27.dp),
+                    .height(54.dp)
+                    .shadow(
+                        elevation = 8.dp,
+                        shape = CircleShape,
+                        spotColor = emeraldGreen.copy(alpha = 0.5f),
+                        ambientColor = emeraldGreen.copy(alpha = 0.3f)
+                    ),
+                shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = emeraldGreen
                 ),
                 elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 3.dp,
-                    pressedElevation = 1.dp
+                    defaultElevation = 0.dp,
+                    pressedElevation = 0.dp
                 )
             ) {
                 Text(
@@ -204,8 +235,4 @@ fun ScanDetectOnboardingScreen(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ScanDetectOnboardingScreenPreview() {
-    ScanDetectOnboardingScreen(onNextClick = {})
-}
+

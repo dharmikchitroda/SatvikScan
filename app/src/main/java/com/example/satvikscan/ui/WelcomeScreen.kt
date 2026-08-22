@@ -34,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -176,13 +177,24 @@ fun WelcomeScreen(
                 .fillMaxWidth()
                 .padding(top = 40.dp)
         ) {
+            val emeraldGreen = Color(0xFF00C853)
             Button(
                 onClick = { onContinueClick(selectedDiet) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
-                shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1B3A2D))
+                    .height(54.dp)
+                    .shadow(
+                        elevation = 8.dp,
+                        shape = CircleShape,
+                        spotColor = emeraldGreen.copy(alpha = 0.5f),
+                        ambientColor = emeraldGreen.copy(alpha = 0.3f)
+                    ),
+                shape = CircleShape,
+                colors = ButtonDefaults.buttonColors(containerColor = emeraldGreen),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 0.dp,
+                    pressedElevation = 0.dp
+                )
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,

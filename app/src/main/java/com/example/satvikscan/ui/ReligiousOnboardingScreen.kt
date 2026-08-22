@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -19,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -46,9 +49,9 @@ fun ReligiousOnboardingScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
+            .background(Color(0xFFF7F7F7))
+            .padding(bottom = 28.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // ==========================================
         // 1. TOP HERO IMAGE WITH SMOOTH GRADIENT FADE
@@ -65,7 +68,7 @@ fun ReligiousOnboardingScreen(
                 modifier = Modifier.fillMaxSize()
             )
 
-            // Smooth White Gradient Overlay at Bottom of Image
+            // Smooth Gradient Overlay at Bottom of Image
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -75,8 +78,8 @@ fun ReligiousOnboardingScreen(
                         brush = Brush.verticalGradient(
                             colors = listOf(
                                 Color.Transparent,
-                                Color.White.copy(alpha = 0.7f),
-                                Color.White
+                                Color(0xFFF7F7F7).copy(alpha = 0.7f),
+                                Color(0xFFF7F7F7)
                             )
                         )
                     )
@@ -84,13 +87,13 @@ fun ReligiousOnboardingScreen(
         }
 
         // ==========================================
-        // 2. CONTENT SECTION (Tagline, Step Indicator, Headline, CTA)
+        // 2. CONTENT SECTION (Tagline, Step Indicator, Headline, Description)
         // ==========================================
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(0.95f)
-                .padding(horizontal = 24.dp, vertical = 16.dp),
+                .weight(0.85f)
+                .padding(horizontal = 24.dp, vertical = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -144,54 +147,82 @@ fun ReligiousOnboardingScreen(
                 )
             }
 
-            // Headline with Color Highlights
-            Text(
-                text = buildAnnotatedString {
-                    withStyle(SpanStyle(color = darkCharcoal)) {
-                        append("Protect Your\n")
-                    }
-                    withStyle(SpanStyle(color = emeraldGreen)) {
-                        append("Religious ")
-                    }
-                    withStyle(SpanStyle(color = darkCharcoal)) {
-                        append("Values\n")
-                    }
-                    withStyle(SpanStyle(color = darkCharcoal)) {
-                        append("Eat ")
-                    }
-                    withStyle(SpanStyle(color = emeraldGreen)) {
-                        append("Pure Satvik")
-                    }
-                },
-                fontSize = 28.sp,
-                fontWeight = FontWeight.ExtraBold,
-                textAlign = TextAlign.Center,
-                lineHeight = 36.sp
-            )
+            // Headline with Color Highlights (Fixed min height container to prevent shift)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 100.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(SpanStyle(color = darkCharcoal)) {
+                            append("Protect Your\n")
+                        }
+                        withStyle(SpanStyle(color = emeraldGreen)) {
+                            append("Religious ")
+                        }
+                        withStyle(SpanStyle(color = darkCharcoal)) {
+                            append("Values\n")
+                        }
+                        withStyle(SpanStyle(color = darkCharcoal)) {
+                            append("Eat ")
+                        }
+                        withStyle(SpanStyle(color = emeraldGreen)) {
+                            append("Pure Satvik")
+                        }
+                    },
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 36.sp
+                )
+            }
 
-            // Subtitle Description
-            Text(
-                text = "Scan packaged foods instantly based on\nSwaminarayan, Jain & Pure Satvik dietary principles.",
-                fontSize = 13.sp,
-                fontWeight = FontWeight.Normal,
-                color = slateGrey,
-                textAlign = TextAlign.Center,
-                lineHeight = 20.sp
-            )
+            // Subtitle Description (Fixed min height container to prevent shift)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 60.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Scan packaged foods instantly based on\nSwaminarayan, Jain & Pure Satvik dietary principles.",
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = slateGrey,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 20.sp
+                )
+            }
+        }
 
-            // Full-Width CTA Button: "Let's Begin"
+        // ==========================================
+        // 3. FIXED BOTTOM CTA BUTTON: "Let's Begin"
+        // ==========================================
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp, top = 8.dp)
+        ) {
             Button(
                 onClick = onLetsBeginClick,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(54.dp),
-                shape = RoundedCornerShape(27.dp),
+                    .height(54.dp)
+                    .shadow(
+                        elevation = 8.dp,
+                        shape = CircleShape,
+                        spotColor = emeraldGreen.copy(alpha = 0.5f),
+                        ambientColor = emeraldGreen.copy(alpha = 0.3f)
+                    ),
+                shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = emeraldGreen
                 ),
                 elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 3.dp,
-                    pressedElevation = 1.dp
+                    defaultElevation = 0.dp,
+                    pressedElevation = 0.dp
                 )
             ) {
                 Text(

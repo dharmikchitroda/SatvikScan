@@ -2,7 +2,6 @@ package com.example.satvikscan.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -36,12 +36,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -59,47 +61,92 @@ fun DisclaimerConsentScreen(
     val isButtonEnabled = isDataDisclaimerChecked && isTermsChecked
 
     val emeraldGreen = Color(0xFF00C853)
-    val darkCharcoal = Color(0xFF1E293B)
+    val darkCharcoal = Color(0xFF0F172A)
     val bodyGrey = Color(0xFF475569)
-    val cardBgColor = Color(0xFFFAFBFC)
+    val inactiveIndicator = Color(0xFFE5E7EB)
+    val cardBgColor = Color.White
     val cardBorderColor = Color(0xFFE2E8F0)
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White)
-            .padding(horizontal = 20.dp, vertical = 16.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
+            .background(Color(0xFFF7F7F7))
+            .padding(bottom = 28.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        // ==========================================
+        // 1. TOP HERO IMAGE (spash3image.png)
+        // ==========================================
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1.0f)
+                .padding(top = 16.dp, start = 20.dp, end = 20.dp),
+            contentAlignment = Alignment.Center
         ) {
-            // ==========================================
-            // 1. TOP HERO IMAGE (spash3image.png)
-            // ==========================================
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(290.dp)
-                    .padding(top = 8.dp),
-                contentAlignment = Alignment.Center
+            Image(
+                painter = painterResource(id = R.drawable.spash3image),
+                contentDescription = "Scan Result Mockup Preview",
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
+        // ==========================================
+        // 2. CONTENT AREA (Indicator, Title, Checkbox Cards)
+        // ==========================================
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1.15f)
+                .padding(horizontal = 20.dp)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            // 3-Segment Progress Indicator (Step 3 Active)
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(bottom = 12.dp)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.spash3image),
-                    contentDescription = "Scan Result Mockup Preview",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier.fillMaxSize()
+                // Bar 1 (Inactive)
+                Box(
+                    modifier = Modifier
+                        .width(42.dp)
+                        .height(5.dp)
+                        .clip(RoundedCornerShape(3.dp))
+                        .background(inactiveIndicator)
+                )
+                // Bar 2 (Inactive)
+                Box(
+                    modifier = Modifier
+                        .width(42.dp)
+                        .height(5.dp)
+                        .clip(RoundedCornerShape(3.dp))
+                        .background(inactiveIndicator)
+                )
+                // Bar 3 (Active Green)
+                Box(
+                    modifier = Modifier
+                        .width(42.dp)
+                        .height(5.dp)
+                        .clip(RoundedCornerShape(3.dp))
+                        .background(emeraldGreen)
                 )
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            // Headline Text: "Please Read & Acknowledge"
+            Text(
+                text = "Please Read & Acknowledge",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = darkCharcoal,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
 
-            // ==========================================
-            // 2. CHECKBOX CARD 1: Public Database & Manual Scan
-            // ==========================================
+            // CHECKBOX CARD 1: Public Database & Manual Scan
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -118,9 +165,8 @@ fun DisclaimerConsentScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 14.dp, vertical = 14.dp)
+                        .padding(horizontal = 14.dp, vertical = 12.dp)
                 ) {
-                    // Header Row: Checkbox + Title + Info Icon
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
@@ -131,7 +177,7 @@ fun DisclaimerConsentScreen(
                                 checked = isDataDisclaimerChecked,
                                 onCheckedChange = { isDataDisclaimerChecked = it },
                                 colors = CheckboxDefaults.colors(
-                                    checkedColor = Color(0xFF1E293B),
+                                    checkedColor = emeraldGreen,
                                     checkmarkColor = Color.White,
                                     uncheckedColor = Color(0xFF94A3B8)
                                 ),
@@ -154,30 +200,27 @@ fun DisclaimerConsentScreen(
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
 
-                    // Description text with bold highlights
                     Text(
                         text = buildAnnotatedString {
                             append("Barcode data is sourced from Open Food Facts (a community database). For 100% accuracy, please verify via our ")
                             withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = darkCharcoal)) {
-                                append("Capture & Discover")
+                                append("Capure & Discover")
                             }
                             append(" or physical packaging.")
                         },
-                        fontSize = 12.5.sp,
+                        fontSize = 12.sp,
                         color = bodyGrey,
-                        lineHeight = 17.5.sp,
+                        lineHeight = 16.sp,
                         modifier = Modifier.padding(start = 34.dp, end = 4.dp)
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
-            // ==========================================
-            // 3. CHECKBOX CARD 2: Dietary Responsibility & Terms
-            // ==========================================
+            // CHECKBOX CARD 2: Dietary Responsibility & Terms
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -196,9 +239,8 @@ fun DisclaimerConsentScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 14.dp, vertical = 14.dp)
+                        .padding(horizontal = 14.dp, vertical = 12.dp)
                 ) {
-                    // Header Row: Checkbox + Title + Info Icon
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
@@ -209,7 +251,7 @@ fun DisclaimerConsentScreen(
                                 checked = isTermsChecked,
                                 onCheckedChange = { isTermsChecked = it },
                                 colors = CheckboxDefaults.colors(
-                                    checkedColor = Color(0xFF1E293B),
+                                    checkedColor = emeraldGreen,
                                     checkmarkColor = Color.White,
                                     uncheckedColor = Color(0xFF94A3B8)
                                 ),
@@ -232,9 +274,8 @@ fun DisclaimerConsentScreen(
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
 
-                    // Description text with bold highlights
                     Text(
                         text = buildAnnotatedString {
                             append("You agree to the ")
@@ -243,42 +284,56 @@ fun DisclaimerConsentScreen(
                             }
                             append(". SatvikScan is for guidance only – final dietary decisions are your personal responsibility. The app is not liable for manufacturer recipe changes or religious differences.")
                         },
-                        fontSize = 12.5.sp,
+                        fontSize = 12.sp,
                         color = bodyGrey,
-                        lineHeight = 17.5.sp,
+                        lineHeight = 16.sp,
                         modifier = Modifier.padding(start = 34.dp, end = 4.dp)
                     )
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(28.dp))
-
         // ==========================================
-        // 4. BOTTOM ACTION CTA BUTTON: "I UNDERSTAND"
+        // 3. FIXED BOTTOM CTA BUTTON: "I UNDERSTAND"
         // ==========================================
-        Button(
-            onClick = onUnderstandClick,
-            enabled = isButtonEnabled,
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(54.dp),
-            shape = RoundedCornerShape(27.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = emeraldGreen,
-                disabledContainerColor = Color(0xFFE2E8F0)
-            ),
-            elevation = ButtonDefaults.buttonElevation(
-                defaultElevation = if (isButtonEnabled) 4.dp else 0.dp,
-                pressedElevation = 2.dp
-            )
+                .padding(start = 24.dp, end = 24.dp, top = 8.dp)
         ) {
-            Text(
-                text = "I UNDERSTAND",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = if (isButtonEnabled) Color.White else Color(0xFF94A3B8)
-            )
+            Button(
+                onClick = onUnderstandClick,
+                enabled = isButtonEnabled,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(54.dp)
+                    .then(
+                        if (isButtonEnabled) {
+                            Modifier.shadow(
+                                elevation = 8.dp,
+                                shape = CircleShape,
+                                spotColor = emeraldGreen.copy(alpha = 0.5f),
+                                ambientColor = emeraldGreen.copy(alpha = 0.3f)
+                            )
+                        } else Modifier
+                    ),
+                shape = CircleShape,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = emeraldGreen,
+                    disabledContainerColor = Color(0xFFE2E8F0)
+                ),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 0.dp,
+                    pressedElevation = 0.dp
+                )
+            ) {
+                Text(
+                    text = "I UNDERSTAND",
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = if (isButtonEnabled) Color.White else Color(0xFF94A3B8)
+                )
+            }
         }
     }
 }
