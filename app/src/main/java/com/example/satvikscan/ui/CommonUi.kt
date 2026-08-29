@@ -279,7 +279,6 @@ fun CommonUi(
                         .fillMaxSize()
                         .statusBarsPadding(),
                     onBackClick = {
-                        viewModel.startScanning()
                         navController.popBackStack()
                     },
                     onScanAgainClick = {
