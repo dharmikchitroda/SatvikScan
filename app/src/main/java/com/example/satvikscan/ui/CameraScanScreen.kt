@@ -178,9 +178,7 @@ fun CameraScanScreen(
 
 
     //flashlight state
-    var isFlashOn by remember {
-        mutableStateOf(false)
-    }
+    var isFlashOn by remember {   mutableStateOf(false) }
     // eror msg
     val missMatchbarcodeError by viewModel.barcodeError.collectAsState()
 
@@ -194,16 +192,23 @@ fun CameraScanScreen(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
             uri?.let {
-                //   above android 8
-                capturedBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    ImageDecoder.decodeBitmap(
-                        ImageDecoder.createSource(
-                            context.contentResolver,
-                            it
-                        )
-                    )
-                } else {
-                    MediaStore.Images.Media.getBitmap(context.contentResolver, it)
+                try {
+                    capturedBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        ImageDecoder.decodeBitmap(
+                            ImageDecoder.createSource(
+                                context.contentResolver,
+                                it
+                            )
+                        ) { decoder, _, _ ->
+                            // Force SOFTWARE allocation — HARDWARE bitmaps crash ML Kit silently
+                            decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
+                        }
+                    } else {
+                        MediaStore.Images.Media.getBitmap(context.contentResolver, it)
+                    }
+                } catch (e: Exception) {
+                    Log.e("GalleryPicker", "Failed to decode image", e)
+                    capturedBitmap = null
                 }
             }
         }
@@ -318,8 +323,22 @@ fun CameraScanScreen(
                                         }
                                     } else {
                                         capturedBitmap?.let { bmp ->
-                                            barcodeAnalyzer.analyzeBitmap(bmp)
+                                            // Show loading like OCR mode
+                                            viewModel.startOcrScanning()
 
+                                            barcodeAnalyzer.analyzeBitmap(
+                                                bitmap = bmp,
+                                                onNoBarcodeFound = {
+                                                    viewModel.setOcrError(
+                                                        "No barcode found in this image. Please try a clearer photo."
+                                                    )
+                                                },
+                                                onFailure = { error ->
+                                                    viewModel.setOcrError(
+                                                        error.message ?: "Barcode scan failed"
+                                                    )
+                                                }
+                                            )
                                         }
                                     }
                                 },

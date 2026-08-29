@@ -279,7 +279,6 @@ fun CommonUi(
                         .fillMaxSize()
                         .statusBarsPadding(),
                     onBackClick = {
-                        viewModel.startScanning() // reset old state, restart camerax barcode fetch
                         navController.popBackStack()
                     },
                     onScanAgainClick = {

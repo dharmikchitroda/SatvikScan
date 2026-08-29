@@ -50,19 +50,29 @@ class BarcodeAnalyzer(private val viewModel: SatvikViewModel, private val contex
         }
     }
 
-    fun analyzeBitmap(bitmap: Bitmap) {
-
+    fun analyzeBitmap(
+        bitmap: Bitmap,
+        onNoBarcodeFound: (() -> Unit)? = null,
+        onFailure: ((Exception) -> Unit)? = null
+    ) {
         val inputImage = InputImage.fromBitmap(bitmap, 0)
-        processImage(inputImage)
+        processImage(inputImage, onNoBarcodeFound = onNoBarcodeFound, onScanFailure = onFailure)
     }
 
-    private fun processImage(inputImage: InputImage, onComplete: (() -> Unit)? = null) {
+    private fun processImage(
+        inputImage: InputImage,
+        onComplete: (() -> Unit)? = null,
+        onNoBarcodeFound: (() -> Unit)? = null,
+        onScanFailure: ((Exception) -> Unit)? = null
+    ) {
 
         // small vibrate
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         scanner.process(inputImage)
             .addOnSuccessListener { barcodes ->
+                var foundValidBarcode = false
+
                 for (barcode in barcodes) {
 
                     val barcodeFormat = barcode.format
@@ -87,6 +97,7 @@ class BarcodeAnalyzer(private val viewModel: SatvikViewModel, private val contex
                             // stop scaning when result number
                             viewModel.stopScanning()
 
+                            foundValidBarcode = true
                         }
                         Barcode.FORMAT_QR_CODE -> {
                             Log.d("Barcode", "no THIS IS PAYMENT QR")
@@ -102,9 +113,15 @@ class BarcodeAnalyzer(private val viewModel: SatvikViewModel, private val contex
 
 
                 }
+
+                // No valid barcode found in the image
+                if (!foundValidBarcode && onNoBarcodeFound != null) {
+                    onNoBarcodeFound()
+                }
             }
             .addOnFailureListener {
                 //scan fail
+                onScanFailure?.invoke(it)
             }
             .addOnCompleteListener {
                 onComplete?.invoke()

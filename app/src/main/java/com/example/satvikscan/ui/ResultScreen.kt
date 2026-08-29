@@ -1,7 +1,7 @@
 package com.example.satvikscan.ui
 
-import android.R.attr.text
 import android.os.Build
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -35,6 +35,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
@@ -96,6 +97,9 @@ fun ResultScreen(
     val currentUiState by viewModel.productUiState.collectAsState()
     val ingredientList by viewModel.ingredients.collectAsState()
 
+    // System back button bhi onBackClick use kare (state reset + navigate)
+    BackHandler { onBackClick() }
+
     when (val state = currentUiState) {
         is SatvikViewModel.ProductUiState.Loading -> {
             LoadingView()
@@ -126,8 +130,19 @@ fun ResultScreen(
 
         is SatvikViewModel.ProductUiState.Success -> {
 
-            val isSafe = ingredientList.isEmpty() // if list is blanck so it is safe
+            val isSafe = ingredientList.isEmpty() // if list is blank so it is safe
 
+            // State to track which ingredient was tapped by user
+            var selectedIngredient by remember { mutableStateOf<IngredientData?>(null) }
+
+            // Show the "Why Avoid?" Dialog when an ingredient is tapped
+            selectedIngredient?.let { ing ->
+                WhyAvoidDialog(
+                    ingredient = ing,
+                    dietName = dietName,
+                    onDismiss = { selectedIngredient = null }
+                )
+            }
 
             Column(
                 modifier = modifier
@@ -138,24 +153,28 @@ fun ResultScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                        .padding(horizontal = 8.dp, vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
-                        tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier
-                            .size(32.dp)
-                            .clickable { onBackClick() })
+                    IconButton(
+                        onClick = onBackClick,
+                        modifier = Modifier.size(48.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(26.dp)
+                        )
+                    }
                     Text(
                         text = "Result",
-                        fontSize = 25.sp,
+                        fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary, // main app theme
                         modifier = Modifier
                             .weight(1f)  // contain remaining space
-                            .padding(end = 32.dp), // ensure center (compensated back button size)
+                            .padding(end = 48.dp), // compensate IconButton width for exact center alignment
                         textAlign = TextAlign.Center
                     )
                 }
@@ -359,7 +378,7 @@ fun ResultScreen(
                             }
                         }
                     } else {
-                        //  Avoid product: Detected Ingredients Card dikhao
+                        // Avoid product: Detected Ingredients Card dikhao
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -402,256 +421,275 @@ fun ResultScreen(
                                     }
                                 }
 
-                                Spacer(modifier = Modifier.height(8.dp))
-                            }
-                            Spacer(modifier = Modifier.height(16.dp))
+                                Spacer(modifier = Modifier.height(16.dp))
 
-                            // dynamic list of ingredients
-                            // State to track which ingredient was tapped by user
-                            var selectedIngredient by remember {
-                                mutableStateOf<IngredientData?>(
-                                    null
-                                )
-                            }
+                                // Dynamic list of ingredients
+                                ingredientList.forEachIndexed { index, ingredient ->
+                                    val iconRes = when {
+                                        ingredient.name.contains(
+                                            "Garlic", ignoreCase = true
+                                        ) -> R.drawable.ic_garlic
 
-                            // Show the "Why Avoid?" Dialog when an ingredient is tapped
-                            selectedIngredient?.let { ing ->
-                                WhyAvoidDialog(
-                                    ingredient = ing,
-                                    dietName = dietName,
-                                    onDismiss = { selectedIngredient = null }
-                                )
-                            }
+                                        ingredient.name.contains(
+                                            "Onion", ignoreCase = true
+                                        ) -> R.drawable.ic_onion
 
-                            ingredientList.forEachIndexed { index, ingredient ->
-                                val iconRes = when {
-                                    ingredient.name.contains(
-                                        "Garlic", ignoreCase = true
-                                    ) -> R.drawable.ic_garlic
+                                        ingredient.name.contains(
+                                            "Potato", ignoreCase = true
+                                        ) -> R.drawable.ic_potato
 
-                                    ingredient.name.contains(
-                                        "Onion", ignoreCase = true
-                                    ) -> R.drawable.ic_onion
+                                        ingredient.name.contains(
+                                            "Carrot", ignoreCase = true
+                                        ) -> R.drawable.ic_carrot_1
 
-                                    ingredient.name.contains(
-                                        "Potato", ignoreCase = true
-                                    ) -> R.drawable.ic_potato
+                                        ingredient.name.contains(
+                                            "Egg", ignoreCase = true
+                                        ) -> R.drawable.ic_egg
 
-                                    ingredient.name.contains(
-                                        "Carrot", ignoreCase = true
-                                    ) -> R.drawable.ic_carrot_1
+                                        ingredient.name.contains(
+                                            "Poppy", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "Khus", ignoreCase = true
+                                        ) -> R.drawable.ic_poppy_seeds
 
-                                    ingredient.name.contains(
-                                        "Egg", ignoreCase = true
-                                    ) -> R.drawable.ic_egg
+                                        ingredient.name.contains(
+                                            "Vinegar", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "Sirka", ignoreCase = true
+                                        ) -> R.drawable.ic_vinegar
 
-                                    ingredient.name.contains(
-                                        "Poppy", ignoreCase = true
-                                    ) || ingredient.name.contains(
-                                        "Khus", ignoreCase = true
-                                    ) -> R.drawable.ic_poppy_seeds
+                                        ingredient.name.contains(
+                                            "Turmeric", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "Haldi", ignoreCase = true
+                                        ) -> R.drawable.ic_turmeric
 
-                                    ingredient.name.contains(
-                                        "Vinegar", ignoreCase = true
-                                    ) || ingredient.name.contains(
-                                        "Sirka", ignoreCase = true
-                                    ) -> R.drawable.ic_vinegar
+                                        ingredient.name.contains(
+                                            "Honey", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "Shehad", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "Madh", ignoreCase = true
+                                        ) -> R.drawable.ic_honey
 
-                                    ingredient.name.contains(
-                                        "Turmeric", ignoreCase = true
-                                    ) || ingredient.name.contains(
-                                        "Haldi", ignoreCase = true
-                                    ) -> R.drawable.ic_turmeric
+                                        ingredient.name.contains(
+                                            "Cheese", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "Paneer", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "Cottage Cheese", ignoreCase = true
+                                        ) -> R.drawable.ic_cheese
 
-                                    ingredient.name.contains(
-                                        "Honey", ignoreCase = true
-                                    ) || ingredient.name.contains(
-                                        "Shehad", ignoreCase = true
-                                    ) || ingredient.name.contains(
-                                        "Madh", ignoreCase = true
-                                    ) -> R.drawable.ic_honey
+                                        ingredient.name.contains(
+                                            "Chocolate", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "Cocoa", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "Cacao", ignoreCase = true
+                                        ) -> R.drawable.ic_chocolate
 
-                                    ingredient.name.contains(
-                                        "Cheese", ignoreCase = true
-                                    ) || ingredient.name.contains(
-                                        "Paneer", ignoreCase = true
-                                    ) || ingredient.name.contains(
-                                        "Cottage Cheese", ignoreCase = true
-                                    ) -> R.drawable.ic_cheese
+                                        ingredient.name.contains(
+                                            "Hing", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "Asafoetida", ignoreCase = true
+                                        ) -> R.drawable.ic_powder
 
-                                    ingredient.name.contains(
-                                        "Chocolate", ignoreCase = true
-                                    ) || ingredient.name.contains(
-                                        "Cocoa", ignoreCase = true
-                                    ) || ingredient.name.contains(
-                                        "Cacao", ignoreCase = true
-                                    ) -> R.drawable.ic_chocolate
+                                        ingredient.type == IngredientType.ROOT_VEGETABLE -> R.drawable.ic_root_vegetable
+                                        ingredient.type == IngredientType.NON_VEG_ORIGIN -> R.drawable.ic_meat
 
-                                    ingredient.name.contains(
-                                        "Hing", ignoreCase = true
-                                    ) || ingredient.name.contains(
-                                        "Asafoetida", ignoreCase = true
-                                    ) -> R.drawable.ic_powder
+                                        // Check for alcohol and intoxicants to display the general restricted icon
+                                        ingredient.name.contains("alcohol", ignoreCase = true) ||
+                                                ingredient.name.contains(
+                                                    "wine",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "beer",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "rum",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "whisky",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "whiskey",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "brandy",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "vodka",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "gin",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "spirit",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "ethanol",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "cannabis",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "bhang",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "marijuana",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "ganja",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "opium",
+                                                    ignoreCase = true
+                                                ) ||
+                                                ingredient.name.contains(
+                                                    "hashish",
+                                                    ignoreCase = true
+                                                ) -> R.drawable.restricted_svgrepo_com
 
-                                    ingredient.type == IngredientType.ROOT_VEGETABLE -> R.drawable.ic_root_vegetable
-                                    ingredient.type == IngredientType.NON_VEG_ORIGIN -> R.drawable.ic_meat
-
-                                    // Check for alcohol and intoxicants to display the general restricted icon
-                                    ingredient.name.contains("alcohol", ignoreCase = true) ||
-                                            ingredient.name.contains("wine", ignoreCase = true) ||
-                                            ingredient.name.contains("beer", ignoreCase = true) ||
-                                            ingredient.name.contains("rum", ignoreCase = true) ||
-                                            ingredient.name.contains("whisky", ignoreCase = true) ||
-                                            ingredient.name.contains(
-                                                "whiskey",
-                                                ignoreCase = true
-                                            ) ||
-                                            ingredient.name.contains("brandy", ignoreCase = true) ||
-                                            ingredient.name.contains("vodka", ignoreCase = true) ||
-                                            ingredient.name.contains("gin", ignoreCase = true) ||
-                                            ingredient.name.contains("spirit", ignoreCase = true) ||
-                                            ingredient.name.contains(
-                                                "ethanol",
-                                                ignoreCase = true
-                                            ) ||
-                                            ingredient.name.contains(
-                                                "cannabis",
-                                                ignoreCase = true
-                                            ) ||
-                                            ingredient.name.contains("bhang", ignoreCase = true) ||
-                                            ingredient.name.contains(
-                                                "marijuana",
-                                                ignoreCase = true
-                                            ) ||
-                                            ingredient.name.contains("ganja", ignoreCase = true) ||
-                                            ingredient.name.contains("opium", ignoreCase = true) ||
-                                            ingredient.name.contains(
-                                                "hashish",
-                                                ignoreCase = true
-                                            ) -> R.drawable.restricted_svgrepo_com
-
-                                    else -> R.drawable.ic_chemical
-                                }
-                                IngredientItem(
-                                    name = ingredient.name,
-                                    reason = ingredient.reason,
-                                    iconRes = iconRes,
-                                    onClick = { selectedIngredient = ingredient }
-                                )
-                                if (index < ingredientList.lastIndex) {
-                                    Spacer(modifier = Modifier.height(12.dp))
-                                }
-                            }
-
-                            Spacer(modifier = Modifier.height(28.dp))
-
-                            // Context Guidelines Note
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(
-                                        Color(0xFFF5F5F5),
-                                        shape = RoundedCornerShape(12.dp)
-                                    )
-                                    .padding(14.dp)
-                            ) {
-                                val annotatedString = buildAnnotatedString {
-                                    append("According to ")
-                                    withStyle(
-                                        SpanStyle(
-                                            color = Color(0xFF8D6E63), fontWeight = FontWeight.Bold
-                                        )
-                                    ) {
-                                        append(dietName)
+                                        else -> R.drawable.ic_chemical
                                     }
-                                    append(" guidelines, these items are avoided to maintain purity and mindful eating.")
+                                    IngredientItem(
+                                        name = ingredient.name,
+                                        reason = ingredient.reason,
+                                        iconRes = iconRes,
+                                        onClick = { selectedIngredient = ingredient }
+                                    )
+                                    if (index < ingredientList.lastIndex) {
+                                        Spacer(modifier = Modifier.height(12.dp))
+                                    }
                                 }
-                                Text(
-                                    text = annotatedString,
-                                    fontSize = 12.sp, color = Color(0xFF616161), lineHeight = 18.sp
-                                )
+
+                                Spacer(modifier = Modifier.height(28.dp))
+
+                                // Context Guidelines Note
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(
+                                            Color(0xFFF5F5F5),
+                                            shape = RoundedCornerShape(12.dp)
+                                        )
+                                        .padding(14.dp)
+                                ) {
+                                    val annotatedString = remember(dietName) {
+                                        buildAnnotatedString {
+                                            append("According to ")
+                                            withStyle(
+                                                SpanStyle(
+                                                    color = Color(0xFF8D6E63),
+                                                    fontWeight = FontWeight.Bold
+                                                )
+                                            ) {
+                                                append(dietName)
+                                            }
+                                            append(" guidelines, these items are avoided to maintain purity and mindful eating.")
+                                        }
+                                    }
+                                    Text(
+                                        text = annotatedString,
+                                        fontSize = 12.sp,
+                                        color = Color(0xFF616161),
+                                        lineHeight = 18.sp
+                                    )
+                                }
                             }
                         }
                     }
-                }
+                    Spacer(modifier = Modifier.height(24.dp))
+                } // End of scrollable Column
 
-                Spacer(modifier = Modifier.height(24.dp))
-            } // End of scrollable Column
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(0xFFFAFAFA))
-                    .navigationBarsPadding()
-                    .padding(bottom = 16.dp, top = 12.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                //  Action Buttons Section
-                Button(
-                    onClick = onScanAgainClick,
+                // Bottom Fixed Action Buttons & Disclaimer Section
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 24.dp)
-                        .height(54.dp),
-                    shape = RoundedCornerShape(14.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                        .background(Color(0xFFFAFAFA))
+                        .navigationBarsPadding()
+                        .padding(bottom = 16.dp, top = 12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    // Action Buttons Section
+                    Button(
+                        onClick = onScanAgainClick,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp)
+                            .height(54.dp),
+                        shape = RoundedCornerShape(14.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+                        elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                painter = painterResource(R.drawable.baseline_camera_alt_24),
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Scan Again",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    // Disclaimer Footer Note
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 32.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.Top
+                    ) {
                         Icon(
-                            painter = painterResource(R.drawable.baseline_camera_alt_24),
+                            imageVector = Icons.Default.Info,
                             contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.size(20.dp)
+                            tint = Color(0xFF9E9E9E),
+                            modifier = Modifier
+                                .size(14.dp)
+                                .padding(top = 2.dp)
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
                         Text(
-                            text = "Scan Again",
-                            fontSize = 16.sp,
+                            text = "ANALYSIS BASED ON COMMON DATABASE.\nALWAYS DOUBLE-CHECK LABELS.",
+                            fontSize = 9.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = Color(0xFF9E9E9E),
+                            textAlign = TextAlign.Center,
+                            letterSpacing = 0.5.sp,
+                            lineHeight = 13.sp
                         )
                     }
                 }
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                //  Disclaimer Footer Note
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 32.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.Top
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Info,
-                        contentDescription = null,
-                        tint = Color(0xFF9E9E9E),
-                        modifier = Modifier
-                            .size(14.dp)
-                            .padding(top = 2.dp)
-                    )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = "ANALYSIS BASED ON COMMON DATABASE.\nALWAYS DOUBLE-CHECK LABELS.",
-                        fontSize = 9.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF9E9E9E),
-                        textAlign = TextAlign.Center,
-                        letterSpacing = 0.5.sp,
-                        lineHeight = 13.sp
-                    )
-                }
-            }
-        }
+            } // End of outer screen Column
+        } // End of Success block
 
         else -> {
             // Idle state me blank box ya loading dikha sakte hain
         }
     }
-
-
 }
 
 

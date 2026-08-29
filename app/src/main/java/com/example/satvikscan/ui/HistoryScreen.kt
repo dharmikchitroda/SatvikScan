@@ -3,6 +3,7 @@ package com.example.satvikscan.ui
 import androidx.compose.foundation.Image
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -351,14 +352,15 @@ fun HistoryCardItem(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .shadow(
-                elevation = 2.dp,
+                elevation = 4.dp,
                 shape = RoundedCornerShape(24.dp),
                 clip = false,
-                ambientColor = Color.Black.copy(alpha = 0.05f),
-                spotColor = Color.Black.copy(alpha = 0.05f)
+                ambientColor = Color.Black.copy(alpha = 0.08f),
+                spotColor = Color.Black.copy(alpha = 0.1f)
             ),
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        border = BorderStroke(0.5.dp, Color(0xFFE0E0E0))
     ) {
         Row(
             modifier = Modifier
