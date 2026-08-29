@@ -97,10 +97,16 @@ fun ResultScreen(
     val currentUiState by viewModel.productUiState.collectAsState()
     val ingredientList by viewModel.ingredients.collectAsState()
 
+    // Remember last non-Idle state so exit transition doesn't flash black when state resets to Idle
+    var lastActiveState by remember { mutableStateOf<SatvikViewModel.ProductUiState?>(null) }
+    if (currentUiState !is SatvikViewModel.ProductUiState.Idle) {
+        lastActiveState = currentUiState
+    }
+
     // System back button bhi onBackClick use kare (state reset + navigate)
     BackHandler { onBackClick() }
 
-    when (val state = currentUiState) {
+    when (val state = lastActiveState ?: currentUiState) {
         is SatvikViewModel.ProductUiState.Loading -> {
             LoadingView()
         }
