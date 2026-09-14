@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SatvikScan</string>
+
+    <!-- UI General Labels -->
+    <string name="diet_gyan_badge_jain">ऋषियों का ज्ञान</string>
+    <string name="diet_gyan_badge_swami">भक्ति और पवित्रता</string>
+    <string name="diet_gyan_tagline_jain">आध्यात्मिक विकास के लिए पवित्र आहार नियम</string>
+    <string name="diet_gyan_tagline_swami">आध्यात्मिक उन्नति के लिए शुद्ध शाकाहारी नियम</string>
+    <string name="diet_gyan_download_btn">आहार मार्गदर्शिका डाउनलोड करें</string>
+    <string name="diet_gyan_footer_jain">जागरूकता के साथ भोजन करें 🙏</string>
+    <string name="diet_gyan_footer_swami">आहार और विचारों की पवित्रता 🙏</string>
+    <string name="diet_gyan_footer_tagline">जैसा खाओ अन्न, वैसा बने मन - Satvik Scan</string>
+    <string name="diet_gyan_label_religious">धार्मिक कारण और संदर्भ</string>
+    <string name="diet_gyan_label_scientific">वैज्ञानिक उत्पत्ति</string>
+    <string name="diet_gyan_toast_downloading">मार्गदर्शिका डाउनलोड शुरू हो रही है…</string>
+    <string name="diet_gyan_title_jain">जैन आहार ज्ञान</string>
+    <string name="diet_gyan_title_swami">स्वामिनारायण आहार ज्ञान</string>
+
+
+    <!--            JAIN GUIDELINES                  -->
+
+    <!-- 1. Root Vegetables -->
+    <string name="jain_root_title">कंदमूल</string>
+    <string name="jain_root_subtitle">प्याज, लहसुन, आलू, अदरक, गाजर, मूली, चुकंदर, शकरकंद, सूरण आदि</string>
+    <string name="jain_root_rel">"अनंतकाय कंदमूल होने से उन्हें जमीन से उखाड़ते समय पूरे पौधे का नाश होता है और उनसे जुड़े असंख्य निगोद जीवों की हिंसा होती है। इसलिए जैन परंपरा में ऐसे कंदमूल का त्याग किया जाता है। (जैन आगम – अनंतकाय सिद्धांत)"</string>
+    <string name="jain_root_sci">जमीन के अंदर उगने वाले कंद, मूल, गांठ या राइजोम (Bulb, Root, Tuber, Rhizome)।</string>
+
+    <!-- 2. Vinegar -->
+    <string name="jain_vinegar_title">सिरका (Vinegar)</string>
+    <string name="jain_vinegar_subtitle">सूक्ष्मजीवों द्वारा किण्वन</string>
+    <string name="jain_vinegar_rel">"सूक्ष्मजीवों द्वारा होने वाली किण्वन (Fermentation) की प्रक्रिया से बनने के कारण कुछ जैन परंपराओं में इसका त्याग किया जाता है या सावधानी बरती जाती है। विभिन्न जैन संप्रदायों में इस विषय में मतभेद पाए जाते हैं। (जैन परंपरा – संप्रदाय अनुसार मतभेद)"</string>
+    <string name="jain_vinegar_sci">एसिटिक एसिड बैक्टीरिया (Acetic Acid Bacteria) द्वारा अल्कोहल के किण्वन से बना घोल।</string>
+
+    <!-- 3. Citric Acid E330 -->
+    <string name="jain_citric_title">साइट्रिक एसिड (E330)</string>
+    <string name="jain_citric_subtitle">परिरक्षक / अम्लता नियामक</string>
+    <string name="jain_citric_rel">"जैन ग्रंथों में इसका स्पष्ट निषेध नहीं है। इसकी स्वीकार्यता इसके उत्पादन स्रोत पर निर्भर करती है, क्योंकि यह प्राकृतिक रूप से फलों से या सूक्ष्मजीवों द्वारा किण्वन से भी बनाया जा सकता है। इसलिए विभिन्न जैन संप्रदायों में मतभेद हैं। (जैन परंपरा – संप्रदाय और उत्पादन स्रोत अनुसार मतभेद)"</string>
+    <string name="jain_citric_sci">प्राकृतिक रूप से नींबू व अन्य खट्टे फलों में पाया जाता है या औद्योगिक रूप से Aspergillus niger द्वारा किण्वन से बनाया जाता है।</string>
+
+    <!-- 4. Ajinomoto / MSG E621 -->
+    <string name="jain_msg_title">अजीनोमोटो (E621)</string>
+    <string name="jain_msg_subtitle">मोनोसोडियम ग्लूटामेट – स्वाद वर्धक</string>
+    <string name="jain_msg_rel">"जैन ग्रंथों में इसका स्पष्ट निषेध नहीं है। सामान्यतः वनस्पति आधारित किण्वन से बनाया जाता है, परंतु इसकी स्वीकार्यता संप्रदाय और व्यक्तिगत धार्मिक आचरण अनुसार भिन्न हो सकती है। (जैन परंपरा – संप्रदाय अनुसार मतभेद)"</string>
+    <string name="jain_msg_sci">स्टार्च, गन्ना या शीरे जैसे वनस्पति आधारित स्रोतों से बैक्टीरियल किण्वन द्वारा बना स्वाद वर्धक (Flavor Enhancer)।</string>
+
+    <!-- 5. Sabudana -->
+    <string name="jain_sabudana_title">साबूदाना</string>
+    <string name="jain_sabudana_subtitle">टैपिओका / कसावा स्टार्च</string>
+    <string name="jain_sabudana_rel">"कंदमूल (टैपिओका/कसावा) से बनने के कारण अनंतकाय सिद्धांत अनुसार जैन परंपरा में इसका त्याग किया जाता है। (जैन आगम – अनंतकाय सिद्धांत)"</string>
+    <string name="jain_sabudana_sci">कसावा/टैपिओका (Manihot esculenta) के भूमिगत कंद से प्राप्त स्टार्च से बनाया जाता है।</string>
+
+    <!-- 6. Mahavigai -->
+    <string name="jain_mahavigai_title">महाविगई (४ वर्जित)</string>
+    <string name="jain_mahavigai_subtitle">शहद, मांस, मक्खन, मदिरा</string>
+    <string name="jain_mahavigai_rel">"जैन परंपरा में इन चारों को \'महाविगई\' के रूप में वर्णित किया गया है। अहिंसा, जीव हिंसा और धार्मिक आहार सिद्धांतों को ध्यान में रखते हुए इनके त्याग की अनुशंसा की जाती है। (परंपरागत जैन साहित्य – महाविगई)"</string>
+    <string name="jain_mahavigai_sci">शहद – मधुमक्खी जन्य उत्पाद; मांस – पशुजन्य भोजन; मक्खन – दूध से प्राप्त दुग्धजन्य वसा; मदिरा – किण्वन या आसवन से बना मादक पेय।</string>
+
+    <!-- 7. Stale Paneer -->
+    <string name="jain_paneer_title">बासी पनीर</string>
+    <string name="jain_paneer_subtitle">पुराना / बासी हुआ पनीर</string>
+    <string name="jain_paneer_rel">"बासी भोजन में सूक्ष्मजीवों की वृद्धि होने की संभावना होने से जैन परंपरा में इसका त्याग किया जाता है। (परंपरागत जैन आहार सिद्धांत)"</string>
+    <string name="jain_paneer_sci">दूध से बना ताजा पनीर समय के साथ सूक्ष्मजीवों की वृद्धि के कारण बासी हो जाता है।</string>
+
+    <!-- 8. Cheese -->
+    <string name="jain_cheese_title">चीज़ (Cheese)</string>
+    <string name="jain_cheese_subtitle">किण्वन से बना दुग्ध उत्पाद</string>
+    <string name="jain_cheese_rel">"किण्वन (Fermentation) से बनने और कुछ प्रकारों में पशुजन्य रेनेट (Rennet) के उपयोग की संभावना के कारण इसका स्रोत जांचना आवश्यक है। विभिन्न जैन परंपराओं में मतभेद हैं। (जैन परंपरा – संप्रदाय और उत्पादन स्रोत अनुसार)"</string>
+    <string name="jain_cheese_sci">दूध को जमाकर और परिपक्व (Aged/Fermented) करके बना दुग्धजन्य उत्पाद; कुछ प्रकारों में पशुजन्य या माइक्रोबियल रेनेट का उपयोग होता है।</string>
+
+    <!-- 9. Fig -->
+    <string name="jain_fig_title">अंजीर (Fig)</string>
+    <string name="jain_fig_subtitle">उदुंबर वर्ग का फल</string>
+    <string name="jain_fig_rel">"अंजीर उदुंबर वर्ग के फल में आता है। जैन परंपरा में उदुंबर फलों का त्याग किया जाता है क्योंकि इनमें सूक्ष्म जीव सृष्टि और अंजीर ततैया (Fig Wasp) के साथ सहजीवी जीवन चक्र होता है। (जैन आगम – उदुंबर फल)"</string>
+    <string name="jain_fig_sci">अंजीर (Ficus carica) एक Syconium प्रकार का फल है जिसका परागण विशिष्ट Fig Wasp द्वारा होता है।</string>
+
+    <!-- 10. Poppy Seeds -->
+    <string name="jain_poppy_title">खसखस (Poppy Seed)</string>
+    <string name="jain_poppy_subtitle">बहुबीज (असंख्य बीज वाला)</string>
+    <string name="jain_poppy_rel">"बहुबीज (असंख्य बीज वाला) होने के कारण जैन परंपरा में इसका त्याग किया जाता है। (परंपरागत जैन मार्गदर्शन)"</string>
+    <string name="jain_poppy_sci">अफीम के पौधे (Papaver somniferum) के सूखे और परिपक्व बीज।</string>
+
+    <!-- 11. Makhana -->
+    <string name="jain_makhana_title">मखाना (Fox Nuts)</string>
+    <string name="jain_makhana_subtitle">Euryale ferox के बीज</string>
+    <string name="jain_makhana_rel">"कुछ जैन आचार्यों के मार्गदर्शन अनुसार मखाना तालाब या अन्य जलाशयों में उगता है जिससे जलजीवों की हिंसा की संभावना रहती है। अतः इसके त्याग की सलाह दी जाती है। (परंपरागत जैन मार्गदर्शन – कुछ आचार्यों के मत अनुसार)"</string>
+    <string name="jain_makhana_sci">मखाना (Euryale ferox) के बीज जो तालाब, झील और अन्य जलाशयों में उगते हैं।</string>
+
+    <!-- 12. Water Chestnut -->
+    <string name="jain_singhoda_title">सिंघाड़ा (Water Chestnut)</string>
+    <string name="jain_singhoda_subtitle">जलाशयों में उगने वाला जलफल</string>
+    <string name="jain_singhoda_rel">"कुछ जैन आचार्यों के मार्गदर्शन अनुसार सिंघाड़ा जलाशयों में उगता है जिससे जलजीवों की हिंसा की संभावना रहती है। अतः इसके त्याग की सलाह दी जाती है। (परंपरागत जैन मार्गदर्शन – कुछ आचार्यों के मत अनुसार)"</string>
+    <string name="jain_singhoda_sci">सिंघाड़ा (Trapa spp.) जलाशयों में उगने वाला जलफल है।</string>
+
+    <!-- 13. Arrowroot -->
+    <string name="jain_arrowroot_title">अरारोट पाउडर</string>
+    <string name="jain_arrowroot_subtitle">Arrowroot Powder (Maranta arundinacea)</string>
+    <string name="jain_arrowroot_rel">"अनंतकाय कंदमूल से बनने के कारण जैन परंपरा में इसका त्याग किया जाता है। (जैन आगम – अनंतकाय सिद्धांत)"</string>
+    <string name="jain_arrowroot_sci">अरारोट पौधे (Maranta arundinacea) के भूमिगत कंद/मूल से प्राप्त स्टार्च।</string>
+
+    <!-- 14. Chocolate / Cocoa -->
+    <string name="jain_chocolate_title">चॉकलेट और कोको</string>
+    <string name="jain_chocolate_subtitle">कोको पाउडर और चॉकलेट उत्पाद</string>
+    <string name="jain_chocolate_rel">"जैन ग्रंथों में स्पष्ट निषेध नहीं है। परंतु कुछ जैन आचार्यों के अनुसार कोको उत्पादन और प्रसंस्करण के दौरान सूक्ष्म कीटों की संभावना के कारण त्याग की सलाह दी जाती है। (परंपरागत जैन मार्गदर्शन – कुछ आचार्यों के मत अनुसार)"</string>
+    <string name="jain_chocolate_sci">कोको (Theobroma cacao) के बीजों से बने खाद्य पदार्थ। औद्योगिक प्रसंस्करण के दौरान नियामक सीमाओं में कीट अंशों की संभावना हो सकती है।</string>
+
+    <!-- 15. Maida -->
+    <string name="jain_maida_title">मैदा (Refined Flour)</string>
+    <string name="jain_maida_subtitle">परिष्कृत आटा और यीस्ट आधारित उत्पाद</string>
+    <string name="jain_maida_rel">"जैन ग्रंथों में मैदे का स्पष्ट निषेध नहीं है। परंतु कुछ जैन आचार्यों के अनुसार मैदा और उससे बनी किण्वित (Yeast) खाद्य वस्तुओं के त्याग की सलाह दी जाती है। (परंपरागत जैन मार्गदर्शन – कुछ आचार्यों के मत अनुसार)"</string>
+    <string name="jain_maida_sci">गेहूं के एंडोस्पर्म (Endosperm) को पीसकर बना परिष्कृत (Refined) आटा।</string>
+
+    <!-- 16. Rava / Suji -->
+    <string name="jain_rava_title">रवा / सूजी (Semolina)</string>
+    <string name="jain_rava_subtitle">मोटा पिसा गेहूं</string>
+    <string name="jain_rava_rel">"जैन ग्रंथों में रवे का स्पष्ट निषेध नहीं है। परंतु कुछ जैन आचार्यों के अनुसार चातुर्मास और पर्यूषण के दौरान रवे के त्याग की सलाह दी जाती है। (परंपरागत जैन मार्गदर्शन – कुछ आचार्यों के मत अनुसार)"</string>
+    <string name="jain_rava_sci">गेहूं के एंडोस्पर्म को मोटा पीसकर बना उत्पाद (Coarsely Milled Wheat Endosperm)।</string>
+
+    <!-- 17. Dry Fruits (Seasonal) -->
+    <string name="jain_dryfruits_title">मेवे (मौसमी)</string>
+    <string name="jain_dryfruits_subtitle">बादाम, काजू, पिस्ता, अखरोट आदि</string>
+    <string name="jain_dryfruits_rel">"कुछ जैन परंपराओं में फागण सुद चौदश से कार्तिक सुद पूर्णिमा तक मेवों का त्याग किया जाता है, जबकि कार्तिक सुद पूर्णिमा से फागण सुद पूर्णिमा तक इनका उपयोग स्वीकार्य माना जाता है। (परंपरागत जैन मार्गदर्शन)"</string>
+    <string name="jain_dryfruits_sci">विभिन्न पेड़ों के सूखे फल और बीज जैसे बादाम, काजू, पिस्ता, अखरोट आदि।</string>
+
+    <!-- 18. E471/E472/E422/E570/E627 Food Additives -->
+    <string name="jain_additives_veg_title">E471 / E472 / E422 / E570 / E627</string>
+    <string name="jain_additives_veg_subtitle">Mono &amp; Diglycerides, Glycerol, Fatty Acids, Disodium Guanylate</string>
+    <string name="jain_additives_veg_rel">"ये फूड एडिटिव्स वनस्पति या पशुजन्य स्रोत से बने हो सकते हैं। इसलिए जैन परंपरा अनुसार उपयोग से पहले इनका स्रोत जांचना आवश्यक है। (परंपरागत जैन मार्गदर्शन)"</string>
+    <string name="jain_additives_veg_sci">औद्योगिक रूप से बने फूड एडिटिव्स जो वनस्पति तेल, पशु वसा या सूक्ष्मजीव आधारित प्रक्रिया से तैयार हो सकते हैं।</string>
+    <string name="jain_additives_veg_chip1">स्रोत जांचें</string>
+    <string name="jain_additives_veg_chip2">पशुजन्य हो सकता है</string>
+
+    <!-- 19. E1105 Lysozyme -->
+    <string name="jain_lysozyme_title">E1105 (Lysozyme)</string>
+    <string name="jain_lysozyme_subtitle">अंडे से प्राप्त एंजाइम</string>
+    <string name="jain_lysozyme_rel">"सामान्यतः अंडे के सफेद भाग से प्राप्त होने के कारण जैन आहार अनुसार इसका त्याग किया जाता है। (परंपरागत जैन मार्गदर्शन)"</string>
+    <string name="jain_lysozyme_sci">अंडे के सफेद भाग से प्राप्त प्राकृतिक एंजाइम (Enzyme)।</string>
+
+    <!-- 20. E901 Beeswax -->
+    <string name="jain_beeswax_title">E901 (Beeswax)</string>
+    <string name="jain_beeswax_subtitle">मधुमक्खी का मोम</string>
+    <string name="jain_beeswax_rel">"मधुमक्खी द्वारा उत्पन्न पशुजन्य उत्पाद होने के कारण जैन परंपरा में इसका त्याग किया जाता है। (परंपरागत जैन मार्गदर्शन)"</string>
+    <string name="jain_beeswax_sci">मधुमक्खी (Apis spp.) द्वारा छत्ते में उत्पन्न प्राकृतिक मोम (Natural Wax)।</string>
+
+    <!-- 21. E120/E441/E542/E904 Animal Additives -->
+    <string name="jain_additives_animal_title">E120 / E441 / E542 / E904</string>
+    <string name="jain_additives_animal_subtitle">Carmine, Gelatin, Bone Phosphate, Shellac</string>
+    <string name="jain_additives_animal_rel">"ये फूड एडिटिव्स कीड़ों या पशुजन्य स्रोत से प्राप्त होने के कारण जैन परंपरा में इनका त्याग किया जाता है। (परंपरागत जैन मार्गदर्शन)"</string>
+    <string name="jain_additives_animal_sci">क्रमशः कोचीनियल कीड़े से रंग, पशु कोलेजन से जेलिंग एजेंट, पशु हड्डियों से बोन फॉस्फेट और लाख कीड़े से प्राकृतिक रेजिन।</string>
+    <string name="jain_additives_animal_chip1">पशुजन्य</string>
+    <string name="jain_additives_animal_chip2">पूर्ण त्याग</string>
+
+    <!-- 22. E631/E635 Flavor Enhancers -->
+    <string name="jain_flavor_enhancers_title">E631 / E635</string>
+    <string name="jain_flavor_enhancers_subtitle">Disodium Inosinate, Disodium Ribonucleotides</string>
+    <string name="jain_flavor_enhancers_rel">"ये फूड एडिटिव्स वनस्पति, सूक्ष्मजीव या पशुजन्य स्रोत से बने हो सकते हैं। इसलिए जैन परंपरा अनुसार इनका स्रोत जांचना आवश्यक है। (परंपरागत जैन मार्गदर्शन)"</string>
+    <string name="jain_flavor_enhancers_sci">स्वाद वर्धक जो किण्वन (Fermentation) या पशुजन्य स्रोत से तैयार हो सकते हैं।</string>
+    <string name="jain_flavor_enhancers_chip1">स्रोत जांचें</string>
+
+    <!-- 23. Alcohol -->
+    <string name="jain_alcohol_title">सभी मदिरा और शराब</string>
+    <string name="jain_alcohol_subtitle">Wine, Beer, Rum, Whisky, Brandy, Vodka, Gin, Food Ethanol</string>
+    <string name="jain_alcohol_rel">"ये सभी किण्वन (Fermentation) या आसवन (Distillation) से बने मादक पेय होने के कारण जैन परंपरा में इनका त्याग किया जाता है। (परंपरागत जैन साहित्य – महाविगई)"</string>
+    <string name="jain_alcohol_sci">चीनी, अनाज, अंगूर, फल या अन्य वनस्पति स्रोतों के किण्वन और आसवन से बने मादक पदार्थ।</string>
+
+    <!-- 24. Meat / Eggs / Seafood -->
+    <string name="jain_meat_title">मांस, अंडे और समुद्री भोजन</string>
+    <string name="jain_meat_subtitle">मांस, चिकन, मछली, झींगा, केकड़ा, सूअर, गाय, बकरा, टर्की, अंडे</string>
+    <string name="jain_meat_rel">"पशुजन्य खाद्य पदार्थ होने के कारण अहिंसा के सिद्धांत अनुसार जैन परंपरा में इनका त्याग किया जाता है। (जैन आहार सिद्धांत)"</string>
+    <string name="jain_meat_sci">पशुओं, पक्षियों और जलचर जीवों से प्राप्त खाद्य पदार्थ (Animal-derived Food Products)।</string>
+    <string name="jain_meat_chip1">मांसाहार</string>
+    <string name="jain_meat_chip2">अहिंसा</string>
+
+
+    <!--         SWAMINARAYAN GUIDELINES              -->
+
+    <!-- 1. Meat, Eggs & Non-Veg -->
+    <string name="swami_meat_title">मांस, अंडे और पशुजन्य आहार</string>
+    <string name="swami_meat_subtitle">मांस, चिकन, मछली, सीफूड, झींगा, केकड़ा, ऑयस्टर, सूअर, गाय, बकरा, टर्की, अंडे</string>
+    <string name="swami_meat_rel">"भगवान स्वामिनारायण ने शिक्षापत्री श्लोक १५ में मांसाहार और अंडे सहित सभी पशुजन्य भोजन के त्याग का आदेश दिया है। यह अहिंसा और शुद्ध सात्विक आहार के सिद्धांत पर आधारित है। (शिक्षापत्री – श्लोक १५)"</string>
+    <string name="swami_meat_sci">पशु, पक्षी या जलचर जीव से प्राप्त Animal-derived Food Products।</string>
+    <string name="swami_meat_chip1">मांसाहार</string>
+    <string name="swami_meat_chip2">अहिंसा</string>
+
+    <!-- 2. Onion & Garlic (Allium) -->
+    <string name="swami_allium_title">प्याज और लहसुन</string>
+    <string name="swami_allium_subtitle">Allium परिवार – प्याज, लहसुन, लीक, शैलट, चाइव्स</string>
+    <string name="swami_allium_rel">"स्वामिनारायण परंपरा में Allium परिवार के पदार्थों को राजसिक और तामसिक माना जाता है। ये काम, क्रोध, चंचलता और दुर्गंध बढ़ाते हैं, इसलिए इनका त्याग किया जाता है। (शिक्षापत्री परंपरा और BAPS/वडताल मार्गदर्शन)"</string>
+    <string name="swami_allium_sci">Allium परिवार की वनस्पतियां जिनमें सल्फरयुक्त यौगिक (Sulfur Compounds) अधिक होते हैं।</string>
+
+    <!-- 3. Alcohol -->
+    <string name="swami_alcohol_title">शराब और मादक पेय</string>
+    <string name="swami_alcohol_subtitle">वाइन, बियर, रम, व्हिस्की, ब्रांडी, वोडका, जिन, स्पिरिट, Food Ethanol</string>
+    <string name="swami_alcohol_rel">"शिक्षापत्री श्लोक १५ और १८ अनुसार सभी प्रकार के मादक पेय और नशीले पदार्थों का त्याग करना। (शिक्षापत्री – श्लोक १५ और १८)"</string>
+    <string name="swami_alcohol_sci">किण्वन या आसवन द्वारा बने मादक उत्पाद।</string>
+
+    <!-- 4. Cannabis & Narcotics -->
+    <string name="swami_narcotics_title">भांग और नशीले पदार्थ</string>
+    <string name="swami_narcotics_subtitle">भांग, गांजा, अफीम, हशीश और अन्य नशीले पदार्थ</string>
+    <string name="swami_narcotics_rel">"मन और इंद्रियों को अशुद्ध बनाने के कारण स्वामिनारायण परंपरा में ऐसे सभी नशीले पदार्थों के संपूर्ण त्याग का निर्देश है। (शिक्षापत्री – श्लोक १८)"</string>
+    <string name="swami_narcotics_sci">Psychoactive / Narcotic Substances।</string>
+    <string name="swami_narcotics_chip1">नशा मुक्ति</string>
+    <string name="swami_narcotics_chip2">मानसिक पवित्रता</string>
+
+    <!-- 5. Animal-derived Additives -->
+    <string name="swami_additives_animal_title">E120 / E441 / E542 / E901 / E904 / E1105</string>
+    <string name="swami_additives_animal_subtitle">Carmine, Gelatin, Bone Phosphate, Beeswax, Shellac, Lysozyme</string>
+    <string name="swami_additives_animal_rel">"ये फूड एडिटिव्स कीड़ों, मधुमक्खी, अंडे या पशुजन्य स्रोतों से प्राप्त होने के कारण स्वामिनारायण आहार सिद्धांत अनुसार स्वीकार्य नहीं हैं। (शिक्षापत्री में पशुजन्य आहार त्याग का सिद्धांत)"</string>
+    <string name="swami_additives_animal_sci">क्रमशः कोचीनियल कीड़े से रंग, पशु कोलेजन से जेलिंग एजेंट, पशु हड्डियों से बोन फॉस्फेट, मधुमक्खी का मोम, लाख कीड़े से रेजिन और अंडे से एंजाइम।</string>
+    <string name="swami_additives_animal_chip1">पशुजन्य</string>
+    <string name="swami_additives_animal_chip2">पूर्ण त्याग</string>
+
+    <!-- 6. Source-dependent Additives -->
+    <string name="swami_additives_source_title">E322 / E471 / E472 / E570 / E920 आदि</string>
+    <string name="swami_additives_source_subtitle">Lecithin, Mono &amp; Diglycerides, Fatty Acids, L-Cysteine, Glycerol आदि</string>
+    <string name="swami_additives_source_rel">"ये फूड एडिटिव्स वनस्पति, सूक्ष्मजीव या पशुजन्य स्रोत से बने हो सकते हैं। यदि स्रोत स्पष्ट न हो तो स्वामिनारायण परंपरा अनुसार स्रोत जांचें या धार्मिक मार्गदर्शन अनुसार त्याग करें।"</string>
+    <string name="swami_additives_source_sci">औद्योगिक रूप से बने फूड एडिटिव्स जो वनस्पति तेल, पशु वसा, अंडे, पंख (Feathers), बाल (Hair) या सूक्ष्मजीव आधारित किण्वन से तैयार हो सकते हैं।</string>
+    <string name="swami_additives_source_chip1">स्रोत जांचें</string>
+    <string name="swami_additives_source_chip2">पशुजन्य हो सकता है</string>
+
+    <!-- 7. Hing (Asafoetida) -->
+    <string name="swami_hing_title">हींग (Asafoetida)</string>
+    <string name="swami_hing_subtitle">Ferula पौधे का दूधिया रस – मसाला</string>
+    <string name="swami_hing_rel">"कुछ स्वामिनारायण परंपराओं में हींग के त्याग की सलाह दी जाती है क्योंकि इसे राजसिक/तामसिक माना जाता है और व्यावसायिक हींग में गेहूं का आटा, गोंद या अन्य मिश्रण हो सकते हैं। विभिन्न स्वामिनारायण संस्थाओं में आचरण में भिन्नता है। (परंपरागत स्वामिनारायण मार्गदर्शन)"</string>
+    <string name="swami_hing_sci">Ferula प्रजाति के पौधे के दूधिया रस (Oleogum Resin) से बना मसाला। बाजार में मिलने वाली हींग में अक्सर गेहूं का आटा, चावल का आटा या गोंद जैसे मिश्रण होते हैं।</string>
+
+
+   
+    <!-- UI STATIC TEXTS — ALL SCREENS  -->
+
+    <!-- Bottom Navigation Bar -->
+    <string name="bottom_bar_history">इतिहास</string>
+    <string name="bottom_bar_scan">स्कैन</string>
+    <string name="bottom_bar_profile">प्रोफ़ाइल</string>
+
+    <!-- Top Bar -->
+    <string name="topbar_history_title">इतिहास</string>
+    <string name="topbar_settings_title">सेटिंग्स</string>
+    <string name="topbar_search_placeholder">उत्पाद खोजें...</string>
+
+    <!-- Home Screen -->
+    <string name="home_did_you_know"> क्या आप जानते हैं?</string>
+    <string name="home_swipe_hint">स्वाइप करें →</string>
+
+    <!-- Camera Scan Screen -->
+    <string name="camera_title_barcode">QR स्कैन करें</string>
+    <string name="camera_title_ocr">सामग्री कैप्चर करें</string>
+    <string name="camera_hint_barcode">लेबल को बॉक्स के अंदर रखें</string>
+    <string name="camera_btn_gallery">गैलरी</string>
+    <string name="camera_btn_flash">फ्लैश</string>
+    <string name="camera_btn_retry">↺  फिर कोशिश करें</string>
+    <string name="camera_btn_ok">✓  ठीक है</string>
+
+    <!-- Result Screen -->
+    <string name="result_title">परिणाम</string>
+    <string name="result_current_context">वर्तमान संदर्भ</string>
+    <string name="result_no_restricted">कोई प्रतिबंधित सामग्री नहीं मिली</string>
+    <string name="result_detected_ingredients">मिली हुई सामग्री</string>
+    <string name="result_btn_scan_again">फिर स्कैन करें</string>
+    <string name="result_disclaimer">सामान्य डेटाबेस पर आधारित विश्लेषण।\nहमेशा लेबल जांचें।</string>
+    <string name="result_loading_title">उत्पाद स्कैन हो रहा है...</string>
+    <string name="result_loading_subtitle">बारकोड स्कैन होने तक प्रतीक्षा करें</string>
+    <string name="result_why_avoid">क्यों बचें?</string>
+    <string name="result_col_ingredient">सामग्री</string>
+    <string name="result_col_status">स्थिति</string>
+
+    <!-- History Screen -->
+    <string name="history_filter_all">सभी</string>
+    <string name="history_filter_safe">सुरक्षित</string>
+    <string name="history_filter_avoid">बचें</string>
+    <string name="history_empty_title">अभी तक कोई स्कैन नहीं।</string>
+    <string name="history_empty_desc">आपकी पवित्र यात्रा यहाँ से शुरू होती है।\nखाद्य उत्पाद स्कैन करके\nसात्विक अनुपालन जांचें।</string>
+    <string name="history_empty_btn">स्कैन शुरू करें</string>
+    <string name="history_empty_footer">सचेत मार्ग खोजें</string>
+    <string name="history_no_items">कोई इतिहास नहीं मिला।</string>
+    <string name="history_menu_delete">हटाएं</string>
+    <string name="history_promo_title">अपने पैकेट की\nपवित्रता बनाए रखें।</string>
+    <string name="history_promo_subtitle">हर स्कैन आपको सचेत\nजीवनशैली की ओर ले जाता है।</string>
+    <string name="history_dialog_title">इतिहास साफ़ करें?</string>
+    <string name="history_dialog_desc">यह सभी स्कैन रिकॉर्ड स्थायी रूप से हटा देगा। यह क्रिया पूर्ववत नहीं की जा सकती।</string>
+    <string name="history_dialog_confirm">सब साफ़ करें</string>
+    <string name="history_dialog_cancel">रद्द करें</string>
+
+    <!-- Profile / Settings Screen -->
+    <string name="profile_section_diet">आहार प्राथमिकता</string>
+    <string name="profile_active_diet">सक्रिय आहार</string>
+    <string name="profile_section_religion">धर्म मार्गदर्शन</string>
+    <string name="profile_app_language">ऐप भाषा</string>
+    <string name="profile_section_support">सहायता और जानकारी</string>
+    <string name="profile_send_feedback">प्रतिक्रिया भेजें</string>
+    <string name="profile_privacy_policy">गोपनीयता नीति</string>
+    <string name="profile_about">SatvikScan के बारे में</string>
+    <string name="profile_badge">जैन और स्वामिनारायण के लिए</string>
+
+    <!-- Select Diet Screen -->
+    <string name="select_diet_title">अपना आहार चुनें</string>
+    <string name="select_diet_subtitle">अपने धार्मिक आहार सिद्धांतों के अनुसार स्कैनिंग अनुभव कस्टमाइज़ करें।</string>
+    <string name="select_diet_btn_continue">आगे बढ़ें</string>
+    <string name="select_diet_footer">आप आहार सेटिंग्स बाद में भी बदल सकते हैं</string>
+
+    <!-- Send Feedback Screen -->
+    <string name="feedback_title">प्रतिक्रिया भेजें</string>
+    <string name="feedback_heading">हम आपकी राय\nसुनना चाहते हैं!</string>
+    <string name="feedback_desc">आपकी प्रतिक्रिया SatvikScan को सबके लिए बेहतर बनाने में मदद करती है। बताएं हम आपकी आहार यात्रा को कैसे बेहतर बना सकते हैं।</string>
+    <string name="feedback_type_label">प्रतिक्रिया का प्रकार</string>
+    <string name="feedback_placeholder">बताएं हम कैसे सुधार कर सकते हैं...</string>
+    <string name="feedback_btn_submit">प्रतिक्रिया भेजें</string>
+
+</resources>

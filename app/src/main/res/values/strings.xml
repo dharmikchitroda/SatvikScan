@@ -2,7 +2,7 @@
     <string name="app_name">SatvikScan</string>
 
     <!-- UI General Labels -->
-    <string name="diet_gyan_badge_jain">WISDOM OF SAGES</string>
+        <string name="diet_gyan_badge_jain">WISDOM OF SAGES</string>
     <string name="diet_gyan_badge_swami">DEVOTION &amp; PURITY</string>
     <string name="diet_gyan_tagline_jain">Sacred dietary principles for spiritual growth</string>
     <string name="diet_gyan_tagline_swami">Pure vegetarian principles for spiritual elevation</string>
@@ -18,7 +18,6 @@
 
 
     <!--             JAIN GUIDELINES                 -->
-
 
     <!-- 1. Root Vegetables -->
     <string name="jain_root_title">Root Vegetables</string>
@@ -224,4 +223,86 @@
     <string name="swami_hing_subtitle">Ferula Oleogum Resin – Spice</string>
     <string name="swami_hing_rel">"In some Swaminarayan traditions, Hing is advised to be renounced as it is considered Rajasic/Tamasic. Commercial Hing may also contain wheat flour, gum or other additives. Practices vary across different Swaminarayan institutions. (Traditional Swaminarayan Guidance)"</string>
     <string name="swami_hing_sci">A spice made from the milky resin (Oleogum Resin) of the Ferula plant. Commercial Hing often contains wheat flour, rice flour or gum as additives.</string>
+
+
+    <!--   UI STATIC TEXTS — ALL SCREENS -->
+
+    <!-- Bottom Navigation Bar -->
+    <string name="bottom_bar_history">History</string>
+    <string name="bottom_bar_scan">Scan</string>
+    <string name="bottom_bar_profile">Profile</string>
+
+    <!-- Top Bar -->
+    <string name="topbar_history_title">History</string>
+    <string name="topbar_settings_title">Settings</string>
+    <string name="topbar_search_placeholder">Search products...</string>
+
+    <!-- Home Screen -->
+    <string name="home_did_you_know"> Did You Know?</string>
+    <string name="home_swipe_hint">Swipe →</string>
+
+    <!-- Camera Scan Screen -->
+    <string name="camera_title_barcode">Scan QR</string>
+    <string name="camera_title_ocr">Capture Ingredients</string>
+    <string name="camera_hint_barcode">Align label inside box</string>
+    <string name="camera_btn_gallery">GALLERY</string>
+    <string name="camera_btn_flash">FLASH</string>
+    <string name="camera_btn_retry">↺  Retry</string>
+    <string name="camera_btn_ok">✓  OK</string>
+
+    <!-- Result Screen -->
+    <string name="result_title">Result</string>
+    <string name="result_current_context">CURRENT CONTEXT</string>
+    <string name="result_no_restricted">No Restricted Ingredients Found</string>
+    <string name="result_detected_ingredients">Detected Ingredients</string>
+    <string name="result_btn_scan_again">Scan Again</string>
+    <string name="result_disclaimer">ANALYSIS BASED ON COMMON DATABASE.\nALWAYS DOUBLE-CHECK LABELS.</string>
+    <string name="result_loading_title">Scanning Product...</string>
+    <string name="result_loading_subtitle">Please wait while we scan the barcode</string>
+    <string name="result_why_avoid">Why Avoid?</string>
+    <string name="result_col_ingredient">INGREDIENT</string>
+    <string name="result_col_status">STATUS</string>
+
+    <!-- History Screen -->
+    <string name="history_filter_all">All</string>
+    <string name="history_filter_safe">Safe</string>
+    <string name="history_filter_avoid">Avoid</string>
+    <string name="history_empty_title">No scans yet.</string>
+    <string name="history_empty_desc">Your purity journey starts here.\nScan food products to see their\nSatvik compliance.</string>
+    <string name="history_empty_btn">Start Scanning</string>
+    <string name="history_empty_footer">EXPLORE THE MINDFUL PATH</string>
+    <string name="history_no_items">No history items found.</string>
+    <string name="history_menu_delete">Delete</string>
+    <string name="history_promo_title">Maintain the Purity\nof Your Packet.</string>
+    <string name="history_promo_subtitle">Each scan brings you closer\nto a mindful lifestyle.</string>
+    <string name="history_dialog_title">Clear History?</string>
+    <string name="history_dialog_desc">This will permanently delete all your scan records. This action cannot be undone.</string>
+    <string name="history_dialog_confirm">Clear All</string>
+    <string name="history_dialog_cancel">Cancel</string>
+
+    <!-- Profile / Settings Screen -->
+    <string name="profile_section_diet">DIET PREFERENCES</string>
+    <string name="profile_active_diet">ACTIVE DIET</string>
+    <string name="profile_section_religion">RELIGION GUIDE</string>
+    <string name="profile_app_language">App Language</string>
+    <string name="profile_section_support">SUPPORT &amp; ABOUT</string>
+    <string name="profile_send_feedback">Send Feedback</string>
+    <string name="profile_privacy_policy">Privacy Policy</string>
+    <string name="profile_about">About SatvikScan</string>
+    <string name="profile_badge">MADE FOR JAIN &amp; SWAMINARAYAN</string>
+
+    <!-- Select Diet Screen -->
+    <string name="select_diet_title">Select Your Diet</string>
+    <string name="select_diet_subtitle">Customize your scanning experience based on your dietary principles.</string>
+    <string name="select_diet_btn_continue">Continue</string>
+    <string name="select_diet_footer">YOU CAN CHANGE YOUR DIET SETTINGS LATER</string>
+
+    <!-- Send Feedback Screen -->
+    <string name="feedback_title">Send Feedback</string>
+    <string name="feedback_heading">We\'d love to hear from\nyou!</string>
+    <string name="feedback_desc">Your feedback helps us improve SatvikScan for everyone. Let us know how we can serve your dietary journey better.</string>
+    <string name="feedback_type_label">FEEDBACK TYPE</string>
+    <string name="feedback_placeholder">Tell us how we can improve your experience...</string>
+    <string name="feedback_btn_submit">Send Feedback</string>
+
 </resources>

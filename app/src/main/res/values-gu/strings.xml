@@ -29,7 +29,7 @@
     <!-- 2. Vinegar -->
     <string name="jain_vinegar_title">સરકો (Vinegar)</string>
     <string name="jain_vinegar_subtitle">સૂક્ષ્મજીવો દ્વારા આથવણ</string>
-    <string name="jain_vinegar_rel">"સૂક્ષ્મજીવો દ્વારા થતી આથવણ (Fermentation)ની પ્રક્રિયા દ્વારા બનતું હોવાથી કેટલીક જૈન પરંપરાઓમાં તેનો ત્યાગ કરવામાં આવે છે અથવા સાવધાની રાખવામાં આવે છે. આ અંગે વિવિધ જૈન સંપ્રદાયોમાં মতભેદ જોવા મળે છે. (જૈન પરંપરા – સંપ્રદાય મુજબ મતભેદ)"</string>
+    <string name="jain_vinegar_rel">"સૂક્ષ્મજીવો દ્વારા થતી આથવણ (Fermentation)ની પ્રક્રિયા દ્વારા બનતું હોવાથી કેટલીક જૈન પરંપરાઓમાં તેનો ત્યાગ કરવામાં આવે છે અથવા સાવધાની રાખવામાં આવે છે. આ અંગે વિવિધ જૈન સંપ્રદાયોમાં মতভেদ જોવા મળે છે. (જૈન પરંપરા – સંપ્રદાય મુજબ મતભેદ)"</string>
     <string name="jain_vinegar_sci">આલ્કોહોલનું એસિટિક એસિડ બેક્ટેરિયા (Acetic Acid Bacteria) દ્વારા આથવણ (Fermentation) થતાં બનતું દ્રાવણ.</string>
 
     <!-- 3. Citric Acid E330 -->
@@ -223,4 +223,86 @@
     <string name="swami_hing_subtitle">Ferula છોડનો દૂધિયા રસ – મસાલો</string>
     <string name="swami_hing_rel">"કેટલીક સ્વામિનારાયણ પરંપરાઓમાં હિંગનો ત્યાગ કરવાની સલાહ આપવામાં આવે છે, કારણ કે તેને રાજસિક/તામસિક માનવામાં આવે છે તથા વ્યાવસાયિક હિંગમાં ઘઉંનો લોટ, ગુંદર અથવા અન્ય મિશ્રણો હોવાની સંભાવના રહે છે. આ અંગે વિવિધ સ્વામિનારાયણ સંસ્થાઓમાં આચરણમાં ભિન્નતા જોવા મળે છે. (પરંપરાગત સ્વામિનારાયણ માર્ગદર્શન)"</string>
     <string name="swami_hing_sci">Ferula પ્રજાતિના છોડના દૂધિયા રસ (Oleogum Resin)માંથી બનતો મસાલો. બજારમાં મળતી હિંગમાં ઘણીવાર ઘઉંનો લોટ, ચોખાનો લોટ અથવા ગમ જેવા મિશ્રણો ઉમેરવામાં આવતા હોય છે.</string>
+
+
+    <!--         UI STATIC TEXTS — ALL SCREENS           -->
+
+    <!-- Bottom Navigation Bar -->
+    <string name="bottom_bar_history">ઇતિહાસ</string>
+    <string name="bottom_bar_scan">સ્કેન</string>
+    <string name="bottom_bar_profile">પ્રોફાઇલ</string>
+
+    <!-- Top Bar -->
+    <string name="topbar_history_title">ઇતિહાસ</string>
+    <string name="topbar_settings_title">સેટિંગ્સ</string>
+    <string name="topbar_search_placeholder">ઉત્પાદન શોધો...</string>
+
+    <!-- Home Screen -->
+    <string name="home_did_you_know"> શું તમે જાણો છો?</string>
+    <string name="home_swipe_hint">સ્વાઇપ કરો →</string>
+
+    <!-- Camera Scan Screen -->
+    <string name="camera_title_barcode">QR સ્કેન કરો</string>
+    <string name="camera_title_ocr">સામગ્રી કેપ્ચર કરો</string>
+    <string name="camera_hint_barcode">લેબલ બૉક્સની અંદર રાખો</string>
+    <string name="camera_btn_gallery">ગૅલેરી</string>
+    <string name="camera_btn_flash">ફ્લૅશ</string>
+    <string name="camera_btn_retry">↺  ફરી પ્રયાસ</string>
+    <string name="camera_btn_ok">✓  ઓકે</string>
+
+    <!-- Result Screen -->
+    <string name="result_title">પરિણામ</string>
+    <string name="result_current_context">વર્તમાન સંદર્ભ</string>
+    <string name="result_no_restricted">કોઈ પ્રતિબંધિત સામગ્રી મળી નહીં</string>
+    <string name="result_detected_ingredients">મળેલી સામગ્રી</string>
+    <string name="result_btn_scan_again">ફરી સ્કેન કરો</string>
+    <string name="result_disclaimer">સામાન્ય ડેટાબેઝ પર આધારિત વિશ્લેષણ.\nહંમેશા લેબલ ચકાસો.</string>
+    <string name="result_loading_title">ઉત્પાદન સ્કેન થઈ રહ્યું છે...</string>
+    <string name="result_loading_subtitle">બારકોડ સ્કેન થાય ત્યાં સુધી રાહ જુઓ</string>
+    <string name="result_why_avoid">કેમ ટાળવું?</string>
+    <string name="result_col_ingredient">સામગ્રી</string>
+    <string name="result_col_status">સ્થિતિ</string>
+
+    <!-- History Screen -->
+    <string name="history_filter_all">બધા</string>
+    <string name="history_filter_safe">સલામત</string>
+    <string name="history_filter_avoid">ટાળો</string>
+    <string name="history_empty_title">હજુ કોઈ સ્કેન નથી.</string>
+    <string name="history_empty_desc">તમારી પવિત્ર યાત્રા અહીંથી શરૂ થાય છે.\nખાદ્ય ઉત્પાદનો સ્કેન કરીને\nસાત્વિક અનુપાલન તપાસો.</string>
+    <string name="history_empty_btn">સ્કેન શરૂ કરો</string>
+    <string name="history_empty_footer">સચેત માર્ગને શોધો</string>
+    <string name="history_no_items">કોઈ ઇતિહાસ મળ્યો નહીં.</string>
+    <string name="history_menu_delete">કાઢી નાખો</string>
+    <string name="history_promo_title">તમારા પેકેટની\nપવિત્રતા જાળવો.</string>
+    <string name="history_promo_subtitle">દરેક સ્કેન તમને સભાન\nજીવનશૈલી તરફ લઈ જાય છે.</string>
+    <string name="history_dialog_title">ઇતિહાસ સાફ કરો?</string>
+    <string name="history_dialog_desc">આ તમામ સ્કેન રેકોર્ડ કાયમ માટે કાઢી નાખશે. આ ક્રિયા પૂર્વવત્ કરી શકાશે નહીં.</string>
+    <string name="history_dialog_confirm">બધું સાફ કરો</string>
+    <string name="history_dialog_cancel">રદ કરો</string>
+
+    <!-- Profile / Settings Screen -->
+    <string name="profile_section_diet">આહાર પસંદગી</string>
+    <string name="profile_active_diet">સક્રિય આહાર</string>
+    <string name="profile_section_religion">ધર્મ માર્ગદર્શન</string>
+    <string name="profile_app_language">એપ ભાષા</string>
+    <string name="profile_section_support">સહાય અને માહિતી</string>
+    <string name="profile_send_feedback">પ્રતિક્રિયા મોકલો</string>
+    <string name="profile_privacy_policy">ગોપનીયતા નીતિ</string>
+    <string name="profile_about">SatvikScan વિશે</string>
+    <string name="profile_badge">જૈન અને સ્વામિનારાયણ માટે</string>
+
+    <!-- Select Diet Screen -->
+    <string name="select_diet_title">તમારો આહાર પસંદ કરો</string>
+    <string name="select_diet_subtitle">તમારા ધાર્મિક આહાર સિદ્ધાંતો અનુસાર સ્કેનિંગ અનુભવ કસ્ટમાઇઝ કરો.</string>
+    <string name="select_diet_btn_continue">આગળ વધો</string>
+    <string name="select_diet_footer">તમે આહાર સેટિંગ્સ પાછળથી બદલી શકો છો</string>
+
+    <!-- Send Feedback Screen -->
+    <string name="feedback_title">પ્રતિક્રિયા મોકલો</string>
+    <string name="feedback_heading">અમે તમારો અભિપ્રાય\nસાંભળવા ઇચ્છીએ છીએ!</string>
+    <string name="feedback_desc">તમારો અભિપ્રાય SatvikScan ને સૌ માટે સુધારવામાં મદદ કરે છે. અમને જણાવો કે અમે તમારી આહાર યાત્રાને કેવી રીતે વધુ સારી બનાવી શકીએ.</string>
+    <string name="feedback_type_label">પ્રતિક્રિયાનો પ્રકાર</string>
+    <string name="feedback_placeholder">તમારો અનુભવ અમને જણાવો...</string>
+    <string name="feedback_btn_submit">પ્રતિક્રિયા મોકલો</string>
+
 </resources>
