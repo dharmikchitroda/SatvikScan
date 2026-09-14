@@ -35,9 +35,9 @@ class PreferenceManager(context: Context) {
         sharedPrefsEdit.putString("selected_language", language).apply()
     }
 
-    // Read Selected Language
+    // Read Selected Language — empty string means user never selected (first install)
     fun getLanguage(): String {
-        return sharedPrefs.getString("selected_language", "en") ?: "en"
+        return sharedPrefs.getString("selected_language", "") ?: ""
     }
 
     // Onboarding completion status

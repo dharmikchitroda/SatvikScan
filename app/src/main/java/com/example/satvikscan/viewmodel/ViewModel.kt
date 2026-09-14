@@ -1,9 +1,11 @@
-package com.example.satvikscan.ui.viewmodel
+package com.example.satvikscan.viewmodel
 
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.satvikscan.Api_Calling.RetrofitInstance
@@ -19,6 +21,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.io.IOException
+import java.net.UnknownHostException
+import java.util.Locale
 
 enum class ScanMode {
     BARCODE,
@@ -31,14 +36,16 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
 
     fun isNetworkAvailable(): Boolean {
 
-        val connectivityManager = getApplication<Application>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            getApplication<Application>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val network = connectivityManager.activeNetwork ?: return false
 
-        val capabilities  = connectivityManager.getNetworkCapabilities(network) ?: return false
+        val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
 
         return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
+
     fun retryLastScan(onNoBarcodeAndHasInternet: () -> Unit) {
         if (!isNetworkAvailable()) {
             _productUiState.value = ProductUiState.Error("NO_INTERNET")
@@ -84,9 +91,35 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
     private val _customAvoidList = MutableStateFlow(prefManager.getCustomExclusions())
     val customAvoidList: StateFlow<Set<String>> = _customAvoidList
 
-    // load app language
-    private val _appLanguage = MutableStateFlow(prefManager.getLanguage())
+    // Supported languages in this app
+    private val supportedLanguages = listOf("en", "hi", "gu")
+
+    // load app language — smart init
+    private val _appLanguage = MutableStateFlow(resolveInitialLanguage())
     val appLanguage: StateFlow<String> = _appLanguage
+
+    /**
+     * Decides which language to use:
+     * - First install (nothing saved) → auto-detect from phone language
+     * - Returning user (saved in prefs) → use saved preference
+     */
+    private fun resolveInitialLanguage(): String {
+        // get from we saved in preferce
+        val saved = prefManager.getLanguage()
+
+        return if (saved.isNotEmpty()) {
+            // User already selected a language before → respect their choice
+            saved
+        } else {
+            // First time install → detect phone language
+            val phoneLang = Locale.getDefault().language // return  "gu", "hi", "en"
+            val detected = if (phoneLang in supportedLanguages) phoneLang
+            else "en"
+            // Save it so we don't auto-detect again next time
+            prefManager.saveLanguage(detected)
+            detected
+        }
+    }
 
     // for Roomdatabase
     private val database_obj = AppDatabase.getDatabase(application)
@@ -99,7 +132,7 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
         initialValue = emptyList()
     )
 
-    // which open camera according the ocr/scanning
+    //  open camera according mode like ocr/scanning
     private val _scanMode = MutableStateFlow(ScanMode.BARCODE)
     val scanMode: StateFlow<ScanMode> = _scanMode
 
@@ -147,15 +180,15 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
             }
 
             try {
-                val response = repository.getProduct(barcode) // return the dataclass object (json->kotlin object )
+                val response =
+                    repository.getProduct(barcode) // return the dataclass object (json->kotlin object )
 
                 // product not found state
                 if (response.status == 0 || response.product == null) {
 
                     _productUiState.value = ProductUiState.ProductNotFound
 
-                }
-                else {
+                } else {
                     //Ingredients text parse and restricted items take
                     val rawIngredientData = response.product?.ingredientsText
 
@@ -191,7 +224,7 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
 
 
             } catch (e: Exception) {
-                if (e is java.io.IOException || e is java.net.UnknownHostException) {
+                if (e is IOException || e is UnknownHostException) {
                     _productUiState.value = ProductUiState.Error("NO_INTERNET")
                 } else {
                     _productUiState.value = ProductUiState.Error(e.message ?: "Unknown Error occurred")
@@ -208,10 +241,22 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
         prefManager.SaveDiet(diet)
     }
 
-    // when user changes app language
+    // when user manually changes app language from the in-app button
     fun updateLanguage(lang: String) {
         _appLanguage.value = lang
         prefManager.saveLanguage(lang)
+        // Apply locale immediately — Android strings switch without restart
+        AppCompatDelegate.setApplicationLocales(
+            LocaleListCompat.forLanguageTags(lang)
+        )
+    }
+
+    // Called once from MainActivity before UI loads — applies the resolved language
+    fun applyStoredLanguage() {
+        val lang = _appLanguage.value
+        AppCompatDelegate.setApplicationLocales(
+            LocaleListCompat.forLanguageTags(lang)
+        )
     }
 
     fun addCustomAvoidIngredient(ingredient: String) {
@@ -315,11 +360,11 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
 
                     // save in roomDb
 
-          // Calculate sequential index based on current saved OCRscans
+                    // Calculate sequential index based on current saved OCRscans
 
-                val count = scanHistory.value.count {
-                    it.imageUrl.isNullOrEmpty() && it.isSatvik == filteredList.isEmpty()
-                }
+                    val count = scanHistory.value.count {
+                        it.imageUrl.isNullOrEmpty() && it.isSatvik == filteredList.isEmpty()
+                    }
                     val allocatedIndex = count % 3
 
                     scanHistoryDao.insertScan(
@@ -330,7 +375,7 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
                             isSatvik = filteredList.isEmpty(),
                             timestamp = System.currentTimeMillis(),
                             dietName = _dietName.value,
-                            imageUrl = null , // OCR dont have an image
+                            imageUrl = null, // OCR dont have an image
                             imageIndex = allocatedIndex
                         )
                     )
@@ -348,6 +393,7 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
     fun setBarcodeError(message: String?) {
         _barcodeError.value = message
     }
+
     fun clearBarcodeError() {
         _barcodeError.value = null
     }

@@ -89,5 +89,8 @@ dependencies {
     implementation("io.coil-kt:coil-gif:2.6.0")
 
     // text recognizaion Ml kit
-    implementation("com.google.mlkit:text-recognition:16.0.1")  
+    implementation("com.google.mlkit:text-recognition:16.0.1")
+
+    // use for AppCompat - setApplicationLocales
+    implementation("androidx.appcompat:appcompat:1.7.0")
 }
