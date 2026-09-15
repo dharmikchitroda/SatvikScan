@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -225,7 +226,9 @@ fun HomeScreenUI(
                             color = Color(0xFF1B3A2D).copy(alpha = 0.12f),
                             shape = RoundedCornerShape(16.dp)
                         )
-                        .clickable { onScanBarcodescan() }
+                        .clickable {
+                            onScanBarcodescan()
+                        }
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.scan_discover_banner),
@@ -285,14 +288,14 @@ fun QuickTipsSection(dietName: String) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = " Did You Know?",
+                text = stringResource(R.string.home_did_you_know),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF1B3A2D)
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = "Swipe →",
+                text = stringResource(R.string.home_swipe_hint),
                 fontSize = 11.sp,
                 color = Color(0xFF1B3A2D).copy(alpha = 0.45f),
                 fontWeight = FontWeight.Medium

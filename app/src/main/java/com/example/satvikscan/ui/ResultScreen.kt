@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -53,6 +54,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -67,13 +69,11 @@ import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
 import com.example.satvikscan.R
-import com.example.satvikscan.ui.viewmodel.SatvikViewModel
+import com.example.satvikscan.viewmodel.SatvikViewModel
 
 // main 3 type show
 enum class IngredientType {
-    ROOT_VEGETABLE,
-    NON_VEG_ORIGIN,
-    OTHER
+    ROOT_VEGETABLE, NON_VEG_ORIGIN, OTHER
 }
 
 data class IngredientData(
@@ -120,8 +120,7 @@ fun ResultScreen(
                     LoadingView()
                     NoInternetDialog(
                         onRetry = { viewModel.retryLastScan(onNoBarcodeAndHasInternet = onScanAgainClick) },
-                        onDismiss = { onBackClick() }
-                    )
+                        onDismiss = { onBackClick() })
                 }
             } else {
                 ErrorView(state.message)
@@ -140,13 +139,11 @@ fun ResultScreen(
                 WhyAvoidDialog(
                     ingredient = ing,
                     dietName = dietName,
-                    onDismiss = { selectedIngredient = null }
-                )
+                    onDismiss = { selectedIngredient = null })
             }
 
             Column(
-                modifier = modifier
-                    .background(Color(0xFFFAFAFA)), // Ultra-clean premium light grey/off-white background
+                modifier = modifier.background(Color(0xFFFAFAFA)), // Ultra-clean premium light grey/off-white background
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Custom Top App Bar
@@ -157,8 +154,7 @@ fun ResultScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     IconButton(
-                        onClick = onBackClick,
-                        modifier = Modifier.size(48.dp)
+                        onClick = onBackClick, modifier = Modifier.size(48.dp)
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -168,7 +164,7 @@ fun ResultScreen(
                         )
                     }
                     Text(
-                        text = "Result",
+                        text = stringResource(R.string.result_title),
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary, // main app theme
@@ -199,8 +195,7 @@ fun ResultScreen(
                                 width = 3.dp,
                                 color = if (isSafe) Color(0xFF2E7D32) else Color(0xFFC62828), // Green border if Safe, Red border if Avoid
                                 shape = RoundedCornerShape(20.dp)
-                            ),
-                        contentAlignment = Alignment.Center
+                            ), contentAlignment = Alignment.Center
                     ) {  // get image from string url
                         AsyncImage(
                             model = state.product.product?.imageUrl,
@@ -291,8 +286,7 @@ fun ResultScreen(
                                 .size(48.dp)
                                 .background(
                                     contextBgColor, shape = CircleShape
-                                ),
-                            contentAlignment = Alignment.Center
+                                ), contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 painter = painterResource(id = contextIconRes),
@@ -306,7 +300,7 @@ fun ResultScreen(
 
                         Column {
                             Text(
-                                text = "CURRENT CONTEXT",
+                                text = stringResource(R.string.result_current_context),
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFF8D6E63), // Brown
@@ -348,10 +342,8 @@ fun ResultScreen(
                                     modifier = Modifier
                                         .size(64.dp)
                                         .background(
-                                            Color(0xFF2E7D32),
-                                            shape = RoundedCornerShape(50.dp)
-                                        ),
-                                    contentAlignment = Alignment.Center
+                                            Color(0xFF2E7D32), shape = RoundedCornerShape(50.dp)
+                                        ), contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
                                         painter = painterResource(id = R.drawable.ic_safe_tick1),
@@ -361,7 +353,7 @@ fun ResultScreen(
                                     )
                                 }
                                 Text(
-                                    text = "No Restricted Ingredients Found",
+                                    text = stringResource(R.string.result_no_restricted),
                                     fontSize = 17.sp,
                                     fontWeight = FontWeight.ExtraBold,
                                     color = Color(0xFF1B5E20),
@@ -398,7 +390,7 @@ fun ResultScreen(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        text = "Detected Ingredients",
+                                        text = stringResource(R.string.result_detected_ingredients),
                                         fontSize = 18.sp,
                                         fontWeight = FontWeight.Bold,
                                         color = Color(0xFF212121)
@@ -498,71 +490,42 @@ fun ResultScreen(
                                         ingredient.type == IngredientType.NON_VEG_ORIGIN -> R.drawable.ic_meat
 
                                         // Check for alcohol and intoxicants to display the general restricted icon
-                                        ingredient.name.contains("alcohol", ignoreCase = true) ||
-                                                ingredient.name.contains(
-                                                    "wine",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "beer",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "rum",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "whisky",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "whiskey",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "brandy",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "vodka",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "gin",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "spirit",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "ethanol",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "cannabis",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "bhang",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "marijuana",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "ganja",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "opium",
-                                                    ignoreCase = true
-                                                ) ||
-                                                ingredient.name.contains(
-                                                    "hashish",
-                                                    ignoreCase = true
-                                                ) -> R.drawable.restricted_svgrepo_com
+                                        ingredient.name.contains(
+                                            "alcohol",
+                                            ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "wine", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "beer", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "rum", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "whisky", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "whiskey", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "brandy", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "vodka", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "gin", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "spirit", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "ethanol", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "cannabis", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "bhang", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "marijuana", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "ganja", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "opium", ignoreCase = true
+                                        ) || ingredient.name.contains(
+                                            "hashish", ignoreCase = true
+                                        ) -> R.drawable.restricted_svgrepo_com
 
                                         else -> R.drawable.ic_chemical
                                     }
@@ -570,8 +533,7 @@ fun ResultScreen(
                                         name = ingredient.name,
                                         reason = ingredient.reason,
                                         iconRes = iconRes,
-                                        onClick = { selectedIngredient = ingredient }
-                                    )
+                                        onClick = { selectedIngredient = ingredient })
                                     if (index < ingredientList.lastIndex) {
                                         Spacer(modifier = Modifier.height(12.dp))
                                     }
@@ -584,8 +546,7 @@ fun ResultScreen(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .background(
-                                            Color(0xFFF5F5F5),
-                                            shape = RoundedCornerShape(12.dp)
+                                            Color(0xFFF5F5F5), shape = RoundedCornerShape(12.dp)
                                         )
                                         .padding(14.dp)
                                 ) {
@@ -645,7 +606,7 @@ fun ResultScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "Scan Again",
+                                text = stringResource(R.string.result_btn_scan_again),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White
@@ -673,7 +634,7 @@ fun ResultScreen(
                         )
                         Spacer(modifier = Modifier.width(6.dp))
                         Text(
-                            text = "ANALYSIS BASED ON COMMON DATABASE.\nALWAYS DOUBLE-CHECK LABELS.",
+                            text = stringResource(R.string.result_disclaimer),
                             fontSize = 9.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFF9E9E9E),
@@ -722,6 +683,7 @@ fun ErrorView(message: String) {
     }
 }
 
+// scanning laoding screen
 @Composable
 fun LoadingView() {
     val context = LocalContext.current
@@ -731,6 +693,36 @@ fun LoadingView() {
             .background(Color(0xFFEFEFEF)),
         contentAlignment = Alignment.Center
     ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.TopCenter)
+                .statusBarsPadding()
+                .padding(top = 80.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+
+        ) {
+
+            Text(
+                text = stringResource(R.string.result_loading_title),
+                fontWeight = FontWeight.Bold,
+                fontSize = 28.sp,
+                color = Color(0xFF000000),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.result_loading_subtitle),
+                fontSize = 18.sp,
+                color = Color(0xFF737373),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+        }
+
+// here model is diffrent because .webp take as gif multiple frame instead of sigble photo webp formate
         AsyncImage(
             model = ImageRequest.Builder(context)
                 .data(R.drawable.food_scan_anim)
@@ -740,8 +732,7 @@ fun LoadingView() {
                     } else {
                         GifDecoder.Factory()
                     }
-                )
-                .build(),
+                ).build(),
             contentDescription = "Scanning Loader",
             modifier = Modifier.size(240.dp)
         )
@@ -751,10 +742,7 @@ fun LoadingView() {
 // IngredientItem box — now clickable to show "Why Avoid?" dialog
 @Composable
 private fun IngredientItem(
-    name: String,
-    reason: String,
-    iconRes: Int,
-    onClick: () -> Unit = {}
+    name: String, reason: String, iconRes: Int, onClick: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier
@@ -764,9 +752,7 @@ private fun IngredientItem(
             )
             .border(BorderStroke(1.dp, Color(0xFFFFF0F0)), shape = RoundedCornerShape(14.dp))
             .clickable { onClick() }
-            .padding(14.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
+            .padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
         // Red Icon container
         Box(
             modifier = Modifier
@@ -807,9 +793,7 @@ private fun IngredientItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WhyAvoidDialog(
-    ingredient: IngredientData,
-    dietName: String,
-    onDismiss: () -> Unit
+    ingredient: IngredientData, dietName: String, onDismiss: () -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
@@ -834,7 +818,7 @@ fun WhyAvoidDialog(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Why Avoid?",
+                    text = stringResource(R.string.result_why_avoid),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.ExtraBold,
                     color = Color(0xFF1A1A1A)
@@ -843,8 +827,7 @@ fun WhyAvoidDialog(
                     modifier = Modifier
                         .size(32.dp)
                         .background(Color(0xFFF0F0F0), shape = CircleShape)
-                        .clickable { onDismiss() },
-                    contentAlignment = Alignment.Center
+                        .clickable { onDismiss() }, contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Close,
@@ -877,7 +860,7 @@ fun WhyAvoidDialog(
                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp)
                 ) {
                     Text(
-                        text = "INGREDIENT",
+                        text = stringResource(R.string.result_col_ingredient),
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF9E9E9E),
@@ -897,8 +880,7 @@ fun WhyAvoidDialog(
 
             //  STATUS row
             Row(
-                verticalAlignment = Alignment.Top,
-                modifier = Modifier.fillMaxWidth()
+                verticalAlignment = Alignment.Top, modifier = Modifier.fillMaxWidth()
             ) {
                 // circle icon
                 Box(
@@ -918,7 +900,7 @@ fun WhyAvoidDialog(
 
                 Column {
                     Text(
-                        text = "STATUS",
+                        text = stringResource(R.string.result_col_status),
                         fontSize = 11.sp,
                         fontWeight = FontWeight.ExtraBold,
                         color = Color(0xFFC62828),
@@ -970,8 +952,7 @@ fun WhyAvoidDialog(
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
-                        text = ingredient.reason
-                            .removePrefix("Avoided: ")
+                        text = ingredient.reason.removePrefix("Avoided: ")
                             .removePrefix("Caution: "),
                         fontSize = 11.5.sp,
                         color = Color(0xFF1F2937),
@@ -1005,10 +986,8 @@ fun WhyAvoidDialog(
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
-                        text = if (ingredient.scientificReason.isNotBlank())
-                            ingredient.scientificReason
-                        else
-                            "Derived from natural or industrial sources. Verify label for exact origin.",
+                        text = if (ingredient.scientificReason.isNotBlank()) ingredient.scientificReason
+                        else "Derived from natural or industrial sources. Verify label for exact origin.",
                         fontSize = 11.5.sp,
                         color = Color(0xFF444444),
                         lineHeight = 16.sp
@@ -1049,8 +1028,7 @@ fun WhyAvoidDialog(
 
 @Composable
 fun NoInternetDialog(
-    onRetry: () -> Unit,
-    onDismiss: () -> Unit
+    onRetry: () -> Unit, onDismiss: () -> Unit
 ) {
     Dialog(
         onDismissRequest = onDismiss,
@@ -1077,8 +1055,7 @@ fun NoInternetDialog(
                     modifier = Modifier
                         .size(24.dp)
                         .align(Alignment.TopEnd)
-                        .clickable { onDismiss() }
-                )
+                        .clickable { onDismiss() })
 
                 Column(
                     modifier = Modifier
@@ -1135,8 +1112,7 @@ fun NoInternetDialog(
                             .height(52.dp),
                         shape = RoundedCornerShape(14.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF7D5233),
-                            contentColor = Color.White
+                            containerColor = Color(0xFF7D5233), contentColor = Color.White
                         ),
                         elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                     ) {

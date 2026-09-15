@@ -44,6 +44,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
@@ -89,7 +90,7 @@ fun AboutSatvikScreen(
             }
 
             Text(
-                text = "About SatvikScan",
+                text = stringResource(R.string.about_title),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF1B3A2D),
@@ -125,7 +126,7 @@ fun AboutSatvikScreen(
 
             // App Name (SatvikScan)
             Text(
-                text = "SatvikScan",
+                text = stringResource(R.string.about_app_name),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF1B3A2D)
@@ -135,7 +136,7 @@ fun AboutSatvikScreen(
 
             // Tagline
             Text(
-                text = "\"Scan with Purity, Eat with Peace\"",
+                text = stringResource(R.string.about_tagline),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color(0xFF1B3A2D),
@@ -144,7 +145,7 @@ fun AboutSatvikScreen(
 
             // Sanskrit Quote
             Text(
-                text = "\"आहारशुद्धौ सत्त्वशुद्धिः\"",
+                text = stringResource(R.string.about_sanskrit_quote),
                 fontSize = 16.sp,
                 fontStyle = FontStyle.Italic,
                 color = Color(0xFF404943),
@@ -180,7 +181,7 @@ fun AboutSatvikScreen(
                         Spacer(modifier = Modifier.width(12.dp))
 
                         Text(
-                            text = "Our Mission",
+                            text = stringResource(R.string.about_mission_title),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFF1B3A2D)
@@ -189,9 +190,9 @@ fun AboutSatvikScreen(
 
                     Spacer(modifier = Modifier.height(14.dp))
 
-                    // Mission Text (Hindi)
+                    // Mission Text
                     Text(
-                        text = "SatvikScan का उद्देश्य लोगों को उनके धार्मिक, सांस्कृतिक और व्यक्तिगत आहार (Dietary Preferences) के अनुसार 100% शुद्ध और सही खाना चुनने में मदद करना है।",
+                        text = stringResource(R.string.about_mission_desc),
                         fontSize = 15.sp,
                         lineHeight = 22.sp,
                         color = Color(0xFF1B1C1C)
@@ -200,6 +201,8 @@ fun AboutSatvikScreen(
                     Spacer(modifier = Modifier.height(14.dp))
 
                     // Focus Note
+                    val focusLabel = stringResource(R.string.about_focus_label)
+                    val focusDesc = stringResource(R.string.about_focus_desc)
                     Text(
                         text = buildAnnotatedString {
                             withStyle(
@@ -209,7 +212,7 @@ fun AboutSatvikScreen(
                                     color = Color(0xFF404943)
                                 )
                             ) {
-                                append("Focus: ")
+                                append(focusLabel)
                             }
                             withStyle(
                                 style = SpanStyle(
@@ -217,7 +220,7 @@ fun AboutSatvikScreen(
                                     color = Color(0xFF404943)
                                 )
                             ) {
-                                append("पैकेज्ड फूड के इंग्रीडिएंट्स (Ingredients) और छिपे हुए कैमिकल्स (Hidden Additives/E-Numbers) को एक क्लिक में स्कैन करके सच बताना।")
+                                append(focusDesc)
                             }
                         },
                         fontSize = 14.sp,
@@ -231,7 +234,7 @@ fun AboutSatvikScreen(
             //  3. Satvik Food Info Cards (Vertical List) 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "What is Satvik Food?",
+                    text = stringResource(R.string.about_what_is_satvik),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF1B3A2D)
@@ -242,8 +245,8 @@ fun AboutSatvikScreen(
                 // Item 1: Sattva
                 SatvikInfoCard(
                     R.drawable.leaf_svg,
-                    heading = "Sattva",
-                    description = "Fresh, pure, natural, non-violent food."
+                    heading = stringResource(R.string.about_sattva_title),
+                    description = stringResource(R.string.about_sattva_desc)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -251,8 +254,8 @@ fun AboutSatvikScreen(
                 // Item 2: No Onion & Garlic
                 SatvikInfoCard(
                     iconRes = R.drawable.ic_onion,
-                    heading = "No Onion & Garlic",
-                    description = "Renouncing Tamasic and Rajasic elements."
+                    heading = stringResource(R.string.about_no_onion_garlic_title),
+                    description = stringResource(R.string.about_no_onion_garlic_desc)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -260,8 +263,8 @@ fun AboutSatvikScreen(
                 // Item 3: Hidden Non-Veg Free
                 SatvikInfoCard(
                     iconRes = R.drawable.ic_chemical,
-                    heading = "Hidden Non-Veg Free",
-                    description = "Protection from Gelatin, Carmine, Rennet, Bone Char."
+                    heading = stringResource(R.string.about_hidden_nonveg_title),
+                    description = stringResource(R.string.about_hidden_nonveg_desc)
                 )
             }
 
@@ -270,7 +273,7 @@ fun AboutSatvikScreen(
             //  4. Diets Supported Section 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Diets Supported",
+                    text = stringResource(R.string.about_diets_supported),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF1B3A2D)
@@ -285,12 +288,12 @@ fun AboutSatvikScreen(
                     DietGridCard(
                         modifier = Modifier.weight(1f),
                         iconRes = R.drawable.custom_icon,
-                        text = "Custom Diet"
+                        text = stringResource(R.string.diet_custom_title)
                     )
                     DietGridCard(
                         modifier = Modifier.weight(1f),
                         iconRes = R.drawable.jain_logo,
-                        text = "Jain Diet"
+                        text = stringResource(R.string.diet_jain_title)
                     )
                 }
 
@@ -303,12 +306,12 @@ fun AboutSatvikScreen(
                     DietGridCard(
                         modifier = Modifier.weight(1f),
                         iconRes = R.drawable.swaminarayan_tilak,
-                        text = "Swaminarayan"
+                        text = stringResource(R.string.diet_swami_title)
                     )
                     DietGridCard(
                         modifier = Modifier.weight(1f),
                         iconRes = R.drawable.ic_carrot_1,
-                        text = "Vegan"
+                        text = stringResource(R.string.about_diet_vegan)
                     )
                 }
             }
@@ -318,7 +321,7 @@ fun AboutSatvikScreen(
             //  5. Key Features Grid (2x2) 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Key Features",
+                    text = stringResource(R.string.about_key_features),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF1B3A2D)
@@ -333,12 +336,12 @@ fun AboutSatvikScreen(
                     KeyFeatureCell(
                         modifier = Modifier.weight(1f),
                         iconRes = R.drawable.baseline_qr_code_scanner_24,
-                        label = "Instant Scanner"
+                        label = stringResource(R.string.about_feature_instant_scanner)
                     )
                     KeyFeatureCell(
                         modifier = Modifier.weight(1f),
                         iconRes = R.drawable.ic_chemical,
-                        label = "E-Number Breakdown"
+                        label = stringResource(R.string.about_feature_e_number)
                     )
                 }
 
@@ -351,12 +354,12 @@ fun AboutSatvikScreen(
                     KeyFeatureCell(
                         modifier = Modifier.weight(1f),
                         iconRes = R.drawable.ic_diet_guidelines,
-                        label = "Diet Gyan"
+                        label = stringResource(R.string.about_feature_diet_gyan)
                     )
                     KeyFeatureCell(
                         modifier = Modifier.weight(1f),
                         iconRes = R.drawable.ic_safe_tick,
-                        label = "100% Privacy"
+                        label = stringResource(R.string.about_feature_privacy)
                     )
                 }
             }
@@ -369,7 +372,7 @@ fun AboutSatvikScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "v1.0.0",
+                    text = stringResource(R.string.about_version),
                     fontSize = 11.sp,
                     color = Color(0xFF404943)
                 )
@@ -378,7 +381,7 @@ fun AboutSatvikScreen(
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "Made with ",
+                        text = stringResource(R.string.about_made_with),
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color(0xFF1B3A2D)
@@ -390,7 +393,7 @@ fun AboutSatvikScreen(
                         modifier = Modifier.size(14.dp)
                     )
                     Text(
-                        text = " for Mindful Eating",
+                        text = stringResource(R.string.about_made_with_suffix),
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color(0xFF1B3A2D)
@@ -404,7 +407,7 @@ fun AboutSatvikScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Privacy Policy",
+                        text = stringResource(R.string.about_privacy_policy),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color(0xFF404943),
@@ -418,7 +421,7 @@ fun AboutSatvikScreen(
                     )
 
                     Text(
-                        text = "Contact Support",
+                        text = stringResource(R.string.about_contact_support),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color(0xFF404943),
@@ -462,7 +465,7 @@ fun AboutSatvikScreen(
                         .height(56.dp)
                 ) {
                     Text(
-                        text = "Rate Us",
+                        text = stringResource(R.string.about_rate_us),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White

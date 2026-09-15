@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -60,8 +61,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.ui.text.input.ImeAction
 import com.example.satvikscan.R
 import com.example.satvikscan.RouteName
-import com.example.satvikscan.ui.viewmodel.SatvikViewModel
-import com.example.satvikscan.ui.viewmodel.ScanMode
+import com.example.satvikscan.viewmodel.SatvikViewModel
+import com.example.satvikscan.viewmodel.ScanMode
 import kotlinx.coroutines.launch
 
 @Composable
@@ -210,7 +211,9 @@ fun CommonUi(
                                 },
                                 onScanBarcodescan = {
                                     if (currentCameramode != ScanMode.BARCODE) viewModel.changeScanMode(ScanMode.BARCODE)
+
                                     viewModel.startScanning()
+
                                     navController.navigate(RouteName.CameraScreen)
                                 },
                                 dietName = dietName
@@ -248,7 +251,9 @@ fun CommonUi(
                 }
             }
             composable(RouteName.CameraScreen) {
+
                 val uiState = viewModel.productUiState.collectAsState().value
+
                 CameraScanScreen(
                     viewModel = viewModel,
                     cameramode = currentCameramode,
@@ -257,8 +262,9 @@ fun CommonUi(
                         navController.popBackStack()
                     }
                 )
+
                 LaunchedEffect(uiState) {
-                    if (uiState != SatvikViewModel.ProductUiState.Idle &&
+                    if ( uiState != SatvikViewModel.ProductUiState.Idle &&
                         !(uiState is SatvikViewModel.ProductUiState.Error && uiState.message == "NO_INTERNET")
                     ) {
                         navController.navigate(
@@ -456,13 +462,13 @@ fun BottomBar(
                 }) {
                 Icon(
                     painter = painterResource(R.drawable.baseline_history_24),
-                    contentDescription = "History",
+                    contentDescription = stringResource(R.string.bottom_bar_history),
                     tint = if (currentPage == 0) Color(0xFF1B3A2D) else Color.Gray,
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "History",
+                    text = stringResource(R.string.bottom_bar_history),
                     fontSize = 11.sp,
                     color = if (currentPage == 0) Color(0xFF1B3A2D) else Color.Gray
                 )
@@ -485,14 +491,14 @@ fun BottomBar(
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.barcode_scan__1_),
-                        contentDescription = "Scan",
+                        contentDescription = stringResource(R.string.bottom_bar_scan),
                         tint = Color.White,
                         modifier = Modifier.size(50.dp)
                     )
                 }
                 Spacer(modifier = Modifier.height(3.dp))
                 Text(
-                    text = "Scan",
+                    text = stringResource(R.string.bottom_bar_scan),
                     fontSize = 11.sp,
                     color = Color(0xFF1B3A2D),
                     fontWeight = FontWeight.Bold
@@ -506,13 +512,13 @@ fun BottomBar(
                 }) {
                 Icon(
                     painter = painterResource(R.drawable.user),
-                    contentDescription = "Profile",
+                    contentDescription = stringResource(R.string.bottom_bar_profile),
                     tint = if (currentPage == 2) Color(0xFF1B3A2D) else Color.Gray,
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Profile",
+                    text = stringResource(R.string.bottom_bar_profile),
                     fontSize = 11.sp,
                     color = if (currentPage == 2) Color(0xFF1B3A2D) else Color.Gray
                 )
@@ -540,7 +546,7 @@ fun HistoryTopBar(
             TextField(
                 value = searchQuery,
                 onValueChange = { onSearchQueryChange(it) },
-                placeholder = { Text("Search products...", color = Color.Gray) },
+                placeholder = { Text(stringResource(R.string.topbar_search_placeholder), color = Color.Gray) },
                 textStyle = androidx.compose.ui.text.TextStyle(
                     color = Color.Black,
                     fontSize = 16.sp
@@ -579,7 +585,7 @@ fun HistoryTopBar(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "History",
+                text = stringResource(R.string.topbar_history_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color(0xFF1B3A2D),
@@ -687,7 +693,7 @@ fun ProfileScreentopbar() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            "Settings",
+            text = stringResource(R.string.topbar_settings_title),
             fontSize = 24.sp,
             fontWeight = FontWeight.ExtraBold,
             color = Color(0xFF1B3A2D)

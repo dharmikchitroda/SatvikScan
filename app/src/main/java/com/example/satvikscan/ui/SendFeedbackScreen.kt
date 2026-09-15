@@ -44,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -112,7 +113,7 @@ fun SendFeedbackScreen(
                 )
             }
             Text(
-                text = "Send Feedback",
+                text = stringResource(R.string.feedback_title),
                 fontSize = 20.sp,
                 color = primaryText,
                 textAlign = TextAlign.Center
@@ -129,7 +130,7 @@ fun SendFeedbackScreen(
         ) {
             // ─── 2. Headline Section ───
             Text(
-                text = "We'd love to hear from\nyou!",
+                text = stringResource(R.string.feedback_heading),
                 fontSize = 26.sp,
                 fontWeight = FontWeight.Bold,
                 color = primaryText,
@@ -139,7 +140,7 @@ fun SendFeedbackScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "Your feedback helps us improve SatvikScan for everyone. Let us know how we can serve your dietary journey better.",
+                text = stringResource(R.string.feedback_desc),
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
                 color = secondaryText
@@ -149,7 +150,7 @@ fun SendFeedbackScreen(
 
             // ─── 3. Category Label ───
             Text(
-                text = "FEEDBACK TYPE",
+                text = stringResource(R.string.feedback_type_label),
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Bold,
                 color = labelText,
@@ -198,7 +199,7 @@ fun SendFeedbackScreen(
                     ) {
                         if (feedbackText.isEmpty()) {
                             Text(
-                                text = "Tell us how we can improve your experience...",
+                                text = stringResource(R.string.feedback_placeholder),
                                 fontSize = 14.sp,
                                 color = placeholderColor,
                                 lineHeight = 20.sp
@@ -284,7 +285,7 @@ fun SendFeedbackScreen(
                     )
                     Spacer(modifier = Modifier.width(10.dp))
                     Text(
-                        text = "Send Feedback",
+                        text = stringResource(R.string.feedback_btn_submit),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White

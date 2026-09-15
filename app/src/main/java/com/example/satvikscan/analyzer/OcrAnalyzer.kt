@@ -4,8 +4,8 @@ import android.graphics.Bitmap
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import com.example.satvikscan.ui.viewmodel.OcrTextValidator
-import com.example.satvikscan.ui.viewmodel.ValidationResult
+import com.example.satvikscan.viewmodel.OcrTextValidator
+import com.example.satvikscan.viewmodel.ValidationResult
 
 class OcrAnalyzer {
 

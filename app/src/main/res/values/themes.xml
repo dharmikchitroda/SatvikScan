@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.SatvikScan" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.SatvikScan" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- App background color so window never flashes dark/black -->
+        <item name="android:windowBackground">#FAF9F9</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
 </resources>

@@ -59,6 +59,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -66,11 +67,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.layout.ContentScale
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.platform.LocalContext
 import android.widget.Toast
 import com.example.satvikscan.R
-import com.example.satvikscan.ui.viewmodel.SatvikViewModel
+import com.example.satvikscan.viewmodel.SatvikViewModel
+
+data class AllergenInfo(
+    val key: String,
+    val nameRes: Int,
+    val iconRes: Int
+)
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -84,16 +90,16 @@ fun CustomExclusionsScreen(
 
     val customExclusions by viewModel.customAvoidList.collectAsState()
 
-    // Most common allergens - elegant order
+    // Most common allergens with localized display names and constant DB keys
     val commonAllergens = listOf(
-        "Dairy",
-        "Gluten",
-        "Peanuts",
-        "Eggs",
-        "Soy",
-        "Tree Nuts",
-        "Mustard",
-        "Onion"
+        AllergenInfo("dairy", R.string.allergen_dairy, R.drawable.allergen_dairy),
+        AllergenInfo("gluten", R.string.allergen_gluten, R.drawable.allergen_gluten),
+        AllergenInfo("peanuts", R.string.allergen_peanuts, R.drawable.allergen_peanuts),
+        AllergenInfo("eggs", R.string.allergen_eggs, R.drawable.allergen_eggs),
+        AllergenInfo("soy", R.string.allergen_soy, R.drawable.allergen_soy),
+        AllergenInfo("tree nuts", R.string.allergen_tree_nuts, R.drawable.allergen_treenuts),
+        AllergenInfo("mustard", R.string.allergen_mustard, R.drawable.allergen_mustard),
+        AllergenInfo("onion", R.string.allergen_onion, R.drawable.allergen_onion)
     )
 
     Column(
@@ -119,7 +125,7 @@ fun CustomExclusionsScreen(
             }
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                text = "Custom Exclusions",
+                text = stringResource(R.string.exclusions_title),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF1B3A2D),
@@ -141,7 +147,7 @@ fun CustomExclusionsScreen(
 
             // Subtitle
             Text(
-                text = "Search or manually add ingredients you want to restrict from your personal sanctuary.",
+                text = stringResource(R.string.exclusions_subtitle),
                 fontSize = 14.sp,
                 color = Color(0xFF555555),
                 lineHeight = 20.sp
@@ -158,7 +164,7 @@ fun CustomExclusionsScreen(
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                placeholder = { Text("Search ingredients...", color = Color(0xFF9E9E9E)) },
+                placeholder = { Text(stringResource(R.string.exclusions_search_placeholder), color = Color(0xFF9E9E9E)) },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
@@ -180,7 +186,7 @@ fun CustomExclusionsScreen(
                         shape = RoundedCornerShape(10.dp),
                         modifier = Modifier.padding(end = 8.dp)
                     ) {
-                        Text("Add", color = Color.White, fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.exclusions_btn_add), color = Color.White, fontWeight = FontWeight.Bold)
                     }
                 },
                 singleLine = true,
@@ -218,14 +224,14 @@ fun CustomExclusionsScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "COMMON ALLERGENS",
+                    text = stringResource(R.string.exclusions_header_common),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF8D6E63),
                     letterSpacing = 1.sp
                 )
                 Text(
-                    text = "Tap to exclude",
+                    text = stringResource(R.string.exclusions_tap_to_exclude),
                     fontSize = 11.sp,
                     fontStyle = FontStyle.Italic,
                     color = Color(0xFF757575)
@@ -247,27 +253,17 @@ fun CustomExclusionsScreen(
                             if (j < commonAllergens.size) {
 
                                 val allergen = commonAllergens[j]
-                                val isSelected = customExclusions.contains(allergen.lowercase())
-                                val allergenIcon = when (allergen.lowercase()) {
-                                    "dairy"     -> R.drawable.allergen_dairy
-                                    "gluten"    -> R.drawable.allergen_gluten
-                                    "peanuts"   -> R.drawable.allergen_peanuts
-                                    "eggs"      -> R.drawable.allergen_eggs
-                                    "soy"       -> R.drawable.allergen_soy
-                                    "tree nuts" -> R.drawable.allergen_treenuts
-                                    "mustard"   -> R.drawable.allergen_mustard
-                                    "onion"     -> R.drawable.allergen_onion
-                                    else        -> R.drawable.allergen_peanuts
-                                }
+                                val isSelected = customExclusions.contains(allergen.key)
+                                val allergenIcon = allergen.iconRes
                                  Card(
                                     modifier = Modifier
                                         .weight(1f)
                                         .height(70.dp)
                                         .clickable {
                                             if (isSelected) {
-                                                viewModel.removeCustomAvoidIngredient(allergen)
+                                                viewModel.removeCustomAvoidIngredient(allergen.key)
                                             } else {
-                                                viewModel.addCustomAvoidIngredient(allergen)
+                                                viewModel.addCustomAvoidIngredient(allergen.key)
                                             }
                                         },
                                     shape = RoundedCornerShape(16.dp),
@@ -305,7 +301,7 @@ fun CustomExclusionsScreen(
                                         ) {
                                             Image(
                                                 painter = painterResource(id = allergenIcon),
-                                                contentDescription = allergen,
+                                                contentDescription = stringResource(allergen.nameRes),
                                                 modifier = Modifier
                                                     .fillMaxSize()
                                                     .clip(CircleShape),
@@ -317,7 +313,7 @@ fun CustomExclusionsScreen(
 
                                         // Center Name
                                         Text(
-                                            text = allergen,
+                                            text = stringResource(allergen.nameRes),
                                             fontWeight = FontWeight.SemiBold,
                                             fontSize = 12.5.sp,
                                             color = if (isSelected) Color(0xFFC62828) else Color(0xFF2C2C2C),
@@ -362,7 +358,7 @@ fun CustomExclusionsScreen(
             ) {
                 HorizontalDivider(modifier = Modifier.weight(1f), color = Color(0xFFE0E0E0))
                 Text(
-                    text = "SELECTED TO AVOID",
+                    text = stringResource(R.string.exclusions_header_selected),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF757575),
@@ -377,7 +373,7 @@ fun CustomExclusionsScreen(
             // Exclusion chips flowing layout
             if (customExclusions.isEmpty()) {
                 Text(
-                    text = "No ingredients selected yet.",
+                    text = stringResource(R.string.exclusions_empty_selected),
                     fontSize = 13.sp,
                     color = Color(0xFF9E9E9E),
                     textAlign = TextAlign.Center,
@@ -392,6 +388,12 @@ fun CustomExclusionsScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     customExclusions.forEach { exclusion ->
+                        val matchedAllergen = commonAllergens.find { it.key.equals(exclusion, ignoreCase = true) }
+                        val displayExclusionName = if (matchedAllergen != null) {
+                            stringResource(matchedAllergen.nameRes)
+                        } else {
+                            exclusion.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+                        }
                         Box(
                             modifier = Modifier
                                 .background(Color(0xFFFCE4EC), shape = RoundedCornerShape(20.dp))
@@ -404,7 +406,7 @@ fun CustomExclusionsScreen(
                                 horizontalArrangement = Arrangement.Center
                             ) {
                                 Text(
-                                    text = exclusion.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
+                                    text = displayExclusionName,
                                     color = Color(0xFFC2185B),
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 13.sp
@@ -458,14 +460,14 @@ fun CustomExclusionsScreen(
                     }
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
-                        text = "Your purity standards are key.",
+                        text = stringResource(R.string.exclusions_purity_title),
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp,
                         color = Color(0xFF212121)
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Adding specific additives ensures every scan respects your Satvik journey.",
+                        text = stringResource(R.string.exclusions_purity_desc),
                         fontSize = 13.sp,
                         color = Color(0xFF757575),
                         textAlign = TextAlign.Center,
@@ -492,7 +494,7 @@ fun CustomExclusionsScreen(
                     if (hasExclusions) {
                         Toast.makeText(
                             context,
-                            "${customExclusions.size} exclusions saved successfully! ✓",
+                            context.getString(R.string.exclusions_toast_saved, customExclusions.size),
                             Toast.LENGTH_SHORT
                         ).show()
                         onBackClick()
@@ -522,7 +524,7 @@ fun CustomExclusionsScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Save Preferences",
+                        text = stringResource(R.string.exclusions_btn_save),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -543,7 +545,7 @@ fun CustomExclusionsScreen(
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
-                    text = "Syncs across your devices automatically",
+                    text = stringResource(R.string.exclusions_footer_sync),
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Medium,
                     color = Color(0xFF9E9E9E)

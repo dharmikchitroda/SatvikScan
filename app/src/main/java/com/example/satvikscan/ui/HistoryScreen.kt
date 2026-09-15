@@ -15,24 +15,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.ui.window.Dialog
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -42,8 +35,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -54,18 +45,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.satvikscan.R
-import com.example.satvikscan.ui.viewmodel.SatvikViewModel
+import com.example.satvikscan.viewmodel.SatvikViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -160,9 +150,13 @@ fun HistoryScreen(
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                val chips = listOf("All", "Safe", "Avoid")
-                chips.forEach { chipName ->
-                    val isSelected = selectedFilter_btn == chipName
+                val chips = listOf(
+                    "All" to R.string.history_filter_all,
+                    "Safe" to R.string.history_filter_safe,
+                    "Avoid" to R.string.history_filter_avoid
+                )
+                chips.forEach { (chipKey, chipRes) ->
+                    val isSelected = selectedFilter_btn == chipKey
                     val bgColor = if (isSelected) Color(0xFF1B3A2D) else Color(0xFFF1F5F2)
                     val textColor = if (isSelected) Color.White else Color(0xFF555555)
 
@@ -170,12 +164,12 @@ fun HistoryScreen(
                         modifier = Modifier
                             .clip(RoundedCornerShape(50.dp))
                             .background(bgColor)
-                            .clickable { selectedFilter_btn = chipName }
+                            .clickable { selectedFilter_btn = chipKey }
                             .padding(horizontal = 24.dp, vertical = 10.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = chipName,
+                            text = stringResource(chipRes),
                             fontSize = 14.sp,
                             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
                             color = textColor
@@ -200,7 +194,7 @@ fun HistoryScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "No history items found.",
+                                text = stringResource(R.string.history_no_items),
                                 color = Color.Gray,
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Medium,
@@ -254,7 +248,6 @@ fun EmptyHistoryState(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Lotus Image
         Image(
             painter = painterResource(R.drawable.history_empty_img),
             contentDescription = "No scans yet",
@@ -267,7 +260,7 @@ fun EmptyHistoryState(
 
         // Title
         Text(
-            text = "No scans yet.",
+            text = stringResource(R.string.history_empty_title),
             fontSize = 30.sp,
             fontWeight = FontWeight.ExtraBold,
             color = Color(0xFF1B3A2D),
@@ -278,7 +271,7 @@ fun EmptyHistoryState(
 
         // Description
         Text(
-            text = "Your purity journey starts here.\nScan food products to see their\nSatvik compliance.",
+            text = stringResource(R.string.history_empty_desc),
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
             color = Color(0xFF555555),
@@ -302,14 +295,14 @@ fun EmptyHistoryState(
                 horizontalArrangement = Arrangement.Center
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.baseline_qr_code_scanner_24),
+                    painter = painterResource(R.drawable.barcode_scan),
                     contentDescription = "Scanner Icon",
                     tint = Color.White,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(26.dp)
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(6.dp))
                 Text(
-                    text = "Start Scanning",
+                    text = stringResource(R.string.history_empty_btn),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
@@ -321,7 +314,7 @@ fun EmptyHistoryState(
 
         // Footer Caption
         Text(
-            text = "EXPLORE THE MINDFUL PATH",
+            text = stringResource(R.string.history_empty_footer),
             fontSize = 11.sp,
             fontWeight = FontWeight.Bold,
             color = Color(0xFF999999),
@@ -487,7 +480,7 @@ fun HistoryCardItem(
                                     tint = Color(0xFFC62828)
                                 )
                                 Text(
-                                    text = "Delete",
+                                    text = stringResource(R.string.history_menu_delete),
                                     color = Color(0xFFC62828),
                                     fontWeight = FontWeight.Bold
                                 )
@@ -569,7 +562,7 @@ fun PromoCard() {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Maintain the Purity\nof Your Packet.",
+                text = stringResource(R.string.history_promo_title),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color(0xFF1B3A2D),
@@ -577,7 +570,7 @@ fun PromoCard() {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Each scan brings you closer\nto a mindful lifestyle.",
+                text = stringResource(R.string.history_promo_subtitle),
                 fontSize = 13.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color(0xFF335C4A),
@@ -651,7 +644,7 @@ fun ClearHistoryDialog(
 
                 // Title
                 Text(
-                    text = "Clear History?",
+                    text = stringResource(R.string.history_dialog_title),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.ExtraBold,
                     color = Color.Black,
@@ -662,7 +655,7 @@ fun ClearHistoryDialog(
 
                 // Description
                 Text(
-                    text = "This will permanently delete all your scan records. This action cannot be undone.",
+                    text = stringResource(R.string.history_dialog_desc),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
                     color = Color(0xFF666666),
@@ -682,7 +675,7 @@ fun ClearHistoryDialog(
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFC62828))
                 ) {
                     Text(
-                        text = "Clear All",
+                        text = stringResource(R.string.history_dialog_confirm),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -704,7 +697,7 @@ fun ClearHistoryDialog(
                     )
                 ) {
                     Text(
-                        text = "Cancel",
+                        text = stringResource(R.string.history_dialog_cancel),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )

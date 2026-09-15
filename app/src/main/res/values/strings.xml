@@ -2,7 +2,7 @@
     <string name="app_name">SatvikScan</string>
 
     <!-- UI General Labels -->
-        <string name="diet_gyan_badge_jain">WISDOM OF SAGES</string>
+    <string name="diet_gyan_badge_jain">WISDOM OF SAGES</string>
     <string name="diet_gyan_badge_swami">DEVOTION &amp; PURITY</string>
     <string name="diet_gyan_tagline_jain">Sacred dietary principles for spiritual growth</string>
     <string name="diet_gyan_tagline_swami">Pure vegetarian principles for spiritual elevation</string>
@@ -304,5 +304,124 @@
     <string name="feedback_type_label">FEEDBACK TYPE</string>
     <string name="feedback_placeholder">Tell us how we can improve your experience...</string>
     <string name="feedback_btn_submit">Send Feedback</string>
+
+    <!-- Custom Exclusions Screen -->
+    <string name="exclusions_title">Custom Exclusions</string>
+    <string name="exclusions_subtitle">Search or manually add ingredients you want to restrict from your personal sanctuary.</string>
+    <string name="exclusions_search_placeholder">Search ingredients...</string>
+    <string name="exclusions_btn_add">Add</string>
+    <string name="exclusions_header_common">COMMON ALLERGENS</string>
+    <string name="exclusions_tap_to_exclude">Tap to exclude</string>
+    <string name="exclusions_header_selected">SELECTED TO AVOID</string>
+    <string name="exclusions_empty_selected">No ingredients selected yet.</string>
+    <string name="exclusions_purity_title">Your purity standards are key.</string>
+    <string name="exclusions_purity_desc">Adding specific additives ensures every scan respects your Satvik journey.</string>
+    <string name="exclusions_btn_save">Save Preferences</string>
+    <string name="exclusions_footer_sync">Syncs across your devices automatically</string>
+    <string name="exclusions_toast_saved">%1$d exclusions saved successfully! ✓</string>
+
+    <!-- Common Allergen Names -->
+    <string name="allergen_dairy">Dairy</string>
+    <string name="allergen_gluten">Gluten</string>
+    <string name="allergen_peanuts">Peanuts</string>
+    <string name="allergen_eggs">Eggs</string>
+    <string name="allergen_soy">Soy</string>
+    <string name="allergen_tree_nuts">Tree Nuts</string>
+    <string name="allergen_mustard">Mustard</string>
+    <string name="allergen_onion">Onion</string>
+
+    <!-- Diet Titles & Descriptions for Profile/Settings -->
+    <string name="diet_swami_title">Swaminarayan</string>
+    <string name="diet_jain_title">Jain</string>
+    <string name="diet_swami_title_strict">Swaminarayan (Strict)</string>
+    <string name="diet_jain_title_strict">Jain (Strict)</string>
+    <string name="diet_custom_title">Custom Diet</string>
+    <string name="diet_swami_desc">No onion, garlic, or eggs.</string>
+    <string name="diet_jain_desc">No root vegetables or honey.</string>
+    <string name="diet_custom_desc">Custom ingredient exclusions enabled.</string>
+    <string name="select_diet_toast_saved">%1$s diet saved successfully! ✓</string>
+
+    <!-- Welcome Screen -->
+    <string name="welcome_title">Welcome to\nSatvikScan</string>
+    <string name="welcome_subtitle">Choose your dietary path to get started.</string>
+    <string name="welcome_select_diet_label">SELECT YOUR DIET</string>
+    <string name="welcome_btn_continue">Continue</string>
+    <string name="welcome_footer">YOU CAN CHANGE YOUR DIET SETTINGS LATER</string>
+    <string name="profile_guide_jain">Jain Ingredient Guide</string>
+    <string name="profile_guide_swami">Swaminarayan Ingredient Guide</string>
+    <string name="profile_guide_custom">Custom Ingredient Guide</string>
+
+    <!-- Camera Permission & Error Messages -->
+    <string name="camera_permission_title">App Permission</string>
+    <string name="camera_permission_desc">Please enable Camera permission from App Settings</string>
+    <string name="camera_permission_cancel">Cancel</string>
+    <string name="camera_permission_settings">OK, Open Settings</string>
+    <string name="camera_error_no_barcode">No barcode found in this image. Please try a clearer photo.</string>
+    <string name="camera_error_barcode_failed">Barcode scan failed</string>
+    <string name="camera_error_ocr_failed">OCR recognition failed</string>
+    <string name="camera_error_qr_code">QR codes are not supported. Scan product barcode.</string>
+    <string name="camera_error_unsupported_format">Unsupported format. Scan a standard product barcode.</string>
+
+    <!-- About Satvik Screen -->
+    <string name="about_title">About SatvikScan</string>
+    <string name="about_app_name">SatvikScan</string>
+    <string name="about_tagline">\"Scan with Purity, Eat with Peace\"</string>
+    <string name="about_sanskrit_quote">\"आहारशुद्धौ सत्त्वशुद्धिः\"</string>
+    <string name="about_mission_title">Our Mission</string>
+    <string name="about_mission_desc">SatvikScan aims to help people choose 100% pure and suitable food according to their religious, cultural, and personal dietary preferences.</string>
+    <string name="about_focus_label">Focus: </string>
+    <string name="about_focus_desc">To scan packaged food ingredients and hidden additives (E-Numbers) in a single click and reveal the truth.</string>
+    <string name="about_what_is_satvik">What is Satvik Food?</string>
+    <string name="about_sattva_title">Sattva</string>
+    <string name="about_sattva_desc">Fresh, pure, natural, non-violent food.</string>
+    <string name="about_no_onion_garlic_title">No Onion &amp; Garlic</string>
+    <string name="about_no_onion_garlic_desc">Renouncing Tamasic and Rajasic elements.</string>
+    <string name="about_hidden_nonveg_title">Hidden Non-Veg Free</string>
+    <string name="about_hidden_nonveg_desc">Protection from Gelatin, Carmine, Rennet, Bone Char.</string>
+    <string name="about_diets_supported">Diets Supported</string>
+    <string name="about_diet_vegan">Vegan</string>
+    <string name="about_key_features">Key Features</string>
+    <string name="about_feature_instant_scanner">Instant Scanner</string>
+    <string name="about_feature_e_number">E-Number Breakdown</string>
+    <string name="about_feature_diet_gyan">Diet Gyan</string>
+    <string name="about_feature_privacy">100% Privacy</string>
+    <string name="about_version">v1.0.0</string>
+    <string name="about_made_with">Made with </string>
+    <string name="about_made_with_suffix"> for Mindful Eating</string>
+    <string name="about_privacy_policy">Privacy Policy</string>
+    <string name="about_contact_support">Contact Support</string>
+    <string name="about_rate_us">Rate Us</string>
+
+    <!-- Privacy Policy Screen -->
+    <string name="privacy_title">Privacy &amp; Legal Policy</string>
+    <string name="privacy_card1_title">100% On-Device Privacy</string>
+    <string name="privacy_card1_desc">Your scans and diet preferences are processed locally. No personal data ever leaves your phone.</string>
+    <string name="privacy_legal_title">Legal and data source</string>
+    <string name="privacy_legal_subtitle">Read these limits before relying on scan results.</string>
+    <string name="privacy_bullet_1">Result based on Open Food Facts data for accurate ingredient analysis.</string>
+    <string name="privacy_bullet_2">Data may be incomplete or inaccurate for certain regional products.</string>
+    <string name="privacy_bullet_3">Data source: Open Food Facts (OFF) community-driven database.</string>
+    <string name="privacy_bullet_4">Results are for reference; always verify critical allergies or strict vows directly on product packaging.</string>
+    <string name="privacy_bullet_5">No official affiliation with Open Food Facts or its contributors.</string>
+    <string name="privacy_bullet_6">The application is provided as-is without guarantee of 100% product coverage.</string>
+    <string name="privacy_data_storage_title">Data Collection &amp; Storage</string>
+    <string name="privacy_feature_no_tracking_title">Zero Personal Tracking</string>
+    <string name="privacy_feature_no_tracking_desc">No account required, no personal ID collected.</string>
+    <string name="privacy_feature_device_storage_title">On-Device Storage</string>
+    <string name="privacy_feature_device_storage_desc">Scan history and custom exclusions stay on your phone.</string>
+    <string name="privacy_feature_no_cloud_title">No Cloud Uploads</string>
+    <string name="privacy_feature_no_cloud_desc">Your dietary choices and scans are never sent to remote servers.</string>
+    <string name="privacy_camera_title">Camera Permissions</string>
+    <string name="privacy_feature_camera_scan_title">Real-Time Label Scanning</string>
+    <string name="privacy_feature_camera_scan_desc">Camera used exclusively for live barcode &amp; ingredient OCR reading via Google ML Kit.</string>
+    <string name="privacy_feature_no_record_title">No Image Recording</string>
+    <string name="privacy_feature_no_record_desc">Frames are processed in real-time memory and instantly discarded.</string>
+    <string name="privacy_network_title">Network &amp; API Transparency</string>
+    <string name="privacy_feature_off_api_title">Open Food Facts Barcode API</string>
+    <string name="privacy_feature_off_api_desc">Only the anonymous numerical barcode string is queried to fetch product details.</string>
+    <string name="privacy_feature_no_id_title">No Tracking Identifiers</string>
+    <string name="privacy_feature_no_id_desc">No device ID or user tracking token is sent with network requests.</string>
+    <string name="privacy_verified_badge">VERIFIED SATVIKSCAN PRIVACY STANDARD</string>
+    <string name="privacy_version_date">v1.0.0 • Last updated: July 2026</string>
 
 </resources>

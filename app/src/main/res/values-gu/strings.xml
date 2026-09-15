@@ -305,4 +305,123 @@
     <string name="feedback_placeholder">તમારો અનુભવ અમને જણાવો...</string>
     <string name="feedback_btn_submit">પ્રતિક્રિયા મોકલો</string>
 
+    <!-- Custom Exclusions Screen -->
+    <string name="exclusions_title">કસ્ટમ બાકાત સામગ્રી</string>
+    <string name="exclusions_subtitle">તમે જે ઘટકોથી બચવા માંગો છો તેને શોધો અથવા મેન્યુઅલી ઉમેરો.</string>
+    <string name="exclusions_search_placeholder">સામગ્રી શોધો...</string>
+    <string name="exclusions_btn_add">ઉમેરો</string>
+    <string name="exclusions_header_common">સામાન્ય એલર્જન</string>
+    <string name="exclusions_tap_to_exclude">બાકાત કરવા માટે ટેપ કરો</string>
+    <string name="exclusions_header_selected">ત્યાગ કરવા માટે પસંદ કરેલ</string>
+    <string name="exclusions_empty_selected">હજુ સુધી કોઈ સામગ્રી પસંદ કરેલ નથી.</string>
+    <string name="exclusions_purity_title">તમારી પવિત્રતાના નિયમો સૌથી મહત્વપૂર્ણ છે.</string>
+    <string name="exclusions_purity_desc">ચોક્કસ ઘટકો ઉમેરવાથી દરેક સ્કેન તમારી સાત્વિક યાત્રાને અનુરૂપ રહેશે.</string>
+    <string name="exclusions_btn_save">સેવ કરો</string>
+    <string name="exclusions_footer_sync">તમારા બધા ઉપકરણો પર આપમેળે સમન્વયિત થાય છે</string>
+    <string name="exclusions_toast_saved">%1$d બાકાત સામગ્રી સફળતાપૂર્વક સાચવવામાં આવી! ✓</string>
+
+    <!-- Common Allergen Names -->
+    <string name="allergen_dairy">દૂધની બનાવટો (Dairy)</string>
+    <string name="allergen_gluten">ગ્લુટેન (Gluten)</string>
+    <string name="allergen_peanuts">મગફળી (Peanuts)</string>
+    <string name="allergen_eggs">ઈંડા (Eggs)</string>
+    <string name="allergen_soy">સોયા (Soy)</string>
+    <string name="allergen_tree_nuts">સુકો મેવો (Tree Nuts)</string>
+    <string name="allergen_mustard">રાઈ / સરસવ (Mustard)</string>
+    <string name="allergen_onion">ડુંગળી (Onion)</string>
+
+    <!-- Diet Titles & Descriptions for Profile/Settings -->
+    <string name="diet_swami_title">સ્વામિનારાયણ</string>
+    <string name="diet_jain_title">જૈન</string>
+    <string name="diet_swami_title_strict">સ્વામિનારાયણ (ચુસ્ત)</string>
+    <string name="diet_jain_title_strict">જૈન (ચુસ્ત)</string>
+    <string name="diet_custom_title">કસ્ટમ આહાર</string>
+    <string name="diet_swami_desc">ડુંગળી, લસણ કે ઈંડા મુક્ત.</string>
+    <string name="diet_jain_desc">કંદમૂળ અને મધ મુક્ત.</string>
+    <string name="diet_custom_desc">કસ્ટમ બાકાત સામગ્રી સક્રિય કરેલ છે.</string>
+    <string name="select_diet_toast_saved">%1$s આહાર સફળતાપૂર્વક સાચવવામાં આવ્યો! ✓</string>
+
+    <!-- Welcome Screen -->
+    <string name="welcome_title">SatvikScan માં\nઆપનું સ્વાગત છે</string>
+    <string name="welcome_subtitle">શરૂ કરવા માટે તમારો આહાર માર્ગ પસંદ કરો.</string>
+    <string name="welcome_select_diet_label">તમારો આહાર પસંદ કરો</string>
+    <string name="welcome_btn_continue">આગળ વધો</string>
+    <string name="welcome_footer">તમે આહાર સેટિંગ્સ પાછળથી બદલી શકો છો</string>
+    <string name="profile_guide_jain">જૈન સામગ્રી માર્ગદર્શિકા</string>
+    <string name="profile_guide_swami">સ્વામિનારાયણ સામગ્રી માર્ગદર્શિકા</string>
+    <string name="profile_guide_custom">કસ્ટમ સામગ્રી માર્ગદર્શિકા</string>
+
+    <!-- Camera Permission & Error Messages -->
+    <string name="camera_permission_title">એપ પરવાનગી</string>
+    <string name="camera_permission_desc">કૃપા કરીને સેટિંગ્સમાંથી કેમેરા પરવાનગી સક્ષમ કરો</string>
+    <string name="camera_permission_cancel">રદ કરો</string>
+    <string name="camera_permission_settings">સેટિંગ્સ ખોલો</string>
+    <string name="camera_error_no_barcode">આ ઈમેજમાં કોઈ બારકોડ મળ્યો નથી. સ્પષ્ટ ફોટો સાથે પ્રયાસ કરો.</string>
+    <string name="camera_error_barcode_failed">બારકોડ સ્કેન નિષ્ફળ રહ્યું</string>
+    <string name="camera_error_ocr_failed">OCR ઓળખ નિષ્ફળ રહી</string>
+    <string name="camera_error_qr_code">QR કોડ સપોર્ટેડ નથી. ઉત્પાદન બારકોડ સ્કેન કરો.</string>
+    <string name="camera_error_unsupported_format">અસમર્થિત ફોર્મેટ. માનક ઉત્પાદન બારકોડ સ્કેન કરો.</string>
+
+    <!-- About Satvik Screen -->
+    <string name="about_title">SatvikScan વિશે</string>
+    <string name="about_app_name">SatvikScan</string>
+    <string name="about_tagline">\"પવિત્રતા સાથે સ્કેન કરો, શાંતિથી આહાર લો\"</string>
+    <string name="about_sanskrit_quote">\"આહારશુદ્ધૌ સત્ત્વશુદ્ધિઃ\"</string>
+    <string name="about_mission_title">અમારું લક્ષ્ય</string>
+    <string name="about_mission_desc">SatvikScan નો ઉદ્દેશ્ય લોકોને તેમના ધાર્મિક, સાંસ્કૃતિક અને વ્યક્તિગત આહાર અનુસાર ૧૦૦% શુદ્ધ અને સાચો ખોરાક પસંદ કરવામાં મદદ કરવાનો છે.</string>
+    <string name="about_focus_label">મુખ્ય ધ્યાન: </string>
+    <string name="about_focus_desc">પેકેજ્ડ ફૂડની સામગ્રી અને છુપાયેલા કેમિકલ્સ (E-Numbers) ને એક ક્લિકમાં સ્કેન કરીને સત્ય જણાવવું.</string>
+    <string name="about_what_is_satvik">સાત્વિક આહાર શું છે?</string>
+    <string name="about_sattva_title">સત્વ</string>
+    <string name="about_sattva_desc">તાજો, શુદ્ધ, કુદરતી અને અહિંસક આહાર.</string>
+    <string name="about_no_onion_garlic_title">ડુંગળી-લસણ મુક્ત</string>
+    <string name="about_no_onion_garlic_desc">તામસિક અને રાજસિક તત્વોનો ત્યાગ.</string>
+    <string name="about_hidden_nonveg_title">છુપા માંસાહારથી મુક્ત</string>
+    <string name="about_hidden_nonveg_desc">જિલેટીન, કાર્માઈન, રેનેટ, બોન ચારથી સુરક્ષા.</string>
+    <string name="about_diets_supported">સમર્થિત આહાર</string>
+    <string name="about_diet_vegan">વીગન</string>
+    <string name="about_key_features">મુખ્ય વિશેષતાઓ</string>
+    <string name="about_feature_instant_scanner">ત્વરિત સ્કેનર</string>
+    <string name="about_feature_e_number">E-નંબર વિગતો</string>
+    <string name="about_feature_diet_gyan">આહાર જ્ઞાન</string>
+    <string name="about_feature_privacy">૧૦૦% ગોપનીયતા</string>
+    <string name="about_version">v1.0.0</string>
+    <string name="about_made_with">બનાવવામાં આવ્યું છે </string>
+    <string name="about_made_with_suffix"> સાથે સભાન આહાર માટે</string>
+    <string name="about_privacy_policy">ગોપનીયતા નીતિ</string>
+    <string name="about_contact_support">સહાયક સંપર્ક</string>
+    <string name="about_rate_us">રેટિંગ આપો</string>
+
+    <!-- Privacy Policy Screen -->
+    <string name="privacy_title">ગોપનીયતા અને કાનૂની નીતિ</string>
+    <string name="privacy_card1_title">૧૦૦% ઉપકરણ પર જ ગોપનીયતા</string>
+    <string name="privacy_card1_desc">તમારા સ્કેન અને આહાર પસંદગીઓ તમારા ફોનમાં જ પ્રક્રિયા થાય છે. કોઈ ડેટા બહાર જતો નથી.</string>
+    <string name="privacy_legal_title">કાનૂની અને ડેટા સ્ત્રોત</string>
+    <string name="privacy_legal_subtitle">સ્કેન પરિણામો પર આધાર રાખતા પહેલા આ મર્યાદાઓ વાંચો.</string>
+    <string name="privacy_bullet_1">સચોટ સામગ્રી વિશ્લેષણ માટે ઓપન ફૂડ ફેક્ટ્સ ડેટા પર આધારિત પરિણામ.</string>
+    <string name="privacy_bullet_2">કેટલાક પ્રાદેશિક ઉત્પાદનો માટે ડેટા અપૂર્ણ અથવા અચોક્કસ હોઈ શકે છે.</string>
+    <string name="privacy_bullet_3">ડેટા સ્ત્રોત: ઓપન ફૂડ ફેક્ટ્સ (OFF) સમુદાય આધારિત ડેટાબેઝ.</string>
+    <string name="privacy_bullet_4">પરિણામો સંદર્ભ માટે છે; ગંભીર એલર્જી અથવા ચુસ્ત નિયમો માટે હંમેશા પેકેટ તપાસો.</string>
+    <string name="privacy_bullet_5">ઓપન ફૂડ ફેક્ટ્સ અથવા તેના યોગદાનકર્તાઓ સાથે કોઈ સત્તાવાર જોડાણ નથી.</string>
+    <string name="privacy_bullet_6">આ એપ્લિકેશન ૧૦૦% ઉત્પાદન કવરેજની ખાતરી વિના પ્રદાન કરવામાં આવે છે.</string>
+    <string name="privacy_data_storage_title">ડેટા સંગ્રહ અને સંગ્રહણ</string>
+    <string name="privacy_feature_no_tracking_title">શૂન્ય વ્યક્તિગત ટ્રેકિંગ</string>
+    <string name="privacy_feature_no_tracking_desc">કોઈ એકાઉન્ટની જરૂર નથી, કોઈ વ્યક્તિગત ID એકત્રિત થતું નથી.</string>
+    <string name="privacy_feature_device_storage_title">ઉપકરણ પર સંગ્રહ</string>
+    <string name="privacy_feature_device_storage_desc">સ્કેન ઇતિહાસ અને કસ્ટમ બાકાત તમારા ફોન પર જ રહે છે.</string>
+    <string name="privacy_feature_no_cloud_title">કોઈ ક્લાઉડ અપલોડ નહીં</string>
+    <string name="privacy_feature_no_cloud_desc">તમારી આહાર પસંદગીઓ ક્યારેય સર્વર પર મોકલવામાં આવતી નથી.</string>
+    <string name="privacy_camera_title">કેમેરા પરવાનગી</string>
+    <string name="privacy_feature_camera_scan_title">રીઅલ-ટાઇમ લેબલ સ્કેનિંગ</string>
+    <string name="privacy_feature_camera_scan_desc">Google ML Kit દ્વારા લાઇવ બારકોડ અને સામગ્રી OCR વાંચવા માટે કેમેરા વપરાય છે.</string>
+    <string name="privacy_feature_no_record_title">કોઈ ઈમેજ રેકોર્ડિંગ નથી</string>
+    <string name="privacy_feature_no_record_desc">ફોટા માત્ર રીઅલ-ટાઇમ મેમરીમાં પ્રોસેસ થઈને તરત જ કાઢી નાખવામાં આવે છે.</string>
+    <string name="privacy_network_title">નેટવર્ક અને API પારદર્શિતા</string>
+    <string name="privacy_feature_off_api_title">ઓપન ફૂડ ફેક્ટ્સ બારકોડ API</string>
+    <string name="privacy_feature_off_api_desc">ઉત્પાદનની વિગતો મેળવવા માટે માત્ર બારકોડ નંબર ક્વેરી કરવામાં આવે છે.</string>
+    <string name="privacy_feature_no_id_title">કોઈ ટ્રેકિંગ ઓળખકર્તા નથી</string>
+    <string name="privacy_feature_no_id_desc">નેટવર્ક વિનંતીઓ સાથે કોઈ ઉપકરણ ID અથવા વપરાશકર્તા ટોકન મોકલવામાં આવતું નથી.</string>
+    <string name="privacy_verified_badge">ચકાસાયેલ સાત્વિક સ્કેન ગોપનીયતા ધોરણ</string>
+    <string name="privacy_version_date">v1.0.0 • છેલ્લે અપડેટ: જુલાઈ ૨૦૨૬</string>
+
 </resources>

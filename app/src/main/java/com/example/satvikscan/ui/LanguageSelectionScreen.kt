@@ -37,15 +37,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.platform.LocalContext
 import android.widget.Toast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.satvikscan.R
-import com.example.satvikscan.ui.viewmodel.SatvikViewModel
+import com.example.satvikscan.viewmodel.SatvikViewModel
 
 // Data model for language options
 data class LanguageItem(
@@ -182,13 +180,15 @@ fun LanguageSelectionScreen(
         ) {
             Button(
                 onClick = {
-                    viewModel.updateLanguage(selectedLanguage)
-                    val langLabel = when (selectedLanguage) {
-                        "gu" -> "ગુજરાતી"
-                        "hi" -> "हिन्दी"
-                        else -> "English"
+                    if (selectedLanguage != currentLanguage) {
+                        viewModel.updateLanguage(selectedLanguage)
+                        val langLabel = when (selectedLanguage) {
+                            "gu" -> "ગુજરાતી"
+                            "hi" -> "हिन्दी"
+                            else -> "English"
+                        }
+                        Toast.makeText(context, "Language set to $langLabel ✓", Toast.LENGTH_SHORT).show()
                     }
-                    Toast.makeText(context, "Language set to $langLabel ✓", Toast.LENGTH_SHORT).show()
                     onContinueClick()
                 },
                 modifier = Modifier
@@ -338,3 +338,4 @@ fun SatvikGreenRadioButton(
         }
     }
 }
+

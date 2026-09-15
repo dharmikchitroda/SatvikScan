@@ -64,7 +64,7 @@ fun ProductNotFoundScreen(
                     .clickable { onBackClick() }
             )
             Text(
-                text = "Result",
+                text = androidx.compose.ui.res.stringResource(R.string.result_title),
                 fontSize = 25.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,

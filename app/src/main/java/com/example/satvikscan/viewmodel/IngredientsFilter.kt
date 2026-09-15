@@ -1,4 +1,4 @@
-package com.example.satvikscan.ui.viewmodel
+package com.example.satvikscan.viewmodel
 
 import com.example.satvikscan.ui.IngredientData
 import com.example.satvikscan.ui.IngredientType

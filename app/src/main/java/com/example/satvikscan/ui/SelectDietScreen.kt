@@ -39,13 +39,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
 import android.widget.Toast
 import com.example.satvikscan.R
-import com.example.satvikscan.ui.viewmodel.SatvikViewModel
+import com.example.satvikscan.viewmodel.SatvikViewModel
 
 @Composable
 fun SelectDietScreen(
@@ -92,7 +93,7 @@ fun SelectDietScreen(
 
             // Title
             Text(
-                text = "Select Your Diet",
+                text = stringResource(R.string.select_diet_title),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color(0xFF1F1F1F),
@@ -104,7 +105,7 @@ fun SelectDietScreen(
 
             // Subtitle
             Text(
-                text = "Customize your scanning experience based on your dietary principles.",
+                text = stringResource(R.string.select_diet_subtitle),
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Medium,
                 color = Color(0xFF666666),
@@ -120,8 +121,8 @@ fun SelectDietScreen(
             ) {
                 // 1. Jain Option
                 SelectDietOptionCard(
-                    title = "Jain",
-                    subtitle = "No root vegetables or honey",
+                    title = stringResource(R.string.diet_jain_title),
+                    subtitle = stringResource(R.string.diet_jain_desc),
                     iconRes = R.drawable.jain_logo,
                     iconBgColor = Color(0xFFE8F5E9),
                     iconTint = Color(0xFF2E7D32),
@@ -131,8 +132,8 @@ fun SelectDietScreen(
 
                 // 2. Swaminarayan Option
                 SelectDietOptionCard(
-                    title = "Swaminarayan",
-                    subtitle = "No onion, garlic, or eggs",
+                    title = stringResource(R.string.diet_swami_title),
+                    subtitle = stringResource(R.string.diet_swami_desc),
                     iconRes = R.drawable.swaminarayan_tilak,
                     iconBgColor = Color(0xFFEFEBE9),
                     iconTint = Color(0xFF5D4037),
@@ -142,8 +143,8 @@ fun SelectDietScreen(
 
                 // 3. Custom Option
                 SelectDietOptionCard(
-                    title = "Custom Diet",
-                    subtitle = "Choose specific ingredients you want to avoid",
+                    title = stringResource(R.string.diet_custom_title),
+                    subtitle = stringResource(R.string.diet_custom_desc),
                     iconRes = R.drawable.custom_icon,
                     iconBgColor = Color(0xFFECEFF1),
                     iconTint = Color(0xFF455A64),
@@ -179,7 +180,16 @@ fun SelectDietScreen(
                     if (selectedDiet == "Custom") {
                         onCustomClick()       // → Navigate to Custom Exclusions Screen
                     } else {
-                        Toast.makeText(context, "$selectedDiet diet saved successfully! ✓", Toast.LENGTH_SHORT).show()
+                        val localizedDietName = when (selectedDiet) {
+                            "Swaminarayan" -> context.getString(R.string.diet_swami_title)
+                            "Jain" -> context.getString(R.string.diet_jain_title)
+                            else -> context.getString(R.string.diet_custom_title)
+                        }
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.select_diet_toast_saved, localizedDietName),
+                            Toast.LENGTH_SHORT
+                        ).show()
                         onContinueClick(selectedDiet)  // → Navigate to Home
                     }
                 },
@@ -194,7 +204,7 @@ fun SelectDietScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Continue",
+                        text = stringResource(R.string.select_diet_btn_continue),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -212,7 +222,7 @@ fun SelectDietScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "YOU CAN CHANGE YOUR DIET SETTINGS LATER",
+                text = stringResource(R.string.select_diet_footer),
                 fontSize = 10.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF9E9E9E),

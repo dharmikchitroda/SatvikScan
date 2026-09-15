@@ -2,6 +2,7 @@ package com.example.satvikscan.ui
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
@@ -38,10 +39,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -76,10 +79,11 @@ data class GuidelineSection(
     val showImage: Boolean = false
 )
 
-// Helper function to dynamically load translation strings from strings.xml
-fun getLocalizedText(context: android.content.Context, isGujarati: Boolean, resId: Int): String {
-    val configuration = android.content.res.Configuration(context.resources.configuration).apply {
-        setLocale(Locale(if (isGujarati) "gu" else "en"))
+// Helper function: load string from strings.xml for a specific language (en / gu / hi)
+fun getLocalizedText(context: Context, lang: String, resId: Int): String {
+    val locale = Locale(lang.ifEmpty { "en" })
+    val configuration = Configuration(context.resources.configuration).apply {
+        setLocale(locale)
     }
     return context.createConfigurationContext(configuration).getString(resId)
 }
@@ -90,10 +94,17 @@ fun getLocalizedText(context: android.content.Context, isGujarati: Boolean, resI
 fun DietGyanScreen(
     dietType: String, // "Jain" or "Swaminarayan"
     onBackClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: com.example.satvikscan.viewmodel.SatvikViewModel = viewModel()
 ) {
     val context = LocalContext.current
-    var isGujarati by remember { mutableStateOf(false) }
+
+    // Connected to global ViewModel — reflects user's saved language choice
+    val globalLang by viewModel.appLanguage.collectAsState()
+
+    // Local override for this screen's language toggle
+    // Starts from global setting, user can change just for this screen
+    var currentLang by remember(globalLang) { mutableStateOf(globalLang) }
 
     // Theme & Colors Setup
     val primaryColor = if (dietType == "Jain") Color(0xFF2E7D32) else Color(0xFFD35400)
@@ -103,31 +114,26 @@ fun DietGyanScreen(
     val subTextColor = Color(0xFF666666)
     val backgroundColor = Color(0xFFFDFBF7)
 
-    // Setup Localized Headings & Taglines
+    // Setup Localized Headings & Taglines — using currentLang (en/gu/hi)
     val topbarTitle = getLocalizedText(
-        context,
-        isGujarati,
+        context, currentLang,
         if (dietType == "Jain") R.string.diet_gyan_title_jain else R.string.diet_gyan_title_swami
     )
     val badgeText = getLocalizedText(
-        context,
-        isGujarati,
+        context, currentLang,
         if (dietType == "Jain") R.string.diet_gyan_badge_jain else R.string.diet_gyan_badge_swami
     )
     val taglineText = getLocalizedText(
-        context,
-        isGujarati,
+        context, currentLang,
         if (dietType == "Jain") R.string.diet_gyan_tagline_jain else R.string.diet_gyan_tagline_swami
     )
-    val religiousHeader = getLocalizedText(context, isGujarati, R.string.diet_gyan_label_religious)
-    val scientificHeader =
-        getLocalizedText(context, isGujarati, R.string.diet_gyan_label_scientific)
+    val religiousHeader = getLocalizedText(context, currentLang, R.string.diet_gyan_label_religious)
+    val scientificHeader = getLocalizedText(context, currentLang, R.string.diet_gyan_label_scientific)
     val footerText = getLocalizedText(
-        context,
-        isGujarati,
+        context, currentLang,
         if (dietType == "Jain") R.string.diet_gyan_footer_jain else R.string.diet_gyan_footer_swami
     )
-    val footerTagline = getLocalizedText(context, isGujarati, R.string.diet_gyan_footer_tagline)
+    val footerTagline = getLocalizedText(context, currentLang, R.string.diet_gyan_footer_tagline)
 
     // Guidelines List mapped to resource IDs
     val sections = remember(dietType) {
@@ -450,22 +456,28 @@ fun DietGyanScreen(
 
                         Toast.makeText(
                             context,
-                            getLocalizedText(context, isGujarati, R.string.diet_gyan_toast_downloading),
+                            getLocalizedText(context, currentLang, R.string.diet_gyan_toast_downloading),
                             Toast.LENGTH_SHORT
                         ).show()
 
-                        //  Diet Type snd  selected Language accoding  asset file select
-                        val assetFileName = if (dietType == "Jain") {
-                            if (isGujarati) "jain_gujrati.pdf" else "jain_english.pdf"
-                        } else {
-                            if (isGujarati) "swaminarayan_gujrati.pdf" else "swaminarayan_english.pdf"
+                        //  Diet Type and selected Language → asset file select
+                        val assetFileName = when {
+                            dietType == "Jain" && currentLang == "gu" -> "jain_gujrati.pdf"
+                            dietType == "Jain" && currentLang == "hi" -> "jain_hindi.pdf"
+                            dietType == "Jain" -> "jain_english.pdf"
+                            currentLang == "gu" -> "swaminarayan_gujrati.pdf"
+                            currentLang == "hi" -> "swaminarayan_hindi.pdf"
+                            else -> "swaminarayan_english.pdf"
                         }
 
-                        // Downloaded file  public name set
-                        val outputFileName = if (dietType == "Jain") {
-                            if (isGujarati) "Jain_Diet_Guide_Gujarati.pdf" else "Jain_Diet_Guide_English.pdf"
-                        } else {
-                            if (isGujarati) "Swaminarayan_Diet_Guide_Gujarati.pdf" else "Swaminarayan_Diet_Guide_English.pdf"
+                        // Downloaded file public name set
+                        val outputFileName = when {
+                            dietType == "Jain" && currentLang == "gu" -> "Jain_Diet_Guide_Gujarati.pdf"
+                            dietType == "Jain" && currentLang == "hi" -> "Jain_Diet_Guide_Hindi.pdf"
+                            dietType == "Jain" -> "Jain_Diet_Guide_English.pdf"
+                            currentLang == "gu" -> "Swaminarayan_Diet_Guide_Gujarati.pdf"
+                            currentLang == "hi" -> "Swaminarayan_Diet_Guide_Hindi.pdf"
+                            else -> "Swaminarayan_Diet_Guide_English.pdf"
                         }
 
                         //  File write trigger karei
@@ -475,13 +487,21 @@ fun DietGyanScreen(
                         if (success) {
                             Toast.makeText(
                                 context,
-                                if (isGujarati) "માર્ગદર્શિકા ડાઉનલોડ થઈ ગઈ!" else "Guide PDF downloaded successfully!",
+                                when (currentLang) {
+                                    "gu" -> "માર્ગદર્શિકા ડાઉનલોડ થઈ ગઈ!"
+                                    "hi" -> "मार्गदर्शिका डाउनलोड हो गई!"
+                                    else -> "Guide PDF downloaded successfully!"
+                                },
                                 Toast.LENGTH_LONG
                             ).show()
                         } else {
                             Toast.makeText(
                                 context,
-                                if (isGujarati) "ડાઉનલોડ કરવામાં ભૂલ આવી!" else "Failed to download PDF",
+                                when (currentLang) {
+                                    "gu" -> "ડાઉનલોડ કરવામાં ભૂલ આવી!"
+                                    "hi" -> "डाउनलोड में त्रुटि हुई!"
+                                    else -> "Failed to download PDF"
+                                },
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -534,7 +554,7 @@ fun DietGyanScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                // Language Toggle
+                // Language Toggle — 3 buttons: EN / GU / HI
                 Row(
                     modifier = Modifier
                         .background(
@@ -545,35 +565,51 @@ fun DietGyanScreen(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // English Toggle
+                    // English
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(20.dp))
-                            .background(if (!isGujarati) accentColor else Color.Transparent)
-                            .clickable { isGujarati = false }
-                            .padding(horizontal = 18.dp, vertical = 8.dp)
+                            .background(if (currentLang == "en") accentColor else Color.Transparent)
+                            .clickable { currentLang = "en" }
+                            .padding(horizontal = 14.dp, vertical = 8.dp)
                     ) {
                         Text(
                             text = "English",
-                            fontSize = 13.sp,
+                            fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
-                            color = if (!isGujarati) Color.White else subTextColor
+                            color = if (currentLang == "en") Color.White else subTextColor
                         )
                     }
 
-                    // Gujarati Toggle
+                    // Gujarati
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(20.dp))
-                            .background(if (isGujarati) accentColor else Color.Transparent)
-                            .clickable { isGujarati = true }
-                            .padding(horizontal = 18.dp, vertical = 8.dp)
+                            .background(if (currentLang == "gu") accentColor else Color.Transparent)
+                            .clickable { currentLang = "gu" }
+                            .padding(horizontal = 14.dp, vertical = 8.dp)
                     ) {
                         Text(
                             text = "ગુજરાતી",
-                            fontSize = 13.sp,
+                            fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
-                            color = if (isGujarati) Color.White else subTextColor
+                            color = if (currentLang == "gu") Color.White else subTextColor
+                        )
+                    }
+
+                    // Hindi
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(if (currentLang == "hi") accentColor else Color.Transparent)
+                            .clickable { currentLang = "hi" }
+                            .padding(horizontal = 14.dp, vertical = 8.dp)
+                    ) {
+                        Text(
+                            text = "हिन्दी",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = if (currentLang == "hi") Color.White else subTextColor
                         )
                     }
                 }
@@ -615,11 +651,10 @@ fun DietGyanScreen(
             }
 
             items(sections) { section ->
-                val title = getLocalizedText(context, isGujarati, section.titleRes)
-                val subtitle = getLocalizedText(context, isGujarati, section.subtitleRes)
-                val religiousText = getLocalizedText(context, isGujarati, section.religiousTextRes)
-                val scientificText =
-                    getLocalizedText(context, isGujarati, section.scientificTextRes)
+                val title = getLocalizedText(context, currentLang, section.titleRes)
+                val subtitle = getLocalizedText(context, currentLang, section.subtitleRes)
+                val religiousText = getLocalizedText(context, currentLang, section.religiousTextRes)
+                val scientificText = getLocalizedText(context, currentLang, section.scientificTextRes)
 
                 Card(
                     modifier = Modifier
@@ -698,7 +733,7 @@ fun DietGyanScreen(
                                             .padding(horizontal = 10.dp, vertical = 4.dp)
                                     ) {
                                         Text(
-                                            text = getLocalizedText(context, isGujarati, chipRes),
+                                            text = getLocalizedText(context, currentLang, chipRes),
                                             fontSize = 11.sp,
                                             fontWeight = FontWeight.Bold,
                                             color = primaryColor

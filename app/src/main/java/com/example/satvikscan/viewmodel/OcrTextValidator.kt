@@ -1,4 +1,4 @@
-package com.example.satvikscan.ui.viewmodel
+package com.example.satvikscan.viewmodel
 
 object OcrTextValidator {
 

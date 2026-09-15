@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -77,7 +78,7 @@ fun PrivacyPolicyScreen(
                 )
             }
             Text(
-                text = "Privacy & Legal Policy",
+                text = stringResource(R.string.privacy_title),
                 fontSize = 20.sp,
                 color = topBarTextColor,
                 textAlign = TextAlign.Center
@@ -123,14 +124,14 @@ fun PrivacyPolicyScreen(
                         Spacer(modifier = Modifier.width(16.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = "100% On-Device Privacy",
+                                text = stringResource(R.string.privacy_card1_title),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = primaryText
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                text = "Your scans and diet preferences are processed locally. No personal data ever leaves your phone.",
+                                text = stringResource(R.string.privacy_card1_desc),
                                 fontSize = 13.sp,
                                 lineHeight = 19.sp,
                                 color = secondaryText
@@ -154,26 +155,26 @@ fun PrivacyPolicyScreen(
                             .padding(20.dp)
                     ) {
                         Text(
-                            text = "Legal and data source",
+                            text = stringResource(R.string.privacy_legal_title),
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Bold,
                             color = primaryText
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Read these limits before relying on scan results.",
+                            text = stringResource(R.string.privacy_legal_subtitle),
                             fontSize = 13.sp,
                             color = secondaryText
                         )
                         Spacer(modifier = Modifier.height(14.dp))
 
                         val bullets = listOf(
-                            "Result based on Open Food Facts data for accurate ingredient analysis.",
-                            "Data may be incomplete or inaccurate for certain regional products.",
-                            "Data source: Open Food Facts (OFF) community-driven database.",
-                            "Results are for reference; always verify critical allergies or strict vows directly on product packaging.",
-                            "No official affiliation with Open Food Facts or its contributors.",
-                            "The application is provided as-is without guarantee of 100% product coverage."
+                            stringResource(R.string.privacy_bullet_1),
+                            stringResource(R.string.privacy_bullet_2),
+                            stringResource(R.string.privacy_bullet_3),
+                            stringResource(R.string.privacy_bullet_4),
+                            stringResource(R.string.privacy_bullet_5),
+                            stringResource(R.string.privacy_bullet_6)
                         )
                         bullets.forEachIndexed { index, bullet ->
                             Row(
@@ -218,7 +219,7 @@ fun PrivacyPolicyScreen(
                             .padding(20.dp)
                     ) {
                         Text(
-                            text = "Data Collection & Storage",
+                            text = stringResource(R.string.privacy_data_storage_title),
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Bold,
                             color = primaryText
@@ -226,24 +227,24 @@ fun PrivacyPolicyScreen(
                         Spacer(modifier = Modifier.height(12.dp))
                         PolicyFeatureRow(
                             icon = painterResource(R.drawable.lock_icon),
-                            title = "Zero Personal Tracking",
-                            subtitle = "No account required, no personal ID collected.",
+                            title = stringResource(R.string.privacy_feature_no_tracking_title),
+                            subtitle = stringResource(R.string.privacy_feature_no_tracking_desc),
                             primaryTextColor = primaryText,
                             secondaryTextColor = secondaryText
                         )
                         HorizontalDivider(color = dividerColor, thickness = 1.dp)
                         PolicyFeatureRow(
                             icon = painterResource(R.drawable.db_icon),
-                            title = "On-Device Storage ",
-                            subtitle = "Scan history and custom exclusions stay on your phone.",
+                            title = stringResource(R.string.privacy_feature_device_storage_title),
+                            subtitle = stringResource(R.string.privacy_feature_device_storage_desc),
                             primaryTextColor = primaryText,
                             secondaryTextColor = secondaryText
                         )
                         HorizontalDivider(color = dividerColor, thickness = 1.dp)
                         PolicyFeatureRow(
                             icon = painterResource(R.drawable.ic_cloud_off),
-                            title = "No Cloud Uploads",
-                            subtitle = "Your dietary choices and scans are never sent to remote servers.",
+                            title = stringResource(R.string.privacy_feature_no_cloud_title),
+                            subtitle = stringResource(R.string.privacy_feature_no_cloud_desc),
                             primaryTextColor = primaryText,
                             secondaryTextColor = secondaryText
                         )
@@ -265,7 +266,7 @@ fun PrivacyPolicyScreen(
                             .padding(20.dp)
                     ) {
                         Text(
-                            text = "Camera Permissions",
+                            text = stringResource(R.string.privacy_camera_title),
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Bold,
                             color = primaryText
@@ -273,16 +274,16 @@ fun PrivacyPolicyScreen(
                         Spacer(modifier = Modifier.height(12.dp))
                         PolicyFeatureRow(
                             icon = painterResource(R.drawable.baseline_camera_alt_24),
-                            title = "Real-Time Label Scanning",
-                            subtitle = "Camera used exclusively for live barcode & ingredient OCR reading via Google ML Kit.",
+                            title = stringResource(R.string.privacy_feature_camera_scan_title),
+                            subtitle = stringResource(R.string.privacy_feature_camera_scan_desc),
                             primaryTextColor = primaryText,
                             secondaryTextColor = secondaryText
                         )
                         HorizontalDivider(color = dividerColor, thickness = 1.dp)
                         PolicyFeatureRow(
                             icon = painterResource(R.drawable.no_image_ic),
-                            title = "No Image Recording",
-                            subtitle = "Frames are processed in real-time memory and instantly discarded.",
+                            title = stringResource(R.string.privacy_feature_no_record_title),
+                            subtitle = stringResource(R.string.privacy_feature_no_record_desc),
                             primaryTextColor = primaryText,
                             secondaryTextColor = secondaryText
                         )
@@ -304,7 +305,7 @@ fun PrivacyPolicyScreen(
                             .padding(20.dp)
                     ) {
                         Text(
-                            text = "Network & API Transparency",
+                            text = stringResource(R.string.privacy_network_title),
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Bold,
                             color = primaryText
@@ -312,16 +313,16 @@ fun PrivacyPolicyScreen(
                         Spacer(modifier = Modifier.height(12.dp))
                         PolicyFeatureRow(
                             icon = painterResource(R.drawable.openfc_icon),
-                            title = "Open Food Facts Barcode API",
-                            subtitle = "Only the anonymous numerical barcode string is queried to fetch product details.",
+                            title = stringResource(R.string.privacy_feature_off_api_title),
+                            subtitle = stringResource(R.string.privacy_feature_off_api_desc),
                             primaryTextColor = primaryText,
                             secondaryTextColor = secondaryText
                         )
                         HorizontalDivider(color = dividerColor, thickness = 1.dp)
                         PolicyFeatureRow(
                             icon = painterResource(R.drawable.key_ic),
-                            title = "No Tracking Identifiers",
-                            subtitle = "No device ID or user tracking token is sent with network requests.",
+                            title = stringResource(R.string.privacy_feature_no_id_title),
+                            subtitle = stringResource(R.string.privacy_feature_no_id_desc),
                             primaryTextColor = primaryText,
                             secondaryTextColor = secondaryText
                         )
@@ -359,7 +360,7 @@ fun PrivacyPolicyScreen(
                             }
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "VERIFIED SATVIKSCAN PRIVACY STANDARD",
+                                text = stringResource(R.string.privacy_verified_badge),
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = badgeTextColor,
@@ -369,7 +370,7 @@ fun PrivacyPolicyScreen(
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
-                        text = "v1.0.0 • Last updated: July 2026",
+                        text = stringResource(R.string.privacy_version_date),
                         fontSize = 11.sp,
                         color = versionTextColor,
                         textAlign = TextAlign.Center

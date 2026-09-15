@@ -43,7 +43,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -85,6 +84,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -95,10 +95,11 @@ import androidx.core.content.ContextCompat
 import com.example.satvikscan.R
 import com.example.satvikscan.analyzer.BarcodeAnalyzer
 import com.example.satvikscan.analyzer.OcrAnalyzer
-import com.example.satvikscan.ui.viewmodel.SatvikViewModel
-import com.example.satvikscan.ui.viewmodel.ScanMode
+import com.example.satvikscan.viewmodel.SatvikViewModel
+import com.example.satvikscan.viewmodel.ScanMode
 import java.util.concurrent.Executors
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
 import androidx.compose.foundation.BorderStroke
@@ -106,6 +107,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 
 
 @Composable
@@ -122,6 +126,7 @@ fun CameraScanScreen(
 
 
     var showPermissionDialog by remember { mutableStateOf(false) }
+
     var hasOpenedSettings by remember { mutableStateOf(false) }
 
 
@@ -154,14 +159,17 @@ fun CameraScanScreen(
         }
     }
 
-    val lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+
     DisposableEffect(lifecycleOwner) {
-        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
-            if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+
+
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
                 val hasPermission = ContextCompat.checkSelfPermission(
                     context,
                     Manifest.permission.CAMERA
-                ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+                ) == PackageManager.PERMISSION_GRANTED
 
                 viewModel.onPermissionResult(hasPermission)
 
@@ -170,7 +178,9 @@ fun CameraScanScreen(
                 }
             }
         }
+
         lifecycleOwner.lifecycle.addObserver(observer)
+
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
         }
@@ -178,7 +188,7 @@ fun CameraScanScreen(
 
 
     //flashlight state
-    var isFlashOn by remember {   mutableStateOf(false) }
+    var isFlashOn by remember { mutableStateOf(false) }
     // eror msg
     val missMatchbarcodeError by viewModel.barcodeError.collectAsState()
 
@@ -223,8 +233,12 @@ fun CameraScanScreen(
         if (isGranted) {
             viewModel.onPermissionResult(true)
         } else {
+
             val permanentlyDenied =
-                permissionRequested &&!ActivityCompat.shouldShowRequestPermissionRationale(  activity,Manifest.permission.CAMERA )
+                permissionRequested && !ActivityCompat.shouldShowRequestPermissionRationale(
+                    activity,
+                    Manifest.permission.CAMERA
+                )
 
             if (permanentlyDenied) {
 
@@ -288,7 +302,7 @@ fun CameraScanScreen(
                                 )
                             ) {
                                 Text(
-                                    "↺  Retry",
+                                    text = stringResource(R.string.camera_btn_retry),
                                     color = Color.White,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 16.sp
@@ -298,11 +312,11 @@ fun CameraScanScreen(
                             Button(
                                 onClick = {
                                     if (cameramode == ScanMode.OCR) {
-                                        capturedBitmap?.let { bmp -> // (bmp = capturedBitmap) when not nulll
-                                            // 1. Loader screen trigger karne ke liye
+                                        capturedBitmap?.let { bmp -> // (bmp = capturedBitmap) when not null
+                                            // Loader screen trigger karne ke liye
                                             viewModel.startOcrScanning()
 
-                                            // 2. OCR analyze bitmap call callbacks ke saath
+                                            // OCR analyze bitmap call callbacks ke saath
                                             ocrAnalyzer.analyzeBitmap(
                                                 bitmap = bmp,
                                                 onSuccess = { detectedText ->
@@ -316,7 +330,7 @@ fun CameraScanScreen(
                                                 onFailure = { error ->
                                                     // Failure par error screen dikhane ke liye
                                                     viewModel.setOcrError(
-                                                        error.message ?: "OCR recognition failed"
+                                                        error.message ?: context.getString(R.string.camera_error_ocr_failed)
                                                     )
                                                 }
                                             )
@@ -329,14 +343,18 @@ fun CameraScanScreen(
                                             barcodeAnalyzer.analyzeBitmap(
                                                 bitmap = bmp,
                                                 onNoBarcodeFound = {
+
                                                     viewModel.setOcrError(
-                                                        "No barcode found in this image. Please try a clearer photo."
+                                                        context.getString(R.string.camera_error_no_barcode)
                                                     )
+
                                                 },
                                                 onFailure = { error ->
+
                                                     viewModel.setOcrError(
-                                                        error.message ?: "Barcode scan failed"
+                                                        error.message ?: context.getString(R.string.camera_error_barcode_failed)
                                                     )
+
                                                 }
                                             )
                                         }
@@ -351,7 +369,7 @@ fun CameraScanScreen(
                                 )
                             ) {
                                 Text(
-                                    "✓  OK",
+                                    text = stringResource(R.string.camera_btn_ok),
                                     color = Color(0xFF1B3A2D),
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 16.sp
@@ -379,6 +397,7 @@ fun CameraScanScreen(
                                     val preview = Preview.Builder().build()
                                     preview.setSurfaceProvider(previewView.surfaceProvider)
 
+                                    // for barcode mode camera as fetch barcode
                                     if (cameramode == ScanMode.BARCODE) {
                                         val imageAnalysis = ImageAnalysis.Builder().build()
 
@@ -396,8 +415,11 @@ fun CameraScanScreen(
                                         )
 
                                     } else {
+
                                         val imageCapture = ImageCapture.Builder().build()
+
                                         imagecaptureReference.value = imageCapture
+
                                         cameraProvider.unbindAll()
                                         camera.value = cameraProvider.bindToLifecycle(
                                             lifecycleOwner,
@@ -437,7 +459,7 @@ fun CameraScanScreen(
                             )
                         }
                         Text(
-                            text = if (cameramode == ScanMode.BARCODE) "Scan QR" else "Capture Ingredients",
+                            text = if (cameramode == ScanMode.BARCODE) stringResource(R.string.camera_title_barcode) else stringResource(R.string.camera_title_ocr),
                             color = Color.White,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
@@ -456,7 +478,7 @@ fun CameraScanScreen(
                                 .padding(top = 220.dp)
                         ) {
                             Text(
-                                text = "Align label inside box",
+                                text = stringResource(R.string.camera_hint_barcode),
                                 color = Color.White,
                                 fontSize = 13.sp,
                                 modifier = Modifier
@@ -481,7 +503,7 @@ fun CameraScanScreen(
                     // ── GALLERY ──
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
+                    ) {
                         Box(
                             modifier = Modifier
                                 .size(60.dp)
@@ -508,7 +530,7 @@ fun CameraScanScreen(
                             )
                         }
                         Text(
-                            text = "GALLERY",
+                            text = stringResource(R.string.camera_btn_gallery),
                             color = Color.White.copy(alpha = 0.85f),
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Medium,
@@ -533,7 +555,7 @@ fun CameraScanScreen(
                                 )
                                 .border(
                                     width = 1.dp,
-                                      color = Color.White.copy(alpha = 0.35f),
+                                    color = Color.White.copy(alpha = 0.35f),
                                     shape = CircleShape
                                 )
                                 .clip(CircleShape)
@@ -553,7 +575,7 @@ fun CameraScanScreen(
                             )
                         }
                         Text(
-                            text = "FLASH",
+                            text = stringResource(R.string.camera_btn_flash),
                             color = Color.White.copy(alpha = 0.85f),
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Medium,
@@ -578,68 +600,77 @@ fun CameraScanScreen(
                                 .background(Color(0xFF19592E), CircleShape)
                                 .clip(CircleShape)
                                 .clickable {
-                                imagecaptureReference.value?.takePicture(
-                                    captureExecutor,
-                                    object : ImageCapture.OnImageCapturedCallback() {
+                                    imagecaptureReference.value?.takePicture(
+                                        captureExecutor,
+                                        object : ImageCapture.OnImageCapturedCallback() {
 
-                                        override fun onCaptureSuccess(image: ImageProxy) {
+                                            override fun onCaptureSuccess(image: ImageProxy) {
 
-                                            val imageInfo = image.imageInfo.rotationDegrees
-                                            Log.d(
-                                                "ROTATION_DEBUG",
-                                                "rotation degree is : $imageInfo"
-                                            )
-
-                                            var bmp = image.toBitmap()
-
-                                            if (imageInfo != 0) {
-                                                val matrix = Matrix()
-                                                matrix.postRotate(imageInfo.toFloat())
-                                                bmp = Bitmap.createBitmap(
-                                                    bmp, 0, 0,
-                                                    bmp.width, bmp.height,
-                                                    matrix, true
+                                                val imageInfo = image.imageInfo.rotationDegrees
+                                                Log.d(
+                                                    "ROTATION_DEBUG",
+                                                    "rotation degree is : $imageInfo"
                                                 )
-                                            }
-                                            image.close()
 
-                                            //  CROP LOGIC TO MATCH SCREEN VIEW ──
-                                           // Get screen aspect ratio in pixels
-                                            val displayMetrics = context.resources.displayMetrics
-                                            val screenRatio =
-                                                displayMetrics.heightPixels.toFloat() / displayMetrics.widthPixels.toFloat()
+                                                var bmp = image.toBitmap()
 
-                                            Handler(Looper.getMainLooper()).post {
-                                                capturedBitmap = bmp
-                                            }
-
-                                            // Get captured bitmap ratio
-                                            val bitmapRatio = bmp.height.toFloat() / bmp.width.toFloat()
-
-                                            // Crop the sides if the captured image is wider than the preview screen
-                                            if (bitmapRatio < screenRatio) {
-                                                val targetWidth = (bmp.height / screenRatio).toInt()
-                                                val xOffset = (bmp.width - targetWidth) / 2
-                                                if (targetWidth > 0 && xOffset >= 0 && (xOffset + targetWidth) <= bmp.width) {
-                                                    bmp = Bitmap.createBitmap(bmp, xOffset, 0, targetWidth, bmp.height)
+                                                if (imageInfo != 0) {
+                                                    val matrix = Matrix()
+                                                    matrix.postRotate(imageInfo.toFloat())
+                                                    bmp = Bitmap.createBitmap(
+                                                        bmp, 0, 0,
+                                                        bmp.width, bmp.height,
+                                                        matrix, true
+                                                    )
                                                 }
+                                                image.close()
+
+                                                //  CROP LOGIC TO MATCH SCREEN VIEW ──
+                                                // Get screen aspect ratio in pixels
+                                                val displayMetrics =
+                                                    context.resources.displayMetrics
+                                                val screenRatio =
+                                                    displayMetrics.heightPixels.toFloat() / displayMetrics.widthPixels.toFloat()
+
+                                                Handler(Looper.getMainLooper()).post {
+                                                    capturedBitmap = bmp
+                                                }
+
+                                                // Get captured bitmap ratio
+                                                val bitmapRatio =
+                                                    bmp.height.toFloat() / bmp.width.toFloat()
+
+                                                // Crop the sides if the captured image is wider than the preview screen
+                                                if (bitmapRatio < screenRatio) {
+                                                    val targetWidth =
+                                                        (bmp.height / screenRatio).toInt()
+                                                    val xOffset = (bmp.width - targetWidth) / 2
+                                                    if (targetWidth > 0 && xOffset >= 0 && (xOffset + targetWidth) <= bmp.width) {
+                                                        bmp = Bitmap.createBitmap(
+                                                            bmp,
+                                                            xOffset,
+                                                            0,
+                                                            targetWidth,
+                                                            bmp.height
+                                                        )
+                                                    }
+                                                }
+
                                             }
 
+                                            override fun onError(exception: ImageCaptureException) {}
                                         }
-
-                                        override fun onError(exception: ImageCaptureException) {}
-                                    }
-                                )
-                            },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.baseline_camera_alt_24),
-                            contentDescription = "Capture",
-                            tint = Color.White,
-                            modifier = Modifier.size(32.dp)
-                        )
-                    }
+                                    )
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.baseline_camera_alt_24),
+                                contentDescription = "Capture",
+                                tint = Color.White,
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
                     }
                 }
 
@@ -711,7 +742,8 @@ fun CameraScanScreen(
                     hasOpenedSettings = true
                     val intent = Intent(
                         Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                        Uri.fromParts("package", context.packageName, null)
+                        Uri.parse("package:${context.packageName}")
+//                        Uri.fromParts("package", context.packageName, null)
                     )
 
                     context.startActivity(intent)
@@ -724,7 +756,7 @@ fun CameraScanScreen(
 
 @Composable
 fun CameraPermissionDialog(
-    onDismiss: () -> Unit ,
+    onDismiss: () -> Unit,
     onOpenSettings: () -> Unit
 ) {
     Dialog(
@@ -756,7 +788,7 @@ fun CameraPermissionDialog(
                 Spacer(modifier = Modifier.height(14.dp))
 
                 Text(
-                    text = "App Permission",
+                    text = stringResource(R.string.camera_permission_title),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
@@ -766,12 +798,12 @@ fun CameraPermissionDialog(
                 Spacer(modifier = Modifier.height(6.dp))
 
                 Text(
-                    text = "Please enable Camera permission from App Settings",
+                    text = stringResource(R.string.camera_permission_desc),
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Medium,
                     color = Color(0xFF666666),
                     textAlign = TextAlign.Center,
-                    maxLines = 1
+                    maxLines = 2
                 )
 
                 Spacer(modifier = Modifier.height(18.dp))
@@ -794,7 +826,7 @@ fun CameraPermissionDialog(
                         )
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.camera_permission_cancel),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
@@ -813,7 +845,7 @@ fun CameraPermissionDialog(
                         )
                     ) {
                         Text(
-                            text = "OK, Open Settings",
+                            text = stringResource(R.string.camera_permission_settings),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             maxLines = 1,

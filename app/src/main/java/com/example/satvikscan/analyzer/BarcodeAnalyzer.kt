@@ -2,17 +2,14 @@ package com.example.satvikscan.analyzer
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.Build
-import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
 import androidx.annotation.OptIn
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import com.example.satvikscan.ui.viewmodel.SatvikViewModel
+import com.example.satvikscan.R
+import com.example.satvikscan.viewmodel.SatvikViewModel
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
@@ -102,12 +99,12 @@ class BarcodeAnalyzer(private val viewModel: SatvikViewModel, private val contex
                         Barcode.FORMAT_QR_CODE -> {
                             Log.d("Barcode", "no THIS IS PAYMENT QR")
 
-                            viewModel.setBarcodeError("QR codes are not supported. Scan product barcode.")
+                            viewModel.setBarcodeError(context.getString(R.string.camera_error_qr_code))
 
                         }
                         else -> {
 
-                            viewModel.setBarcodeError("Unsupported format. Scan a standard product barcode.")
+                            viewModel.setBarcodeError(context.getString(R.string.camera_error_unsupported_format))
                         }
                     }
 

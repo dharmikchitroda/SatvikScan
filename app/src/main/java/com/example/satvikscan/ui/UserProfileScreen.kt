@@ -1,56 +1,41 @@
 package com.example.satvikscan.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathFillType
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.satvikscan.R
-import com.example.satvikscan.ui.viewmodel.SatvikViewModel
+import com.example.satvikscan.viewmodel.SatvikViewModel
 
 @Composable
 fun UserProfileScreen(
@@ -92,7 +77,7 @@ fun UserProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // 2. DIET PREFERENCES section
-            SectionHeader(title = "DIET PREFERENCES", isDarkMode = isDarkMode, headerColor = Color(0xFF7E8B85))
+            SectionHeader(title = stringResource(R.string.profile_section_diet), isDarkMode = isDarkMode, headerColor = Color(0xFF7E8B85))
 
             Card(
                 modifier = Modifier
@@ -137,7 +122,7 @@ fun UserProfileScreen(
                     Spacer(modifier = Modifier.width(16.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "ACTIVE DIET",
+                            text = stringResource(R.string.profile_active_diet),
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFFD35400),
@@ -146,9 +131,9 @@ fun UserProfileScreen(
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
                             text = when (dietName) {
-                                "Swaminarayan" -> "Swaminarayan (Strict)"
-                                "Jain" -> "Jain (Strict)"
-                                else -> if (dietName.endsWith("Diet", ignoreCase = true)) dietName else "$dietName Diet"
+                                "Swaminarayan" -> stringResource(R.string.diet_swami_title_strict)
+                                "Jain" -> stringResource(R.string.diet_jain_title_strict)
+                                else -> stringResource(R.string.diet_custom_title)
                             },
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
@@ -157,9 +142,9 @@ fun UserProfileScreen(
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
                             text = when (dietName) {
-                                "Swaminarayan" -> "No onion, garlic, or eggs."
-                                "Jain" -> "No root vegetables or honey."
-                                else -> "Custom ingredient exclusions enabled."
+                                "Swaminarayan" -> stringResource(R.string.diet_swami_desc)
+                                "Jain" -> stringResource(R.string.diet_jain_desc)
+                                else -> stringResource(R.string.diet_custom_desc)
                             },
                             fontSize = 13.sp,
                             color = if (isDarkMode) Color(0xFFCCB3A3) else Color(0xFF7E726B)
@@ -178,7 +163,7 @@ fun UserProfileScreen(
 
 
             // 3. RELIGION GUIDE section
-            SectionHeader(title = "RELIGIOIN GUIDE", isDarkMode = isDarkMode, headerColor = Color(0xFF7E8B85))
+            SectionHeader(title = stringResource(R.string.profile_section_religion), isDarkMode = isDarkMode, headerColor = Color(0xFF7E8B85))
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -211,7 +196,7 @@ fun UserProfileScreen(
                                     if (dietName == "Jain") R.drawable.jain_guide_logo
                                     else R.drawable.swaminarayan_guide_logo
                                 ),
-                                contentDescription = "$dietName Ingredient Guide",
+                                contentDescription = if (dietName == "Jain") stringResource(R.string.profile_guide_jain) else stringResource(R.string.profile_guide_swami),
                                 tint = if (dietName == "Jain") {
                                     if (isDarkMode) Color(0xFF4CAF50) else Color(0xFF2E7D32)
                                 } else {
@@ -222,7 +207,11 @@ fun UserProfileScreen(
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Text(
-                            text = "$dietName Ingredient Guide",
+                            text = when (dietName) {
+                                "Jain" -> stringResource(R.string.profile_guide_jain)
+                                "Swaminarayan" -> stringResource(R.string.profile_guide_swami)
+                                else -> stringResource(R.string.profile_guide_custom)
+                            },
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = if (isDarkMode) Color.White else Color(0xFF1F1F1F),
@@ -267,7 +256,7 @@ fun UserProfileScreen(
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Text(
-                            text = "App Language",
+                            text = stringResource(R.string.profile_app_language),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = if (isDarkMode) Color.White else Color(0xFF1F1F1F),
@@ -286,7 +275,7 @@ fun UserProfileScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             // 4. SUPPORT & ABOUT section
-            SectionHeader(title = "SUPPORT & ABOUT", isDarkMode = isDarkMode, headerColor = Color(0xFF7E8B85))
+            SectionHeader(title = stringResource(R.string.profile_section_support), isDarkMode = isDarkMode, headerColor = Color(0xFF7E8B85))
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -300,7 +289,7 @@ fun UserProfileScreen(
                     // Send Feedback
                     SupportRow(
                         icon = painterResource(R.drawable.feedback_icon),
-                        title = "Send Feedback",
+                        title = stringResource(R.string.profile_send_feedback),
                         isDarkMode = isDarkMode,
                         iconColor = RowIconColor,
                         onClick = { onFeedbackClick() }
@@ -314,7 +303,7 @@ fun UserProfileScreen(
                     // Privacy Policy
                     SupportRow(
                         icon = painterResource(R.drawable.policy_icon),
-                        title = "Privacy Policy",
+                        title = stringResource(R.string.profile_privacy_policy),
                         isDarkMode = isDarkMode,
                         iconColor = RowIconColor,
                         onClick = { onPrivacyPolicyClick() }
@@ -328,7 +317,7 @@ fun UserProfileScreen(
                     // About SatvikScan
                     SupportRow(
                         icon = painterResource(R.drawable.info_icon),
-                        title = "About SatvikScan",
+                        title = stringResource(R.string.profile_about),
                         isDarkMode = isDarkMode,
                         iconColor = RowIconColor,
                         onClick = { onAboutClick() }
@@ -360,7 +349,7 @@ fun UserProfileScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "MADE FOR JAIN & SWAMINARAYAN",
+                    text = stringResource(R.string.profile_badge),
                     fontSize = 9.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFFD35400),

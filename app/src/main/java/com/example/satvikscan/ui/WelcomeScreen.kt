@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -94,7 +95,7 @@ fun WelcomeScreen(
 
             // Title Header
             Text(
-                text = "Welcome to\nSatvikScan",
+                text = stringResource(R.string.welcome_title),
                 fontSize = 36.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color(0xFF1F1F1F),
@@ -106,7 +107,7 @@ fun WelcomeScreen(
 
             // Subtitle
             Text(
-                text = "Choose your dietary path to get started.",
+                text = stringResource(R.string.welcome_subtitle),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
                 color = Color(0xFF555555),
@@ -117,7 +118,7 @@ fun WelcomeScreen(
 
             // Select Your Diet label
             Text(
-                text = "SELECT YOUR DIET",
+                text = stringResource(R.string.welcome_select_diet_label),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF7E8B85), // Lighter green/gray
@@ -134,8 +135,8 @@ fun WelcomeScreen(
             ) {
                 // 1. Swaminarayan Option
                 DietOptionCard(
-                    title = "Swaminarayan",
-                    subtitle = "No onion, garlic, or eggs.",
+                    title = stringResource(R.string.diet_swami_title),
+                    subtitle = stringResource(R.string.diet_swami_desc),
                     iconRes = R.drawable.swaminarayan_tilak,
                     iconBgColor = Color(0xFFEFEBE9),
                     iconTint = Color(0xFF5D4037),
@@ -145,8 +146,8 @@ fun WelcomeScreen(
 
                 // 2. Jain Option
                 DietOptionCard(
-                    title = "Jain",
-                    subtitle = "No root vegetables or honey.",
+                    title = stringResource(R.string.diet_jain_title),
+                    subtitle = stringResource(R.string.diet_jain_desc),
                     iconRes = R.drawable.jain_logo,
                     iconBgColor = Color(0xFFE8F5E9),
                     iconTint = Color(0xFF2E7D32),
@@ -156,8 +157,8 @@ fun WelcomeScreen(
 
                 // 3. Custom Diet Option
                 DietOptionCard(
-                    title = "Custom Diet",
-                    subtitle = "Choose specific ingredients you want to avoid.",
+                    title = stringResource(R.string.diet_custom_title),
+                    subtitle = stringResource(R.string.diet_custom_desc),
                     iconRes = R.drawable.custom_icon,
                     iconBgColor = Color(0xFFECEFF1),
                     iconTint = Color(0xFF455A64),
@@ -177,7 +178,7 @@ fun WelcomeScreen(
                 .fillMaxWidth()
                 .padding(top = 40.dp)
         ) {
-            val emeraldGreen = Color(0xFF00C853)
+
             Button(
                 onClick = { onContinueClick(selectedDiet) },
                 modifier = Modifier
@@ -186,11 +187,11 @@ fun WelcomeScreen(
                     .shadow(
                         elevation = 8.dp,
                         shape = CircleShape,
-                        spotColor = emeraldGreen.copy(alpha = 0.5f),
-                        ambientColor = emeraldGreen.copy(alpha = 0.3f)
+                        spotColor = Color(0xFF1B3A2D) .copy(alpha = 0.5f),
+                        ambientColor = Color(0xFF1B3A2D) .copy(alpha = 0.3f)
                     ),
                 shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(containerColor = emeraldGreen),
+                colors = ButtonDefaults.buttonColors(Color(0xFF1B3A2D) ),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 0.dp,
                     pressedElevation = 0.dp
@@ -201,7 +202,7 @@ fun WelcomeScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Continue",
+                        text = stringResource(R.string.welcome_btn_continue),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -219,7 +220,7 @@ fun WelcomeScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "YOU CAN CHANGE YOUR DIET SETTINGS LATER",
+                text = stringResource(R.string.welcome_footer),
                 fontSize = 10.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF9E9E9E),
