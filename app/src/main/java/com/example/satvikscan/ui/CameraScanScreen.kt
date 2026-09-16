@@ -11,6 +11,7 @@ import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.Camera
 import androidx.camera.core.ImageAnalysis
@@ -199,7 +200,7 @@ fun CameraScanScreen(
         }
     }
     val galleryLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
+        contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
             uri?.let {
                 try {
@@ -518,7 +519,9 @@ fun CameraScanScreen(
                                 )
                                 .clip(CircleShape)
                                 .clickable {
-                                    galleryLauncher.launch("image/*")
+                                    galleryLauncher.launch(
+                                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                    )
                                 },
                             contentAlignment = Alignment.Center
                         ) {
