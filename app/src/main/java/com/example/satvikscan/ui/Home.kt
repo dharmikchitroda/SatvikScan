@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -180,6 +181,20 @@ fun HomeScreenUI(
     onScanBarcodescan: () -> Unit,
     dietName: String = ""
 ) {
+    val currentLang = LocalConfiguration.current.locales[0]?.language ?: "en"
+
+    val scanBannerRes = when (currentLang) {
+        "gu" -> R.drawable.scan_gu
+        "hi" -> R.drawable.scan_hi
+        else -> R.drawable.scan_discover_banner
+    }
+
+    val captureBannerRes = when (currentLang) {
+        "gu" -> R.drawable.capture_gu
+        "hi" -> R.drawable.capture_hi
+        else -> R.drawable.capture_discover_banner
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -231,7 +246,7 @@ fun HomeScreenUI(
                         }
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.scan_discover_banner),
+                        painter = painterResource(id = scanBannerRes),
                         contentDescription = "Scan & Discover",
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Fit
@@ -253,7 +268,7 @@ fun HomeScreenUI(
                         .clickable { onScanPhotoclick() }
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.capture_discover_banner),
+                        painter = painterResource(id = captureBannerRes),
                         contentDescription = "Capture & Discover",
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Fit
