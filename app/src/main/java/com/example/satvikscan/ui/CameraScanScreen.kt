@@ -103,6 +103,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
+import androidx.camera.core.CameraSelector
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -132,8 +133,7 @@ fun CameraScanScreen(
 
 
     val uiState = viewModel.productUiState.collectAsState().value
-    val imagecaptureReference =
-        remember { mutableStateOf<ImageCapture?>(null) } // made for bhar aces`s use for btn click used
+    val imagecaptureReference =remember { mutableStateOf<ImageCapture?>(null) } // made for bhar aces`s use for btn click used
     var capturedBitmap by remember { mutableStateOf<Bitmap?>(null) }
     val ocrAnalyzer = remember { OcrAnalyzer() } // one time make use multiple time
     val barcodeAnalyzer = remember { BarcodeAnalyzer(viewModel, context) }
@@ -234,9 +234,7 @@ fun CameraScanScreen(
         if (isGranted) {
             viewModel.onPermissionResult(true)
         } else {
-
-            val permanentlyDenied =
-                permissionRequested && !ActivityCompat.shouldShowRequestPermissionRationale(
+            val permanentlyDenied = permissionRequested && !ActivityCompat.shouldShowRequestPermissionRationale(
                     activity,
                     Manifest.permission.CAMERA
                 )
@@ -391,26 +389,29 @@ fun CameraScanScreen(
                             val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
 
                             cameraProviderFuture.addListener(
+                                // which work i follow after got cameraProviderFuture
                                 {
+
                                     val cameraProvider = cameraProviderFuture.get()
+
                                     cameraProviderState.value = cameraProvider
 
-                                    val preview = Preview.Builder().build()
-                                    preview.setSurfaceProvider(previewView.surfaceProvider)
-
-                                    // for barcode mode camera as fetch barcode
+                                    val preview = Preview.Builder().build().also {
+                                        it.setSurfaceProvider(previewView.surfaceProvider)
+                                    }
+                                    // for barcoProcessCameraProvider.getInstance(context)de mode camera as fetch barcode
                                     if (cameramode == ScanMode.BARCODE) {
                                         val imageAnalysis = ImageAnalysis.Builder().build()
 
                                         imageAnalysis.setAnalyzer(
                                             captureExecutor,
-                                            BarcodeAnalyzer(viewModel, context)
+                                            barcodeAnalyzer
                                         )
                                         cameraProvider.unbindAll()
 
                                         camera.value = cameraProvider.bindToLifecycle(
                                             lifecycleOwner,
-                                            androidx.camera.core.CameraSelector.DEFAULT_BACK_CAMERA,
+                                            CameraSelector.DEFAULT_BACK_CAMERA,
                                             preview,
                                             imageAnalysis
                                         )
@@ -431,6 +432,7 @@ fun CameraScanScreen(
                                     }
 
                                 },
+                                // which i will have to use thread
                                 ContextCompat.getMainExecutor(context)
                             )
                             previewView

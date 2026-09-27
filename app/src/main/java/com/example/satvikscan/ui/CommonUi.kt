@@ -650,6 +650,12 @@ fun homeScreentopbar(dietName: String) {
             dietName.contains("Custom", ignoreCase = true) -> Color(0xFF455A64)
             else -> Color(0xFF2E7D32)
         }
+        val dietDisplayName = when {
+            dietName.contains("Swaminarayan", ignoreCase = true) -> stringResource(R.string.diet_swami_title)
+            dietName.contains("Jain", ignoreCase = true) -> stringResource(R.string.diet_jain_title)
+            dietName.contains("Custom", ignoreCase = true) -> stringResource(R.string.diet_custom_title)
+            else -> dietName
+        }
 
         Box(
             modifier = Modifier
@@ -675,7 +681,7 @@ fun homeScreentopbar(dietName: String) {
                     modifier = Modifier.size(18.dp)
                 )
                 Text(
-                    text = dietName,
+                    text = dietDisplayName,
                     fontSize = 12.sp,
                     color = Color(0xFF1B3A2D),
                     fontWeight = FontWeight.SemiBold,
