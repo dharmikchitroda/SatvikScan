@@ -224,7 +224,7 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
 
 
             } catch (e: Exception) {
-                if (e is IOException || e is UnknownHostException) {
+                if (e is IOException ) {
                     _productUiState.value = ProductUiState.Error("NO_INTERNET")
                 } else {
                     _productUiState.value =

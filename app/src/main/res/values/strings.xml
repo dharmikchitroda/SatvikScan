@@ -240,11 +240,49 @@
     <!-- Home Screen -->
     <string name="home_did_you_know"> Did You Know?</string>
     <string name="home_swipe_hint">Swipe →</string>
+    <string name="home_footer_tagline_1">Purity  in  Every  Bite</string>
+    <string name="home_footer_tagline_2">That\'s SatvikScan! 🍃</string>
+
+    <!-- Home Quick Tips - Common -->
+    <string name="tip_read_labels_title">Always Read Labels</string>
+    <string name="tip_read_labels_body">The first ingredient listed is present in the highest quantity. Always check E-codes carefully before consuming!</string>
+    <string name="tip_barcode_accuracy_title">Barcode Scan is More Accurate</string>
+    <string name="tip_barcode_accuracy_body">For packaged goods, barcode scanning gives more accurate and detailed results than a photo scan.</string>
+    <string name="tip_natural_flavors_title">\"Natural Flavors\" Alert</string>
+    <string name="tip_natural_flavors_body">\"Natural flavors\" can sometimes be derived from animal sources. Always verify before consuming!</string>
+    <string name="tip_satvik_food_title">What is Satvik Food?</string>
+    <string name="tip_satvik_food_body">Fresh, whole and minimally processed foods are a safe and healthy choice.</string>
+
+    <!-- Home Quick Tips - Jain -->
+    <string name="tip_jain_roots_title">Root Vegetables Alert</string>
+    <string name="tip_jain_roots_body">Potatoes, onions, garlic and carrots are avoided in the Jain diet. Always check the ingredients list!</string>
+    <string name="tip_jain_honey_title">Honey in Products</string>
+    <string name="tip_jain_honey_body">Many energy bars and sweets contain honey. Consuming honey is considered one of the Mahavigais in Jain tradition.</string>
+    <string name="tip_jain_cheese_title">Source of Cheese</string>
+    <string name="tip_jain_cheese_body">Some cheeses are made using animal-derived rennet. Always verify the source before consuming.</string>
+    <string name="tip_jain_ecodes_title">Watch Out for E-Codes</string>
+    <string name="tip_jain_ecodes_body">E120 (Carmine), E441 (Gelatin), E901 (Beeswax) — all are animal-derived additives. Strictly avoid!</string>
+
+    <!-- Home Quick Tips - Swaminarayan -->
+    <string name="tip_swami_alcohol_title">Hidden Alcohol in Food?</string>
+    <string name="tip_swami_alcohol_body">Some sauces, vinegars and bakery items contain alcohol. Always scan the product first!</string>
+    <string name="tip_swami_onion_garlic_title">Check for Onion &amp; Garlic</string>
+    <string name="tip_swami_onion_garlic_body">The Allium family is strictly prohibited. Look for garlic powder or onion extract in spice blends.</string>
+    <string name="tip_swami_hing_title">Purity of Hing (Asafoetida)</string>
+    <string name="tip_swami_hing_body">Commercial Hing often contains wheat flour as a filler. Check its purity before use.</string>
+    <string name="tip_swami_shikshapatri_title">Shikshapatri Guidelines</string>
+    <string name="tip_swami_shikshapatri_body">Meat, eggs, alcohol and narcotics are prohibited as per Shikshapatri Verses 15 &amp; 18.</string>
+
+    <!-- Home Quick Tips - Plant Based / Other -->
+    <string name="tip_plant_based_title">Stay Plant-Based</string>
+    <string name="tip_plant_based_body">Look for plant-based alternatives to dairy and meat derivatives in packaged foods.</string>
+    <string name="tip_harmful_ecodes_title">Avoid Harmful E-Codes</string>
+    <string name="tip_harmful_ecodes_body">E120 (Carmine), E441 (Gelatin), E901 (Beeswax) — all are animal-derived additives. Watch out!</string>
 
     <!-- Camera Scan Screen -->
-    <string name="camera_title_barcode">Scan QR</string>
+    <string name="camera_title_barcode">Scan Barcode</string>
     <string name="camera_title_ocr">Capture Ingredients</string>
-    <string name="camera_hint_barcode">Align label inside box</string>
+    <string name="camera_hint_barcode">Align barcode inside box</string>
     <string name="camera_btn_gallery">GALLERY</string>
     <string name="camera_btn_flash">FLASH</string>
     <string name="camera_btn_retry">↺  Retry</string>
@@ -259,9 +297,36 @@
     <string name="result_disclaimer">ANALYSIS BASED ON COMMON DATABASE.\nALWAYS DOUBLE-CHECK LABELS.</string>
     <string name="result_loading_title">Scanning Product...</string>
     <string name="result_loading_subtitle">Please wait while we scan the barcode</string>
+    <string name="result_loading_ocr_title">Analyzing Ingredients...</string>
+    <string name="result_loading_ocr_subtitle">Please wait while we analyze the ingredient label</string>
     <string name="result_why_avoid">Why Avoid?</string>
     <string name="result_col_ingredient">INGREDIENT</string>
     <string name="result_col_status">STATUS</string>
+    <string name="result_unknown_product">Unknown Product</string>
+    <string name="result_barcode_label">Barcode: %1$s</string>
+    <string name="result_status_satvik">SATVIK</string>
+    <string name="result_status_avoid">AVOID</string>
+    <string name="result_subtitle_safe">Product is safe to consume</string>
+    <string name="result_subtitle_avoid">Contains restricted ingredients</string>
+    <string name="result_diet_label">Diet: %1$s</string>
+    <string name="result_safe_desc">This product contains no ingredients that conflict with your %1$s diet guidelines.</string>
+    <string name="result_items_found">%1$d FOUND</string>
+    <string name="result_avoid_note">According to %1$s guidelines, these items are avoided to maintain purity and mindful eating.</string>
+    <string name="result_non_permissible">Non-Permissible for %1$s</string>
+    <string name="result_religious_guidance_header">RELIGIOUS GUIDANCE</string>
+    <string name="result_industry_origin_header">INDUSTRY ORIGIN</string>
+    <string name="result_industry_origin_default">Derived from natural or industrial sources. Verify label for exact origin.</string>
+    <string name="result_btn_understand">I Understand</string>
+    <string name="dialog_offline_title">Connection Lost</string>
+    <string name="dialog_offline_subtitle">It seems you\'re offline. Please check your internet connection and try again.</string>
+    <string name="dialog_offline_btn_retry">Try Again</string>
+    <string name="product_not_found_title">Product Not Found</string>
+    <string name="product_not_found_desc">This product isn\'t in our database yet.\nYou can scan the ingredient label directly to check.</string>
+    <string name="product_not_found_btn_scan_label">Scan Ingredient Label</string>
+    <string name="lang_title">App Language</string>
+    <string name="lang_subtitle">Choose your preferred language for the app</string>
+    <string name="lang_toast_saved">Language set to %1$s ✓</string>
+    <string name="lang_footer">YOU CAN CHANGE YOUR LANGUAGE ANYTIME</string>
 
     <!-- History Screen -->
     <string name="history_filter_all">All</string>
@@ -352,10 +417,10 @@
     <string name="profile_guide_custom">Custom Ingredient Guide</string>
 
     <!-- Camera Permission & Error Messages -->
-    <string name="camera_permission_title">App Permission</string>
-    <string name="camera_permission_desc">Please enable Camera permission from App Settings</string>
+    <string name="camera_permission_title">Camera Permission</string>
+    <string name="camera_permission_desc">Please enable camera permission from Settings to scan products</string>
     <string name="camera_permission_cancel">Cancel</string>
-    <string name="camera_permission_settings">OK, Open Settings</string>
+    <string name="camera_permission_settings">Open Settings</string>
     <string name="camera_error_no_barcode">No barcode found in this image. Please try a clearer photo.</string>
     <string name="camera_error_barcode_failed">Barcode scan failed</string>
     <string name="camera_error_ocr_failed">OCR recognition failed</string>

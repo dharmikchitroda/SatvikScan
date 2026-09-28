@@ -241,11 +241,49 @@
     <!-- Home Screen -->
     <string name="home_did_you_know"> क्या आप जानते हैं?</string>
     <string name="home_swipe_hint">स्वाइप करें →</string>
+    <string name="home_footer_tagline_1">हर निवाले में शुद्धता</string>
+    <string name="home_footer_tagline_2">यही है SatvikScan! 🍃</string>
+
+    <!-- Home Quick Tips - Common -->
+    <string name="tip_read_labels_title">हमेशा लेबल पढ़ें</string>
+    <string name="tip_read_labels_body">सूची में पहला घटक सबसे अधिक मात्रा में होता है। उपयोग से पहले E-codes की जांच अवश्य करें!</string>
+    <string name="tip_barcode_accuracy_title">बारकोड स्कैन अधिक सटीक है</string>
+    <string name="tip_barcode_accuracy_body">पैकेज्ड सामान के लिए, फोटो स्कैन की तुलना में बारकोड स्कैन अधिक सटीक परिणाम देता है।</string>
+    <string name="tip_natural_flavors_title">\"नेचुरल फ्लेवर\" से सावधान</string>
+    <string name="tip_natural_flavors_body">\"नेचुरल फ्लेवर\" कभी-कभी पशु स्रोतों से भी बनाए जा सकते हैं। खाने से पहले जांचें!</string>
+    <string name="tip_satvik_food_title">सात्विक भोजन क्या है?</string>
+    <string name="tip_satvik_food_body">ताज़ा, प्राकृतिक और कम प्रोसेस्ड भोजन हमेशा सबसे सुरक्षित और स्वास्थ्यवर्धक विकल्प होता है।</string>
+
+    <!-- Home Quick Tips - Jain -->
+    <string name="tip_jain_roots_title">कंदमूल से सावधान</string>
+    <string name="tip_jain_roots_body">जैन आहार में आलू, प्याज, लहसुन और गाजर वर्जित हैं। सामग्री सूची अवश्य जांचें!</string>
+    <string name="tip_jain_honey_title">उत्पादों में शहद</string>
+    <string name="tip_jain_honey_body">कई एनर्जी बार और मिठाइयों में शहद होता है। जैन परंपरा में शहद का सेवन महाविगई माना गया है।</string>
+    <string name="tip_jain_cheese_title">चीज़ का स्रोत</string>
+    <string name="tip_jain_cheese_body">कुछ चीज़ पशु-जनित रेनेट (Rennet) से बनते हैं। सेवन से पहले स्रोत जांचें।</string>
+    <string name="tip_jain_ecodes_title">E-Codes से सावधान</string>
+    <string name="tip_jain_ecodes_body">E120 (कारमाइन), E441 (जिलेटिन), E901 (मोम) — ये सभी पशु-जनित एडिटिव्स हैं। पूरी तरह बचें!</string>
+
+    <!-- Home Quick Tips - Swaminarayan -->
+    <string name="tip_swami_alcohol_title">खाने में छुपा अल्कोहल?</string>
+    <string name="tip_swami_alcohol_body">कुछ सॉस, सिरके और बेकरी उत्पादों में अल्कोहल होता है। उत्पाद को पहले स्कैन करें!</string>
+    <string name="tip_swami_onion_garlic_title">प्याज और लहसुन की जांच</string>
+    <string name="tip_swami_onion_garlic_body">लहसुन और प्याज पूरी तरह वर्जित हैं। मसालों में लहसुन पाउडर या प्याज का अर्क देखें।</string>
+    <string name="tip_swami_hing_title">हींग की शुद्धता</string>
+    <string name="tip_swami_hing_body">बाजारू हींग में अक्सर मैदा या गेहूं का आटा मिलाया जाता है। उपयोग से पहले शुद्धता जांचें।</string>
+    <string name="tip_swami_shikshapatri_title">शिक्षापत्री आज्ञा</string>
+    <string name="tip_swami_shikshapatri_body">शिक्षापत्री श्लोक 15 और 18 के अनुसार मांस, अंडा, मदिरा और नशीले पदार्थ वर्जित हैं।</string>
+
+    <!-- Home Quick Tips - Plant Based / Other -->
+    <string name="tip_plant_based_title">वनस्पति आधारित विकल्प</string>
+    <string name="tip_plant_based_body">पैकेज्ड फूड में डेयरी और पशु तत्वों के सुरक्षित वनस्पति-आधारित विकल्प चुनें।</string>
+    <string name="tip_harmful_ecodes_title">हानिकारक E-Codes से बचें</string>
+    <string name="tip_harmful_ecodes_body">E120 (कारमाइन), E441 (जिलेटिन), E901 (मोम) — ये सभी पशु जनित एडिटिव्स हैं!</string>
 
     <!-- Camera Scan Screen -->
-    <string name="camera_title_barcode">QR स्कैन करें</string>
-    <string name="camera_title_ocr">सामग्री कैप्चर करें</string>
-    <string name="camera_hint_barcode">लेबल को बॉक्स के अंदर रखें</string>
+    <string name="camera_title_barcode">बारकोड स्कैन करें</string>
+    <string name="camera_title_ocr">सामग्री का फोटो लें</string>
+    <string name="camera_hint_barcode">बारकोड को बॉक्स के अंदर रखें</string>
     <string name="camera_btn_gallery">गैलरी</string>
     <string name="camera_btn_flash">फ्लैश</string>
     <string name="camera_btn_retry">↺  फिर कोशिश करें</string>
@@ -260,9 +298,36 @@
     <string name="result_disclaimer">सामान्य डेटाबेस पर आधारित विश्लेषण।\nहमेशा लेबल जांचें।</string>
     <string name="result_loading_title">उत्पाद स्कैन हो रहा है...</string>
     <string name="result_loading_subtitle">बारकोड स्कैन होने तक प्रतीक्षा करें</string>
+    <string name="result_loading_ocr_title">सामग्री का विश्लेषण हो रहा है...</string>
+    <string name="result_loading_ocr_subtitle">सामग्री लेबल का विश्लेषण होने तक प्रतीक्षा करें</string>
     <string name="result_why_avoid">क्यों बचें?</string>
     <string name="result_col_ingredient">सामग्री</string>
     <string name="result_col_status">स्थिति</string>
+    <string name="result_unknown_product">अज्ञात उत्पाद</string>
+    <string name="result_barcode_label">बारकोड: %1$s</string>
+    <string name="result_status_satvik">सात्विक</string>
+    <string name="result_status_avoid">वर्जित</string>
+    <string name="result_subtitle_safe">यह उत्पाद उपभोग के लिए सुरक्षित है</string>
+    <string name="result_subtitle_avoid">प्रतिबंधित सामग्री शामिल है</string>
+    <string name="result_diet_label">आहार: %1$s</string>
+    <string name="result_safe_desc">इस उत्पाद में ऐसी कोई सामग्री नहीं है जो आपके %1$s आहार नियमों के विरुद्ध हो।</string>
+    <string name="result_items_found">%1$d मिली</string>
+    <string name="result_avoid_note">%1$s नियमों के अनुसार, पवित्रता और सचेत खानपान बनाए रखने के लिए इन वस्तुओं से बचा जाता है।</string>
+    <string name="result_non_permissible">%1$s के लिए अस्वीकार्य</string>
+    <string name="result_religious_guidance_header">धार्मिक मार्गदर्शन</string>
+    <string name="result_industry_origin_header">औद्योगिक उत्पत्ति</string>
+    <string name="result_industry_origin_default">प्राकृतिक या औद्योगिक स्रोतों से प्राप्त। सटीक उत्पत्ति के लिए लेबल की जाँच करें।</string>
+    <string name="result_btn_understand">मैं समझ गया</string>
+    <string name="dialog_offline_title">कनेक्शन टूट गया</string>
+    <string name="dialog_offline_subtitle">ऐसा लगता है कि आप ऑफ़लाइन हैं। कृपया अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।</string>
+    <string name="dialog_offline_btn_retry">पुनः प्रयास करें</string>
+    <string name="product_not_found_title">उत्पाद नहीं मिला</string>
+    <string name="product_not_found_desc">यह उत्पाद अभी हमारे डेटाबेस में नहीं है।\nआप जांच के लिए सीधे सामग्री लेबल स्कैन कर सकते हैं।</string>
+    <string name="product_not_found_btn_scan_label">सामग्री लेबल स्कैन करें</string>
+    <string name="lang_title">ऐप भाषा</string>
+    <string name="lang_subtitle">ऐप के लिए अपनी पसंदीदा भाषा चुनें</string>
+    <string name="lang_toast_saved">भाषा %1$s पर सेट की गई ✓</string>
+    <string name="lang_footer">आप कभी भी अपनी भाषा बदल सकते हैं</string>
 
     <!-- History Screen -->
     <string name="history_filter_all">सभी</string>
@@ -353,8 +418,8 @@
     <string name="profile_guide_custom">कस्टम सामग्री मार्गदर्शिका</string>
 
     <!-- Camera Permission & Error Messages -->
-    <string name="camera_permission_title">ऐप अनुमति</string>
-    <string name="camera_permission_desc">कृपया ऐप सेटिंग्स से कैमरा अनुमति सक्षम करें</string>
+    <string name="camera_permission_title">कैमरा अनुमति</string>
+    <string name="camera_permission_desc">उत्पाद स्कैन करने के लिए कृपया सेटिंग्स से कैमरा अनुमति सक्षम करें</string>
     <string name="camera_permission_cancel">रद्द करें</string>
     <string name="camera_permission_settings">सेटिंग्स खोलें</string>
     <string name="camera_error_no_barcode">इस छवि में कोई बारकोड नहीं मिला। कृपया स्पष्ट फोटो से प्रयास करें।</string>

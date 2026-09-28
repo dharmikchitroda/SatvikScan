@@ -43,6 +43,8 @@ import androidx.compose.ui.platform.LocalContext
 import android.widget.Toast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import com.example.satvikscan.R
 import com.example.satvikscan.viewmodel.SatvikViewModel
 
 // Data model for language options
@@ -123,7 +125,7 @@ fun LanguageSelectionScreen(
             }
 
             Text(
-                text = "App Language",
+                text = stringResource(R.string.lang_title),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = brandGreen
@@ -142,7 +144,7 @@ fun LanguageSelectionScreen(
         ) {
             // Subtitle
             Text(
-                text = "Choose your preferred language for the app",
+                text = stringResource(R.string.lang_subtitle),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal,
                 color = Color(0xFF666666),
@@ -187,7 +189,7 @@ fun LanguageSelectionScreen(
                             "hi" -> "हिन्दी"
                             else -> "English"
                         }
-                        Toast.makeText(context, "Language set to $langLabel ✓", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.lang_toast_saved, langLabel), Toast.LENGTH_SHORT).show()
                     }
                     onContinueClick()
                 },
@@ -209,7 +211,7 @@ fun LanguageSelectionScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Continue",
+                        text = stringResource(R.string.welcome_btn_continue),
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -227,7 +229,7 @@ fun LanguageSelectionScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "YOU CAN CHANGE YOUR LANGUAGE ANYTIME",
+                text = stringResource(R.string.lang_footer),
                 fontSize = 10.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF9E9E9E),

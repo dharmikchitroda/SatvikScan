@@ -178,7 +178,7 @@
     <string name="swami_meat_title">માંસ, ઇંડા અને પ્રાણીજ આહાર</string>
     <string name="swami_meat_subtitle">માંસ, ચિકન, માછલી, સીફૂડ, ઝીંગા, કરચલો, ઓઇસ્ટર, ડુક્કર, ગાય, બકરું, ટર્કી, ઈંડા</string>
     <string name="swami_meat_rel">"ભગવાન સ્વામિનારાયણે શિક્ષાપત્રી શ્લોક ૧૫ માં માંસાહાર અને ઈંડા સહિત તમામ પ્રાણીજન્ય ખોરાકનો ત્યાગ કરવાનો આદેશ આપ્યો છે. આ અહિંસા અને શુદ્ધ સાત્વિક આહારના સિદ્ધાંત પર આધારિત છે. (શિક્ષાપત્રી – શ્લોક ૧૫)"</string>
-    <string name="swami_meat_sci">પ્રાણી, પક્ષી અથવા જળચર જીવમાંથી મેળવવામાં આવતા Animal-derived Food Products.</string>
+    <string name="swami_meat_sci">પ્રાણી, પક્ષી અથવા જળચર જીવમાંથી મેળવવામાં આવતા પ્રાણીજન્ય ખાદ્ય પદાર્થો.</string>
     <string name="swami_meat_chip1">માંસાહાર</string>
     <string name="swami_meat_chip2">અહિંસા</string>
 
@@ -186,25 +186,25 @@
     <string name="swami_allium_title">ડુંગળી અને લસણ</string>
     <string name="swami_allium_subtitle">Allium કુળ – ડુંગળી, લસણ, લીક, શેલોટ, ચાઈવ્સ</string>
     <string name="swami_allium_rel">"સ્વામિનારાયણ પરંપરામાં આ Allium કુળના પદાર્થોને રાજસિક અને તામસિક માનવામાં આવે છે. મનમાં કામ, ક્રોધ, ચંચળતા તથા દુર્ગંધ વધે છે, તેથી તેનો ત્યાગ કરવામાં આવે છે. (શિક્ષાપત્રી પરંપરા તથા BAPS/વડતાલ માર્ગદર્શન)"</string>
-    <string name="swami_allium_sci">Allium પરિવારની વનસ્પતિઓ, જેમાં સલ્ફરયુક્ત સંયોજનો (Sulfur Compounds) વધુ હોય છે.</string>
+    <string name="swami_allium_sci">Allium કુળની વનસ્પતિઓ, જેમાં સલ્ફરયુક્ત સંયોજનોનું પ્રમાણ વધુ હોય છે.</string>
 
     <!-- 3. Alcohol (All varieties) -->
     <string name="swami_alcohol_title">દારૂ અને મદ્યપાન</string>
     <string name="swami_alcohol_subtitle">વાઇન, બિયર, રમ, વ્હિસ્કી, બ્રાન્ડી, વોડકા, જિન, સ્પિરિટ, Food Ethanol</string>
     <string name="swami_alcohol_rel">"શિક્ષાપત્રી શ્લોક ૧૫ અને ૧૮ મુજબ તમામ પ્રકારના મદ્યપાન અને નશીલા પદાર્થોનો ત્યાગ કરવો. (શિક્ષાપત્રી – શ્લોક ૧૫ અને ૧૮)"</string>
-    <string name="swami_alcohol_sci">Fermentation અથવા Distillation દ્વારા બનતા Alcoholic Products.</string>
+    <string name="swami_alcohol_sci">આથવણ અથવા નિસ્યંદન પ્રક્રિયા દ્વારા બનતા મદ્યપાનના પદાર્થો.</string>
 
     <!-- 4. Cannabis & Narcotics -->
     <string name="swami_narcotics_title">ભાંગ અને નશીલા પદાર્થો</string>
     <string name="swami_narcotics_subtitle">ભાંગ, ગાંજો, અફીણ, હશીશ તથા અન્ય નશીલા પદાર્થો</string>
     <string name="swami_narcotics_rel">"મન અને ઇન્દ્રિયોને અશુદ્ધ બનાવતા હોવાથી સ્વામિનારાયણ પરંપરામાં આવા તમામ નશીલા પદાર્થોનો સંપૂર્ણ ત્યાગ કરવાનો નિર્દેશ આપવામાં આવ્યો છે. (શિક્ષાપત્રી – શ્લોક ૧૮)"</string>
-    <string name="swami_narcotics_sci">Psychoactive / Narcotic Substances.</string>
+    <string name="swami_narcotics_sci">મન અને ચેતાતંત્રની કાર્યક્ષમતાને અસર કરતા મન:પ્રભાવક અથવા નશીલા પદાર્થો.</string>
     <string name="swami_narcotics_chip1">નશા મુક્તિ</string>
     <string name="swami_narcotics_chip2">માનસિક પવિત્રતા</string>
 
     <!-- 5. Animal-derived Additives (E120/E441/E542/E901/E904/E1105) -->
     <string name="swami_additives_animal_title">E120 / E441 / E542 / E901 / E904 / E1105</string>
-    <string name="swami_additives_animal_subtitle">Carmine, Gelatin, Bone Phosphate, Beeswax, Shellac, Lysozyme</string>
+    <string name="swami_additives_animal_subtitle">કાર્માઈન, જિલેટીન, બોન ફોસ્ફેટ, મધમાખીનું મીણ, શેલેક, લાઇસોઝાઇમ</string>
     <string name="swami_additives_animal_rel">"આ ફૂડ એડિટિવ્સ જીવાતો, મધમાખી, ઈંડા અથવા પ્રાણીજન્ય સ્ત્રોતોમાંથી મેળવવામાં આવતા હોવાથી સ્વામિનારાયણ આહાર સિદ્ધાંતો અનુસાર સ્વીકાર્ય નથી. (શિક્ષાપત્રીમાં પ્રાણીજન્ય આહારના ત્યાગનો સિદ્ધાંત તથા સ્વામિનારાયણ પરંપરાગત માર્ગદર્શન)"</string>
     <string name="swami_additives_animal_sci">અનુક્રમે કોચિનિયલ જીવાતમાંથી મળતો કુદરતી રંગ, પ્રાણીના કોલાજનમાંથી બનતો જેલિંગ એજન્ટ, પ્રાણીના હાડકાંમાંથી મળતું બોન ફોસ્ફેટ, મધમાખીનું કુદરતી મીણ, લાખની જીવાત દ્વારા ઉત્પન્ન થતું કુદરતી રેઝિન અને ઈંડાના સફેદ ભાગમાંથી મળતું એન્ઝાઇમ.</string>
     <string name="swami_additives_animal_chip1">પ્રાણીજન્ય</string>
@@ -240,11 +240,49 @@
     <!-- Home Screen -->
     <string name="home_did_you_know"> શું તમે જાણો છો?</string>
     <string name="home_swipe_hint">સ્વાઇપ કરો →</string>
+    <string name="home_footer_tagline_1">દરેક કોળિયામાં શુદ્ધતા</string>
+    <string name="home_footer_tagline_2">આ જ છે SatvikScan! 🍃</string>
+
+    <!-- Home Quick Tips - Common -->
+    <string name="tip_read_labels_title">હંમેશાં લેબલ વાંચો</string>
+    <string name="tip_read_labels_body">યાદીમાં સૌથી પહેલો ઘટક સૌથી વધુ માત્રામાં હોય છે. ખાવા પહેલાં E-codes ખાસ તપાસો!</string>
+    <string name="tip_barcode_accuracy_title">બારકોડ સ્કેન વધુ સચોટ છે</string>
+    <string name="tip_barcode_accuracy_body">પેકેજ્ડ વસ્તુઓ માટે, ફોટો સ્કેન કરતા બારકોડ સ્કેન વધુ સચોટ માહિતી આપે છે.</string>
+    <string name="tip_natural_flavors_title">\"નેચરલ ફ્લેવર્સ\" સાવધાની</string>
+    <string name="tip_natural_flavors_body">\"નેચરલ ફ્લેવર્સ\" ક્યારેક પ્રાણીજન્ય સ્ત્રોતોમાંથી પણ હોઈ શકે છે. ખાતા પહેલાં ચકાસો!</string>
+    <string name="tip_satvik_food_title">સાત્વિક આહાર શું છે?</string>
+    <string name="tip_satvik_food_body">તાજો, કુદરતી અને ઓછા પ્રોસેસ કરેલો ખોરાક સામાન્ય રીતે સલામત અને આરોગ્યપ્રદ પસંદગી છે.</string>
+
+    <!-- Home Quick Tips - Jain -->
+    <string name="tip_jain_roots_title">કંદમૂળ સાવધાની</string>
+    <string name="tip_jain_roots_body">જૈન આહારમાં બટાકા, ડુંગળી, લસણ અને ગાજર વર્જિત છે. સામગ્રીની યાદી ખાસ તપાસો!</string>
+    <string name="tip_jain_honey_title">પ્રોડક્ટ્સમાં મધ</string>
+    <string name="tip_jain_honey_body">ઘણા એનર્જી બાર અને મીઠાઈઓમાં મધ હોય છે. જૈન પરંપરામાં મધ મહાવિગઈમાંનું એક માનવામાં આવે છે.</string>
+    <string name="tip_jain_cheese_title">ચીઝનો સ્ત્રોત</string>
+    <string name="tip_jain_cheese_body">કેટલાક ચીઝ પ્રાણીજન્ય રેનેટ (Rennet) દ્વારા બને છે. ઉપયોગ પહેલાં સ્ત્રોત ચકાસો.</string>
+    <string name="tip_jain_ecodes_title">E-Codes થી સાવધાન</string>
+    <string name="tip_jain_ecodes_body">E120 (કાર્માઇન), E441 (જિલેટીન), E901 (મીણ) — આ બધા પ્રાણીજન્ય છે. સંપૂર્ણપણે ટાળો!</string>
+
+    <!-- Home Quick Tips - Swaminarayan -->
+    <string name="tip_swami_alcohol_title">ખોરાકમાં છુપાયેલો આલ્કોહોલ?</string>
+    <string name="tip_swami_alcohol_body">કેટલાક સોસ, વિનેગર અને બેકરી વસ્તુઓમાં આલ્કોહોલ હોય છે. પહેલાં સ્કેન કરો!</string>
+    <string name="tip_swami_onion_garlic_title">ડુંગળી અને લસણની તપાસ</string>
+    <string name="tip_swami_onion_garlic_body">ડુંગળી અને લસણનો સંપૂર્ણ ત્યાગ કરવામાં આવે છે. મસાલામાં લસણ પાવડર કે ડુંગળીનો અર્ક તપાસો.</string>
+    <string name="tip_swami_hing_title">હિંગની પવિત્રતા</string>
+    <string name="tip_swami_hing_body">બજારમાં મળતી હિંગમાં ઘણીવાર ઘઉંનો લોટ અથવા અન્ય ફિલર ઉમેરવામાં આવેલો હોય છે. શુદ્ધતા ચકાસો.</string>
+    <string name="tip_swami_shikshapatri_title">શિક્ષાપત્રી નિયમો</string>
+    <string name="tip_swami_shikshapatri_body">શિક્ષાપત્રી શ્લોક ૧૫ અને ૧૮ મુજબ માંસ, ઈંડાં, દારૂ અને નશાકારક પદાર્થોનો ત્યાગ કરવો.</string>
+
+    <!-- Home Quick Tips - Plant Based / Other -->
+    <string name="tip_plant_based_title">વનસ્પતિ આધારિત આહાર</string>
+    <string name="tip_plant_based_body">પેકેજ્ડ ફૂડમાં ડેરી અને માંસના ઘટકોની જગ્યાએ વનસ્પતિ-આધારિત વિકલ્પો પસંદ કરો.</string>
+    <string name="tip_harmful_ecodes_title">હાનિકારક E-Codes થી બચો</string>
+    <string name="tip_harmful_ecodes_body">E120 (કાર્માઇન), E441 (જિલેટીન), E901 (મીણ) — આ બધા પ્રાણીજન્ય તત્વો છે!</string>
 
     <!-- Camera Scan Screen -->
-    <string name="camera_title_barcode">QR સ્કેન કરો</string>
-    <string name="camera_title_ocr">સામગ્રી કેપ્ચર કરો</string>
-    <string name="camera_hint_barcode">લેબલ બૉક્સની અંદર રાખો</string>
+    <string name="camera_title_barcode">બારકોડ સ્કેન કરો</string>
+    <string name="camera_title_ocr">સામગ્રીનો ફોટો લો</string>
+    <string name="camera_hint_barcode">બારકોડ બોક્સની અંદર રાખો</string>
     <string name="camera_btn_gallery">ગૅલેરી</string>
     <string name="camera_btn_flash">ફ્લૅશ</string>
     <string name="camera_btn_retry">↺  ફરી પ્રયાસ</string>
@@ -259,9 +297,36 @@
     <string name="result_disclaimer">સામાન્ય ડેટાબેઝ પર આધારિત વિશ્લેષણ.\nહંમેશા લેબલ ચકાસો.</string>
     <string name="result_loading_title">ઉત્પાદન સ્કેન થઈ રહ્યું છે...</string>
     <string name="result_loading_subtitle">બારકોડ સ્કેન થાય ત્યાં સુધી રાહ જુઓ</string>
+    <string name="result_loading_ocr_title">સામગ્રીનું વિશ્લેષણ થઈ રહ્યું છે...</string>
+    <string name="result_loading_ocr_subtitle">સામગ્રી લેબલનું વિશ્લેષણ થાય ત્યાં સુધી રાહ જુઓ</string>
     <string name="result_why_avoid">કેમ ટાળવું?</string>
     <string name="result_col_ingredient">સામગ્રી</string>
     <string name="result_col_status">સ્થિતિ</string>
+    <string name="result_unknown_product">અજ્ઞાત ઉત્પાદન</string>
+    <string name="result_barcode_label">બારકોડ: %1$s</string>
+    <string name="result_status_satvik">સાત્વિક</string>
+    <string name="result_status_avoid">ટાળો</string>
+    <string name="result_subtitle_safe">આ ઉત્પાદન ઉપયોગ માટે સલામત છે</string>
+    <string name="result_subtitle_avoid">પ્રતિબંધિત સામગ્રી ધરાવે છે</string>
+    <string name="result_diet_label">આહાર: %1$s</string>
+    <string name="result_safe_desc">આ પ્રોડક્ટમાં એવી કોઈ સામગ્રી નથી જે તમારા %1$s આહાર નિયમો સાથે વિરોધાભાસ ધરાવતી હોય.</string>
+    <string name="result_items_found">%1$d મળી</string>
+    <string name="result_avoid_note">%1$s નિયમો અનુસાર, પવિત્રતા અને સભાન આહાર જાળવવા માટે આ ઘટકોનો ત્યાગ કરવામાં આવે છે.</string>
+    <string name="result_non_permissible">%1$s માટે અસ્વીકાર્ય</string>
+    <string name="result_religious_guidance_header">ધાર્મિક માર્ગદર્શન</string>
+    <string name="result_industry_origin_header">ઔદ્યોગિક સ્ત્રોત</string>
+    <string name="result_industry_origin_default">કુદરતી અથવા ઔદ્યોગિક સ્ત્રોતોમાંથી મેળવેલ. ચોક્કસ સ્ત્રોત માટે લેબલ તપાસો.</string>
+    <string name="result_btn_understand">હું સમજી ગયો</string>
+    <string name="dialog_offline_title">કનેક્શન કપાઈ ગયું</string>
+    <string name="dialog_offline_subtitle">તમે ઑફલાઇન હોય તેવું લાગે છે. કૃપા કરીને તમારું ઇન્ટરનેટ કનેક્શન તપાસો અને ફરી પ્રયાસ કરો.</string>
+    <string name="dialog_offline_btn_retry">ફરી પ્રયાસ કરો</string>
+    <string name="product_not_found_title">ઉત્પાદન મળ્યું નથી</string>
+    <string name="product_not_found_desc">આ ઉત્પાદન હજુ અમારા ડેટાબેઝમાં નથી.\nતમે તપાસવા માટે સીધા જ સામગ્રી લેબલને સ્કેન કરી શકો છો.</string>
+    <string name="product_not_found_btn_scan_label">સામગ્રી લેબલ સ્કેન કરો</string>
+    <string name="lang_title">એપ ભાષા</string>
+    <string name="lang_subtitle">એપ માટે તમારી પસંદગીની ભાષા પસંદ કરો</string>
+    <string name="lang_toast_saved">ભાષા %1$s પર સેટ થઈ ✓</string>
+    <string name="lang_footer">તમે કોઈપણ સમયે તમારી ભાષા બદલી શકો છો</string>
 
     <!-- History Screen -->
     <string name="history_filter_all">બધા</string>
@@ -270,7 +335,7 @@
     <string name="history_empty_title">હજુ કોઈ સ્કેન નથી.</string>
     <string name="history_empty_desc">તમારી પવિત્ર યાત્રા અહીંથી શરૂ થાય છે.\nખાદ્ય ઉત્પાદનો સ્કેન કરીને\nસાત્વિક અનુપાલન તપાસો.</string>
     <string name="history_empty_btn">સ્કેન શરૂ કરો</string>
-    <string name="history_empty_footer">સચેત માર્ગને શોધો</string>
+    <string name="history_empty_footer">સભાનતાના માર્ગને અપનાવો</string>
     <string name="history_no_items">કોઈ ઇતિહાસ મળ્યો નહીં.</string>
     <string name="history_menu_delete">કાઢી નાખો</string>
     <string name="history_promo_title">તમારા પેકેટની\nપવિત્રતા જાળવો.</string>
@@ -306,13 +371,13 @@
     <string name="feedback_btn_submit">પ્રતિક્રિયા મોકલો</string>
 
     <!-- Custom Exclusions Screen -->
-    <string name="exclusions_title">કસ્ટમ બાકાત સામગ્રી</string>
+    <string name="exclusions_title">કસ્ટમ બાકાત ઘટકો</string>
     <string name="exclusions_subtitle">તમે જે ઘટકોથી બચવા માંગો છો તેને શોધો અથવા મેન્યુઅલી ઉમેરો.</string>
     <string name="exclusions_search_placeholder">સામગ્રી શોધો...</string>
     <string name="exclusions_btn_add">ઉમેરો</string>
     <string name="exclusions_header_common">સામાન્ય એલર્જન</string>
     <string name="exclusions_tap_to_exclude">બાકાત કરવા માટે ટેપ કરો</string>
-    <string name="exclusions_header_selected">ત્યાગ કરવા માટે પસંદ કરેલ</string>
+    <string name="exclusions_header_selected">ટાળવા માટે પસંદ કરેલા ઘટકો</string>
     <string name="exclusions_empty_selected">હજુ સુધી કોઈ સામગ્રી પસંદ કરેલ નથી.</string>
     <string name="exclusions_purity_title">તમારી પવિત્રતાના નિયમો સૌથી મહત્વપૂર્ણ છે.</string>
     <string name="exclusions_purity_desc">ચોક્કસ ઘટકો ઉમેરવાથી દરેક સ્કેન તમારી સાત્વિક યાત્રાને અનુરૂપ રહેશે.</string>
@@ -352,8 +417,8 @@
     <string name="profile_guide_custom">કસ્ટમ સામગ્રી માર્ગદર્શિકા</string>
 
     <!-- Camera Permission & Error Messages -->
-    <string name="camera_permission_title">એપ પરવાનગી</string>
-    <string name="camera_permission_desc">કૃપા કરીને સેટિંગ્સમાંથી કેમેરા પરવાનગી સક્ષમ કરો</string>
+    <string name="camera_permission_title">કેમેરા પરવાનગી</string>
+    <string name="camera_permission_desc">પ્રોડક્ટ સ્કેન કરવા માટે કૃપા કરીને સેટિંગ્સમાંથી કેમેરા પરવાનગી સક્ષમ કરો</string>
     <string name="camera_permission_cancel">રદ કરો</string>
     <string name="camera_permission_settings">સેટિંગ્સ ખોલો</string>
     <string name="camera_error_no_barcode">આ ઈમેજમાં કોઈ બારકોડ મળ્યો નથી. સ્પષ્ટ ફોટો સાથે પ્રયાસ કરો.</string>
@@ -370,13 +435,13 @@
     <string name="about_mission_title">અમારું લક્ષ્ય</string>
     <string name="about_mission_desc">SatvikScan નો ઉદ્દેશ્ય લોકોને તેમના ધાર્મિક, સાંસ્કૃતિક અને વ્યક્તિગત આહાર અનુસાર ૧૦૦% શુદ્ધ અને સાચો ખોરાક પસંદ કરવામાં મદદ કરવાનો છે.</string>
     <string name="about_focus_label">મુખ્ય ધ્યાન: </string>
-    <string name="about_focus_desc">પેકેજ્ડ ફૂડની સામગ્રી અને છુપાયેલા કેમિકલ્સ (E-Numbers) ને એક ક્લિકમાં સ્કેન કરીને સત્ય જણાવવું.</string>
+    <string name="about_focus_desc">પેકેજ્ડ ફૂડની સામગ્રી અને છુપાયેલા એડિટિવ્સ (E-Numbers) ને એક ક્લિકમાં સ્કેન કરીને સત્ય જણાવવું.</string>
     <string name="about_what_is_satvik">સાત્વિક આહાર શું છે?</string>
     <string name="about_sattva_title">સત્વ</string>
     <string name="about_sattva_desc">તાજો, શુદ્ધ, કુદરતી અને અહિંસક આહાર.</string>
     <string name="about_no_onion_garlic_title">ડુંગળી-લસણ મુક્ત</string>
     <string name="about_no_onion_garlic_desc">તામસિક અને રાજસિક તત્વોનો ત્યાગ.</string>
-    <string name="about_hidden_nonveg_title">છુપા માંસાહારથી મુક્ત</string>
+    <string name="about_hidden_nonveg_title">છુપાયેલા પ્રાણીજન્ય ઘટકોથી મુક્ત</string>
     <string name="about_hidden_nonveg_desc">જિલેટીન, કાર્માઈન, રેનેટ, બોન ચારથી સુરક્ષા.</string>
     <string name="about_diets_supported">સમર્થિત આહાર</string>
     <string name="about_diet_vegan">વીગન</string>
@@ -389,7 +454,7 @@
     <string name="about_made_with">બનાવવામાં આવ્યું છે </string>
     <string name="about_made_with_suffix"> સાથે સભાન આહાર માટે</string>
     <string name="about_privacy_policy">ગોપનીયતા નીતિ</string>
-    <string name="about_contact_support">સહાયક સંપર્ક</string>
+    <string name="about_contact_support">સહાય માટે સંપર્ક કરો</string>
     <string name="about_rate_us">રેટિંગ આપો</string>
 
     <!-- Privacy Policy Screen -->
@@ -410,12 +475,12 @@
     <string name="privacy_feature_device_storage_title">ઉપકરણ પર સંગ્રહ</string>
     <string name="privacy_feature_device_storage_desc">સ્કેન ઇતિહાસ અને કસ્ટમ બાકાત તમારા ફોન પર જ રહે છે.</string>
     <string name="privacy_feature_no_cloud_title">કોઈ ક્લાઉડ અપલોડ નહીં</string>
-    <string name="privacy_feature_no_cloud_desc">તમારી આહાર પસંદગીઓ ક્યારેય સર્વર પર મોકલવામાં આવતી નથી.</string>
+    <string name="privacy_feature_no_cloud_desc">તમારી આહાર પસંદગીઓ અને સ્કેન ક્યારેય રિમોટ સર્વર પર મોકલવામાં આવતા નથી.</string>
     <string name="privacy_camera_title">કેમેરા પરવાનગી</string>
     <string name="privacy_feature_camera_scan_title">રીઅલ-ટાઇમ લેબલ સ્કેનિંગ</string>
     <string name="privacy_feature_camera_scan_desc">Google ML Kit દ્વારા લાઇવ બારકોડ અને સામગ્રી OCR વાંચવા માટે કેમેરા વપરાય છે.</string>
     <string name="privacy_feature_no_record_title">કોઈ ઈમેજ રેકોર્ડિંગ નથી</string>
-    <string name="privacy_feature_no_record_desc">ફોટા માત્ર રીઅલ-ટાઇમ મેમરીમાં પ્રોસેસ થઈને તરત જ કાઢી નાખવામાં આવે છે.</string>
+    <string name="privacy_feature_no_record_desc">ફ્રેમ્સ માત્ર રીઅલ-ટાઇમ મેમરીમાં પ્રક્રિયા થઈને તરત જ કાઢી નાખવામાં આવે છે.</string>
     <string name="privacy_network_title">નેટવર્ક અને API પારદર્શિતા</string>
     <string name="privacy_feature_off_api_title">ઓપન ફૂડ ફેક્ટ્સ બારકોડ API</string>
     <string name="privacy_feature_off_api_desc">ઉત્પાદનની વિગતો મેળવવા માટે માત્ર બારકોડ નંબર ક્વેરી કરવામાં આવે છે.</string>

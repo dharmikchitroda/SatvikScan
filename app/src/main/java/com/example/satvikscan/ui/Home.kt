@@ -51,8 +51,8 @@ import kotlin.math.absoluteValue
 // Data model for a tip card
 data class QuickTip(
     val emoji: String,
-    val title: String,
-    val body: String,
+    val titleRes: Int,
+    val bodyRes: Int,
     val bgColor: Color,
     val accentColor: Color
 )
@@ -61,29 +61,29 @@ fun getQuickTips(dietName: String): List<QuickTip> {
     val commonTips = listOf(
         QuickTip(
             emoji = "🔍",
-            title = "Always Read Labels",
-            body = "The first ingredient listed is present in the highest quantity. Always check E-codes carefully before consuming!",
+            titleRes = R.string.tip_read_labels_title,
+            bodyRes = R.string.tip_read_labels_body,
             bgColor = Color(0xFFE8F5E9),
             accentColor = Color(0xFF2E7D32)
         ),
         QuickTip(
             emoji = "📦",
-            title = "Barcode Scan is More Accurate",
-            body = "For packaged goods, barcode scanning gives more accurate and detailed results than a photo scan.",
+            titleRes = R.string.tip_barcode_accuracy_title,
+            bodyRes = R.string.tip_barcode_accuracy_body,
             bgColor = Color(0xFFE3F2FD),
             accentColor = Color(0xFF1565C0)
         ),
         QuickTip(
             emoji = "⚠️",
-            title = "\"Natural Flavors\" Alert",
-            body = "\"Natural flavors\" can sometimes be derived from animal sources. Always verify before consuming!",
+            titleRes = R.string.tip_natural_flavors_title,
+            bodyRes = R.string.tip_natural_flavors_body,
             bgColor = Color(0xFFFFF8E1),
             accentColor = Color(0xFFF57F17)
         ),
         QuickTip(
             emoji = "🌿",
-            title = "What is Satvik Food?",
-            body = "Fresh, whole and minimally processed foods are always the safest and healthiest choice.",
+            titleRes = R.string.tip_satvik_food_title,
+            bodyRes = R.string.tip_satvik_food_body,
             bgColor = Color(0xFFE8F5E9),
             accentColor = Color(0xFF388E3C)
         )
@@ -93,29 +93,29 @@ fun getQuickTips(dietName: String): List<QuickTip> {
         dietName.contains("Jain", ignoreCase = true) -> listOf(
             QuickTip(
                 emoji = "🥕",
-                title = "Root Vegetables Alert",
-                body = "Potatoes, onions, garlic and carrots are avoided in the Jain diet. Always check the ingredients list!",
+                titleRes = R.string.tip_jain_roots_title,
+                bodyRes = R.string.tip_jain_roots_body,
                 bgColor = Color(0xFFFCE4EC),
                 accentColor = Color(0xFFC62828)
             ),
             QuickTip(
                 emoji = "🍯",
-                title = "Honey in Products",
-                body = "Many energy bars and sweets contain honey. Consuming honey is considered a major sin (Mahavigai) in Jain tradition.",
+                titleRes = R.string.tip_jain_honey_title,
+                bodyRes = R.string.tip_jain_honey_body,
                 bgColor = Color(0xFFFFF3E0),
                 accentColor = Color(0xFFE65100)
             ),
             QuickTip(
                 emoji = "🧀",
-                title = "Source of Cheese",
-                body = "Some cheeses are made using animal-derived rennet. Always verify the source before consuming.",
+                titleRes = R.string.tip_jain_cheese_title,
+                bodyRes = R.string.tip_jain_cheese_body,
                 bgColor = Color(0xFFF3E5F5),
                 accentColor = Color(0xFF6A1B9A)
             ),
             QuickTip(
                 emoji = "🌾",
-                title = "Watch Out for E-Codes",
-                body = "E120 (Carmine), E441 (Gelatin), E901 (Beeswax) — all are animal-derived additives. Strictly avoid!",
+                titleRes = R.string.tip_jain_ecodes_title,
+                bodyRes = R.string.tip_jain_ecodes_body,
                 bgColor = Color(0xFFFCE4EC),
                 accentColor = Color(0xFFB71C1C)
             )
@@ -123,30 +123,29 @@ fun getQuickTips(dietName: String): List<QuickTip> {
         dietName.contains("Swaminarayan", ignoreCase = true) -> listOf(
             QuickTip(
                 emoji = "🍺",
-                title = "Hidden Alcohol in Food?",
-                body = "Some sauces, vinegars and bakery items contain alcohol. Always scan the product first!",
+                titleRes = R.string.tip_swami_alcohol_title,
+                bodyRes = R.string.tip_swami_alcohol_body,
                 bgColor = Color(0xFFFFF3E0),
                 accentColor = Color(0xFFBF360C)
             ),
             QuickTip(
                 emoji = "🧅",
-                title = "Check for Onion & Garlic",
-                body = "The Allium family is strictly prohibited. Look for garlic powder or onion extract in spice blends.",
+                titleRes = R.string.tip_swami_onion_garlic_title,
+                bodyRes = R.string.tip_swami_onion_garlic_body,
                 bgColor = Color(0xFFFCE4EC),
                 accentColor = Color(0xFFC62828)
             ),
-
             QuickTip(
                 emoji = "🌾",
-                title = "Purity of Asafoetida (Hing)",
-                body = "Commercial Hing often contains wheat flour as a filler. Verify its purity before use.",
+                titleRes = R.string.tip_swami_hing_title,
+                bodyRes = R.string.tip_swami_hing_body,
                 bgColor = Color(0xFFE8EAF6),
                 accentColor = Color(0xFF283593)
             ),
             QuickTip(
                 emoji = "🥦",
-                title = "Shikshapatri Guidelines",
-                body = "Meat, eggs, alcohol and narcotics are prohibited as per Shikshapatri Verses 15 & 18.",
+                titleRes = R.string.tip_swami_shikshapatri_title,
+                bodyRes = R.string.tip_swami_shikshapatri_body,
                 bgColor = Color(0xFFE8F5E9),
                 accentColor = Color(0xFF1B5E20)
             )
@@ -154,15 +153,15 @@ fun getQuickTips(dietName: String): List<QuickTip> {
         else -> listOf(
             QuickTip(
                 emoji = "🥦",
-                title = "Stay Plant-Based",
-                body = "Look for plant-based alternatives to dairy and meat derivatives in packaged foods.",
+                titleRes = R.string.tip_plant_based_title,
+                bodyRes = R.string.tip_plant_based_body,
                 bgColor = Color(0xFFE8F5E9),
                 accentColor = Color(0xFF1B5E20)
             ),
             QuickTip(
                 emoji = "💊",
-                title = "Avoid Harmful E-Codes",
-                body = "E120 (Carmine), E441 (Gelatin), E901 (Beeswax) — all are animal-derived additives. Watch out!",
+                titleRes = R.string.tip_harmful_ecodes_title,
+                bodyRes = R.string.tip_harmful_ecodes_body,
                 bgColor = Color(0xFFFCE4EC),
                 accentColor = Color(0xFFB71C1C)
             )
@@ -358,14 +357,14 @@ fun TipCard(tip: QuickTip) {
             }
 
             Text(
-                text = tip.title,
+                text = stringResource(tip.titleRes),
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Bold,
                 color = tip.accentColor,
                 lineHeight = 17.sp
             )
             Text(
-                text = tip.body,
+                text = stringResource(tip.bodyRes),
                 fontSize = 11.5.sp,
                 color = Color(0xFF424242),
                 lineHeight = 16.sp
@@ -376,16 +375,29 @@ fun TipCard(tip: QuickTip) {
 
 
 //  Image Slider 
- @Composable
+@Composable
 fun ImageSlider() {
+    val currentLang = LocalConfiguration.current.locales[0]?.language ?: "en"
 
-    val sliderImages = listOf(
-        R.drawable.banner,
-        R.drawable.banner_2,
-        R.drawable.banner_3
-    )
+    val sliderImages = when (currentLang) {
+        "gu" -> listOf(
+            R.drawable.guj1,
+            R.drawable.guj2,
+            R.drawable.guj3
+        )
+        "hi" -> listOf(
+            R.drawable.hi1,
+            R.drawable.hi2,
+            R.drawable.hi3
+        )
+        else -> listOf(
+            R.drawable.banner,
+            R.drawable.banner_2,
+            R.drawable.banner_3
+        )
+    }
 
-    val pagerState = rememberPagerState( pageCount = { sliderImages.size })
+    val pagerState = rememberPagerState(pageCount = { sliderImages.size })
 
     // Auto-scroll every 5 seconds
     LaunchedEffect(pagerState) {
@@ -473,7 +485,7 @@ fun FooterText(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = "Purity  in  Every  Bite",
+            text = stringResource(R.string.home_footer_tagline_1),
             fontSize = 38.sp,
             fontWeight = FontWeight.ExtraBold,
             color = Color(0xFFA2A2A2),
@@ -482,7 +494,7 @@ fun FooterText(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth()
         )
         Text(
-            text = "That's SatvikScan! \uD83C\uDF43",
+            text = stringResource(R.string.home_footer_tagline_2),
             fontSize = 35.sp,
             fontWeight = FontWeight.ExtraBold,
             color = Color(0xFFA2A2A2),

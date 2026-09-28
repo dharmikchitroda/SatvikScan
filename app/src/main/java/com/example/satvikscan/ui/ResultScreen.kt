@@ -2,6 +2,7 @@ package com.example.satvikscan.ui
 
 import android.os.Build
 import androidx.activity.compose.BackHandler
+import com.example.satvikscan.viewmodel.ScanMode
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -57,6 +58,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
@@ -78,9 +80,12 @@ enum class IngredientType {
 
 data class IngredientData(
     val name: String,
-    val reason: String,
+    val reason: String = "",
     val type: IngredientType,
-    val scientificReason: String = ""
+    val scientificReason: String = "",
+    val titleRes: Int? = null,
+    val reasonRes: Int? = null,
+    val scientificReasonRes: Int? = null
 )
 
 @Composable
@@ -96,13 +101,20 @@ fun ResultScreen(
     // collect both state
     val currentUiState by viewModel.productUiState.collectAsState()
     val ingredientList by viewModel.ingredients.collectAsState()
+    val currentScanMode by viewModel.scanMode.collectAsState()
+
+    val localizedDietName = when (dietName) {
+        "Swaminarayan" -> stringResource(R.string.diet_swami_title)
+        "Jain" -> stringResource(R.string.diet_jain_title)
+        else -> stringResource(R.string.diet_custom_title)
+    }
 
     // System back button bhi onBackClick use kare (state reset + navigate)
     BackHandler { onBackClick() }
 
     when (val state = currentUiState) {
         is SatvikViewModel.ProductUiState.Loading -> {
-            LoadingView()
+            LoadingView(scanMode = currentScanMode)
         }
 
         is SatvikViewModel.ProductUiState.ProductNotFound -> {
@@ -117,7 +129,7 @@ fun ResultScreen(
             if (state.message == "NO_INTERNET") {
 
                 Box(modifier = Modifier.fillMaxSize()) {
-                    LoadingView()
+                    LoadingView(scanMode = currentScanMode)
                     NoInternetDialog(
                         onRetry = { viewModel.retryLastScan(onNoBarcodeAndHasInternet = onScanAgainClick) },
                         onDismiss = { onBackClick() })
@@ -215,7 +227,7 @@ fun ResultScreen(
                     Spacer(modifier = Modifier.height(20.dp))
 
                     Text(
-                        text = state.product.product?.productName ?: "Unknown Product",
+                        text = state.product.product?.productName ?: stringResource(R.string.result_unknown_product),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = Color(0xFF333333),
@@ -225,7 +237,7 @@ fun ResultScreen(
                     if (!state.product.code.isNullOrBlank()) {
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Barcode: ${state.product.code}",
+                            text = stringResource(R.string.result_barcode_label, state.product.code ?: ""),
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Normal,
                             color = Color(0xFF757575),
@@ -236,7 +248,7 @@ fun ResultScreen(
                     Spacer(modifier = Modifier.height(24.dp))
 
                     Text(
-                        text = if (isSafe) "SATVIK" else "AVOID",
+                        text = if (isSafe) stringResource(R.string.result_status_satvik) else stringResource(R.string.result_status_avoid),
                         fontSize = 32.sp,
                         fontWeight = FontWeight.ExtraBold,
                         color = if (isSafe) Color(0xFF2E7D32) else Color(0xFFC62828),
@@ -246,7 +258,7 @@ fun ResultScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = if (isSafe) "Product is safe to consume" else "Contains restricted ingredients",
+                        text = if (isSafe) stringResource(R.string.result_subtitle_safe) else stringResource(R.string.result_subtitle_avoid),
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color(0xFF555555)
@@ -310,7 +322,7 @@ fun ResultScreen(
                             Spacer(modifier = Modifier.height(2.dp))
 
                             Text(
-                                text = "Diet: $dietName",
+                                text = stringResource(R.string.result_diet_label, localizedDietName),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.tertiary // Deep brown title
@@ -360,7 +372,7 @@ fun ResultScreen(
                                     textAlign = TextAlign.Center
                                 )
                                 Text(
-                                    text = "This product contains no ingredients that conflict with your $dietName diet guidelines.",
+                                    text = stringResource(R.string.result_safe_desc, localizedDietName),
                                     fontSize = 13.sp,
                                     color = Color(0xFF4CAF50),
                                     textAlign = TextAlign.Center,
@@ -405,7 +417,7 @@ fun ResultScreen(
                                             .padding(horizontal = 10.dp, vertical = 4.dp)
                                     ) {
                                         Text(
-                                            text = "${ingredientList.size} FOUND",
+                                            text = stringResource(R.string.result_items_found, ingredientList.size),
                                             fontSize = 10.sp,
                                             fontWeight = FontWeight.Bold,
                                             color = Color(0xFFC62828)
@@ -529,6 +541,7 @@ fun ResultScreen(
 
                                         else -> R.drawable.ic_chemical
                                     }
+
                                     IngredientItem(
                                         name = ingredient.name,
                                         reason = ingredient.reason,
@@ -550,22 +563,8 @@ fun ResultScreen(
                                         )
                                         .padding(14.dp)
                                 ) {
-                                    val annotatedString = remember(dietName) {
-                                        buildAnnotatedString {
-                                            append("According to ")
-                                            withStyle(
-                                                SpanStyle(
-                                                    color = Color(0xFF8D6E63),
-                                                    fontWeight = FontWeight.Bold
-                                                )
-                                            ) {
-                                                append(dietName)
-                                            }
-                                            append(" guidelines, these items are avoided to maintain purity and mindful eating.")
-                                        }
-                                    }
                                     Text(
-                                        text = annotatedString,
+                                        text = stringResource(R.string.result_avoid_note, localizedDietName),
                                         fontSize = 12.sp,
                                         color = Color(0xFF616161),
                                         lineHeight = 18.sp
@@ -683,10 +682,15 @@ fun ErrorView(message: String) {
     }
 }
 
-// scanning laoding screen
+// scanning loading screen
 @Composable
-fun LoadingView() {
+fun LoadingView(scanMode: ScanMode = ScanMode.BARCODE) {
     val context = LocalContext.current
+    val isOcr = scanMode == ScanMode.OCR
+    val title = if (isOcr) stringResource(R.string.result_loading_ocr_title) else stringResource(R.string.result_loading_title)
+    val subtitle = if (isOcr) stringResource(R.string.result_loading_ocr_subtitle) else stringResource(R.string.result_loading_subtitle)
+    val imageRes = if (isOcr) R.drawable.capture_loading else R.drawable.scan_loading
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -700,11 +704,9 @@ fun LoadingView() {
                 .statusBarsPadding()
                 .padding(top = 80.dp),
             horizontalAlignment = Alignment.CenterHorizontally
-
         ) {
-
             Text(
-                text = stringResource(R.string.result_loading_title),
+                text = title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 28.sp,
                 color = Color(0xFF000000),
@@ -713,19 +715,17 @@ fun LoadingView() {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = stringResource(R.string.result_loading_subtitle),
+                text = subtitle,
                 fontSize = 18.sp,
                 color = Color(0xFF737373),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
-
         }
 
-// here model is diffrent because .webp take as gif multiple frame instead of sigble photo webp formate
         AsyncImage(
             model = ImageRequest.Builder(context)
-                .data(R.drawable.food_scan_anim)
+                .data(imageRes)
                 .decoderFactory(
                     if (Build.VERSION.SDK_INT >= 28) {
                         ImageDecoderDecoder.Factory()
@@ -733,7 +733,7 @@ fun LoadingView() {
                         GifDecoder.Factory()
                     }
                 ).build(),
-            contentDescription = "Scanning Loader",
+            contentDescription = if (isOcr) "Ingredient Analyzing Loader" else "Barcode Scanning Loader",
             modifier = Modifier.size(240.dp)
         )
     }
@@ -742,7 +742,10 @@ fun LoadingView() {
 // IngredientItem box — now clickable to show "Why Avoid?" dialog
 @Composable
 private fun IngredientItem(
-    name: String, reason: String, iconRes: Int, onClick: () -> Unit = {}
+    name: String,
+    reason: String = "",
+    iconRes: Int,
+    onClick: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier
@@ -898,6 +901,12 @@ fun WhyAvoidDialog(
 
                 Spacer(modifier = Modifier.width(8.dp))
 
+                val localizedDietName = when (dietName) {
+                    "Swaminarayan" -> stringResource(R.string.diet_swami_title)
+                    "Jain" -> stringResource(R.string.diet_jain_title)
+                    else -> stringResource(R.string.diet_custom_title)
+                }
+
                 Column {
                     Text(
                         text = stringResource(R.string.result_col_status),
@@ -910,7 +919,7 @@ fun WhyAvoidDialog(
                     Spacer(modifier = Modifier.height(2.dp))
 
                     Text(
-                        text = "Non-Permissible for $dietName",
+                        text = stringResource(R.string.result_non_permissible, localizedDietName),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF1A1A1A),
@@ -942,7 +951,7 @@ fun WhyAvoidDialog(
                         )
                         Spacer(modifier = Modifier.width(5.dp))
                         Text(
-                            text = "RELIGIOUS GUIDANCE",
+                            text = stringResource(R.string.result_religious_guidance_header),
                             fontSize = 9.sp,
                             fontWeight = FontWeight.ExtraBold,
                             color = Color(0xFF15803D),
@@ -951,9 +960,14 @@ fun WhyAvoidDialog(
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
+                    val religiousReasonText = if (ingredient.reasonRes != null) {
+                        stringResource(ingredient.reasonRes)
+                    } else {
+                        ingredient.reason.removePrefix("Avoided: ")
+                            .removePrefix("Caution: ")
+                    }
                     Text(
-                        text = ingredient.reason.removePrefix("Avoided: ")
-                            .removePrefix("Caution: "),
+                        text = religiousReasonText,
                         fontSize = 11.5.sp,
                         color = Color(0xFF1F2937),
                         lineHeight = 16.sp
@@ -976,7 +990,7 @@ fun WhyAvoidDialog(
                         )
                         Spacer(modifier = Modifier.width(5.dp))
                         Text(
-                            text = "INDUSTRY ORIGIN",
+                            text = stringResource(R.string.result_industry_origin_header),
                             fontSize = 9.sp,
                             fontWeight = FontWeight.ExtraBold,
                             color = Color(0xFF333333),
@@ -985,9 +999,15 @@ fun WhyAvoidDialog(
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
+                    val scientificReasonText = if (ingredient.scientificReasonRes != null) {
+                        stringResource(ingredient.scientificReasonRes)
+                    } else if (ingredient.scientificReason.isNotBlank()) {
+                        ingredient.scientificReason
+                    } else {
+                        stringResource(R.string.result_industry_origin_default)
+                    }
                     Text(
-                        text = if (ingredient.scientificReason.isNotBlank()) ingredient.scientificReason
-                        else "Derived from natural or industrial sources. Verify label for exact origin.",
+                        text = scientificReasonText,
                         fontSize = 11.5.sp,
                         color = Color(0xFF444444),
                         lineHeight = 16.sp
@@ -1008,7 +1028,7 @@ fun WhyAvoidDialog(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "I Understand",
+                        text = stringResource(R.string.result_btn_understand),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -1082,7 +1102,7 @@ fun NoInternetDialog(
 
                     // Title
                     Text(
-                        text = "Connection Lost",
+                        text = stringResource(R.string.dialog_offline_title),
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF7D5233),
@@ -1093,7 +1113,7 @@ fun NoInternetDialog(
 
                     // Subtitle
                     Text(
-                        text = "It seems you're offline. Please check your internet connection and try again.",
+                        text = stringResource(R.string.dialog_offline_subtitle),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color(0xFF6D6D6D),
@@ -1117,7 +1137,7 @@ fun NoInternetDialog(
                         elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                     ) {
                         Text(
-                            text = "Try Again",
+                            text = stringResource(R.string.dialog_offline_btn_retry),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.White

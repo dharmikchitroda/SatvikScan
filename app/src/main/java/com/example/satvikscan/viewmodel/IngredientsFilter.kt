@@ -1,5 +1,6 @@
 package com.example.satvikscan.viewmodel
 
+import com.example.satvikscan.R
 import com.example.satvikscan.ui.IngredientData
 import com.example.satvikscan.ui.IngredientType
 
@@ -107,6 +108,7 @@ fun ingredientsFilter(
     // check available items are restricted using the loop
     for (ingredient in rawList) {
         val nameLower = ingredient.lowercase()
+        val capitalizedName = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
 
         // 1. Check Custom Exclusions first
         if (currentDiet == "Custom") {
@@ -114,7 +116,7 @@ fun ingredientsFilter(
             if (matchedExclusion != null) {
                 detectedItems.add(
                     IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
+                        name = capitalizedName,
                         reason = "Avoided: Matches custom excluded ingredient '$matchedExclusion'",
                         type = IngredientType.OTHER,
                         scientificReason = "Personally excluded ingredient based on your custom diet preferences."
@@ -127,17 +129,36 @@ fun ingredientsFilter(
         // 2. Standard Diets: Swaminarayan, Jain
         // Check Non-Veg (restricted in all three)
         if (nonVegRegex.containsMatchIn(nameLower)) {
-            val reasonStr = when (currentDiet) {
-                "Swaminarayan" -> "Avoided: Animal-derived food/meat is strictly prohibited (Shikshapatri Verse 15)"
-                "Jain" -> "Avoided: Animal-derived ingredients are strictly prohibited in Jain diet (Ahimsa)"
-                else -> "Avoided: Non-vegetarian origin ingredient detected"
+            val (titleRes, reasonRes, sciRes) = when {
+                nameLower.contains("lysozyme") || nameLower.contains("1105") ->
+                    Triple(R.string.jain_lysozyme_title, R.string.jain_lysozyme_rel, R.string.jain_lysozyme_sci)
+                nameLower.contains("beeswax") || nameLower.contains("901") ->
+                    Triple(R.string.jain_beeswax_title, R.string.jain_beeswax_rel, R.string.jain_beeswax_sci)
+                nameLower.contains("gelatin") || nameLower.contains("carmine") || nameLower.contains("shellac") ||
+                nameLower.contains("120") || nameLower.contains("441") || nameLower.contains("542") || nameLower.contains("904") -> {
+                    if (currentDiet == "Swaminarayan") {
+                        Triple(R.string.swami_additives_animal_title, R.string.swami_additives_animal_rel, R.string.swami_additives_animal_sci)
+                    } else {
+                        Triple(R.string.jain_additives_animal_title, R.string.jain_additives_animal_rel, R.string.jain_additives_animal_sci)
+                    }
+                }
+                currentDiet == "Swaminarayan" ->
+                    Triple(R.string.swami_meat_title, R.string.swami_meat_rel, R.string.swami_meat_sci)
+                currentDiet == "Jain" ->
+                    Triple(R.string.jain_meat_title, R.string.jain_meat_rel, R.string.jain_meat_sci)
+                else ->
+                    Triple(R.string.swami_meat_title, R.string.swami_meat_rel, R.string.swami_meat_sci)
             }
+
             detectedItems.add(
                 IngredientData(
-                    name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                    reason = reasonStr,
+                    name = capitalizedName,
+                    reason = "Avoided: Non-vegetarian origin ingredient detected",
                     type = IngredientType.NON_VEG_ORIGIN,
-                    scientificReason = "Derived from animal, poultry, or marine sources. Includes meat, eggs, gelatin (animal collagen), carmine (cochineal insect), shellac (lac insect resin), and beeswax."
+                    scientificReason = "Derived from animal, poultry, or marine sources.",
+                    titleRes = titleRes,
+                    reasonRes = reasonRes,
+                    scientificReasonRes = sciRes
                 )
             )
             continue
@@ -145,17 +166,31 @@ fun ingredientsFilter(
 
         // Check Alcohol & Intoxicants (restricted in all three)
         if (alcoholIntoxicantRegex.containsMatchIn(nameLower)) {
-            val reasonStr = when (currentDiet) {
-                "Swaminarayan" -> "Avoided: Alcohol/intoxicating substances are strictly prohibited (Shikshapatri Verses 15 & 18)"
-                "Jain" -> "Avoided: Alcohol/intoxicants are restricted in Jain diet due to fermentation/violence"
-                else -> "Avoided: Intoxicating substance/alcohol detected"
+            val isNarcotic = nameLower.contains("cannabis") || nameLower.contains("bhang") ||
+                    nameLower.contains("marijuana") || nameLower.contains("ganja") ||
+                    nameLower.contains("opium") || nameLower.contains("hashish") ||
+                    nameLower.contains("narcotic")
+
+            val (titleRes, reasonRes, sciRes) = when {
+                currentDiet == "Swaminarayan" && isNarcotic ->
+                    Triple(R.string.swami_narcotics_title, R.string.swami_narcotics_rel, R.string.swami_narcotics_sci)
+                currentDiet == "Swaminarayan" ->
+                    Triple(R.string.swami_alcohol_title, R.string.swami_alcohol_rel, R.string.swami_alcohol_sci)
+                currentDiet == "Jain" ->
+                    Triple(R.string.jain_alcohol_title, R.string.jain_alcohol_rel, R.string.jain_alcohol_sci)
+                else ->
+                    Triple(R.string.swami_alcohol_title, R.string.swami_alcohol_rel, R.string.swami_alcohol_sci)
             }
+
             detectedItems.add(
                 IngredientData(
-                    name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                    reason = reasonStr,
+                    name = capitalizedName,
+                    reason = "Avoided: Intoxicating substance/alcohol detected",
                     type = IngredientType.OTHER,
-                    scientificReason = "Produced by fermentation of sugars, grains, or fruits yielding ethanol. Cannabis and narcotics are psychoactive substances that impair neurological functions."
+                    scientificReason = "Produced by fermentation of sugars, grains, or fruits yielding ethanol.",
+                    titleRes = titleRes,
+                    reasonRes = reasonRes,
+                    scientificReasonRes = sciRes
                 )
             )
             continue
@@ -163,17 +198,21 @@ fun ingredientsFilter(
 
         // Check Allium Family (restricted in Swaminarayan, Jain)
         if (alliumRegex.containsMatchIn(nameLower)) {
-            val reasonStr = when (currentDiet) {
-                "Swaminarayan" -> "Avoided: Onion, garlic, and Allium family are Rajasic/Tamasic and restricted (Shikshapatri & BAPS/Vadtal guidance)"
-                "Jain" -> "Avoided: Onion, garlic, and Allium family are root vegetables, restricted in Jain diet"
-                else -> "Avoided: Allium family ingredient (onion/garlic) detected"
+            val (titleRes, reasonRes, sciRes) = if (currentDiet == "Swaminarayan") {
+                Triple(R.string.swami_allium_title, R.string.swami_allium_rel, R.string.swami_allium_sci)
+            } else {
+                Triple(R.string.jain_root_title, R.string.jain_root_rel, R.string.jain_root_sci)
             }
+
             detectedItems.add(
                 IngredientData(
-                    name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                    reason = reasonStr,
+                    name = capitalizedName,
+                    reason = "Avoided: Allium family ingredient (onion/garlic) detected",
                     type = IngredientType.ROOT_VEGETABLE,
-                    scientificReason = "Plants of the Allium family (Allium cepa, Allium sativum). Rich in organosulfur compounds responsible for their characteristic pungent aroma."
+                    scientificReason = "Plants of the Allium family containing organosulfur compounds.",
+                    titleRes = titleRes,
+                    reasonRes = reasonRes,
+                    scientificReasonRes = sciRes
                 )
             )
             continue
@@ -181,13 +220,21 @@ fun ingredientsFilter(
 
         // Check Suspect Additives (caution in Swaminarayan, Jain)
         if (suspectAdditivesRegex.containsMatchIn(nameLower)) {
-            val reasonStr = "Caution: May be derived from animal sources. Swaminarayan and Jain traditions advise verifying the source."
+            val (titleRes, reasonRes, sciRes) = if (currentDiet == "Swaminarayan") {
+                Triple(R.string.swami_additives_source_title, R.string.swami_additives_source_rel, R.string.swami_additives_source_sci)
+            } else {
+                Triple(R.string.jain_additives_veg_title, R.string.jain_additives_veg_rel, R.string.jain_additives_veg_sci)
+            }
+
             detectedItems.add(
                 IngredientData(
-                    name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                    reason = reasonStr,
+                    name = capitalizedName,
+                    reason = "Caution: May be derived from animal sources.",
                     type = IngredientType.OTHER,
-                    scientificReason = "Industrially produced food additives (E322 Lecithin, E471 Mono-diglycerides, E570 Fatty acids, E920 L-Cysteine) that may be derived from vegetable oils, animal fats, or eggs depending on manufacturer."
+                    scientificReason = "Industrially produced food additives that may be derived from vegetable oils or animal fats.",
+                    titleRes = titleRes,
+                    reasonRes = reasonRes,
+                    scientificReasonRes = sciRes
                 )
             )
             continue
@@ -198,10 +245,13 @@ fun ingredientsFilter(
             if (hingRegex.containsMatchIn(nameLower)) {
                 detectedItems.add(
                     IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                        reason = "Caution: Asafoetida (Hing) is avoided in some Swaminarayan traditions as it is considered Rajasic/Tamasic.",
+                        name = capitalizedName,
+                        reason = "Caution: Asafoetida (Hing) is avoided in some Swaminarayan traditions.",
                         type = IngredientType.OTHER,
-                        scientificReason = "Oleogum resin from Ferula plant roots. Commercial Hing often contains wheat flour, rice flour, or gum arabic as carrier/filler substances."
+                        scientificReason = "Oleogum resin from Ferula plant roots.",
+                        titleRes = R.string.swami_hing_title,
+                        reasonRes = R.string.swami_hing_rel,
+                        scientificReasonRes = R.string.swami_hing_sci
                     )
                 )
                 continue
@@ -211,12 +261,24 @@ fun ingredientsFilter(
         // Diet-specific checks: Jain
         if (currentDiet == "Jain") {
             if (otherRootVegRegex.containsMatchIn(nameLower)) {
+                val (titleRes, reasonRes, sciRes) = when {
+                    nameLower.contains("sabudana") || nameLower.contains("tapioca") || nameLower.contains("cassava") ->
+                        Triple(R.string.jain_sabudana_title, R.string.jain_sabudana_rel, R.string.jain_sabudana_sci)
+                    nameLower.contains("arrowroot") ->
+                        Triple(R.string.jain_arrowroot_title, R.string.jain_arrowroot_rel, R.string.jain_arrowroot_sci)
+                    else ->
+                        Triple(R.string.jain_root_title, R.string.jain_root_rel, R.string.jain_root_sci)
+                }
+
                 detectedItems.add(
                     IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
+                        name = capitalizedName,
                         reason = "Avoided: Root vegetables (Anantkaya) are restricted in Jain diet",
                         type = IngredientType.ROOT_VEGETABLE,
-                        scientificReason = "Underground storage organs (bulbs, tubers, rhizomes) that harbour entire colonies of micro-organisms. Uprooting destroys the complete plant."
+                        scientificReason = "Underground storage organs harbouring countless micro-organisms.",
+                        titleRes = titleRes,
+                        reasonRes = reasonRes,
+                        scientificReasonRes = sciRes
                     )
                 )
                 continue
@@ -224,10 +286,13 @@ fun ingredientsFilter(
             if (honeyRegex.containsMatchIn(nameLower)) {
                 detectedItems.add(
                     IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
+                        name = capitalizedName,
                         reason = "Avoided: Honey is restricted in Jain diet (Mahavigai principle)",
                         type = IngredientType.OTHER,
-                        scientificReason = "Natural sweet substance produced by honeybees (Apis spp.) from flower nectar. Its collection involves destruction of micro-organisms within the hive."
+                        scientificReason = "Sweet substance produced by bees; classified under Mahavigai.",
+                        titleRes = R.string.jain_mahavigai_title,
+                        reasonRes = R.string.jain_mahavigai_rel,
+                        scientificReasonRes = R.string.jain_mahavigai_sci
                     )
                 )
                 continue
@@ -235,10 +300,13 @@ fun ingredientsFilter(
             if (jainButterRegex.containsMatchIn(nameLower)) {
                 detectedItems.add(
                     IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                        reason = "Avoided: Butter is considered Mahavigai in Jain tradition (avoided due to rapid microorganism growth)",
+                        name = capitalizedName,
+                        reason = "Avoided: Butter is considered Mahavigai in Jain tradition",
                         type = IngredientType.OTHER,
-                        scientificReason = "Dairy fat separated from milk by churning. Fresh butter becomes stale rapidly due to microbial activity, leading to proliferation of micro-organisms."
+                        scientificReason = "Dairy fat prone to rapid microbial growth; classified under Mahavigai.",
+                        titleRes = R.string.jain_mahavigai_title,
+                        reasonRes = R.string.jain_mahavigai_rel,
+                        scientificReasonRes = R.string.jain_mahavigai_sci
                     )
                 )
                 continue
@@ -246,10 +314,13 @@ fun ingredientsFilter(
             if (jainUdumbaraRegex.containsMatchIn(nameLower)) {
                 detectedItems.add(
                     IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                        reason = "Avoided: Fig (Anjeer) is an Udumbara fruit containing microscopic life/wasps, prohibited in Jain diet",
+                        name = capitalizedName,
+                        reason = "Avoided: Fig (Anjeer) is an Udumbara fruit prohibited in Jain diet",
                         type = IngredientType.OTHER,
-                        scientificReason = "Ficus carica — a syconium-type fruit whose pollination requires a symbiotic life cycle with the Fig Wasp (Blastophaga psenes) inside the fruit."
+                        scientificReason = "Ficus carica — a syconium fruit with a symbiotic life cycle involving fig wasps.",
+                        titleRes = R.string.jain_fig_title,
+                        reasonRes = R.string.jain_fig_rel,
+                        scientificReasonRes = R.string.jain_fig_sci
                     )
                 )
                 continue
@@ -257,54 +328,100 @@ fun ingredientsFilter(
             if (jainPoppyRegex.containsMatchIn(nameLower)) {
                 detectedItems.add(
                     IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                        reason = "Avoided: Poppy seeds (Khus Khus) contain innumerable seeds and are avoided in Jain diet",
+                        name = capitalizedName,
+                        reason = "Avoided: Poppy seeds (Khus Khus) contain innumerable seeds",
                         type = IngredientType.OTHER,
-                        scientificReason = "Dried mature seeds of Papaver somniferum. Each pod contains thousands of tiny seeds (Bahubiji), making them multi-seeded. Seeds may also contain trace opioid compounds."
+                        scientificReason = "Multi-seeded (Bahubiji) seeds of Papaver somniferum.",
+                        titleRes = R.string.jain_poppy_title,
+                        reasonRes = R.string.jain_poppy_rel,
+                        scientificReasonRes = R.string.jain_poppy_sci
                     )
                 )
                 continue
             }
             if (jainAquaticPlantsRegex.containsMatchIn(nameLower)) {
+                val isSinghoda = nameLower.contains("water chestnut") || nameLower.contains("singhara") || nameLower.contains("singhada")
+                val (titleRes, reasonRes, sciRes) = if (isSinghoda) {
+                    Triple(R.string.jain_singhoda_title, R.string.jain_singhoda_rel, R.string.jain_singhoda_sci)
+                } else {
+                    Triple(R.string.jain_makhana_title, R.string.jain_makhana_rel, R.string.jain_makhana_sci)
+                }
+
                 detectedItems.add(
                     IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                        reason = "Caution: Makhana/Water Chestnut grows in water bodies; harvesting may harm aquatic life. Avoided by some Acharyas.",
+                        name = capitalizedName,
+                        reason = "Caution: Aquatic plant seeds harvesting may harm aquatic life.",
                         type = IngredientType.OTHER,
-                        scientificReason = "Euryale ferox (Makhana) / Trapa spp. (Singhara) — aquatic plants growing in ponds and lakes. Harvesting disturbs and potentially destroys aquatic ecosystems."
+                        scientificReason = "Aquatic plants growing in water bodies; harvesting disturbs aquatic life.",
+                        titleRes = titleRes,
+                        reasonRes = reasonRes,
+                        scientificReasonRes = sciRes
                     )
                 )
                 continue
             }
             if (jainFermentedRegex.containsMatchIn(nameLower)) {
+                val (titleRes, reasonRes, sciRes) = when {
+                    nameLower.contains("vinegar") || nameLower.contains("sirka") ->
+                        Triple(R.string.jain_vinegar_title, R.string.jain_vinegar_rel, R.string.jain_vinegar_sci)
+                    nameLower.contains("paneer") ->
+                        Triple(R.string.jain_paneer_title, R.string.jain_paneer_rel, R.string.jain_paneer_sci)
+                    else ->
+                        Triple(R.string.jain_cheese_title, R.string.jain_cheese_rel, R.string.jain_cheese_sci)
+                }
+
                 detectedItems.add(
                     IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                        reason = "Caution: Fermented product (Vinegar/Cheese/Paneer). Cheese may contain animal rennet; verify source.",
+                        name = capitalizedName,
+                        reason = "Caution: Fermented dairy or condiment; verify source.",
                         type = IngredientType.OTHER,
-                        scientificReason = "Vinegar: produced by Acetic Acid Bacteria fermenting alcohol. Cheese: coagulated milk using rennet (which can be animal, microbial, or vegetarian-sourced)."
+                        scientificReason = "Produced by fermentation and coagulation processes.",
+                        titleRes = titleRes,
+                        reasonRes = reasonRes,
+                        scientificReasonRes = sciRes
                     )
                 )
                 continue
             }
             if (jainFermentedAdditivesRegex.containsMatchIn(nameLower)) {
+                val isCitric = nameLower.contains("citric") || nameLower.contains("330")
+                val (titleRes, reasonRes, sciRes) = if (isCitric) {
+                    Triple(R.string.jain_citric_title, R.string.jain_citric_rel, R.string.jain_citric_sci)
+                } else {
+                    Triple(R.string.jain_msg_title, R.string.jain_msg_rel, R.string.jain_msg_sci)
+                }
+
                 detectedItems.add(
                     IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                        reason = "Caution: Citric Acid (E330) / MSG (E621) are produced via fermentation. Verification of source recommended.",
+                        name = capitalizedName,
+                        reason = "Caution: Additive produced via fermentation.",
                         type = IngredientType.OTHER,
-                        scientificReason = "Citric Acid (E330): naturally from citrus fruits or industrially via Aspergillus niger fermentation. MSG (E621): produced by bacterial fermentation of starch, sugarcane, or molasses."
+                        scientificReason = "Produced by microbial fermentation; verification recommended.",
+                        titleRes = titleRes,
+                        reasonRes = reasonRes,
+                        scientificReasonRes = sciRes
                     )
                 )
                 continue
             }
             if (jainProcessedWheatRegex.containsMatchIn(nameLower)) {
+                val isRava = nameLower.contains("rava") || nameLower.contains("suji") ||
+                        nameLower.contains("sooji") || nameLower.contains("semolina")
+                val (titleRes, reasonRes, sciRes) = if (isRava) {
+                    Triple(R.string.jain_rava_title, R.string.jain_rava_rel, R.string.jain_rava_sci)
+                } else {
+                    Triple(R.string.jain_maida_title, R.string.jain_maida_rel, R.string.jain_maida_sci)
+                }
+
                 detectedItems.add(
                     IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                        reason = "Caution: Refined flour (Maida) / Semolina (Rava/Suji) are wheat products; avoidance recommended by some Maharaj Sahebs.",
+                        name = capitalizedName,
+                        reason = "Caution: Processed wheat flour product.",
                         type = IngredientType.OTHER,
-                        scientificReason = "Maida: finely milled endosperm of wheat, stripped of bran and germ. Rava/Suji: coarsely milled wheat endosperm. Both are refined wheat products with low nutritional fibre."
+                        scientificReason = "Refined or coarsely milled wheat endosperm.",
+                        titleRes = titleRes,
+                        reasonRes = reasonRes,
+                        scientificReasonRes = sciRes
                     )
                 )
                 continue
@@ -312,10 +429,13 @@ fun ingredientsFilter(
             if (jainCocoaRegex.containsMatchIn(nameLower)) {
                 detectedItems.add(
                     IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                        reason = "Caution: Chocolate/Cocoa powder may contain microscopic insect fragments. Avoided by some Maharaj Sahebs.",
+                        name = capitalizedName,
+                        reason = "Caution: Chocolate/Cocoa powder product.",
                         type = IngredientType.OTHER,
-                        scientificReason = "Food products from Theobroma cacao beans. During industrial cocoa processing, regulatory limits allow trace insect fragments (FDA: up to 60 insect fragments per 100g cocoa powder)."
+                        scientificReason = "Food products from Cocoa beans; may contain trace insect fragments.",
+                        titleRes = R.string.jain_chocolate_title,
+                        reasonRes = R.string.jain_chocolate_rel,
+                        scientificReasonRes = R.string.jain_chocolate_sci
                     )
                 )
                 continue
@@ -323,10 +443,13 @@ fun ingredientsFilter(
             if (jainDryFruitsRegex.containsMatchIn(nameLower)) {
                 detectedItems.add(
                     IngredientData(
-                        name = ingredient.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                        reason = "Caution: Dry fruits are avoided in some Jain traditions during specific lunar months (Phagan to Kartak).",
+                        name = capitalizedName,
+                        reason = "Caution: Dry fruits seasonal usage guidance.",
                         type = IngredientType.OTHER,
-                        scientificReason = "Dried seeds and nuts (almonds, cashews, pistachios, walnuts) of various trees. During rainy seasons, these may harbour micro-organisms more readily as per traditional understanding."
+                        scientificReason = "Dried fruits and seeds of trees.",
+                        titleRes = R.string.jain_dryfruits_title,
+                        reasonRes = R.string.jain_dryfruits_rel,
+                        scientificReasonRes = R.string.jain_dryfruits_sci
                     )
                 )
                 continue
@@ -335,3 +458,6 @@ fun ingredientsFilter(
     }
     return detectedItems
 }
+
+
+

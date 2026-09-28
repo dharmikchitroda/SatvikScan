@@ -112,7 +112,7 @@ fun ProductNotFoundScreen(
 
             // Title
             Text(
-                text = "Product Not Found",
+                text = androidx.compose.ui.res.stringResource(R.string.product_not_found_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF1A1A1A),
@@ -123,7 +123,7 @@ fun ProductNotFoundScreen(
 
             // Subtitle
             Text(
-                text = "This product isn't in our database yet.\nYou can scan the ingredient label directly to check.",
+                text = androidx.compose.ui.res.stringResource(R.string.product_not_found_desc),
                 fontSize = 14.sp,
                 color = Color(0xFF888888),
                 textAlign = TextAlign.Center,
@@ -153,7 +153,7 @@ fun ProductNotFoundScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Scan Ingredient Label",
+                        text = androidx.compose.ui.res.stringResource(R.string.product_not_found_btn_scan_label),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
