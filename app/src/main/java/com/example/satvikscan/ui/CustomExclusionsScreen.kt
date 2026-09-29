@@ -83,6 +83,7 @@ data class AllergenInfo(
 fun CustomExclusionsScreen(
     viewModel: SatvikViewModel,
     onBackClick: () -> Unit,
+    onSaveClick: (() -> Unit)? = null, // null = use onBackClick (Settings flow)
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -497,7 +498,7 @@ fun CustomExclusionsScreen(
                             context.getString(R.string.exclusions_toast_saved, customExclusions.size),
                             Toast.LENGTH_SHORT
                         ).show()
-                        onBackClick()
+                        (onSaveClick ?: onBackClick)()
                     }
                 },
                 enabled = hasExclusions,

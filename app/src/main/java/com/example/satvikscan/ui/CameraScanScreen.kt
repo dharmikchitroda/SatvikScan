@@ -196,7 +196,7 @@ fun CameraScanScreen(
     LaunchedEffect(missMatchbarcodeError) {
         if (missMatchbarcodeError != null) {
             kotlinx.coroutines.delay(1800)
-            viewModel.clearBarcodeError() // 2.5s baad clear ho jayega
+            viewModel.clearBarcodeError() //  after will clear in 2.5s
         }
     }
     val galleryLauncher = rememberLauncherForActivityResult(

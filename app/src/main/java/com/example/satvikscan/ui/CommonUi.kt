@@ -58,6 +58,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.ui.text.input.ImeAction
 import com.example.satvikscan.R
 import com.example.satvikscan.RouteName
@@ -272,6 +273,7 @@ fun CommonUi(
                         ) {
                             // remove the last screen from the stack
                             popUpTo(RouteName.CameraScreen) { inclusive = true }
+                            launchSingleTop = true
                         }
                     }
                 }
@@ -291,6 +293,7 @@ fun CommonUi(
                         viewModel.startScanning()
                         navController.navigate(RouteName.CameraScreen) {
                             popUpTo(RouteName.HomeScreen)
+                            launchSingleTop = true
                         }
                     },
                     dietName = dietName,
@@ -299,6 +302,7 @@ fun CommonUi(
                         viewModel.startScanning()
                         navController.navigate(RouteName.CameraScreen) {
                             popUpTo(RouteName.ResultScreen) { inclusive = true }
+                            launchSingleTop = true
                         }
                     }
                 )
@@ -335,14 +339,13 @@ fun CommonUi(
                     onContinueClick = { selectedDiet ->
                         // save Diet
                         viewModel.updateDiet(selectedDiet)
-                        viewModel.completeOnboarding()
 
                         if (selectedDiet == "Custom") {
-                            navController.navigate(RouteName.CustomExclusionsScreen) {
-                                // Clear entire back stack up to and including WelcomeScreen
-                                popUpTo(RouteName.WelcomeScreen) { inclusive = true }
-                            }
+                            // Don't completeOnboarding() here — wait until user saves exclusions
+                            // Don't popUpTo WelcomeScreen — so Back goes back to WelcomeScreen
+                            navController.navigate(RouteName.CustomExclusionsScreen)
                         } else {
+                            viewModel.completeOnboarding()
                             navController.navigate(RouteName.HomeScreen) {
                                 // Clear entire back stack — onboarding never reachable again
                                 popUpTo(0) { inclusive = true }
@@ -352,11 +355,24 @@ fun CommonUi(
             }
 
             composable(RouteName.CustomExclusionsScreen) {
+                // Onboarding flow: isOnboardingCompleted() = false (completeOnboarding not called yet)
+                // Settings flow: isOnboardingCompleted() = true (already completed long ago)
+                val isOnboarding = !viewModel.isOnboardingCompleted()
+
                 CustomExclusionsScreen(
                     viewModel = viewModel,
                     onBackClick = {
                         navController.popBackStack()
-                    })
+                    },
+                    onSaveClick = if (isOnboarding) {
+                        {
+                            viewModel.completeOnboarding()
+                            navController.navigate(RouteName.HomeScreen) {
+                                popUpTo(0) { inclusive = true }
+                            }
+                        }
+                    } else null // Settings flow: Save uses onBackClick (existing behavior)
+                )
             }
 
             composable(RouteName.SelectDietScreen) {
@@ -429,7 +445,7 @@ fun Topbar(
                 )
             )
             .statusBarsPadding()
-            .height(46.dp)
+            .height(48.dp)
             .padding(horizontal = 16.dp),
         contentAlignment = Alignment.CenterStart
     ) {
@@ -527,7 +543,6 @@ fun BottomBar(
     }
 }
 
-
 @Composable
 fun HistoryTopBar(
     isSearchActive: Boolean,
@@ -543,6 +558,17 @@ fun HistoryTopBar(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            IconButton(onClick = {
+                onSearchQueryChange("")
+                onSearchActiveChange(false)
+                focusManager.clearFocus()
+            }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Close Search",
+                    tint = Color(0xFF1B3A2D)
+                )
+            }
             TextField(
                 value = searchQuery,
                 onValueChange = { onSearchQueryChange(it) },
@@ -553,7 +579,7 @@ fun HistoryTopBar(
                 ),
                 modifier = Modifier
                     .weight(1f)
-                    .height(48.dp),
+                    .height(50.dp),
                 colors = TextFieldDefaults.colors(
                     focusedTextColor = Color.Black,
                     unfocusedTextColor = Color.Black,
