@@ -368,6 +368,12 @@
     <string name="feedback_desc">Your feedback helps us improve SatvikScan for everyone. Let us know how we can serve your dietary journey better.</string>
     <string name="feedback_type_label">FEEDBACK TYPE</string>
     <string name="feedback_placeholder">Tell us how we can improve your experience...</string>
+    <string name="feedback_attach_label">ATTACH SCREENSHOT (OPTIONAL)</string>
+    <string name="feedback_attach_btn">Add Screenshot / Photo</string>
+    <string name="feedback_attach_placeholder">Upload a photo showing the issue or ingredient label</string>
+    <string name="feedback_attach_remove">Remove</string>
+    <string name="feedback_attach_change">Change Image</string>
+    <string name="feedback_attach_attached">Screenshot attached</string>
     <string name="feedback_btn_submit">Send Feedback</string>
 
     <!-- Custom Exclusions Screen -->
@@ -430,32 +436,39 @@
     <!-- About Satvik Screen -->
     <string name="about_title">About SatvikScan</string>
     <string name="about_app_name">SatvikScan</string>
-    <string name="about_tagline">\"Scan with Purity, Eat with Peace\"</string>
-    <string name="about_sanskrit_quote">\"आहारशुद्धौ सत्त्वशुद्धिः\"</string>
-    <string name="about_mission_title">Our Mission</string>
-    <string name="about_mission_desc">SatvikScan aims to help people choose 100% pure and suitable food according to their religious, cultural, and personal dietary preferences.</string>
-    <string name="about_focus_label">Focus: </string>
-    <string name="about_focus_desc">To scan packaged food ingredients and hidden additives (E-Numbers) in a single click and reveal the truth.</string>
-    <string name="about_what_is_satvik">What is Satvik Food?</string>
-    <string name="about_sattva_title">Sattva</string>
-    <string name="about_sattva_desc">Fresh, pure, natural, non-violent food.</string>
-    <string name="about_no_onion_garlic_title">No Onion &amp; Garlic</string>
-    <string name="about_no_onion_garlic_desc">Renouncing Tamasic and Rajasic elements.</string>
-    <string name="about_hidden_nonveg_title">Hidden Non-Veg Free</string>
-    <string name="about_hidden_nonveg_desc">Protection from Gelatin, Carmine, Rennet, Bone Char.</string>
-    <string name="about_diets_supported">Diets Supported</string>
+    <string name="about_tagline">Understand what you eat. Choose with confidence.</string>
+    <string name="about_subtitle">SatvikScan helps you understand packaged food ingredients by scanning product barcodes and checking them according to your selected dietary guidelines.</string>
+    <string name="about_mission_title">Why SatvikScan?</string>
+    <string name="about_mission_desc">Packaged food labels can contain unfamiliar ingredients, additives, and E-numbers. SatvikScan helps simplify this information by checking product ingredients against your selected dietary guidelines.</string>
+    <string name="about_how_it_works">How It Works</string>
+    <string name="about_step_scan_title">Scan</string>
+    <string name="about_step_scan_desc">Scan the barcode on a packaged food product.</string>
+    <string name="about_step_check_title">Check</string>
+    <string name="about_step_check_desc">SatvikScan checks the available product and ingredient information.</string>
+    <string name="about_step_understand_title">Understand</string>
+    <string name="about_step_understand_desc">Get a clear result based on your selected dietary guidelines.</string>
+    <string name="about_diets_supported">Supported Diets</string>
+    <string name="about_diet_jain">Jain</string>
+    <string name="about_diet_jain_desc">No root vegetables, honey, or animal products.</string>
+    <string name="about_diet_swami">Swaminarayan</string>
+    <string name="about_diet_swami_desc">No onion, garlic, meat, or intoxicants.</string>
     <string name="about_diet_vegan">Vegan</string>
+    <string name="about_diet_vegan_desc">No animal-derived ingredients or additives.</string>
+    <string name="about_diet_custom">Custom</string>
+    <string name="about_diet_custom_desc">Define your own ingredient exclusions.</string>
     <string name="about_key_features">Key Features</string>
-    <string name="about_feature_instant_scanner">Instant Scanner</string>
-    <string name="about_feature_e_number">E-Number Breakdown</string>
-    <string name="about_feature_diet_gyan">Diet Gyan</string>
-    <string name="about_feature_privacy">100% Privacy</string>
-    <string name="about_version">v1.0.0</string>
-    <string name="about_made_with">Made with </string>
-    <string name="about_made_with_suffix"> for Mindful Eating</string>
+    <string name="about_feature_barcode">Barcode Scanner</string>
+    <string name="about_feature_barcode_desc">Quickly scan packaged food products.</string>
+    <string name="about_feature_e_number">Ingredient &amp; E-number Awareness</string>
+    <string name="about_feature_e_number_desc">Understand potentially relevant ingredients and additives.</string>
+    <string name="about_feature_diet_guidelines">Dietary Guidelines</string>
+    <string name="about_feature_diet_guidelines_desc">Check products according to your selected diet.</string>
+    <string name="about_feature_privacy">Privacy-focused</string>
+    <string name="about_feature_privacy_desc">Your food-checking experience stays simple and private.</string>
+    <string name="about_version">Version 1.0.0</string>
+    <string name="about_footer">Made with ♥ for mindful food choices</string>
     <string name="about_privacy_policy">Privacy Policy</string>
     <string name="about_contact_support">Contact Support</string>
-    <string name="about_rate_us">Rate Us</string>
 
     <!-- Privacy Policy Screen -->
     <string name="privacy_title">Privacy &amp; Legal Policy</string>

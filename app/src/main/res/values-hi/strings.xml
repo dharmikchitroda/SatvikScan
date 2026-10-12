@@ -369,6 +369,12 @@
     <string name="feedback_desc">आपकी प्रतिक्रिया SatvikScan को सबके लिए बेहतर बनाने में मदद करती है। बताएं हम आपकी आहार यात्रा को कैसे बेहतर बना सकते हैं।</string>
     <string name="feedback_type_label">प्रतिक्रिया का प्रकार</string>
     <string name="feedback_placeholder">बताएं हम कैसे सुधार कर सकते हैं...</string>
+    <string name="feedback_attach_label">स्क्रीनशॉट संलग्न करें (वैकल्पिक)</string>
+    <string name="feedback_attach_btn">स्क्रीनशॉट / फोटो जोड़ें</string>
+    <string name="feedback_attach_placeholder">समस्या या सामग्री लेबल का फोटो या स्क्रीनशॉट जोड़ें</string>
+    <string name="feedback_attach_remove">हटाएं</string>
+    <string name="feedback_attach_change">फोटो बदलें</string>
+    <string name="feedback_attach_attached">स्क्रीनशॉट संलग्न है</string>
     <string name="feedback_btn_submit">प्रतिक्रिया भेजें</string>
 
     <!-- Custom Exclusions Screen -->
@@ -431,32 +437,39 @@
     <!-- About Satvik Screen -->
     <string name="about_title">SatvikScan के बारे में</string>
     <string name="about_app_name">SatvikScan</string>
-    <string name="about_tagline">\"पवित्रता से स्कैन करें, शांति से भोजन करें\"</string>
-    <string name="about_sanskrit_quote">\"आहारशुद्धौ सत्त्वशुद्धिः\"</string>
-    <string name="about_mission_title">हमारा मिशन</string>
-    <string name="about_mission_desc">SatvikScan का उद्देश्य लोगों को उनके धार्मिक, सांस्कृतिक और व्यक्तिगत आहार के अनुसार 100% शुद्ध और सही खाना चुनने में मदद करना है।</string>
-    <string name="about_focus_label">मुख्य ध्यान: </string>
-    <string name="about_focus_desc">पैकेज्ड फूड के इंग्रीडिएंट्स और छिपे हुए कैमिकल्स (E-Numbers) को एक क्लिक में स्कैन करके सच बताना।</string>
-    <string name="about_what_is_satvik">सात्विक भोजन क्या है?</string>
-    <string name="about_sattva_title">सत्व</string>
-    <string name="about_sattva_desc">ताजा, शुद्ध, प्राकृतिक और अहिंसक भोजन।</string>
-    <string name="about_no_onion_garlic_title">प्याज और लहसुन मुक्त</string>
-    <string name="about_no_onion_garlic_desc">तामसिक और राजसिक तत्वों का त्याग।</string>
-    <string name="about_hidden_nonveg_title">छिपे मांसाहार से मुक्त</string>
-    <string name="about_hidden_nonveg_desc">जिलेटिन, कार्माइन, रेनेट, बोन चार से सुरक्षा।</string>
+    <string name="about_tagline">जानिए आप क्या खाते हैं। विश्वास के साथ चुनें।</string>
+    <string name="about_subtitle">SatvikScan पैकेज्ड फूड के बारकोड को स्कैन करके और आपकी चुनी हुई आहार शैली के अनुसार जांचकर सामग्री को समझने में मदद करता है।</string>
+    <string name="about_mission_title">SatvikScan क्यों?</string>
+    <string name="about_mission_desc">पैकेज्ड फूड के लेबल में अनजान सामग्री, एडिटिव्स और E-नंबर हो सकते हैं। SatvikScan आपकी चुनी हुई आहार शैली के अनुसार सामग्री की जांच करके इस जानकारी को सरल बनाता है।</string>
+    <string name="about_how_it_works">यह कैसे काम करता है</string>
+    <string name="about_step_scan_title">स्कैन करें</string>
+    <string name="about_step_scan_desc">पैकेज्ड फूड उत्पाद पर बारकोड को स्कैन करें।</string>
+    <string name="about_step_check_title">जांचें</string>
+    <string name="about_step_check_desc">SatvikScan उपलब्ध उत्पाद और सामग्री की जानकारी की जांच करता है।</string>
+    <string name="about_step_understand_title">समझें</string>
+    <string name="about_step_understand_desc">अपनी चुनी हुई आहार शैली के आधार पर स्पष्ट परिणाम प्राप्त करें।</string>
     <string name="about_diets_supported">समर्थित आहार</string>
+    <string name="about_diet_jain">जैन</string>
+    <string name="about_diet_jain_desc">कंदमूल (जमींकंद), शहद या मांसाहारी उत्पाद वर्जित।</string>
+    <string name="about_diet_swami">स्वामीनारायण</string>
+    <string name="about_diet_swami_desc">प्याज, लहसुन, मांस या नशीले पदार्थ वर्जित।</string>
     <string name="about_diet_vegan">वीगन</string>
+    <string name="about_diet_vegan_desc">कोई भी पशु-व्युत्पन्न सामग्री या एडिटिव्स नहीं।</string>
+    <string name="about_diet_custom">कस्टम</string>
+    <string name="about_diet_custom_desc">अपनी पसंद के अनुसार सामग्री को प्रतिबंधित करें।</string>
     <string name="about_key_features">मुख्य विशेषताएं</string>
-    <string name="about_feature_instant_scanner">त्वरित स्कैनर</string>
-    <string name="about_feature_e_number">E-नंबर विश्लेषण</string>
-    <string name="about_feature_diet_gyan">आहार ज्ञान</string>
-    <string name="about_feature_privacy">100% गोपनीयता</string>
-    <string name="about_version">v1.0.0</string>
-    <string name="about_made_with">बनाया गया है </string>
-    <string name="about_made_with_suffix"> के साथ सचेत भोजन के लिए</string>
+    <string name="about_feature_barcode">बारकोड स्कैनर</string>
+    <string name="about_feature_barcode_desc">पैकेज्ड खाद्य उत्पादों को तेजी से स्कैन करें।</string>
+    <string name="about_feature_e_number">सामग्री और E-नंबर जागरूकता</string>
+    <string name="about_feature_e_number_desc">संभावित महत्वपूर्ण सामग्री और एडिटिव्स को समझें।</string>
+    <string name="about_feature_diet_guidelines">आहार दिशानिर्देश</string>
+    <string name="about_feature_diet_guidelines_desc">अपने चुने हुए आहार के अनुसार उत्पादों की जांच करें।</string>
+    <string name="about_feature_privacy">गोपनीयता-केंद्रित</string>
+    <string name="about_feature_privacy_desc">आपका भोजन जांचने का अनुभव सरल और निजी रहता है।</string>
+    <string name="about_version">संस्करण 1.0.0</string>
+    <string name="about_footer">सचेत भोजन विकल्पों के लिए ♥ से बनाया गया</string>
     <string name="about_privacy_policy">गोपनीयता नीति</string>
     <string name="about_contact_support">सहायता संपर्क</string>
-    <string name="about_rate_us">रेटिंग दें</string>
 
     <!-- Privacy Policy Screen -->
     <string name="privacy_title">गोपनीयता और कानूनी नीति</string>

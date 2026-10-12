@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -93,4 +94,13 @@ dependencies {
 
     // use for AppCompat - setApplicationLocales
     implementation("androidx.appcompat:appcompat:1.7.0")
+
+    // Firebase BoM (Bill of Materials) - version management
+    implementation(platform("com.google.firebase:firebase-bom:34.0.0"))
+
+    // Firebase Firestore - Verified Products Database
+    implementation("com.google.firebase:firebase-firestore")
+
+    // Firebase Storage - Product Images
+    implementation("com.google.firebase:firebase-storage")
 }
