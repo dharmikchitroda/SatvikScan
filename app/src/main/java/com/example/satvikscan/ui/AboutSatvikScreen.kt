@@ -316,6 +316,12 @@ fun AboutSatvikScreen(
                         )
                         HorizontalDivider(color = DividerColor, thickness = 1.dp)
                         AboutFeatureRow(
+                            iconRes = R.drawable.baseline_camera_alt_24,
+                            title = stringResource(R.string.about_feature_capture_discover),
+                            description = stringResource(R.string.about_feature_capture_discover_desc)
+                        )
+                        HorizontalDivider(color = DividerColor, thickness = 1.dp)
+                        AboutFeatureRow(
                             iconRes = R.drawable.ic_chemical,
                             title = stringResource(R.string.about_feature_e_number),
                             description = stringResource(R.string.about_feature_e_number_desc)
@@ -328,9 +334,9 @@ fun AboutSatvikScreen(
                         )
                         HorizontalDivider(color = DividerColor, thickness = 1.dp)
                         AboutFeatureRow(
-                            iconRes = R.drawable.lock_icon,
-                            title = stringResource(R.string.about_feature_privacy),
-                            description = stringResource(R.string.about_feature_privacy_desc)
+                            iconRes = R.drawable.ic_language,
+                            title = stringResource(R.string.about_feature_multilingual),
+                            description = stringResource(R.string.about_feature_multilingual_desc)
                         )
                     }
                 }

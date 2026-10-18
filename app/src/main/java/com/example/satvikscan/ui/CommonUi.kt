@@ -304,6 +304,9 @@ fun CommonUi(
                             popUpTo(RouteName.ResultScreen) { inclusive = true }
                             launchSingleTop = true
                         }
+                    },
+                    onFeedbackClick = {
+                        navController.navigate(RouteName.FeedbackScreen)
                     }
                 )
 

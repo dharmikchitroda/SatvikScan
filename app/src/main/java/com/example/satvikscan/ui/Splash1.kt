@@ -201,7 +201,7 @@ fun Splash1(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Scan food packets instantly based on\nSwaminarayan, Jain & Custome Satvik dietary principles.",
+                        text = "Scan food packets instantly based on\nSwaminarayan, Jain & Custom Satvik dietary principles.",
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Normal,
                         color = slateGrey,

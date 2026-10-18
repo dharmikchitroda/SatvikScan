@@ -689,7 +689,7 @@ fun LoadingView(scanMode: ScanMode = ScanMode.BARCODE) {
     val isOcr = scanMode == ScanMode.OCR
     val title = if (isOcr) stringResource(R.string.result_loading_ocr_title) else stringResource(R.string.result_loading_title)
     val subtitle = if (isOcr) stringResource(R.string.result_loading_ocr_subtitle) else stringResource(R.string.result_loading_subtitle)
-    val imageRes = if (isOcr) R.drawable.capture_loading else R.drawable.scan_loading
+    val imageRes = R.drawable.loading_Animation
 
     Box(
         modifier = Modifier

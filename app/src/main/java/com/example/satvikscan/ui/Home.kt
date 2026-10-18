@@ -289,6 +289,7 @@ fun HomeScreenUI(
     }
 }
 
+
 // ─── Quick Tips Section ───────────────────────────────────────────────────────
 
 @Composable

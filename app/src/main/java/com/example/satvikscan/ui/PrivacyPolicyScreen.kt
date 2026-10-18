@@ -312,7 +312,7 @@ fun PrivacyPolicyScreen(
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                         PolicyFeatureRow(
-                            icon = painterResource(R.drawable.openfc_icon),
+                            icon = painterResource(R.drawable.db_icon),
                             title = stringResource(R.string.privacy_feature_off_api_title),
                             subtitle = stringResource(R.string.privacy_feature_off_api_desc),
                             primaryTextColor = primaryText,

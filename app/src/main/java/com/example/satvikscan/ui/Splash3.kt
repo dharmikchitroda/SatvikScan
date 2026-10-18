@@ -231,7 +231,7 @@ fun Splash3(
                                 )
                                 Spacer(modifier = Modifier.width(10.dp))
                                 Text(
-                                    text = "Public Database & Manual Scan",
+                                    text = "Our Verified List & 100% Accuracy Goal",
                                     fontSize = 13.5.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = darkCharcoal
@@ -243,11 +243,19 @@ fun Splash3(
 
                         Text(
                             text = buildAnnotatedString {
-                                append("Barcode data is sourced from Open Food Facts (a community database). For 100% accuracy, please verify via our ")
+                                append("Currently, results combine public food data (Open Food Facts) with our own ")
+                                withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = satvikGreen)) {
+                                    append("Satvik verified list")
+                                }
+                                append(". We are manually checking products daily, and with your support, we will reach ")
+                                withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = darkCharcoal)) {
+                                    append("100% accuracy")
+                                }
+                                append("! For complete certainty, please verify via our ")
                                 withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = darkCharcoal)) {
                                     append("Capture & Discover")
                                 }
-                                append(" or physical packaging.")
+                                append(" feature or physical packaging.")
                             },
                             fontSize = 11.5.sp,
                             color = bodyGrey,
@@ -296,7 +304,7 @@ fun Splash3(
                                 )
                                 Spacer(modifier = Modifier.width(10.dp))
                                 Text(
-                                    text = "Dietary Responsibility & Terms",
+                                    text = "Helpful Guidance & Terms",
                                     fontSize = 13.5.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = darkCharcoal
@@ -308,11 +316,11 @@ fun Splash3(
 
                         Text(
                             text = buildAnnotatedString {
-                                append("You agree to the ")
+                                append("I agree to the ")
                                 withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = darkCharcoal)) {
                                     append("Terms of Service & Privacy Policy")
                                 }
-                                append(". SatvikScan is for guidance only – final dietary decisions are your personal responsibility. The app is not liable for manufacturer recipe changes or religious differences.")
+                                append(". SatvikScan is made to help and guide you. Because brands sometimes change ingredients without notice, the final eating decision is your personal choice.")
                             },
                             fontSize = 11.5.sp,
                             color = bodyGrey,
