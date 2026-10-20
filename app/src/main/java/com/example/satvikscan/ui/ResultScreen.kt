@@ -95,7 +95,8 @@ fun ResultScreen(
     dietName: String,
     onBackClick: () -> Unit,
     onScanAgainClick: () -> Unit,
-    scanIngredient: () -> Unit
+    scanIngredient: () -> Unit,
+    onFeedbackClick: () -> Unit = {}
 ) {
 
     // collect both state
@@ -573,6 +574,32 @@ fun ResultScreen(
                             }
                         }
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Feedback Prompt
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable { onFeedbackClick() }
+                            .padding(vertical = 8.dp, horizontal = 4.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(R.string.result_feedback_title),
+                            fontSize = 13.sp,
+                            color = Color(0xFF757575)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = stringResource(R.string.result_feedback_action),
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
                     Spacer(modifier = Modifier.height(24.dp))
                 } // End of scrollable Column
 
@@ -689,12 +716,12 @@ fun LoadingView(scanMode: ScanMode = ScanMode.BARCODE) {
     val isOcr = scanMode == ScanMode.OCR
     val title = if (isOcr) stringResource(R.string.result_loading_ocr_title) else stringResource(R.string.result_loading_title)
     val subtitle = if (isOcr) stringResource(R.string.result_loading_ocr_subtitle) else stringResource(R.string.result_loading_subtitle)
-    val imageRes = R.drawable.loading_Animation
+    val imageRes = R.drawable.loading_animation
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFEFEFEF)),
+            .background(Color(0xFFFEFEFE)),
         contentAlignment = Alignment.Center
     ) {
         Column(
