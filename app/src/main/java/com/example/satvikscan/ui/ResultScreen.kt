@@ -43,11 +43,14 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.delay
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -196,6 +199,27 @@ fun ResultScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
+                    // Loop between Front Image & Back Image every 2 seconds
+                    val frontUrl = state.product.product?.imageUrl
+                    val backUrl = state.product.product?.backImageUrl
+
+                    val productImages = remember(frontUrl, backUrl) {
+                        listOfNotNull(frontUrl, backUrl).filter { it.isNotBlank() }
+                    }
+
+                    var activeImageIndex by remember(productImages) { mutableIntStateOf(0) }
+
+                    LaunchedEffect(productImages) {
+                        if (productImages.size > 1) {
+                            while (true) {
+                                delay(2000L) // 2-second front <-> back loop
+                                activeImageIndex = (activeImageIndex + 1) % productImages.size
+                            }
+                        }
+                    }
+
+                    val currentImageUrl = if (productImages.isNotEmpty()) productImages[activeImageIndex] else null
+
                     // avoid Status Block
                     Box(
                         modifier = Modifier
@@ -211,7 +235,10 @@ fun ResultScreen(
                             ), contentAlignment = Alignment.Center
                     ) {  // get image from string url
                         AsyncImage(
-                            model = state.product.product?.imageUrl,
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(currentImageUrl)
+                                .crossfade(400) // smooth crossfade between front and back
+                                .build(),
                             placeholder = painterResource(
                                 id = if (isSafe) R.drawable.safe_foodpacket else R.drawable.avoid_foodpacket
                             ), // till load image show this
@@ -224,6 +251,30 @@ fun ResultScreen(
                                 .padding(7.dp)
                                 .fillMaxSize()
                         )
+                    }
+
+                    // Dot indicator for Front / Back image if both exist
+                    if (productImages.size > 1) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(5.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            productImages.indices.forEach { index ->
+                                Box(
+                                    modifier = Modifier
+                                        .size(if (index == activeImageIndex) 8.dp else 5.dp)
+                                        .clip(CircleShape)
+                                        .background(
+                                            if (index == activeImageIndex) {
+                                                if (isSafe) Color(0xFF2E7D32) else Color(0xFFC62828)
+                                            } else {
+                                                Color(0xFFBDBDBD)
+                                            }
+                                        )
+                                )
+                            }
+                        }
                     }
                     Spacer(modifier = Modifier.height(20.dp))
 

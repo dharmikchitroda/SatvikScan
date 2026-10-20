@@ -23,5 +23,7 @@ data class Product(
     @SerializedName("image_thumb_url")
     val imageThumbUrl: String?,    // for history rows
     @SerializedName("image_small_url")
-    val imageSmallUrl: String?    // small image
+    val imageSmallUrl: String?,    // small image
+    @SerializedName("image_ingredients_url")
+    val backImageUrl: String? = null // back packaging photo
 )
