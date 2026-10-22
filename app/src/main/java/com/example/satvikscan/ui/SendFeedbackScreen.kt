@@ -88,7 +88,7 @@ fun SendFeedbackScreen(
     val feedbackOptions = listOf(
         FeedbackTypeOption("bug", "Bug Report", R.drawable.ic_chemical),
         FeedbackTypeOption("feature", "Feature Request", R.drawable.star),
-        FeedbackTypeOption("diet", "Diet Update", R.drawable.leaf_svg),
+        FeedbackTypeOption("diet", "Diet Update", R.drawable.custom_icon),
         FeedbackTypeOption("other", "Other", R.drawable.feedback_icon)
     )
 

@@ -42,6 +42,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.satvikscan.R
@@ -336,7 +337,8 @@ fun QuickTipsSection(dietName: String) {
 fun TipCard(tip: QuickTip) {
     Box(
         modifier = Modifier
-            .width(220.dp)
+            .width(215.dp)
+            .height(145.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(tip.bgColor)
             .border(
@@ -344,31 +346,40 @@ fun TipCard(tip: QuickTip) {
                 color = tip.accentColor.copy(alpha = 0.18f),
                 shape = RoundedCornerShape(16.dp)
             )
-            .padding(16.dp)
+            .padding(14.dp)
     ) {
-        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
             // Emoji badge
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))
                     .background(tip.accentColor.copy(alpha = 0.12f))
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .padding(horizontal = 7.dp, vertical = 3.dp)
             ) {
-                Text(text = tip.emoji, fontSize = 20.sp)
+                Text(text = tip.emoji, fontSize = 18.sp)
             }
+
+            Spacer(modifier = Modifier.height(2.dp))
 
             Text(
                 text = stringResource(tip.titleRes),
-                fontSize = 13.sp,
+                fontSize = 13.5.sp,
                 fontWeight = FontWeight.Bold,
                 color = tip.accentColor,
-                lineHeight = 17.sp
+                lineHeight = 17.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
             Text(
                 text = stringResource(tip.bodyRes),
                 fontSize = 11.5.sp,
-                color = Color(0xFF424242),
-                lineHeight = 16.sp
+                color = Color(0xFF374151),
+                lineHeight = 16.sp,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }

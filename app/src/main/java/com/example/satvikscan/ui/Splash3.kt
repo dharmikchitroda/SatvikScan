@@ -1,5 +1,6 @@
 package com.example.satvikscan.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -348,14 +349,21 @@ fun Splash3(
                     .fillMaxWidth()
                     .height(54.dp)
                     .shadow(
-                        elevation = 8.dp,
+                        elevation = if (isButtonEnabled) 8.dp else 0.dp,
                         shape = CircleShape,
                         spotColor = satvikGreen.copy(alpha = 0.5f),
                         ambientColor = satvikGreen.copy(alpha = 0.3f)
                     ),
                 shape = CircleShape,
+                border = BorderStroke(
+                    width = 1.dp,
+                    color = if (isButtonEnabled) satvikGreen else Color(0xFFCBD5E1)
+                ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = satvikGreen
+                    containerColor = satvikGreen,
+                    disabledContainerColor = Color(0xFFF1F5F9),
+                    contentColor = Color.White,
+                    disabledContentColor = Color(0xFF94A3B8)
                 ),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 0.dp,
