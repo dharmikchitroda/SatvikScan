@@ -2,8 +2,15 @@
 <resources>
 
     <style name="Theme.SatvikScan" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- App background color so window never flashes dark/black -->
-        <item name="android:windowBackground">#FAF9F9</item>
-        <item name="android:windowAnimationStyle">@null</item>
+
+    </style>
+
+    <style name="Theme.SatvikScan.Starting" parent = "Theme.SplashScreen">
+        <!-- SplashScreen background color -->
+        <item name="android:windowSplashScreenBackground">#FEFAE9</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/potato_wafer__1_</item>
+
+        <!-- Theme to transition to after splash screen completes -->
+        <item name="postSplashScreenTheme">@drawable/potato_wafer__1_</item>
     </style>
 </resources>

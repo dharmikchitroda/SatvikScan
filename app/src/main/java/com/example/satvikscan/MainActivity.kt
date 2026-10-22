@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.example.satvikscan.ui.CommonUi
 import com.example.satvikscan.ui.theme.SatvikScanTheme
@@ -17,6 +18,9 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: SatvikViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        installSplashScreen()
+
         super.onCreate(savedInstanceState)
 
         // Applies the initial detected/saved language on app startup

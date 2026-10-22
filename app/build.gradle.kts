@@ -103,4 +103,8 @@ dependencies {
 
     // Firebase Storage - Product Images
     implementation("com.google.firebase:firebase-storage")
+
+    // Splash api
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
 }
