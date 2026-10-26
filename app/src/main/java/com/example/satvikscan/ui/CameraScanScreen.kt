@@ -103,7 +103,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
+import android.util.Size
+import android.view.MotionEvent
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.FocusMeteringAction
+import java.util.concurrent.TimeUnit
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -173,6 +177,10 @@ fun CameraScanScreen(
                 ) == PackageManager.PERMISSION_GRANTED
 
                 viewModel.onPermissionResult(hasPermission)
+
+                if (hasPermission && cameramode == ScanMode.BARCODE) {
+                    viewModel.startScanning()
+                }
 
                 if (hasOpenedSettings && !hasPermission) {
                     onBackClick()
@@ -251,17 +259,20 @@ fun CameraScanScreen(
     }
 
     LaunchedEffect(Unit) {
-        permissionRequested = true
-        cameraLauncher.launch(Manifest.permission.CAMERA)
-    }
+        val hasPermission = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
 
-    LaunchedEffect(cameramode) {
+        if (hasPermission) {
+            viewModel.onPermissionResult(true)
+        } else {
+            permissionRequested = true
+            cameraLauncher.launch(Manifest.permission.CAMERA)
+        }
+
         if (cameramode == ScanMode.BARCODE) {
-            viewModel.startScanning()  // isScanning is true
-            if (!viewModel.isNetworkAvailable()) {
-                viewModel.setOcrError("NO_INTERNET")
-                viewModel.stopScanning()
-            }
+            viewModel.startScanning()
         }
     }
 
@@ -382,14 +393,29 @@ fun CameraScanScreen(
                 key(cameramode) {
 
                     AndroidView(
-                        { context ->
+                        factory = { ctx ->
 
-                            val previewView = PreviewView(context)
+                            val previewView = PreviewView(ctx).apply {
+                                setOnTouchListener { view, event ->
+                                    if (event.action == MotionEvent.ACTION_DOWN) {
+                                        val factory = meteringPointFactory
+                                        val point = factory.createPoint(event.x, event.y)
+                                        val action = FocusMeteringAction.Builder(
+                                            point,
+                                            FocusMeteringAction.FLAG_AF or FocusMeteringAction.FLAG_AE
+                                        ).setAutoCancelDuration(3, TimeUnit.SECONDS).build()
+                                        camera.value?.cameraControl?.startFocusAndMetering(action)
+                                        view.performClick()
+                                        true
+                                    } else {
+                                        false
+                                    }
+                                }
+                            }
 
-                            val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
+                            val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
 
                             cameraProviderFuture.addListener(
-                                // which work i follow after got cameraProviderFuture
                                 {
 
                                     val cameraProvider = cameraProviderFuture.get()
@@ -399,9 +425,12 @@ fun CameraScanScreen(
                                     val preview = Preview.Builder().build().also {
                                         it.setSurfaceProvider(previewView.surfaceProvider)
                                     }
-                                    // for barcoProcessCameraProvider.getInstance(context)de mode camera as fetch barcode
+                                    // for barcode mode camera as fetch barcode
                                     if (cameramode == ScanMode.BARCODE) {
-                                        val imageAnalysis = ImageAnalysis.Builder().build()
+                                        val imageAnalysis = ImageAnalysis.Builder()
+                                            .setTargetResolution(Size(1280, 720))
+                                            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                                            .build()
 
                                         imageAnalysis.setAnalyzer(
                                             captureExecutor,
@@ -409,12 +438,23 @@ fun CameraScanScreen(
                                         )
                                         cameraProvider.unbindAll()
 
-                                        camera.value = cameraProvider.bindToLifecycle(
+                                        val cam = cameraProvider.bindToLifecycle(
                                             lifecycleOwner,
                                             CameraSelector.DEFAULT_BACK_CAMERA,
                                             preview,
                                             imageAnalysis
                                         )
+                                        camera.value = cam
+
+                                        // Auto-focus on center barcode scanning region
+                                        previewView.post {
+                                            val factory = previewView.meteringPointFactory
+                                            val point = factory.createPoint(previewView.width / 2f, previewView.height / 2f)
+                                            val action = FocusMeteringAction.Builder(point, FocusMeteringAction.FLAG_AF)
+                                                .setAutoCancelDuration(3, TimeUnit.SECONDS)
+                                                .build()
+                                            cam.cameraControl.startFocusAndMetering(action)
+                                        }
 
                                     } else {
 
@@ -425,15 +465,14 @@ fun CameraScanScreen(
                                         cameraProvider.unbindAll()
                                         camera.value = cameraProvider.bindToLifecycle(
                                             lifecycleOwner,
-                                            androidx.camera.core.CameraSelector.DEFAULT_BACK_CAMERA,
+                                            CameraSelector.DEFAULT_BACK_CAMERA,
                                             preview,
                                             imageCapture
                                         )
                                     }
 
                                 },
-                                // which i will have to use thread
-                                ContextCompat.getMainExecutor(context)
+                                ContextCompat.getMainExecutor(ctx)
                             )
                             previewView
                         },

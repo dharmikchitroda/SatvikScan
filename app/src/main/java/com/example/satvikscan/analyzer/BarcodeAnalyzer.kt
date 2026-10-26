@@ -19,9 +19,23 @@ class BarcodeAnalyzer(private val viewModel: SatvikViewModel, private val contex
     ImageAnalysis.Analyzer {
 
 
-    // configuration/settings of barcode scanner used for only custumize aur add somthing advance
-    private val option = BarcodeScannerOptions.Builder().build()
+    // configuration/settings of barcode scanner with supported formats to improve performance
+    private val option = BarcodeScannerOptions.Builder()
+        .setBarcodeFormats(
+            Barcode.FORMAT_EAN_13,
+            Barcode.FORMAT_UPC_A,
+            Barcode.FORMAT_EAN_8,
+            Barcode.FORMAT_UPC_E,
+            Barcode.FORMAT_CODE_128,
+            Barcode.FORMAT_CODE_39,
+            Barcode.FORMAT_CODE_93,
+            Barcode.FORMAT_ITF,
+            Barcode.FORMAT_QR_CODE
+        )
+        .build()
     private val scanner = BarcodeScanning.getClient(option)
+
+    private var lastErrorTimestamp = 0L
 
     @OptIn(ExperimentalGetImage::class)
     override fun analyze(image: ImageProxy) {
@@ -34,8 +48,12 @@ class BarcodeAnalyzer(private val viewModel: SatvikViewModel, private val contex
 
         val mediaImage = image.image
 
-        if (mediaImage != null) {
+        if (mediaImage == null) {
+            image.close()
+            return
+        }
 
+        try {
             val inputImage = InputImage.fromMediaImage(
                 mediaImage,
                 image.imageInfo.rotationDegrees
@@ -44,6 +62,9 @@ class BarcodeAnalyzer(private val viewModel: SatvikViewModel, private val contex
             processImage(inputImage) {
                 image.close()
             }
+        } catch (e: Exception) {
+            Log.e("BarcodeAnalyzer", "Failed to process image frame", e)
+            image.close()
         }
     }
 
@@ -64,7 +85,7 @@ class BarcodeAnalyzer(private val viewModel: SatvikViewModel, private val contex
     ) {
 
         // small vibrate
-        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
 
         scanner.process(inputImage)
             .addOnSuccessListener { barcodes ->
@@ -86,7 +107,11 @@ class BarcodeAnalyzer(private val viewModel: SatvikViewModel, private val contex
                             // if value does not exist so move next(continue)
                             val value = barcode.rawValue?: continue
 
-                            vibrator.vibrate(150)
+                            try {
+                                vibrator?.vibrate(150)
+                            } catch (e: Exception) {
+                                Log.e("BarcodeAnalyzer", "Vibration failed", e)
+                            }
 
                             // send to code viewmodel and would call api
                             viewModel.changeProductUiState(value)
@@ -95,16 +120,22 @@ class BarcodeAnalyzer(private val viewModel: SatvikViewModel, private val contex
                             viewModel.stopScanning()
 
                             foundValidBarcode = true
+                            break
                         }
                         Barcode.FORMAT_QR_CODE -> {
-                            Log.d("Barcode", "no THIS IS PAYMENT QR")
-
-                            viewModel.setBarcodeError(context.getString(R.string.camera_error_qr_code))
-
+                            val currentTime = System.currentTimeMillis()
+                            if (currentTime - lastErrorTimestamp > 2500) {
+                                lastErrorTimestamp = currentTime
+                                Log.d("Barcode", "no THIS IS PAYMENT QR")
+                                viewModel.setBarcodeError(context.getString(R.string.camera_error_qr_code))
+                            }
                         }
                         else -> {
-
-                            viewModel.setBarcodeError(context.getString(R.string.camera_error_unsupported_format))
+                            val currentTime = System.currentTimeMillis()
+                            if (currentTime - lastErrorTimestamp > 2500) {
+                                lastErrorTimestamp = currentTime
+                                viewModel.setBarcodeError(context.getString(R.string.camera_error_unsupported_format))
+                            }
                         }
                     }
 

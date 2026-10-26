@@ -1,10 +1,13 @@
 package com.example.satvikscan.viewmodel
 
+import android.Manifest
 import android.app.Application
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -66,6 +69,10 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
     // for this portion permission get or not
     private val _cameraPermission = MutableStateFlow(false)
     val cameraPermission: StateFlow<Boolean> = _cameraPermission
+
+    init {
+        checkCameraPermission()
+    }
 
 
     // stop / start scanner
@@ -150,6 +157,14 @@ class SatvikViewModel(application: Application) : AndroidViewModel(application) 
             ProductUiState // api respons data as actual object provoded by retrofit
 
         data class Error(val message: String) : ProductUiState
+    }
+
+    fun checkCameraPermission() {
+        val isGranted = ContextCompat.checkSelfPermission(
+            getApplication(),
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+        _cameraPermission.value = isGranted
     }
 
     fun onPermissionResult(isGranted: Boolean) {
