@@ -279,7 +279,7 @@ fun CommonUi(
                 }
 
             }
-            composable(RouteName.ResultScreen) {
+            composable(RouteName.ResultScreen ) {
 
                 ResultScreen(
                     viewModel = viewModel,

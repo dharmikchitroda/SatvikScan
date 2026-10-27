@@ -409,8 +409,8 @@
     <string name="diet_swami_title_strict">સ્વામિનારાયણ (ચુસ્ત)</string>
     <string name="diet_jain_title_strict">જૈન (ચુસ્ત)</string>
     <string name="diet_custom_title">કસ્ટમ આહાર</string>
-    <string name="diet_swami_desc">ડુંગળી, લસણ કે ઈંડા મુક્ત.</string>
-    <string name="diet_jain_desc">કંદમૂળ અને મધ મુક્ત.</string>
+    <string name="diet_swami_desc">ડુંગળી, લસણ અને અન્ય ઘણી સામગ્રી મુક્ત.</string>
+    <string name="diet_jain_desc">કંદમૂળ, મધ અને અન્ય ઘણી સામગ્રી મુક્ત.</string>
     <string name="diet_custom_desc">કસ્ટમ બાકાત સામગ્રી સક્રિય કરેલ છે.</string>
     <string name="select_diet_toast_saved">%1$s આહાર સફળતાપૂર્વક સાચવવામાં આવ્યો! ✓</string>
 

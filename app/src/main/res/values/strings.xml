@@ -409,8 +409,8 @@
     <string name="diet_swami_title_strict">Swaminarayan (Strict)</string>
     <string name="diet_jain_title_strict">Jain (Strict)</string>
     <string name="diet_custom_title">Custom Diet</string>
-    <string name="diet_swami_desc">No onion, garlic, or eggs.</string>
-    <string name="diet_jain_desc">No root vegetables or honey.</string>
+    <string name="diet_swami_desc">No onion, garlic, and many more.</string>
+    <string name="diet_jain_desc">No root vegetables, honey, or many more...</string>
     <string name="diet_custom_desc">Custom ingredient exclusions enabled.</string>
     <string name="select_diet_toast_saved">%1$s diet saved successfully! ✓</string>
 

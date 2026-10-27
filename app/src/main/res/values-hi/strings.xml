@@ -410,8 +410,8 @@
     <string name="diet_swami_title_strict">स्वामिनारायण (सख्त)</string>
     <string name="diet_jain_title_strict">जैन (सख्त)</string>
     <string name="diet_custom_title">कस्टम आहार</string>
-    <string name="diet_swami_desc">प्याज, लहसुन या अंडा मुक्त।</string>
-    <string name="diet_jain_desc">कंदमूल और शहद मुक्त।</string>
+    <string name="diet_swami_desc">प्याज, लहसुन और अन्य कई सामग्री मुक्त।</string>
+    <string name="diet_jain_desc">कंदमूल, शहद और अन्य कई सामग्री मुक्त।</string>
     <string name="diet_custom_desc">कस्टम सामग्री अपवर्जन सक्रिय है।</string>
     <string name="select_diet_toast_saved">%1$s आहार सफलतापूर्वक सहेजा गया! ✓</string>
 
