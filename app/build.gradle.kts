@@ -7,11 +7,11 @@ plugins {
 
 android {
 
-    namespace = "com.example.satvikscan"
+    namespace = "com.satvikscan.app"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.satvikscan"
+        applicationId = "com.satvikscan.app"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
