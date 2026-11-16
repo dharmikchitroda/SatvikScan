@@ -406,8 +406,8 @@
     <!-- Diet Titles & Descriptions for Profile/Settings -->
     <string name="diet_swami_title">Swaminarayan</string>
     <string name="diet_jain_title">Jain</string>
-    <string name="diet_swami_title_strict">Swaminarayan (Strict)</string>
-    <string name="diet_jain_title_strict">Jain (Strict)</string>
+    <string name="diet_swami_title_strict">Swaminarayan (Pure)</string>
+    <string name="diet_jain_title_strict">Jain (Pure)</string>
     <string name="diet_custom_title">Custom Diet</string>
     <string name="diet_swami_desc">No onion, garlic, and many more.</string>
     <string name="diet_jain_desc">No root vegetables, honey, or many more...</string>
