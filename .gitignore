@@ -16,3 +16,8 @@ local.properties
 .kotlin/
 brain/
 
+# Keystore & Signing files
+/keystore/
+*.jks
+*.keystore
+
